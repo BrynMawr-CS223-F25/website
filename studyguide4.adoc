@@ -1,0 +1,232 @@
+include::header.adoc[]
+
+:title: Study Guide 4
+:Author Initials: ASN
+:Date:    2020-08-15
+:Revision: 0.1
+
+[discrete]
+= {title}
+
+Code Jams are open book. 40 minutes in lab.
+
+Topics:
+
+Everything from link:studyguide3.html[Study Guide 3], plus
+
+* Generating assembly from C code
+* Assembly basics: registers, instructions, operands, memory forms
+* Using GDB to step through assembly code and inspect registers
+
+[discrete]
+= Short answers
+
+Can you answer the following?
+
+. What does the `lea` instruction do?
+. How are parameters passed to functions?
+. How is machine code generated from source code? What is the relationship between machine code and assembly?
+. What is a register? 
+. What do the registers %rsp and %rbp represent? How do they relate to functions?
+. What the do the registers %rax and %eax typically represent? When do we use one versus the other? 
+. What two steps occur when the CPU executes the instruction `push %rbp`?
+. What two steps occur when the CPU executes the instruction `pop %rbp`?
+. What does `callq` do?
+. What does `retq` do?
+
+++++
+<div class="pagebreak"> </div>
+++++
+
+[discrete]
+= Practice questions
+
+1) Consider the following programs. Use `gcc -S div.c -o div.S` to generate the assembly code for this program.
+
+[source]
+----
+#include <stdio.h>
+int main() {
+  int a = 40;
+  int value = a / 2;
+  printf("values = %d", value); 
+}
+----
+
+2) Try modifying the assembly code from Q1 to divide by 4 instead of 2. 
+Edit the file `div.S` and use the command `gcc div.S` to build `a.out`.
+
+{nbsp} +
+{nbsp} +
+{nbsp} +
+
+++++
+<div class="pagebreak"> </div>
+++++
+
+3) Fill in the following table
+
+[cols="1a,1a"]
+|===
+|Suppose memory has the following values:
+[cols="1,1"]
+!===
+!Address ! Value
+!0x304 ! 0xCA
+!0x308 ! 0xF0
+!0x30C ! 0x03
+!0x310 ! 0x1E
+!===
+
+|And suppose our registers have the following values to start:
+[cols="1,1"]
+!===
+!Register ! Value
+!%eax ! 0x304
+!%edx ! 0x8
+!%rbp ! 0x0
+!%rsp ! 0x300
+!%esi  ! 0x4
+!%edi  ! 0x1
+!%rip  ! 0x0000555555555149
+!===
+|===
+
+[cols="1,1,3,2"]
+|===
+|Operand | Form | Translation | Value 
+|%eax | | | 
+|(%eax) | | | 
+|(%rsp,%esi) | | | 
+|(%rsp,%edi,%edx) | | | 
+|0x300(,%esi,2) | | | 
+|$0x310 | | | 
+|0x310 | | | 
+|===
+
+++++
+<div class="pagebreak"> </div>
+++++
+
+[discrete]
+= Tracing assembly
+
+[source]
+----
+Dump of assembler code for function main:
+=> 0x0000555555555149 <+0>:     endbr64
+   0x000055555555514d <+4>:     push   %rbp
+   0x000055555555514e <+5>:     mov    %rsp,%rbp
+   0x0000555555555151 <+8>:     sub    $0x10,%rsp
+   0x0000555555555155 <+12>:    movl   $0xfffffff7,-0x8(%rbp)
+   0x000055555555515c <+19>:    mov    -0x8(%rbp),%eax
+   0x000055555555515f <+22>:    shl    $0x2,%eax
+   0x0000555555555162 <+25>:    mov    %eax,-0x4(%rbp)
+   0x0000555555555165 <+28>:    mov    -0x4(%rbp),%edx
+   0x0000555555555168 <+31>:    mov    -0x8(%rbp),%eax
+   0x000055555555516b <+34>:    mov    %eax,%esi
+   0x000055555555516d <+36>:    lea    0xe90(%rip),%rdi        # 0x555555556004
+   0x0000555555555174 <+43>:    mov    $0x0,%eax
+   0x0000555555555179 <+48>:    callq  0x555555555050 <printf@plt>
+   0x000055555555517e <+53>:    mov    $0x0,%eax
+   0x0000555555555183 <+58>:    leaveq
+   0x0000555555555184 <+59>:    retq
+----
+
+[cols="1a,1a"]
+|===
+|Suppose memory has the following values:
+[cols="1,1"]
+!===
+!Address ! Value
+!M[0x555555556004] ! "%d %d"
+!===
+
+|And suppose our registers have the following values to start:
+[cols="1,1"]
+!===
+!Register ! Value
+!%eax ! 0xd0d
+!%edx ! 0xe148
+!%rbp ! 0x0
+!%rsp ! 0x048
+!%esi  ! 0xe138
+!%edi  ! 0x1
+!%rip  ! 0x0000555555555149
+!===
+|===
+
+//++++
+//<div class="pagebreak"> </div>
+//++++
+
+1) What is the value 0x10 as a base 10 integer?
+{nbsp} +
+{nbsp} +
+{nbsp} +
+2) What is the value 0xfffffff7 as a base 10 _signed_ integer (two's complement)?
+{nbsp} +
+{nbsp} +
+{nbsp} +
+3) Draw the contents of the registers and stack after executing the instruction `sub $0x10,%rsp` (   0x0000555555555151)
+
+[cols="1a,1a"]
+|===
+|
+[cols="1,2"]
+!===
+!Register ! Value
+!%eax ! 
+!%edx ! 
+!%rbp ! 
+!%rsp ! 
+!%esi  ! 
+!%edi  ! 
+!%rip  ! 
+!===
+|
+"Stack top"
+[cols="1,3"]
+!===
+!Address ! Stack value
+!{nbsp} + !
+!{nbsp} + !
+!{nbsp} + !
+!{nbsp} + !
+!{nbsp} + !
+!{nbsp} + !
+!{nbsp} +  !
+!0x048  !
+!===
+|===
+
+4) What is the translation of the memory form `-0x8(%rbp)`?
+{nbsp} +
+{nbsp} +
+{nbsp} +
+
+5) What is the `shl` instruction?
+{nbsp} +
+{nbsp} +
+{nbsp} +
+
+6) What are the contents of %eax after executing instruction 0x000055555555515c?
+{nbsp} +
+{nbsp} +
+{nbsp} +
+
+7) What are the contents of %eax after executing instruction 0x000055555555515f?
+{nbsp} +
+{nbsp} +
+{nbsp} +
+
+8) What are the contents of %rsi after executing instruction 0x000055555555516b?
+{nbsp} +
+{nbsp} +
+{nbsp} +
+
+9) What are the contents of %rdi after executing instruction 0x000055555555516d?
+{nbsp} +
+{nbsp} +
+{nbsp} +
+

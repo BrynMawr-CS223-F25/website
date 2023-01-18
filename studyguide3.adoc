@@ -1,0 +1,267 @@
+include::header.adoc[]
+
+:title: Study Guide 3
+:Author Initials: ASN
+:Date:    2020-08-15
+:Revision: 0.1
+
+= {title}
+
+Code Jams are open book. 40 minutes in lab.
+
+Topics:
+
+Everything from link:studyguide2.html[Study Guide 2], plus
+
+* Data type formats: signed and unsigned integers, float, double
+* Bitwise operators
+* Binary arithmetic
+* Memory layouts of arrays and structs, byte alignment
+* Reading and writing binary files
+
+Write C programs to check your answers. Or you can ask a TA or instructor 
+to give feedback on your responses.
+
+= Practice questions
+
+1) Convert the following binary numbers to hexadecimal and decimal. Try without a calculator (but use a calculator to check your results) 
+
+* 0110 1010
+* 1110 0011
+* 0110 1110
+
+2) Convert the following hexadecimal numbers to binary and decimal. Try without a calculator (but use a calculator to check your results) 
+
+* 0xF5
+* 0x03
+* 0x2D
+
+3) Convert the following decimal numbers to hexadecimal and binary. Try without a calculator (but use a calculator to check your results) 
+
+* 101
+* 54
+* 25
+
+4) Compute the results of the following decimal expressions using 4-bit unsigned integers. Indicate whether there is overflow. Express your final answer in hexadecimal. Show your work.
+
+[cols="1,5"]
+|===
+|Expression
+|Result
+//|Overflow or not?
+
+|3 << 8
+|{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+//|yes/no
+
+|2 & 7
+|{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+//|yes/no
+
+|2 + 7
+|{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+//|yes/no
+
+|9 + 7
+|{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+//|yes/no
+
+|11-9
+|{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+//|yes/no
+|=== 
+
+5) Convert the following hexadecimal number to a floating-point number: `0x 3f c0 00 00`
+
+6) Compute the results of the following decimal expressions using 4-bit signed integers. Indicate whether there is overflow. Express your final answer in hexadecimal. Show your answer.
+
+[cols="1,5"]
+|===
+|Expression
+|Result
+//|Overflow or not?
+
+|-6 >> 3
+|{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+//|yes/no
+
+|2 ^ 7
+|{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+//|yes/no
+
+|2 + 7
+|{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+//|yes/no
+
+|5 - 7
+|{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+//|yes/no
+
+|-4-1
+|{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+//|yes/no
+|=== 
+
+7) Consider the following struct. 
+Draw the contents and layout of a variable of this struct type, assuming the variable is placed in memory starting at address 0xfffffe40. 
+
+[source]
+----
+struct foo {
+    float x;
+    unsigned char c[3];
+    struct foo* v;
+};
+----
+
+8) Sheldon uses the following program to write an unsigned integer to a file in binary format.
+
+[source]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+  FILE* fp = fopen("test.bin", "wb");
+
+  const char* message = "a-ok";
+  fwrite(message, sizeof(unsigned char), 5, fp);
+
+  unsigned int v = 7;
+  fwrite(&v, sizeof(unsigned int), 1, fp);
+
+  fclose(fp);
+}
+----
+
+When they inspect the file using hexedit, they see the following result. Does it make sense? Why or why not? 
+
+[source]
+----
+00000000   61 2D 6F 6B  00 07 00 00  00      a-ok.....
+00000018
+----
+
+8) Ava implemented the following program to keep track of her finances. However, it's not working properly. What is going on and how can she fix it?
+
+[source]
+----
+#include <stdio.h>
+
+int main() {
+  unsigned int balance = 0;
+
+  FILE* infile = fopen("finances.txt", "r");
+  fscanf(infile, " %u", &balance);
+  fclose(infile);
+
+  printf("Your balance: $%u\n", balance);
+  printf("What would you like to do? (d = deposit,w = withdraw)\n");
+  char choice = fgetc(stdin);
+  if (choice != 'd' && choice != 'w') {
+    printf("Invalid choice! Quitting....\n");
+    return 1;
+  }
+
+  int amount = 0;
+  printf("Enter an amount: ");
+  scanf(" %d", &amount);
+  if (amount < 0) {
+    printf("Invalid amount! Quitting...\n");
+    return 1;
+  }
+
+  if (choice == 'd') {
+    balance += amount;
+  } else if (choice == 'w') {
+    balance -= amount;
+  }
+
+  FILE* outfile = fopen("finances.txt", "w");
+  fprintf(outfile, "%u", balance);
+  fclose(outfile);
+
+  return 0;
+}
+----
+
+[source,subs=quotes]
+----
+$ **./finance**
+Your balance: $50
+What would you like to do? (d = deposit,w = withdraw)
+**d**
+Enter an amount: **5**
+$ **./finance**
+Your balance: $55
+What would you like to do? (d = deposit,w = withdraw)
+**w**
+Enter an amount: **40**
+$ **./finance**
+Your balance: $15
+What would you like to do? (d = deposit,w = withdraw)
+**w**
+Enter an amount: **20**
+$ **./finance**
+Your balance: $4294967291
+What would you like to do? (d = deposit,w = withdraw)
+^C
+----
+
+9) Write a program, `lswizzle.c` that shifts all the bits in an unsigned integer to the left, wrapping the most significant bit into the least significant bit. For example, if the integer has binary representation `0b 1010 0110 0000 0000`, the result should be `0b 0100 1100 000 0001`.
+
+10) Write a program, `odd.c` that uses xor to identify the single element that appears an odd number of times in the following list: [4, 6, 8, 8, 6, 2, 3, 4, 3]. 
+
+11) Write a program, `flag.c`, that allows the user to set or unset a specific bit in an unsigned integer.
+
+[source,subs=quotes]
+----
+$ **./flag**
+usage: flag <number> <bit place> <bit value>
+$ **./flag 101 4 1**
+Your original number: 0x65 (101)
+Your new number: 0x75 (117)
+$ **./flag 101 3 1**
+Your original number: 0x65 (101)
+Your new number: 0x6d (109)
+----

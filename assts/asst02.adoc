@@ -1,0 +1,235 @@
+include::header.adoc[]
+
+:title: Assignment 2: If you malloc something, set it free
+:Author Initials: ASN
+:Date:    2021-01-29
+:Revision: 0.1
+:ASST: A02
+
+= {title}
+
+**Due Thursday, September 22, before midnight**
+
+The goals for this assignment are:
+
+* Work with pointers
+* Work with malloc/free
+* Work with arrays
+
+:sectnums:
+
+= Update your repository
+
+Do a *fetch upstream* to obtain the basecode for this assignment. 
+
+Using the command line
+
+* Open terminal and change your current directory to your assignment repository.
+* Run the command `git fetch upstream`
+* Run the command `git merge upstream/main`
+
+Your repository should now contain a new folder named `{ASST}`.
+
+The `fetch` and `merge` commands update your repository with any changes from the original.
+
+= Can't get a word in entwise
+
+    "We must not be hasty." 
+    -- Treebeard 
+
+The https://lotr.fandom.com/wiki/Ents[Ents] in Lord of the Rings were a noble 
+race of tree herders, whose language was "long and sonorous". 
+Ents live a very long time and so speak very...carefully...and....very...s.l.o.w.l.y. 
+
+Write a program ,`slow.c`, that turns a phrase into ent-speech. Your program 
+should ask for the pause length and a phrase to change. Your program should 
+output an ent-phrase. Ent-phrases contain '.' between each letter in the input. 
+
+Two examples of the running program are shown below. User input is shown in *bold*.
+
+[source,subs="quotes"]
+----
+$ **make slow**
+gcc -g -Wall -Wvla -Werror slow.c -o slow
+$ **./slow**
+Pause length: **3**
+Text: **Surprise!**
+S...u...r...p...r...i...s...e...!...
+
+$ **./slow**
+Pause length: **5**
+Text: **Hmmm?**
+H.....m.....m.....m.....?.....
+----
+
+Requirements and Hints:
+
+* You can assume that the user will enter a string that fits into a 32 character buffer, e.g. `char buff[32];`
+* Watch out that any string you create ends with a terminating null character, e.g. `'\0'`
+* Use malloc/free to allocate a string that has enough space to store your "slow" speech!
+
+= Dynamic restaurants
+
+Implement a program, `dynamic_restaurants.c`, that allows users to add restaurants to 
+our restaurant directory. 
+Unlike last week's restaurants, your program only needs the following features: 
+
+. The ability to create an array of new retaurants (use malloc/free)
+. The ability to add a new restaurant to the array of restaurants
+. The ability to print out the current list of restaurants
+
+[source,subs="quotes"]
+----
+$ **make dynamic_restaurants**
+gcc -g -Wall -Wvla -Werror dynamic_restaurants.c -o dynamic_restaurants
+$ **./dynamic_restaurants**
+Enter a number of restaurants: **3**
+Enter a name: **Sushi Atsumi**
+Open time: **11**
+Close time: **23**
+Stars: **3.5**
+Enter a name: **The Thirsty Horse**
+Open time: **17**
+Close time: **2**
+Stars: **4.5**
+Enter a name: **Magic Bean Coffee**
+Open time: **6**
+Close time: **15**
+Stars: **4.1**
+
+Welcome to Dynamic Donna's Restaurant Directory.
+
+0) Sushi Atsumi         open: 11:00     close: 23:00    stars: 3.5
+1) The Thirsty Horse    open: 17:00     close: 02:00    stars: 4.5
+2) Magic Bean Coffee    open: 06:00     close: 15:00    stars: 4.1
+----
+
+Requirements and Hints:
+
+* Your program must use malloc/free to allocate the array of restaurants.
+* Your program should print the restaurants in an attractive table, although the formatting does not need to match the sample output exactly.
+* You can assume that all restaurant names fit into an 32 character buffer.
+* Feel free to re-use code from A01 (such as your printed table)!
+
+NOTE: Because the restaurant names can have spaces in them, using scanf requires additional syntax. 
+Instead of `scanf(" %d", &val);`, use `scanf(" %d%*c", &val);`. The trailing `%*c` tells scanf 
+to read and ignore the newline character at the end of the line. Furthermore, to read the name, 
+call `scanf(" %[^\n]%*c", name);` instead of `scanf(" %s", name);`.
+
+= 2048
+
+Implement a program, `2048.c`, that analyzes a board from the game 2048. 
+
+link:https://play2048.co/[2048] is a puzzle game created by
+Gabriele Cirulli. 2048 consists of a 4x4 grid that contains powers of two. 
+Each turn, the player can shift all the values in the grid either up, down, left, 
+or right. During shifting, if two matching 
+values collide, they combine into a single value that is the sum of them both. 
+Values can only combine once in a single turn. Values cannot shift past the 
+extents of the grid.
+
+For example, Suppose the current state of the board is as follows (zeroes correspond to 
+empty spaces)
+
+[source]
+----
+2 0 0 2
+4 16 8 2
+2 64 32 4
+1024 1024 64 0
+----
+
+If we shift the values left, we will get the following board configuration
+
+[source]
+----
+4 0 0 0
+4 16 8 2
+2 64 32 4
+2048 64 0 0
+----
+
+Notice that values shift over empty spaces!
+
+**Input**
+
+The input is a 4x4 matrix representing a valid state of a 2048 puzzle. 
+Input values will always be one of {0, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024}.
+Integer 0 means an empty space.
+
+**Output**
+
+Output the largest value that can result from a shift in any direction.
+If no values can be combined in a shift, then your program should output the largest value on the board.
+
+[source,subs="quotes"]
+----
+$ **make 2048**
+gcc -g -Wall -Wvla -Werror 2048.c -o 2048
+
+$ **cat input1.txt**
+2 0 0 2
+4 16 8 2
+2 64 32 4
+1024 1024 64 0
+
+$ **./2048 < input1.txt**
+The largest value is 2048.
+
+$ **cat input2.txt**
+2 0 0 2
+4 16 8 2
+2 64 32 4
+1024 64 1024 0
+
+$ **./2048 < input2.txt**
+The largest value is 128.
+
+$ **cat input3.txt**
+2 0 0 2
+4 0 0 0
+2 0 32 4
+0 0 64 0
+
+$ **./2048 < input3.txt**
+The largest value is 4.
+
+$ **cat input4.txt**
+2 0 0 0
+0 0 8 0
+0 0 0 0
+0 0 0 2
+
+$ **./2048 < input4.txt**
+The largest value is 8.
+
+$ **cat input5.txt**
+2 2 4 8
+4 0 4 4
+16 16 16 16
+32 16 16 32
+
+$ **./2048 < input5.txt**
+The largest value is 32.
+----
+
+Requirements and Hints:
+
+* Use `scanf(" %d", &val);` to load the input values from stdin
+* Create a static 4x4 matrix to hold the values. You do not need to use malloc/free.
+
+= Submit your Work
+
+Push you work to github to submit your work.
+
+[source]
+----
+$ cd A02
+$ git status
+$ git add *.c 
+$ git status
+$ git commit -m "assignment 2 complete"
+$ git status
+$ git push
+$ git status
+----

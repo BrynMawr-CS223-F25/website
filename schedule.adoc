@@ -1,0 +1,151 @@
+
+
+[cols="1,2,6a", options="header"]
+|===
+| Week 
+| Date 
+| Agenda
+
+//-----------------------------
+| 1
+| Jan 18 anchor:week01[]
+| *Introductions, Hello C* 
+
+* Read: link:https://diveintosystems.org/singlepage/[Appendix 1] 
+* link:assts/asst01.html[Assignment 01]: Due Jan 25
+* link:http://linuxcommand.org/lc3_learning_the_shell.php[Learning the shell]
+* Topics: Programming at the command line, From Java to C 
+* Lab: SSH and Github setup
+
+//-----------------------------
+| 2 
+| Jan 23,25 anchor:week02[]
+| *Pointers* 
+
+* Topics: Function stacks, scope, dynamically-allocated memory (malloc/free), heap
+* link:assts/.html[Assignment 02]: Feb 1
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 2] 
+* link:https://pythontutor.com/c.html#mode=edit[C Tutor]
+* Lab: Editor Workshop
+
+//-----------------------------
+|3
+|Jan 30, Feb 1 anchor:week03[]
+|*Pointers* 
+
+* Topics: Pointer-based data structures, More I/O
+* link:assts/.html[Assignment 03]: Due Feb 8
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 3] 
+* Read: link:http://svslibrary.pbworks.com/f/Data+Structures+and+Algorithm+Analysis+in+C+-+Mark+Allen+Weiss.pdf[Data Structures in C, Mark Allen Weiss, Chpt 3 and 4]
+* Lab: Jam practice
+// TODO * link:https://github.com/BrynMawr-CS223-F22/git-workshop[Github workshop] and link:https://github.com/BrynMawr-CS223-S22/git-workshop/blob/main/SSHSetup.md[Setting up SSH keys for Github]
+
+//-----------------------------
+|4
+|Feb 6,8 anchor:week04[]
+|*Debugging. Binary and Data Representation I* 
+
+* Topics: GDB, Valgrind, Binary representations of integers
+* link:assts/.html[Assignment 04]: Due Feb 15
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 4.1-4.3] 
+* Lab: **Code Jam 01**, link:studyguide1.html[Study Guide]
+
+//-----------------------------
+|5
+|Feb 13,15 anchor:week05[]
+|*Binary and Data Representation II* 
+
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 4.4-4.9] 
+* link:assts/.html[Assignment 05]: Due Feb 22 
+* Lab: **Jam Redux 01; Study Guide 02**
+
+//-----------------------------
+|6
+|Feb 20,22 anchor:week06[]
+|*Computer architecture, Assembly* 
+
+* Read: link:https://diveintosystems.org/singlepage/[Section 5.1, Chapter 6] 
+* link:assts/.html[Assignment 06]: Due March 1 
+* Lab: **Code Jam 02**, link:studyguide2.html[Study Guide 2]
+
+//-----------------------------
+|7
+|Feb 27, March 1 anchor:week07[]
+|*Assembly I* 
+
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 7 (7.1-7.3,7.5,7.10), 10] 
+* Lab: **Jam 02 Redux**
+
+//-----------------------------
+|8
+|March 6,8 anchor:week08[]
+|*Spring Break*
+
+* *NO LECTURES, LABS, HOMEWORKS*
+
+//-----------------------------
+|9
+|March 13,15 anchor:week09[]
+|*Assembly II* 
+
+* link:assts/.html[Assignment 07]: Due March 22
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 7 (7.1-7.3,7.5,7.10), 10] 
+
+//-----------------------------
+|10
+|March 20, 22 anchor:week10[]
+|*The operating system, Processes* 
+
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 13, skip section 13.3] 
+* link:assts/.html[Assignment 08]: Due March 29
+* Lab: **Jam 03 Redux; Jam 04 Study Guide**
+
+//-----------------------------
+|11
+|March 27,29 anchor:week11[]
+|*Processes and Inter-process communication (IPC)* 
+
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 13.4-13.6] 
+* link:assts/.html[Assignment 09]: Due April 5
+* **Jam 04**: link:studyguide4.html[Study Guide 4]
+
+//-----------------------------
+|11
+|April 3,5 anchor:week12[]
+|*Inter-process communication, Threads I* 
+
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 14] 
+* link:assts/.html[Assignment 10]: Due April 12
+* **Jam 04 Redux; Jam 05 Study Guide**
+
+//-----------------------------
+|12
+|April 10,12 anchor:week13[]
+|*Threads II* 
+
+* link:assts/.html[Assignment 11]: Due April 19
+* Lab: **Jam 05**, link:studyguide5.html[Study Guide 5]
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 14] 
+
+//-----------------------------
+|13
+|April 17,19 anchor:week14[]
+|*Memory* 
+
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 11.1-11.3] 
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 11.5, Malloc Handout] 
+* link:assts/asst12.html[Assignment 12]: Due April 26
+* Lab: **Jam 03**: link:studyguide3.html[Study Guide 3]
+
+//-----------------------------
+|14
+|April 24,26 anchor:week15[]
+|*Code Optimization, C++* 
+
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 12] 
+* link:studyguide6.html[Study Guide 6]
+* link:studyguide-final.html[Final Study Guide]
+
+|===
+
+

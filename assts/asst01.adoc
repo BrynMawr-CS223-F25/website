@@ -1,0 +1,239 @@
+include::header.adoc[]
+
+:title: Assignment 0: Hello CS223!
+:Author Initials: ASN
+:Date:    2020-08-15
+:Revision: 0.1
+:ASST: A00
+
+= {title}
+
+**Due Wednesday, January 25, before midnight**
+
+The goals for this assignment are:
+
+* Try slack
+* Sign-up for Github
+* Look at the website
+* Write a simple C program
+* (Optional) Setup your development environment on your own machine
+
+:sectnums:
+
+= Try slack
+
+I will be inviting you all to join the course slack channel. In the
+introduction channel, say and introduce yourself:
+
+* What is your preferred name and pronouns?
+* Share with us your favorite emojji. :)
+
+We will use Slack for 
+
+* Course announcements
+* Links to zoom and calend.ly
+* Questions and errata for assignments and labs
+
+You can also use Slack to talk directly to me and the TAs, or even to each other!
+
+= Sign-up for Github
+
+Please go to github.com and register. We will use github for assignments.  *Email
+the instructor (anormoyle at brynmawr.edu) with your github username.* 
+
+*You will need to setup an SSH key for Github. link:https://docs.github.com/en/authentication/connecting-to-github-with-ssh[Click here for instructions].
+
+We have made the decision to open-source our assignments and projects for this 
+class. The benefit of this decision is that you will have a portfolio of work that 
+you can easily keep and share.
+
+Having open-source assignments means that your work is publicly viewable, should 
+someone search for it. It also means that if you copy other people's work, it is 
+in plain view for anyone to see! We will compare assignments and expect everyone to 
+adhere to the honor code at Bryn Mawr and Haverford.
+
+You will discover that there are many open-source coding resources for 
+online. Some of it is boiler plate and intended to be re-used, such as when 
+we use API documentation in order to use a function. Any non-trivial code (longer than a 
+single statement) that you re-use in your own program should be attributed. In this class, 
+99% of all code should be your own.
+
+= Read the class web pages 
+
+Start by reading through **all** of the link:../index.html[class webpage]!
+Bookmark this page on your browser, or use some other method that helps you 
+keep this information handy. All course materials will be 
+posted on the course webpage! 
+
+Pay special attention to the link:../index.html#_schedule[Schedule]. 
+
+= Hello C
+
+Verify that you can use Github, git, and C. You can try this using a lab machine, or your own 
+machine if you have setup your development environment there. 
+
+[discrete]
+== Fork the repository 
+
+Fork the repository from here: 
+
+link:https://github.com/BrynMawr-CS223-S23/cs223-assignments[]
+
+Fork is a button located on the top, right on Github.
+
+[discrete]
+== Clone the repository
+
+From _your own account_, clone the repository you just forked. The URL should look 
+something like the following
+
+[source]
+----
+git@github.com:<YOURUSERNAME>/cs223-assignments[]
+----
+
+Use the "Code" button on Github to copy the URL. Then run the following command
+from terminal.
+
+[source]
+----
+git clone git@github.com:<YOURUSERNAME>/cs223-assignments[]
+----
+
+This will download a local account of the repository to your computer.
+
+[discrete]
+== Build hello.c
+
+In the directory `A00`, you will have a sample file, `hello.c` and makefile `Makefile`. Try building and running.
+
+[source]
+----
+$ make hello
+$ ./hello
+Hello World
+----
+
+[discrete]
+== Math Game
+
+In the directory, `A00`, implement a simple math game that asks a user a series of addition problems 
+and keeps track of the number of correct responses. 
+
+[source]
+----
+$ make mathgame
+$ ./mathgame
+TBD
+----
+
+Requirements:
+
+* Ask the user for the number of questions
+* Use printf and scanf for interactions with the user
+* Use a loop to ask each question
+* Maintain the number of correct questions
+* Print a welcome message 
+* Print a completion message 
+* Compiles with `make`
+* No memory errors using `valgrind`
+
+[discrete]
+== Submit your work to Github
+
+Add and check in your program using git and then push your changes to Github. 
+Run the following command inside your `{ASST}` directory.
+
+[source]
+----
+$ cd A00
+$ git add *.c
+$ git commit -m "assignment 0 exercise"
+$ git push
+----
+
+Run `git status` to check the result of the previous git command.
+Check the Github website to make sure that your program uploaded correctly. 
+
+= (Optional) Set up your own development environment
+
+Having your own development environment will allow you to write code outside of lab.
+
+NOTE: All programs must run on the lab's Linux environment. Make sure you test your work on the lab machines if you work on your laptop! 
+
+== Windows
+
+. Open PowerShell and install wsl2: `wsl --install`. See link:https://docs.microsoft.com/en-us/windows/wsl/install[documentation]. Note that you may need to open powershell as an administrator.
+. From the windows store, link:https://ubuntu.com/wsl[install `Ubuntu`].
+
+Once installed, you can setup your development environment from a bash shell. 
+
+. Open PowerShell
+. Type `wsl` to start the windows subsystem for linux. This will give your a bash prompt
+. Then install your development tools
+.. `sudo apt-get install cmake`
+.. `sudo apt-get install git`
+.. `sudo apt-get install g++`
+.. `sudo apt-get install vim`
+.. `sudo apt-get install libc6-dev-i386`
+.. `sudo apt-get install gcc-multilib`
+.. `sudo apt-get install hexedit`
+.. `sudo apt-get install valgrind`
+.. `sudo apt-get install gdb`
+
+For example, you get something like the following
+
+[source]
+----
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Users\alinen> wsl
+WSL alinen@Balthazar:~$ sudo apt-get install make
+
+etc
+----
+
+NOTE: A quick way to open powershell is to type <WindowsKey>-'Q' and type 'powershell'.
+
+== MacOS
+
+From terminal, run command `xcode-select --install`
+
+You can follow the instructions link:https://www.ics.uci.edu/~pattis/common/handouts/macclion/clang.html[here]
+
+Then, to install additional dependencies, execute the following commands form terminal
+
+[source]
+----
+$ brew install vim
+$ brew install git
+$ brew install hexdump
+$ brew install cmake
+----
+
+NOTE: A quick way to open terminal is to use spotlight. From the keyboard, type the <cmd> and <spacebar>. Then type terminal at the popup edit field.
+
+Unfortunately, `valgrind` and `gdb` cannot be run natively on mac. 
+
+= Grading Rubric
+
+*Assignment rubrics*
+
+Grades are out of 4 points.
+
+* Github setup (0.5 points)
+* Slack setup and introduction (0.5 points)
+* C program (3 points)
+
+*Code rubrics*
+
+For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
+have good style.
+
+* Some credit lost for missing features or bugs, depending on severity of error
+* -12.5% for style errors. See the link:codingstyle.html[class coding style] here.
+* -50% for memory errors
+* -100% for failure to checkin work to Github
+* -100% for failure to compile on linux using make
+* -100% for cheating (+ honor board hearing)

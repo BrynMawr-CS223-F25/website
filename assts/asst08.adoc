@@ -1,0 +1,244 @@
+include::header.adoc[]
+
+:title: Assignment 8: Hold on to your memories
+:Author Initials: ASN
+:Date:    2020-08-15
+:Revision: 0.1
+:stem: latexmath
+:ASST: A08
+
+= {title}
+
+Due Thursday, , before midnight
+
+The goals for this assignment are:
+
+* Understand void* types and pointer arithmetic
+* More linked list practice
+* Better understand malloc and free, particularly the use of the free list
+
+[discrete]
+== Update your repository
+
+Do a *fetch upstream* to obtain the basecode for this assignment. 
+
+Using the command line
+
+* Open terminal and change your current directory to your assignment repository.
+* Run the command `git fetch upstream`
+* Run the command `git merge upstream/main`
+
+Your repository should now contain a new folder named `{ASST}`.
+
+The `fetch` and `merge` commands update your repository with any changes from the original.
+
+
+:sectnums:
+
+= Description
+
+In this assignment, we will implement our own version of malloc and free based on 
+"first-fit" strategy and analyze its performance. 
+
+For this assignment, you should submit both 
+
+* your code, and
+* a written report, *due in class, November 17th*
+
+= Code setup
+
+Your basecode includes the following source files
+
+* `mylloc_list.c` - Malloc/free implementation that implements a free list with first-fit strategy (corresponds to `mhysa.c` in reading)
+* `rand.c` - Utilities for generating random sizes of memory
+* `sbrk.c` - Utilities for extending the amount of memory allocated to a program
+* `memstats.c` - A benchmark program
+* `unit_tests.c` - Unit tests for your malloc/free implementation 
+
+NOTE: This assignment is based on the reading: "My malloc: mylloc and mhysa" by
+Johan Montelius, posted to Slack. You should complete the reading and finish the
+implementation of `mylloc_list.c` _before_ starting the assignment. 
+
+= mylloc_list
+
+In `mylloc_list.c`, implement malloc and free based on the reading.
+
+Recall that the reading steps you through implementing your own malloc/free
+based on a free list and a _first-fit_ strategy.  This implementation uses a
+header to keep track of the memory requested from `sbrk`.  When we re-use memory
+that is freed, we typically will not re-use the entire block of memory. Modify
+the implementation from the reading to 
+
+* Extend this header to keep track of both the requested size and the amount of memory 
+currently used in the chunk.
+
+[source]
+----
+struct chunk {
+  int size; // size of memory allocated from sbrk
+  int used; // *NEW*: amount currently in use
+  struct chunk *next;
+};
+----
+
+Use the unit tests included with your assignment to test that your implementation is correct
+
+[source,subs="quotes"]
+----
+$ **make all**
+gcc -g -Wall -Wvla -Werror memstats.c mylloc_list.c sbrk.c rand.c -o memstats -lm
+gcc -g -Wall -Wvla -Werror unit_tests.c mylloc_list.c sbrk.c rand.c -o unit_tests -lm
+$ **./unit_tests**
+Running tests...
+test 1: size 0 returns NULL: PASSED
+test 2: flist is NULL to start: PASSED
+test 3: flist is empty after first malloc: PASSED
+test 4: correct amount allocated: PASSED
+test 5: header size correct: PASSED
+test 6: header used correct: PASSED
+test 7: flist is non-empty after free: PASSED
+test 8: flist is empty: PASSED
+test9: correct amount allocated: PASSED
+test 10: header size correct: PASSED
+test 11: header used correct: PASSED
+test 12: flist is not empty: PASSED
+test 13: current-init correct size: PASSED
+test 14: header size correct: PASSED
+test 15: header used correct: PASSED
+test 16: flist's first node has correct size: PASSED
+test 17: flist is non-empty: PASSED
+test 18: flist's second node has correct size: PASSED
+----
+
+= Memory statistics
+
+In `memstats.c`, implement the function `memstats` to print the following information
+
+* The total number of memory blocks allocated by malloc, along with
+** The number of total blocks which are currently in-use 
+** The number of total blocks which are currently free 
+* The total amount of memory allocated by malloc, along with
+** The total amount of memory currently in-use 
+** The total amount of memory currently free 
+* The amount of underutilised memory as a percentage. This is the percent of memory that is held in buffers but not being used.
+
+For example, your function might produce the following output
+
+[source]
+----
+Total blocks: 8 Free blocks: 6 Used blocks: 2
+Total memory allocated: 9665 Free memory: 4427 Used memory: 5238
+Underutilized memory: 0.48
+----
+
+You are given code to simulate many random allocations and frees. After
+implementing your function, you should get the following output.
+
+[source,subs="quotes"]
+----
+$ **./memstats**
+Starting test..
+The initial top of the heap is 0x7feffe84d010.
+---------------
+0
+Allocating 452 bytes at index 0
+Allocating 1042 bytes at index 4
+Allocating 45 bytes at index 1
+Freeing index 0
+Allocating 68 bytes at index 0
+Freeing index 1
+Freeing index 0
+Allocating 127 bytes at index 3
+Allocating 1141 bytes at index 2
+Allocating 89 bytes at index 1
+The new top of the heap is 0x7feffe84db31.
+Increased by 2849 (0xb21) bytes
+Total blocks: 5 Free blocks: 1 Used blocks: 4
+Total memory allocated: 2769 Free memory: 45 Used memory: 2724
+Underutilized memory: 0.12
+---------------
+1
+Freeing index 3
+Allocating 47 bytes at index 0
+Freeing index 4
+Freeing index 1
+Freeing index 2
+Freeing index 0
+Allocating 3426 bytes at index 1
+Freeing index 1
+Allocating 39 bytes at index 2
+Allocating 163 bytes at index 4
+The new top of the heap is 0x7feffe84e8a3.
+Increased by 3442 (0xd72) bytes
+Total blocks: 6 Free blocks: 4 Used blocks: 2
+Total memory allocated: 6195 Free memory: 2317 Used memory: 3878
+Underutilized memory: 0.95
+---------------
+2
+Allocating 1658 bytes at index 3
+Allocating 1812 bytes at index 0
+Freeing index 3
+Allocating 39 bytes at index 3
+Allocating 156 bytes at index 1
+Freeing index 3
+Freeing index 1
+Freeing index 4
+Freeing index 2
+Allocating 921 bytes at index 1
+The new top of the heap is 0x7feffe84f651.
+Increased by 3502 (0xdae) bytes
+Total blocks: 8 Free blocks: 6 Used blocks: 2
+Total memory allocated: 9665 Free memory: 4427 Used memory: 5238
+Underutilized memory: 0.48
+Time is 4.1e-05
+----
+
+== README (*Due Nov 17th in class*)
+
+Read this section and answer the corresponding questions. We will visualize the execution of `memstats.c` for Round 1.
+When the program starts, we have no buffers allocated and the free list is empty. 
+
+image:memstats0.png[]
+
+After the first 3 allocations, the buffers and free list look as follows:
+
+image:memstats1.png[]
+
+After the next iteration, we have
+
+image:memstats2.png[]
+
+After the next iteration, we have
+image:memstats3.png[]
+
+After the next iteration, we have
+image:memstats4.png[]
+
+At the end of round 1, the buffers and free list look as follows
+
+image:memstats5.png[]
+
+Answer the following questions:
+
+. Why is the total memory allocated equal to 2769 bytes?
+. If the total memory is equal to 2769 bytes, why did the heap increase by 2849 bytes?
+. Why is the underutilized memory 12%?
+. Draw the buffers and free list after round 1
+. Draw the buffers and free list after round 2
+
+= Submit your work
+
+Submit both your code (by midnight) *and* your written questions (due in class Thursday).
+
+1) Push your code work to github
+
+[source]
+----
+$ git status
+$ git add . 
+$ git status
+$ git commit -m "assignment complete"
+$ git status
+$ git push
+$ git status
+----

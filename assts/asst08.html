@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.17">
+<title>Assignment 8: Hold on to your memories</title>
+<link rel="stylesheet" href="../style/cs21.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_assignment_8_hold_on_to_your_memories">Assignment 8: Hold on to your memories</a></li>
+<li><a href="#_description">1. Description</a></li>
+<li><a href="#_code_setup">2. Code setup</a></li>
+<li><a href="#_mylloc_list">3. mylloc_list</a></li>
+<li><a href="#_memory_statistics">4. Memory statistics</a>
+<ul class="sectlevel2">
+<li><a href="#_readme_due_nov_17th_in_class">4.1. README (<strong>Due Nov 17th in class</strong>)</a></li>
+</ul>
+</li>
+<li><a href="#_submit_your_work">5. Submit your work</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_assignment_8_hold_on_to_your_memories">Assignment 8: Hold on to your memories</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Due Thursday, , before midnight</p>
+</div>
+<div class="paragraph">
+<p>The goals for this assignment are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Understand void* types and pointer arithmetic</p>
+</li>
+<li>
+<p>More linked list practice</p>
+</li>
+<li>
+<p>Better understand malloc and free, particularly the use of the free list</p>
+</li>
+</ul>
+</div>
+<h3 id="_update_your_repository" class="discrete">Update your repository</h3>
+<div class="paragraph">
+<p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
+</div>
+<div class="paragraph">
+<p>Using the command line</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open terminal and change your current directory to your assignment repository.</p>
+</li>
+<li>
+<p>Run the command <code>git fetch upstream</code></p>
+</li>
+<li>
+<p>Run the command <code>git merge upstream/main</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Your repository should now contain a new folder named <code>A08</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_description">1. Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this assignment, we will implement our own version of malloc and free based on
+"first-fit" strategy and analyze its performance.</p>
+</div>
+<div class="paragraph">
+<p>For this assignment, you should submit both</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>your code, and</p>
+</li>
+<li>
+<p>a written report, <strong>due in class, November 17th</strong></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_code_setup">2. Code setup</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Your basecode includes the following source files</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>mylloc_list.c</code> - Malloc/free implementation that implements a free list with first-fit strategy (corresponds to <code>mhysa.c</code> in reading)</p>
+</li>
+<li>
+<p><code>rand.c</code> - Utilities for generating random sizes of memory</p>
+</li>
+<li>
+<p><code>sbrk.c</code> - Utilities for extending the amount of memory allocated to a program</p>
+</li>
+<li>
+<p><code>memstats.c</code> - A benchmark program</p>
+</li>
+<li>
+<p><code>unit_tests.c</code> - Unit tests for your malloc/free implementation</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This assignment is based on the reading: "My malloc: mylloc and mhysa" by
+Johan Montelius, posted to Slack. You should complete the reading and finish the
+implementation of <code>mylloc_list.c</code> <em>before</em> starting the assignment.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mylloc_list">3. mylloc_list</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In <code>mylloc_list.c</code>, implement malloc and free based on the reading.</p>
+</div>
+<div class="paragraph">
+<p>Recall that the reading steps you through implementing your own malloc/free
+based on a free list and a <em>first-fit</em> strategy.  This implementation uses a
+header to keep track of the memory requested from <code>sbrk</code>.  When we re-use memory
+that is freed, we typically will not re-use the entire block of memory. Modify
+the implementation from the reading to</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Extend this header to keep track of both the requested size and the amount of memory
+currently used in the chunk.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>struct chunk {
+  int size; // size of memory allocated from sbrk
+  int used; // *NEW*: amount currently in use
+  struct chunk *next;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Use the unit tests included with your assignment to test that your implementation is correct</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make all</strong>
+gcc -g -Wall -Wvla -Werror memstats.c mylloc_list.c sbrk.c rand.c -o memstats -lm
+gcc -g -Wall -Wvla -Werror unit_tests.c mylloc_list.c sbrk.c rand.c -o unit_tests -lm
+$ <strong>./unit_tests</strong>
+Running tests...
+test 1: size 0 returns NULL: PASSED
+test 2: flist is NULL to start: PASSED
+test 3: flist is empty after first malloc: PASSED
+test 4: correct amount allocated: PASSED
+test 5: header size correct: PASSED
+test 6: header used correct: PASSED
+test 7: flist is non-empty after free: PASSED
+test 8: flist is empty: PASSED
+test9: correct amount allocated: PASSED
+test 10: header size correct: PASSED
+test 11: header used correct: PASSED
+test 12: flist is not empty: PASSED
+test 13: current-init correct size: PASSED
+test 14: header size correct: PASSED
+test 15: header used correct: PASSED
+test 16: flist's first node has correct size: PASSED
+test 17: flist is non-empty: PASSED
+test 18: flist's second node has correct size: PASSED</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_memory_statistics">4. Memory statistics</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In <code>memstats.c</code>, implement the function <code>memstats</code> to print the following information</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The total number of memory blocks allocated by malloc, along with</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The number of total blocks which are currently in-use</p>
+</li>
+<li>
+<p>The number of total blocks which are currently free</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The total amount of memory allocated by malloc, along with</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The total amount of memory currently in-use</p>
+</li>
+<li>
+<p>The total amount of memory currently free</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The amount of underutilised memory as a percentage. This is the percent of memory that is held in buffers but not being used.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example, your function might produce the following output</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Total blocks: 8 Free blocks: 6 Used blocks: 2
+Total memory allocated: 9665 Free memory: 4427 Used memory: 5238
+Underutilized memory: 0.48</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You are given code to simulate many random allocations and frees. After
+implementing your function, you should get the following output.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./memstats</strong>
+Starting test..
+The initial top of the heap is 0x7feffe84d010.
+---------------
+0
+Allocating 452 bytes at index 0
+Allocating 1042 bytes at index 4
+Allocating 45 bytes at index 1
+Freeing index 0
+Allocating 68 bytes at index 0
+Freeing index 1
+Freeing index 0
+Allocating 127 bytes at index 3
+Allocating 1141 bytes at index 2
+Allocating 89 bytes at index 1
+The new top of the heap is 0x7feffe84db31.
+Increased by 2849 (0xb21) bytes
+Total blocks: 5 Free blocks: 1 Used blocks: 4
+Total memory allocated: 2769 Free memory: 45 Used memory: 2724
+Underutilized memory: 0.12
+---------------
+1
+Freeing index 3
+Allocating 47 bytes at index 0
+Freeing index 4
+Freeing index 1
+Freeing index 2
+Freeing index 0
+Allocating 3426 bytes at index 1
+Freeing index 1
+Allocating 39 bytes at index 2
+Allocating 163 bytes at index 4
+The new top of the heap is 0x7feffe84e8a3.
+Increased by 3442 (0xd72) bytes
+Total blocks: 6 Free blocks: 4 Used blocks: 2
+Total memory allocated: 6195 Free memory: 2317 Used memory: 3878
+Underutilized memory: 0.95
+---------------
+2
+Allocating 1658 bytes at index 3
+Allocating 1812 bytes at index 0
+Freeing index 3
+Allocating 39 bytes at index 3
+Allocating 156 bytes at index 1
+Freeing index 3
+Freeing index 1
+Freeing index 4
+Freeing index 2
+Allocating 921 bytes at index 1
+The new top of the heap is 0x7feffe84f651.
+Increased by 3502 (0xdae) bytes
+Total blocks: 8 Free blocks: 6 Used blocks: 2
+Total memory allocated: 9665 Free memory: 4427 Used memory: 5238
+Underutilized memory: 0.48
+Time is 4.1e-05</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_readme_due_nov_17th_in_class">4.1. README (<strong>Due Nov 17th in class</strong>)</h3>
+<div class="paragraph">
+<p>Read this section and answer the corresponding questions. We will visualize the execution of <code>memstats.c</code> for Round 1.
+When the program starts, we have no buffers allocated and the free list is empty.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/memstats0.png" alt="memstats0"></span></p>
+</div>
+<div class="paragraph">
+<p>After the first 3 allocations, the buffers and free list look as follows:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/memstats1.png" alt="memstats1"></span></p>
+</div>
+<div class="paragraph">
+<p>After the next iteration, we have</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/memstats2.png" alt="memstats2"></span></p>
+</div>
+<div class="paragraph">
+<p>After the next iteration, we have
+<span class="image"><img src="img/memstats3.png" alt="memstats3"></span></p>
+</div>
+<div class="paragraph">
+<p>After the next iteration, we have
+<span class="image"><img src="img/memstats4.png" alt="memstats4"></span></p>
+</div>
+<div class="paragraph">
+<p>At the end of round 1, the buffers and free list look as follows</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/memstats5.png" alt="memstats5"></span></p>
+</div>
+<div class="paragraph">
+<p>Answer the following questions:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Why is the total memory allocated equal to 2769 bytes?</p>
+</li>
+<li>
+<p>If the total memory is equal to 2769 bytes, why did the heap increase by 2849 bytes?</p>
+</li>
+<li>
+<p>Why is the underutilized memory 12%?</p>
+</li>
+<li>
+<p>Draw the buffers and free list after round 1</p>
+</li>
+<li>
+<p>Draw the buffers and free list after round 2</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_submit_your_work">5. Submit your work</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Submit both your code (by midnight) <strong>and</strong> your written questions (due in class Thursday).</p>
+</div>
+<div class="paragraph">
+<p>1) Push your code work to github</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ git status
+$ git add .
+$ git status
+$ git commit -m "assignment complete"
+$ git status
+$ git push
+$ git status</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2023-01-18 09:36:12 -0500
+</div>
+</div>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { equationNumbers: { autoNumber: "none" } }
+})
+MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
+  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
+    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains("stemblock")) {
+      data.math.root.display = "block"
+    }
+    return data
+  })
+})
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+</body>
+</html>

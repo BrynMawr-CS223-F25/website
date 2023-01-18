@@ -1,0 +1,325 @@
+include::header.adoc[]
+
+:title: Study Guide 5
+:Author Initials: ASN
+:Date:    2020-08-15
+:Revision: 0.1
+
+= {title}
+
+Code Jams are open book. 40 minutes in lab.
+
+Topics:
+
+Everything from link:studyguide4.html[Study Guide 4], plus
+
+//* Compiling and linking
+* Memory hierarchy, primary and secondary storage, caches, temporal and spatial locality
+* Advanced pointers, pointer arithmetic, void*, function pointers, pass by pointer
+* Implementations of malloc and free. sbrk()
+* The operating system, interrupts, traps, processes, virtual memory, zombies
+* fork(), wait(), pid, ps
+* Interprocess communication: signals, shared memory
+
+= Practice questions
+
+//== Compiling and linking
+//
+//1) Short answers
+//
+//* What is the difference between compiling and linking?
+//* What is a library? When would you use one?
+//* What are differences between an application and a library?
+//* What is the difference between static and dynamic libraries? Why might you want to use one over the other?
+//* What does the pre-processor do?
+//* What is the purpose of compiling and linking?
+//
+//2) Ann-marie has the following errors when she tried to build. What type of error is it (compile, link, runtime, or logical)? How can she fix it?
+//
+//[source]
+//----
+///usr/bin/ld: /tmp/ccH1QHw0.o: in function `main':
+//thread-argv.c:(.text+0x1c4): undefined reference to `pthread_attr_setstacksize'
+///usr/bin/ld: thread-argv.c:(.text+0x2e4): undefined reference to `pthread_create'
+///usr/bin/ld: thread-argv.c:(.text+0x38d): undefined reference to `pthread_join'
+//collect2: error: ld returned 1 exit status
+//----
+
+//4) Tymothy would like to create a library for creating color pallettes. The
+//functions in their library would have the following APIs. 
+//
+//[source]
+//----
+//struct ppm_pixel {
+//  union {
+//    struct {
+//      unsigned char red;
+//      unsigned char green;
+//      unsigned char blue;
+//    };
+//    unsigned char colors[3];
+//  };
+//};
+//
+//// Creates and initializes a pallet with the given number of random colors
+//struct ppm_pixel* create_pallette(int size);
+//
+//// Frees the memory associated with the given pallette
+//void delete_pallette(struct ppm_pixel* pallette);
+//----
+//
+//* How can Tymothy use `ar` to create a static library?
+//* How can Tymothy use `gcc` to create a shared library?
+//* How might Tymothy implement the given functions?
+//* Are the commands for building a library different
+//* What is the difference between a header file (.h) and an implementation file (*.c)? 
+//* How can Tymothy use the functions in their library? Write a program that tests the pallet function.
+
+== Advanced pointers
+
+1) Draw a stack diagram for the following program. Show all intermediate values.
+
+[source]
+----
+#include <stdio.h>
+
+int main() {
+  int vals[4] = {1,2,3,4};
+
+  printf("-------\n");
+  for (int* ptr = vals; ptr < vals+4; ptr++) {
+    printf("%p %d\n", ptr, *ptr);
+  }
+
+  return 0;
+}
+----
+
+2) Fix the error in the following program. Then draw the function stack and heap for the working program.
+
+[source]
+----
+#include <stdio.h>
+
+int main() {
+  void *gen_ptr;
+  int x = 3;
+  char ch = 'a';
+
+  gen_ptr = &x;  // gen_ptr can be assigned the address of an int
+  gen_ptr = &ch; // or the address of a char (or the address of any type)
+
+  int* int_ptr;
+  int_ptr = &x;
+
+  printf("The int value is %d\n", *int_ptr);
+  printf("The char value is %c\n", *gen_ptr);
+  return 0;
+}
+----
+
+3) Fix the error in the following program. Then draw the function stack and heap for the working program.
+
+[source]
+----
+#include <stdio.h>
+
+int main() {
+  int* value = NULL;
+  printf("value is %d\n", *value);
+
+  int a = 4;
+  value = &a;
+  printf("value is %d\n", *value);
+}
+----
+
+4) Draw the stack and heap diagram for the following program.
+
+[source]
+----
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+struct headerT {
+  int a;
+  int b;
+};
+
+struct studentT {
+  char name[64];
+  int age;
+  float gpa;
+};
+
+int main() {
+
+  void* data = malloc(sizeof(struct headerT) + 2 * sizeof(struct studentT));
+  struct headerT* header = (struct headerT*) data;
+  header->a = 5;
+  header->b = 7;
+
+  struct studentT* student = (struct studentT*) (header + 1);
+  strncpy(student->name, "Bill", 4);
+  student->age = 18;
+  student->gpa = 3.3;
+
+  student++;
+  strncpy(student->name, "Carol", 5);
+  student->age = 22;
+  student->gpa = 3.6;
+
+  free(data);
+  // draw the stack and heap here
+  return 0;
+}
+----
+
+== Memory
+
+1) Short answers
+
+* What is the memory hierarchy?
+//* Why do computers have a memory hierachy?
+//* What is a cache hit? A cache miss?
+* What are some examples of primary storage?
+* What are some examples of secondary storage?
+* What is locality and what impact does it have on performance? 
+* What is sbrk()? Why do we use functions such as malloc and free, rather than call sbrk() directly from our programs?
+//* What is memory fragmentation and how can it occur?
+
+2) In the following code, which variables have temporal locality? spatial locality?
+
+[source]
+----
+#include <stdio.h>
+
+int main() {
+    int i, size = 0;
+
+    // declare array of 10 ints
+    int my_arr[10];
+
+    // set the value of each array element
+    for (i = 0; i < 10; i++) {
+        my_arr[i] = i;
+        size++;
+    }
+
+    // set value at position 3 to 100
+    my_arr[3] = 100;
+
+    // print the number of array elements
+    printf("array of %d items:\n", size);
+
+    // print each element of the array
+    for (i = 0; i < 10; i++) {
+        printf("%d\n", my_arr[i]);
+    }
+
+    return 0;
+}
+----
+
+3) Is the following program guaranteed to have good spatial locality? Why or why not?
+
+[source]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+void init_matrix(int** m, int rows, int cols) {
+  int i, j;
+  for (i = 0; i < rows; i++) {  // for each row i
+    for (j = 0; j < cols; j++) { // iterate over each column in row i
+        m[i][j] = 0;
+    }
+  }
+}
+
+int main() {
+  int nrows = 50;
+  int ncols = 100;
+
+  int** matrix = malloc(sizeof(int*) * nrows);
+  for (int i = 0; i < nrows; i++) {
+    matrix[i] = malloc(sizeof(int) * ncols);
+  }
+
+  init_matrix(matrix, nrows, ncols);
+
+  for (int i = 0; i < nrows; i++) {
+    free(matrix[i]);
+  }
+  free(matrix);
+  matrix = NULL;
+  return 0;
+}
+----
+
+== OS, Processes
+
+1) Short answer
+
+* What is the operating system?
+* What is the BIOS or UEFI for?
+* What is virtual address space (VAS)? Why is it useful?
+* What is a process? 
+* What is the difference between an interrupt and a trap?
+* Why do we need interrupts and traps?
+* Why do we need special mechanisms, such as pipes or sockets, to communicate between processes?
+* How can you kill a process using `ps` ?
+* What states can a process be in?
+* What is a zombie process?
+* Why might we want to register a signal handler for the SIGKILL or SIGSEGV signal?
+* When does the OS send the SIGSEGV signal?
+//* What are the differences between shared memory, signals and pipes?
+
+2) The following program creates a zombie process. Why?
+
+[source]
+----
+void main() {
+  if (fork() == 0) { /*child */
+    printf("Child, PID = %d\n", getpid());
+    exit(0);
+  } else { /*parent */
+    printf("Parent, PID = %d\n", getpid());
+    while(1) {
+    }
+  }
+}
+----
+
+3) Draw the process hierarchy created by executing the following program. For each process in the hierarchy, list its output (e.g. what does each process print)?
+
+[source]
+----
+int main() {
+  pid_t ret;
+
+  printf("A\n");
+
+  ret = fork();
+  if(ret == 0) {
+    printf("B\n");
+
+    ret = fork();
+    if(ret == 0) {
+      printf("C\n");
+    }
+    printf("D\n");
+  } else {
+    printf("E\n");
+
+    ret = fork();
+    printf("F\n");
+  }
+
+  printf("G\n");
+  return 0;
+}
+----
+
+4) What type of event does SIGINT represent? Write a program that registers a signal handler for SIGINT?

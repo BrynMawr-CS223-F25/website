@@ -1,0 +1,162 @@
+include::header.adoc[]
+
+:title: Assignment 5: Give a little bit
+:Author Initials: ASN
+:Date:    2020-08-15
+:Revision: 0.1
+:ASST: A05
+
+= {title}
+
+**Due Thursday, Oct 20, before midnight**
+
+The goals for this assignment are:
+
+* Directly manipulate basic types at the bit level using masks
+* Directly manipulate basic types at the bit level
+* Work with binary files
+
+**All programs must run without memory errors and leaks!**
+
+NOTE: Install the VS Code extension, "PBM/PPM/PGM Viewer" by ngtystr, so you can easily view your PPM files!
+
+[discrete]
+== Update your repository
+
+Do a *fetch upstream* to obtain the basecode for this assignment. 
+
+Using the command line
+
+* Open terminal and change your current directory to your assignment repository.
+* Run the command `git fetch upstream`
+* Run the command `git merge upstream/main`
+
+Your repository should now contain a new folder named `{ASST}`.
+
+The `fetch` and `merge` commands update your repository with any changes from the original.
+
+== Update your repository
+
+Do a *fetch upstream* to obtain the basecode for this assignment. 
+
+Using the command line
+
+* Open terminal and change your current directory to your assignment repository.
+* Run the command `git fetch upstream`
+* Run the command `git merge upstream/main`
+
+Your repository should now contain a new folder named `A02`.
+
+The `fetch` and `merge` commands update your repository with any changes from the original.
+
+:sectnums:
+
+= Tiny Bitmaps
+
+A link:https://sneslab.net/wiki/Graphics_Format[1bpp], or 1-bit-per-pixel, 
+sprite stores a grid of black and white pixels using a single bit. 0 denotes 
+white and 1 denotes black. 
+
+image::https://sneslab.net/mw/images/c/c6/saa03_1bpp.png[width=400px] 
+
+In the program, `bitmap.c`, implement a program that reads in a single 64-bit 
+unsigned integer (e.g. `unsigned long`) and outputs it as an 8x8 1bpp sprite. 
+
+[source,subs="quotes"]
+$ **./bitmap < bitmap1.txt**
+Image (unsigned long): ff818181818181ff
+@ @ @ @ @ @ @ @
+@             @
+@             @
+@             @
+@             @
+@             @
+@             @
+@ @ @ @ @ @ @ @
+----
+
+Requirements/Hints:
+
+* Your program should *must* use a bitmask! For example, to generate a 64-bit mask that obtains the left-most bit, do `0x1ul << 63`. The `ul` indicates an `unsigned long` value. `0x1` is the number one in hexadecimal.
+* The bitmap files store the values as hexadecimal values. To read them in, do `unsigned long img; scanf(" %lx", &img);`. Use `%lx` for printf also. You are given basecode that reads in the long integer from stdin.
+
+= Write PPM
+
+Implement a new function, `write_ppm`, defined in `write_ppm.c`. 
+Similarly to link:asst04.html[Assignment 04], you should choose one definition of `write_ppm` to 
+implement, depending on whether you use either a "flat array" or an "array of arrays" to store your pixels. 
+
+The file, `test_write_ppm.c`, tests your write function if you implemented a 1D array.
+The file, `test_write_ppm_2d.c`, tests your write function if you implemented a 2D array.
+If it is working correctly, you should see the following output.
+
+[source,subs="quotes"]
+----
+$ **make test_ppm**
+gcc -g -Wall -Wvla -Werror test_ppm.c write_ppm.C read_ppm.c -o test_ppm
+$ **./test_ppm**
+Testing file feep-raw.ppm: 4 4
+(0,0,0) (100,0,0) (0,0,0) (255,0,255)
+(0,0,0) (0,255,175) (0,0,0) (0,0,0)
+(0,0,0) (0,0,0) (0,15,175) (0,0,0)
+(255,0,255) (0,0,0) (0,0,0) (255,255,255)
+----
+
+Requirements/Hints:
+
+* Use `fprintf` to write the header and `fwrite` to write the binary Data to your file.
+
+= Glitch
+
+link:https://en.wikipedia.org/wiki/Glitch_art[Glitch Art] is the practice of leveraging technological errors for artistic purposes. Some cool examples can be found here by link:https://mobile.twitter.com/glitchartbot[glitchartbot].
+
+image::https://www.joelatimer.com/wp-content/uploads/2019/09/JoeLatimer.com-Blog-Featured-Image-Landscape-08-31-19.jpg[height=300px]
+
+Then write a program, `glitch.c`, that reads in a PPM file and "glitches" it. Your program should save the modified PPM in a new file with the suffix "-glitch". For example, if you load in the file 
+"monalisa.ppm", you should output a file named "monalisa-glitch.ppm".
+
+[source,subs="quotes"]
+----
+$ **./glitch monalisa.ppm**
+Reading monalisa.ppm with width 606 and height 771
+Writing file monalisa-glitch.ppm
+----
+
+[cols="1a,1a"]  
+|=== 
+|Original Image | Glitched Image
+|image::monalisa.png[height=300px]
+|image::monalisa-glitch-v2.0.png[height=300]
+|=== 
+
+
+Requirements/Hints:
+
+* Save the result to `<filename>-glitch.ppm`
+* To start, implement a minimal glitch, which shifts each color value by either 1 or 2 bits, choosen at random, e.g. `newcolorvalue = oldcolorvalue << (rand() % 2);`. Your result should look like
+* Submit your glitched images as part of your submission!
+
+[cols="1a,1a"]  
+|=== 
+|Original Image | Result of random bit shift
+|image::monalisa.png[height=300px]
+|image::monalisa-glitch-simple.png[height=300]
+|=== 
+
+Feel free to be creative with your glitches. You can use a combination of bit operations, switching colors, adding colors, etc.  Anything goes! Also, feel free to use your own images. PPM images can be exported using link:https://www.gimp.org[Gimp] or Photoshop.
+
+= Submit your work
+
+Push you work to github to submit your work.
+
+[subs="attributes"]
+----
+$ cd {ASST}
+$ git status
+$ git add *.c 
+$ git status
+$ git commit -m "assignment complete"
+$ git status
+$ git push
+$ git status
+----

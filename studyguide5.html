@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.17">
+<title>Study Guide 5</title>
+<link rel="stylesheet" href="style/cs21.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_study_guide_5">Study Guide 5</a></li>
+<li><a href="#_practice_questions">Practice questions</a>
+<ul class="sectlevel2">
+<li><a href="#_advanced_pointers">Advanced pointers</a></li>
+<li><a href="#_memory">Memory</a></li>
+<li><a href="#_os_processes">OS, Processes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_study_guide_5">Study Guide 5</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Code Jams are open book. 40 minutes in lab.</p>
+</div>
+<div class="paragraph">
+<p>Topics:</p>
+</div>
+<div class="paragraph">
+<p>Everything from <a href="studyguide4.html">Study Guide 4</a>, plus</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Memory hierarchy, primary and secondary storage, caches, temporal and spatial locality</p>
+</li>
+<li>
+<p>Advanced pointers, pointer arithmetic, void*, function pointers, pass by pointer</p>
+</li>
+<li>
+<p>Implementations of malloc and free. sbrk()</p>
+</li>
+<li>
+<p>The operating system, interrupts, traps, processes, virtual memory, zombies</p>
+</li>
+<li>
+<p>fork(), wait(), pid, ps</p>
+</li>
+<li>
+<p>Interprocess communication: signals, shared memory</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions">Practice questions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>///usr/bin/ld: /tmp/ccH1QHw0.o: in function `main':
+///usr/bin/ld: thread-argv.c:(.text+0x2e4): undefined reference to `pthread_create'
+///usr/bin/ld: thread-argv.c:(.text+0x38d): undefined reference to `pthread_join'</p>
+</div>
+<div class="paragraph">
+<p>//// Creates and initializes a pallet with the given number of random colors
+//// Frees the memory associated with the given pallette</p>
+</div>
+<div class="sect2">
+<h3 id="_advanced_pointers">Advanced pointers</h3>
+<div class="paragraph">
+<p>1) Draw a stack diagram for the following program. Show all intermediate values.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int vals[4] = {1,2,3,4};
+
+  printf("-------\n");
+  for (int* ptr = vals; ptr &lt; vals+4; ptr++) {
+    printf("%p %d\n", ptr, *ptr);
+  }
+
+  return 0;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>2) Fix the error in the following program. Then draw the function stack and heap for the working program.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#include &lt;stdio.h&gt;
+
+int main() {
+  void *gen_ptr;
+  int x = 3;
+  char ch = 'a';
+
+  gen_ptr = &amp;x;  // gen_ptr can be assigned the address of an int
+  gen_ptr = &amp;ch; // or the address of a char (or the address of any type)
+
+  int* int_ptr;
+  int_ptr = &amp;x;
+
+  printf("The int value is %d\n", *int_ptr);
+  printf("The char value is %c\n", *gen_ptr);
+  return 0;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>3) Fix the error in the following program. Then draw the function stack and heap for the working program.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int* value = NULL;
+  printf("value is %d\n", *value);
+
+  int a = 4;
+  value = &amp;a;
+  printf("value is %d\n", *value);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>4) Draw the stack and heap diagram for the following program.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct headerT {
+  int a;
+  int b;
+};
+
+struct studentT {
+  char name[64];
+  int age;
+  float gpa;
+};
+
+int main() {
+
+  void* data = malloc(sizeof(struct headerT) + 2 * sizeof(struct studentT));
+  struct headerT* header = (struct headerT*) data;
+  header-&gt;a = 5;
+  header-&gt;b = 7;
+
+  struct studentT* student = (struct studentT*) (header + 1);
+  strncpy(student-&gt;name, "Bill", 4);
+  student-&gt;age = 18;
+  student-&gt;gpa = 3.3;
+
+  student++;
+  strncpy(student-&gt;name, "Carol", 5);
+  student-&gt;age = 22;
+  student-&gt;gpa = 3.6;
+
+  free(data);
+  // draw the stack and heap here
+  return 0;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_memory">Memory</h3>
+<div class="paragraph">
+<p>1) Short answers</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What is the memory hierarchy?</p>
+</li>
+<li>
+<p>What are some examples of primary storage?</p>
+</li>
+<li>
+<p>What are some examples of secondary storage?</p>
+</li>
+<li>
+<p>What is locality and what impact does it have on performance?</p>
+</li>
+<li>
+<p>What is sbrk()? Why do we use functions such as malloc and free, rather than call sbrk() directly from our programs?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>2) In the following code, which variables have temporal locality? spatial locality?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int i, size = 0;
+
+    // declare array of 10 ints
+    int my_arr[10];
+
+    // set the value of each array element
+    for (i = 0; i &lt; 10; i++) {
+        my_arr[i] = i;
+        size++;
+    }
+
+    // set value at position 3 to 100
+    my_arr[3] = 100;
+
+    // print the number of array elements
+    printf("array of %d items:\n", size);
+
+    // print each element of the array
+    for (i = 0; i &lt; 10; i++) {
+        printf("%d\n", my_arr[i]);
+    }
+
+    return 0;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>3) Is the following program guaranteed to have good spatial locality? Why or why not?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void init_matrix(int** m, int rows, int cols) {
+  int i, j;
+  for (i = 0; i &lt; rows; i++) {  // for each row i
+    for (j = 0; j &lt; cols; j++) { // iterate over each column in row i
+        m[i][j] = 0;
+    }
+  }
+}
+
+int main() {
+  int nrows = 50;
+  int ncols = 100;
+
+  int** matrix = malloc(sizeof(int*) * nrows);
+  for (int i = 0; i &lt; nrows; i++) {
+    matrix[i] = malloc(sizeof(int) * ncols);
+  }
+
+  init_matrix(matrix, nrows, ncols);
+
+  for (int i = 0; i &lt; nrows; i++) {
+    free(matrix[i]);
+  }
+  free(matrix);
+  matrix = NULL;
+  return 0;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_os_processes">OS, Processes</h3>
+<div class="paragraph">
+<p>1) Short answer</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What is the operating system?</p>
+</li>
+<li>
+<p>What is the BIOS or UEFI for?</p>
+</li>
+<li>
+<p>What is virtual address space (VAS)? Why is it useful?</p>
+</li>
+<li>
+<p>What is a process?</p>
+</li>
+<li>
+<p>What is the difference between an interrupt and a trap?</p>
+</li>
+<li>
+<p>Why do we need interrupts and traps?</p>
+</li>
+<li>
+<p>Why do we need special mechanisms, such as pipes or sockets, to communicate between processes?</p>
+</li>
+<li>
+<p>How can you kill a process using <code>ps</code> ?</p>
+</li>
+<li>
+<p>What states can a process be in?</p>
+</li>
+<li>
+<p>What is a zombie process?</p>
+</li>
+<li>
+<p>Why might we want to register a signal handler for the SIGKILL or SIGSEGV signal?</p>
+</li>
+<li>
+<p>When does the OS send the SIGSEGV signal?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>2) The following program creates a zombie process. Why?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>void main() {
+  if (fork() == 0) { /*child */
+    printf("Child, PID = %d\n", getpid());
+    exit(0);
+  } else { /*parent */
+    printf("Parent, PID = %d\n", getpid());
+    while(1) {
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>3) Draw the process hierarchy created by executing the following program. For each process in the hierarchy, list its output (e.g. what does each process print)?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>int main() {
+  pid_t ret;
+
+  printf("A\n");
+
+  ret = fork();
+  if(ret == 0) {
+    printf("B\n");
+
+    ret = fork();
+    if(ret == 0) {
+      printf("C\n");
+    }
+    printf("D\n");
+  } else {
+    printf("E\n");
+
+    ret = fork();
+    printf("F\n");
+  }
+
+  printf("G\n");
+  return 0;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>4) What type of event does SIGINT represent? Write a program that registers a signal handler for SIGINT?</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2023-01-18 09:36:12 -0500
+</div>
+</div>
+</body>
+</html>

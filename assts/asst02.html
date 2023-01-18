@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.17">
+<title>Assignment 2: If you malloc something, set it free</title>
+<link rel="stylesheet" href="../style/cs21.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_assignment_2_if_you_malloc_something_set_it_free">Assignment 2: If you malloc something, set it free</a></li>
+<li><a href="#_update_your_repository">1. Update your repository</a></li>
+<li><a href="#_cant_get_a_word_in_entwise">2. Can&#8217;t get a word in entwise</a></li>
+<li><a href="#_dynamic_restaurants">3. Dynamic restaurants</a></li>
+<li><a href="#_2048">4. 2048</a></li>
+<li><a href="#_submit_your_work">5. Submit your Work</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_assignment_2_if_you_malloc_something_set_it_free">Assignment 2: If you malloc something, set it free</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Due Thursday, September 22, before midnight</strong></p>
+</div>
+<div class="paragraph">
+<p>The goals for this assignment are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Work with pointers</p>
+</li>
+<li>
+<p>Work with malloc/free</p>
+</li>
+<li>
+<p>Work with arrays</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_update_your_repository">1. Update your repository</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
+</div>
+<div class="paragraph">
+<p>Using the command line</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open terminal and change your current directory to your assignment repository.</p>
+</li>
+<li>
+<p>Run the command <code>git fetch upstream</code></p>
+</li>
+<li>
+<p>Run the command <code>git merge upstream/main</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Your repository should now contain a new folder named <code>A02</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cant_get_a_word_in_entwise">2. Can&#8217;t get a word in entwise</h2>
+<div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre>"We must not be hasty."
+-- Treebeard</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <a href="https://lotr.fandom.com/wiki/Ents">Ents</a> in Lord of the Rings were a noble
+race of tree herders, whose language was "long and sonorous".
+Ents live a very long time and so speak very&#8230;&#8203;carefully&#8230;&#8203;and&#8230;&#8203;.very&#8230;&#8203;s.l.o.w.l.y.</p>
+</div>
+<div class="paragraph">
+<p>Write a program ,<code>slow.c</code>, that turns a phrase into ent-speech. Your program
+should ask for the pause length and a phrase to change. Your program should
+output an ent-phrase. Ent-phrases contain '.' between each letter in the input.</p>
+</div>
+<div class="paragraph">
+<p>Two examples of the running program are shown below. User input is shown in <strong>bold</strong>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make slow</strong>
+gcc -g -Wall -Wvla -Werror slow.c -o slow
+$ <strong>./slow</strong>
+Pause length: <strong>3</strong>
+Text: <strong>Surprise!</strong>
+S...u...r...p...r...i...s...e...!...
+
+$ <strong>./slow</strong>
+Pause length: <strong>5</strong>
+Text: <strong>Hmmm?</strong>
+H.....m.....m.....m.....?.....</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements and Hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You can assume that the user will enter a string that fits into a 32 character buffer, e.g. <code>char buff[32];</code></p>
+</li>
+<li>
+<p>Watch out that any string you create ends with a terminating null character, e.g. <code>'\0'</code></p>
+</li>
+<li>
+<p>Use malloc/free to allocate a string that has enough space to store your "slow" speech!</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dynamic_restaurants">3. Dynamic restaurants</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Implement a program, <code>dynamic_restaurants.c</code>, that allows users to add restaurants to
+our restaurant directory.
+Unlike last week&#8217;s restaurants, your program only needs the following features:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The ability to create an array of new retaurants (use malloc/free)</p>
+</li>
+<li>
+<p>The ability to add a new restaurant to the array of restaurants</p>
+</li>
+<li>
+<p>The ability to print out the current list of restaurants</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make dynamic_restaurants</strong>
+gcc -g -Wall -Wvla -Werror dynamic_restaurants.c -o dynamic_restaurants
+$ <strong>./dynamic_restaurants</strong>
+Enter a number of restaurants: <strong>3</strong>
+Enter a name: <strong>Sushi Atsumi</strong>
+Open time: <strong>11</strong>
+Close time: <strong>23</strong>
+Stars: <strong>3.5</strong>
+Enter a name: <strong>The Thirsty Horse</strong>
+Open time: <strong>17</strong>
+Close time: <strong>2</strong>
+Stars: <strong>4.5</strong>
+Enter a name: <strong>Magic Bean Coffee</strong>
+Open time: <strong>6</strong>
+Close time: <strong>15</strong>
+Stars: <strong>4.1</strong>
+
+Welcome to Dynamic Donna's Restaurant Directory.
+
+0) Sushi Atsumi         open: 11:00     close: 23:00    stars: 3.5
+1) The Thirsty Horse    open: 17:00     close: 02:00    stars: 4.5
+2) Magic Bean Coffee    open: 06:00     close: 15:00    stars: 4.1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements and Hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Your program must use malloc/free to allocate the array of restaurants.</p>
+</li>
+<li>
+<p>Your program should print the restaurants in an attractive table, although the formatting does not need to match the sample output exactly.</p>
+</li>
+<li>
+<p>You can assume that all restaurant names fit into an 32 character buffer.</p>
+</li>
+<li>
+<p>Feel free to re-use code from A01 (such as your printed table)!</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Because the restaurant names can have spaces in them, using scanf requires additional syntax.
+Instead of <code>scanf(" %d", &amp;val);</code>, use <code>scanf(" %d%*c", &amp;val);</code>. The trailing <code>%*c</code> tells scanf
+to read and ignore the newline character at the end of the line. Furthermore, to read the name,
+call <code>scanf(" %[^\n]%*c", name);</code> instead of <code>scanf(" %s", name);</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2048">4. 2048</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Implement a program, <code>2048.c</code>, that analyzes a board from the game 2048.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://play2048.co/">2048</a> is a puzzle game created by
+Gabriele Cirulli. 2048 consists of a 4x4 grid that contains powers of two.
+Each turn, the player can shift all the values in the grid either up, down, left,
+or right. During shifting, if two matching
+values collide, they combine into a single value that is the sum of them both.
+Values can only combine once in a single turn. Values cannot shift past the
+extents of the grid.</p>
+</div>
+<div class="paragraph">
+<p>For example, Suppose the current state of the board is as follows (zeroes correspond to
+empty spaces)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>2 0 0 2
+4 16 8 2
+2 64 32 4
+1024 1024 64 0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we shift the values left, we will get the following board configuration</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>4 0 0 0
+4 16 8 2
+2 64 32 4
+2048 64 0 0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that values shift over empty spaces!</p>
+</div>
+<div class="paragraph">
+<p><strong>Input</strong></p>
+</div>
+<div class="paragraph">
+<p>The input is a 4x4 matrix representing a valid state of a 2048 puzzle.
+Input values will always be one of {0, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024}.
+Integer 0 means an empty space.</p>
+</div>
+<div class="paragraph">
+<p><strong>Output</strong></p>
+</div>
+<div class="paragraph">
+<p>Output the largest value that can result from a shift in any direction.
+If no values can be combined in a shift, then your program should output the largest value on the board.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make 2048</strong>
+gcc -g -Wall -Wvla -Werror 2048.c -o 2048
+
+$ <strong>cat input1.txt</strong>
+2 0 0 2
+4 16 8 2
+2 64 32 4
+1024 1024 64 0
+
+$ <strong>./2048 < input1.txt</strong>
+The largest value is 2048.
+
+$ <strong>cat input2.txt</strong>
+2 0 0 2
+4 16 8 2
+2 64 32 4
+1024 64 1024 0
+
+$ <strong>./2048 < input2.txt</strong>
+The largest value is 128.
+
+$ <strong>cat input3.txt</strong>
+2 0 0 2
+4 0 0 0
+2 0 32 4
+0 0 64 0
+
+$ <strong>./2048 < input3.txt</strong>
+The largest value is 4.
+
+$ <strong>cat input4.txt</strong>
+2 0 0 0
+0 0 8 0
+0 0 0 0
+0 0 0 2
+
+$ <strong>./2048 < input4.txt</strong>
+The largest value is 8.
+
+$ <strong>cat input5.txt</strong>
+2 2 4 8
+4 0 4 4
+16 16 16 16
+32 16 16 32
+
+$ <strong>./2048 < input5.txt</strong>
+The largest value is 32.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements and Hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use <code>scanf(" %d", &amp;val);</code> to load the input values from stdin</p>
+</li>
+<li>
+<p>Create a static 4x4 matrix to hold the values. You do not need to use malloc/free.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_submit_your_work">5. Submit your Work</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Push you work to github to submit your work.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ cd A02
+$ git status
+$ git add *.c
+$ git status
+$ git commit -m "assignment 2 complete"
+$ git status
+$ git push
+$ git status</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2023-01-18 09:36:12 -0500
+</div>
+</div>
+</body>
+</html>

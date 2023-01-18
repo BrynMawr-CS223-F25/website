@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.17">
+<title>Study Guide 3</title>
+<link rel="stylesheet" href="style/cs21.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_study_guide_3">Study Guide 3</a></li>
+<li><a href="#_practice_questions">Practice questions</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_study_guide_3">Study Guide 3</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Code Jams are open book. 40 minutes in lab.</p>
+</div>
+<div class="paragraph">
+<p>Topics:</p>
+</div>
+<div class="paragraph">
+<p>Everything from <a href="studyguide2.html">Study Guide 2</a>, plus</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Data type formats: signed and unsigned integers, float, double</p>
+</li>
+<li>
+<p>Bitwise operators</p>
+</li>
+<li>
+<p>Binary arithmetic</p>
+</li>
+<li>
+<p>Memory layouts of arrays and structs, byte alignment</p>
+</li>
+<li>
+<p>Reading and writing binary files</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Write C programs to check your answers. Or you can ask a TA or instructor
+to give feedback on your responses.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions">Practice questions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>1) Convert the following binary numbers to hexadecimal and decimal. Try without a calculator (but use a calculator to check your results)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>0110 1010</p>
+</li>
+<li>
+<p>1110 0011</p>
+</li>
+<li>
+<p>0110 1110</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>2) Convert the following hexadecimal numbers to binary and decimal. Try without a calculator (but use a calculator to check your results)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>0xF5</p>
+</li>
+<li>
+<p>0x03</p>
+</li>
+<li>
+<p>0x2D</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>3) Convert the following decimal numbers to hexadecimal and binary. Try without a calculator (but use a calculator to check your results)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>101</p>
+</li>
+<li>
+<p>54</p>
+</li>
+<li>
+<p>25</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>4) Compute the results of the following decimal expressions using 4-bit unsigned integers. Indicate whether there is overflow. Express your final answer in hexadecimal. Show your work.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Expression</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Result</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3 &lt;&lt; 8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 &amp; 7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 + 7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9 + 7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11-9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>5) Convert the following hexadecimal number to a floating-point number: <code>0x 3f c0 00 00</code></p>
+</div>
+<div class="paragraph">
+<p>6) Compute the results of the following decimal expressions using 4-bit signed integers. Indicate whether there is overflow. Express your final answer in hexadecimal. Show your answer.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Expression</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Result</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-6 &gt;&gt; 3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 ^ 7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 + 7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5 - 7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-4-1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>7) Consider the following struct.
+Draw the contents and layout of a variable of this struct type, assuming the variable is placed in memory starting at address 0xfffffe40.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>struct foo {
+    float x;
+    unsigned char c[3];
+    struct foo* v;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>8) Sheldon uses the following program to write an unsigned integer to a file in binary format.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+  FILE* fp = fopen("test.bin", "wb");
+
+  const char* message = "a-ok";
+  fwrite(message, sizeof(unsigned char), 5, fp);
+
+  unsigned int v = 7;
+  fwrite(&amp;v, sizeof(unsigned int), 1, fp);
+
+  fclose(fp);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When they inspect the file using hexedit, they see the following result. Does it make sense? Why or why not?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>00000000   61 2D 6F 6B  00 07 00 00  00      a-ok.....
+00000018</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>8) Ava implemented the following program to keep track of her finances. However, it&#8217;s not working properly. What is going on and how can she fix it?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#include &lt;stdio.h&gt;
+
+int main() {
+  unsigned int balance = 0;
+
+  FILE* infile = fopen("finances.txt", "r");
+  fscanf(infile, " %u", &amp;balance);
+  fclose(infile);
+
+  printf("Your balance: $%u\n", balance);
+  printf("What would you like to do? (d = deposit,w = withdraw)\n");
+  char choice = fgetc(stdin);
+  if (choice != 'd' &amp;&amp; choice != 'w') {
+    printf("Invalid choice! Quitting....\n");
+    return 1;
+  }
+
+  int amount = 0;
+  printf("Enter an amount: ");
+  scanf(" %d", &amp;amount);
+  if (amount &lt; 0) {
+    printf("Invalid amount! Quitting...\n");
+    return 1;
+  }
+
+  if (choice == 'd') {
+    balance += amount;
+  } else if (choice == 'w') {
+    balance -= amount;
+  }
+
+  FILE* outfile = fopen("finances.txt", "w");
+  fprintf(outfile, "%u", balance);
+  fclose(outfile);
+
+  return 0;
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./finance</strong>
+Your balance: $50
+What would you like to do? (d = deposit,w = withdraw)
+<strong>d</strong>
+Enter an amount: <strong>5</strong>
+$ <strong>./finance</strong>
+Your balance: $55
+What would you like to do? (d = deposit,w = withdraw)
+<strong>w</strong>
+Enter an amount: <strong>40</strong>
+$ <strong>./finance</strong>
+Your balance: $15
+What would you like to do? (d = deposit,w = withdraw)
+<strong>w</strong>
+Enter an amount: <strong>20</strong>
+$ <strong>./finance</strong>
+Your balance: $4294967291
+What would you like to do? (d = deposit,w = withdraw)
+^C</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>9) Write a program, <code>lswizzle.c</code> that shifts all the bits in an unsigned integer to the left, wrapping the most significant bit into the least significant bit. For example, if the integer has binary representation <code>0b 1010 0110 0000 0000</code>, the result should be <code>0b 0100 1100 000 0001</code>.</p>
+</div>
+<div class="paragraph">
+<p>10) Write a program, <code>odd.c</code> that uses xor to identify the single element that appears an odd number of times in the following list: [4, 6, 8, 8, 6, 2, 3, 4, 3].</p>
+</div>
+<div class="paragraph">
+<p>11) Write a program, <code>flag.c</code>, that allows the user to set or unset a specific bit in an unsigned integer.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./flag</strong>
+usage: flag <number> <bit place> <bit value>
+$ <strong>./flag 101 4 1</strong>
+Your original number: 0x65 (101)
+Your new number: 0x75 (117)
+$ <strong>./flag 101 3 1</strong>
+Your original number: 0x65 (101)
+Your new number: 0x6d (109)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2023-01-18 09:36:12 -0500
+</div>
+</div>
+</body>
+</html>

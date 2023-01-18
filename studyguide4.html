@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.17">
+<title>Study Guide 4</title>
+<link rel="stylesheet" href="style/cs21.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<h2 id="_study_guide_4" class="discrete">Study Guide 4</h2>
+<div class="paragraph">
+<p>Code Jams are open book. 40 minutes in lab.</p>
+</div>
+<div class="paragraph">
+<p>Topics:</p>
+</div>
+<div class="paragraph">
+<p>Everything from <a href="studyguide3.html">Study Guide 3</a>, plus</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Generating assembly from C code</p>
+</li>
+<li>
+<p>Assembly basics: registers, instructions, operands, memory forms</p>
+</li>
+<li>
+<p>Using GDB to step through assembly code and inspect registers</p>
+</li>
+</ul>
+</div>
+<h2 id="_short_answers" class="discrete">Short answers</h2>
+<div class="paragraph">
+<p>Can you answer the following?</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>What does the <code>lea</code> instruction do?</p>
+</li>
+<li>
+<p>How are parameters passed to functions?</p>
+</li>
+<li>
+<p>How is machine code generated from source code? What is the relationship between machine code and assembly?</p>
+</li>
+<li>
+<p>What is a register?</p>
+</li>
+<li>
+<p>What do the registers %rsp and %rbp represent? How do they relate to functions?</p>
+</li>
+<li>
+<p>What the do the registers %rax and %eax typically represent? When do we use one versus the other?</p>
+</li>
+<li>
+<p>What two steps occur when the CPU executes the instruction <code>push %rbp</code>?</p>
+</li>
+<li>
+<p>What two steps occur when the CPU executes the instruction <code>pop %rbp</code>?</p>
+</li>
+<li>
+<p>What does <code>callq</code> do?</p>
+</li>
+<li>
+<p>What does <code>retq</code> do?</p>
+</li>
+</ol>
+</div>
+<div class="pagebreak"> </div>
+<h2 id="_practice_questions" class="discrete">Practice questions</h2>
+<div class="paragraph">
+<p>1) Consider the following programs. Use <code>gcc -S div.c -o div.S</code> to generate the assembly code for this program.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#include &lt;stdio.h&gt;
+int main() {
+  int a = 40;
+  int value = a / 2;
+  printf("values = %d", value);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>2) Try modifying the assembly code from Q1 to divide by 4 instead of 2.
+Edit the file <code>div.S</code> and use the command <code>gcc div.S</code> to build <code>a.out</code>.</p>
+</div>
+<div class="paragraph">
+<p>&#160;<br>
+&#160;<br>
+&#160;<br></p>
+</div>
+<div class="pagebreak"> </div>
+<div class="paragraph">
+<p>3) Fill in the following table</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Suppose memory has the following values:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x304</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0xCA</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x308</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0xF0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x30C</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x03</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x310</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x1E</p></td>
+</tr>
+</tbody>
+</table></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>And suppose our registers have the following values to start:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Register</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%eax</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x304</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%edx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x8</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%rbp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%rsp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x300</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%esi</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x4</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%edi</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%rip</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x0000555555555149</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 42.8571%;">
+<col style="width: 28.5715%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operand</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Form</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Translation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%eax</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(%eax)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(%rsp,%esi)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(%rsp,%edi,%edx)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x300(,%esi,2)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$0x310</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x310</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="pagebreak"> </div>
+<h2 id="_tracing_assembly" class="discrete">Tracing assembly</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Dump of assembler code for function main:
+=&gt; 0x0000555555555149 &lt;+0&gt;:     endbr64
+   0x000055555555514d &lt;+4&gt;:     push   %rbp
+   0x000055555555514e &lt;+5&gt;:     mov    %rsp,%rbp
+   0x0000555555555151 &lt;+8&gt;:     sub    $0x10,%rsp
+   0x0000555555555155 &lt;+12&gt;:    movl   $0xfffffff7,-0x8(%rbp)
+   0x000055555555515c &lt;+19&gt;:    mov    -0x8(%rbp),%eax
+   0x000055555555515f &lt;+22&gt;:    shl    $0x2,%eax
+   0x0000555555555162 &lt;+25&gt;:    mov    %eax,-0x4(%rbp)
+   0x0000555555555165 &lt;+28&gt;:    mov    -0x4(%rbp),%edx
+   0x0000555555555168 &lt;+31&gt;:    mov    -0x8(%rbp),%eax
+   0x000055555555516b &lt;+34&gt;:    mov    %eax,%esi
+   0x000055555555516d &lt;+36&gt;:    lea    0xe90(%rip),%rdi        # 0x555555556004
+   0x0000555555555174 &lt;+43&gt;:    mov    $0x0,%eax
+   0x0000555555555179 &lt;+48&gt;:    callq  0x555555555050 &lt;printf@plt&gt;
+   0x000055555555517e &lt;+53&gt;:    mov    $0x0,%eax
+   0x0000555555555183 &lt;+58&gt;:    leaveq
+   0x0000555555555184 &lt;+59&gt;:    retq</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Suppose memory has the following values:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M[0x555555556004]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"%d %d"</p></td>
+</tr>
+</tbody>
+</table></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>And suppose our registers have the following values to start:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Register</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%eax</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0xd0d</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%edx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0xe148</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%rbp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%rsp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x048</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%esi</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0xe138</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%edi</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%rip</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x0000555555555149</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>1) What is the value 0x10 as a base 10 integer?
+&#160;<br>
+&#160;<br>
+&#160;<br>
+2) What is the value 0xfffffff7 as a base 10 <em>signed</em> integer (two&#8217;s complement)?
+&#160;<br>
+&#160;<br>
+&#160;<br>
+3) Draw the contents of the registers and stack after executing the instruction <code>sub $0x10,%rsp</code> (   0x0000555555555151)</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Register</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%eax</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%edx</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%rbp</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%rsp</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%esi</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%edi</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%rip</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>"Stack top"</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stack value</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x048</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>4) What is the translation of the memory form <code>-0x8(%rbp)</code>?
+&#160;<br>
+&#160;<br>
+&#160;<br></p>
+</div>
+<div class="paragraph">
+<p>5) What is the <code>shl</code> instruction?
+&#160;<br>
+&#160;<br>
+&#160;<br></p>
+</div>
+<div class="paragraph">
+<p>6) What are the contents of %eax after executing instruction 0x000055555555515c?
+&#160;<br>
+&#160;<br>
+&#160;<br></p>
+</div>
+<div class="paragraph">
+<p>7) What are the contents of %eax after executing instruction 0x000055555555515f?
+&#160;<br>
+&#160;<br>
+&#160;<br></p>
+</div>
+<div class="paragraph">
+<p>8) What are the contents of %rsi after executing instruction 0x000055555555516b?
+&#160;<br>
+&#160;<br>
+&#160;<br></p>
+</div>
+<div class="paragraph">
+<p>9) What are the contents of %rdi after executing instruction 0x000055555555516d?
+&#160;<br>
+&#160;<br>
+&#160;<br></p>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2023-01-18 09:36:12 -0500
+</div>
+</div>
+</body>
+</html>
