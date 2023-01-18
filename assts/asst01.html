@@ -200,8 +200,20 @@ and keeps track of the number of correct responses.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>$ make mathgame
+gcc -g mathgame.c -o mathgame
 $ ./mathgame
-TBD</code></pre>
+Welcome to Math Game!
+How many rounds do you want to play? 3
+
+2 + 8 = ? 10
+Correct!
+
+1 + 8 = ? 5
+Incorrect :(
+
+6 + 8 = ? 14
+Correct!
+You answered 2/3 correctly.</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -222,6 +234,9 @@ TBD</code></pre>
 <p>Maintain the number of correct questions</p>
 </li>
 <li>
+<p>Generate random questions. Use rand() to generate random integers between 1 and 9.</p>
+</li>
+<li>
 <p>Print a welcome message</p>
 </li>
 <li>
@@ -235,10 +250,55 @@ TBD</code></pre>
 </li>
 </ul>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To check for valgrind errors, run your program like so. Look for the
+message "no leaks are possible". Make sure there are no errors reported. We will talk
+more about valgrind in week 2 and 3.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ valgrind ./mathgame
+==5184== Memcheck, a memory error detector
+==5184== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==5184== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==5184== Command: ./mathgame
+==5184==
+Welcome to Math Game!
+How many rounds do you want to play? 3
+
+2 + 8 = ? 10
+Correct!
+
+1 + 8 = ? 5
+Incorrect :(
+
+6 + 8 = ? 14
+Correct!
+You answered 2/3 correctly.
+==5184==
+==5184== HEAP SUMMARY:
+==5184==     in use at exit: 0 bytes in 0 blocks
+==5184==   total heap usage: 2 allocs, 2 frees, 2,048 bytes allocated
+==5184==
+==5184== All heap blocks were freed -- no leaks are possible
+==5184==
+==5184== For lists of detected and suppressed errors, rerun with: -s
+==5184== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)</code></pre>
+</div>
+</div>
 <h3 id="_submit_your_work_to_github" class="discrete">Submit your work to Github</h3>
 <div class="paragraph">
 <p>Add and check in your program using git and then push your changes to Github.
-Run the following command inside your <code>A00</code> directory.</p>
+Run the following command inside your <code>A01</code> directory.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -451,7 +511,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-18 11:09:27 -0500
+Last updated 2023-01-18 11:50:57 -0500
 </div>
 </div>
 </body>
