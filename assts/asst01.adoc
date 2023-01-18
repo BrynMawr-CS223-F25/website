@@ -194,9 +194,9 @@ Run the following command inside your `{ASST}` directory.
 
 [source]
 ----
-$ cd A00
+$ cd {ASST}
 $ git add *.c
-$ git commit -m "assignment 0 exercise"
+$ git commit -m "Descriptive message"
 $ git push
 ----
 
