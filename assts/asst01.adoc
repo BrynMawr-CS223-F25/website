@@ -280,7 +280,7 @@ For full credit, your C programs must be feature-complete, robust (e.g. run with
 have good style.
 
 * Some credit lost for missing features or bugs, depending on severity of error
-* -12.5% for style errors. See the link:codingstyle.html[class coding style] here.
+* -12.5% for style errors. See the link:codingstandard.html[class coding style] here.
 * -50% for memory errors
 * -100% for failure to checkin work to Github
 * -100% for failure to compile on linux using make
