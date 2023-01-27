@@ -16,10 +16,11 @@
 <ul class="sectlevel1">
 <li><a href="#_assignment_2_if_you_malloc_something_set_it_free">Assignment 2: If you malloc something, set it free</a></li>
 <li><a href="#_update_your_repository">1. Update your repository</a></li>
-<li><a href="#_cant_get_a_word_in_entwise">2. Can&#8217;t get a word in entwise</a></li>
-<li><a href="#_dynamic_restaurants">3. Dynamic restaurants</a></li>
-<li><a href="#_2048">4. 2048</a></li>
+<li><a href="#_exclaim">2. Exclaim!</a></li>
+<li><a href="#_acronym">3. Acronym</a></li>
+<li><a href="#_songs">4. Songs</a></li>
 <li><a href="#_submit_your_work">5. Submit your Work</a></li>
+<li><a href="#_grading_rubric">6. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
@@ -28,7 +29,7 @@
 <h2 id="_assignment_2_if_you_malloc_something_set_it_free">Assignment 2: If you malloc something, set it free</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Thursday, September 22, before midnight</strong></p>
+<p><strong>Due Wednesday, February 1st, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -36,10 +37,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Work with pointers</p>
+<p>Work with strings</p>
 </li>
 <li>
-<p>Work with malloc/free</p>
+<p>Work with structs</p>
 </li>
 <li>
 <p>Work with arrays</p>
@@ -79,40 +80,31 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cant_get_a_word_in_entwise">2. Can&#8217;t get a word in entwise</h2>
+<h2 id="_exclaim">2. Exclaim!</h2>
 <div class="sectionbody">
-<div class="literalblock">
-<div class="content">
-<pre>"We must not be hasty."
--- Treebeard</pre>
-</div>
-</div>
 <div class="paragraph">
-<p>The <a href="https://lotr.fandom.com/wiki/Ents">Ents</a> in Lord of the Rings were a noble
-race of tree herders, whose language was "long and sonorous".
-Ents live a very long time and so speak very&#8230;&#8203;carefully&#8230;&#8203;and&#8230;&#8203;.very&#8230;&#8203;s.l.o.w.l.y.</p>
-</div>
-<div class="paragraph">
-<p>Write a program ,<code>slow.c</code>, that turns a phrase into ent-speech. Your program
-should ask for the pause length and a phrase to change. Your program should
-output an ent-phrase. Ent-phrases contain '.' between each letter in the input.</p>
+<p>Sometimes life can be very frustrating and we just need to shout.
+Write a program, <code>exclaim.c</code> that turns a word into an exclaimation.
+Your program should loop through each character. If the character
+is a lowercase letter, replace it with a randomly chosen character
+from the set <code>{'@', '!', '#', '*'}</code>.</p>
 </div>
 <div class="paragraph">
 <p>Two examples of the running program are shown below. User input is shown in <strong>bold</strong>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make slow</strong>
-gcc -g -Wall -Wvla -Werror slow.c -o slow
-$ <strong>./slow</strong>
-Pause length: <strong>3</strong>
-Text: <strong>Surprise!</strong>
-S...u...r...p...r...i...s...e...!...
-
-$ <strong>./slow</strong>
-Pause length: <strong>5</strong>
-Text: <strong>Hmmm?</strong>
-H.....m.....m.....m.....?.....</code></pre>
+<pre class="highlight"><code>$ <strong>make exclaim</strong>
+gcc -g -Wall -Wvla -Werror exclaim.c -o exclaim
+$ <strong>./exclaim</strong>
+Enter a word: <strong>apple</strong>
+OMG! *#!*!
+$ <strong>./exclaim</strong>
+Enter a word: <strong>YOLO!</strong>
+OMG! YOLO!
+$ <strong>./exclaim</strong>
+Enter a word: <strong>Tada!</strong>
+OMG! T*#!!</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -121,63 +113,39 @@ H.....m.....m.....m.....?.....</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>You can assume that the user will enter a string that fits into a 32 character buffer, e.g. <code>char buff[32];</code></p>
+<p>You can assume that the user will enter a string that fits into a 32 character buffer, e.g. store the user&#8217;s input with a variable defined as <code>char buff[32];</code></p>
 </li>
 <li>
-<p>Watch out that any string you create ends with a terminating null character, e.g. <code>'\0'</code></p>
+<p>Use the fact that ascii characters correspond to integers to check for a lowercase letter. <a href="https://www.cs.cmu.edu/~pattis/15-1XX/common/handouts/ascii.html">ASCII Table</a></p>
 </li>
 <li>
-<p>Use malloc/free to allocate a string that has enough space to store your "slow" speech!</p>
+<p>Use <code>rand()</code> to choose a random character.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_dynamic_restaurants">3. Dynamic restaurants</h2>
+<h2 id="_acronym">3. Acronym</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implement a program, <code>dynamic_restaurants.c</code>, that allows users to add restaurants to
-our restaurant directory.
-Unlike last week&#8217;s restaurants, your program only needs the following features:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>The ability to create an array of new retaurants (use malloc/free)</p>
-</li>
-<li>
-<p>The ability to add a new restaurant to the array of restaurants</p>
-</li>
-<li>
-<p>The ability to print out the current list of restaurants</p>
-</li>
-</ol>
+<p>Write a program, <code>acronym.c</code>, that computes an acronym from a given phrase.
+Your program should create a string consisting of all capital letters from
+the given phrase.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make dynamic_restaurants</strong>
-gcc -g -Wall -Wvla -Werror dynamic_restaurants.c -o dynamic_restaurants
-$ <strong>./dynamic_restaurants</strong>
-Enter a number of restaurants: <strong>3</strong>
-Enter a name: <strong>Sushi Atsumi</strong>
-Open time: <strong>11</strong>
-Close time: <strong>23</strong>
-Stars: <strong>3.5</strong>
-Enter a name: <strong>The Thirsty Horse</strong>
-Open time: <strong>17</strong>
-Close time: <strong>2</strong>
-Stars: <strong>4.5</strong>
-Enter a name: <strong>Magic Bean Coffee</strong>
-Open time: <strong>6</strong>
-Close time: <strong>15</strong>
-Stars: <strong>4.1</strong>
-
-Welcome to Dynamic Donna's Restaurant Directory.
-
-0) Sushi Atsumi         open: 11:00     close: 23:00    stars: 3.5
-1) The Thirsty Horse    open: 17:00     close: 02:00    stars: 4.5
-2) Magic Bean Coffee    open: 06:00     close: 15:00    stars: 4.1</code></pre>
+<pre class="highlight"><code>$ <strong>make acroynm</strong>
+gcc -g -Wall -Wvla -Werror acronym.c -o acronym
+$ <strong>./acronym</strong>
+Enter a phrase: <strong>What Does The Fox Say?</strong>
+Your acronym is WDTFS
+$ <strong>./acronym</strong>
+Enter a phrase: <strong>The Truth Is Out There</strong>
+Your acronym is TTIOT
+$ <strong>./acronym</strong>
+Enter a phrase: <strong>You Only Live Once</strong>
+Your acronym is YOLO</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -186,16 +154,13 @@ Welcome to Dynamic Donna's Restaurant Directory.
 <div class="ulist">
 <ul>
 <li>
-<p>Your program must use malloc/free to allocate the array of restaurants.</p>
+<p>You do not need to handle the case where a capital letter occurs in the middle of a word.</p>
 </li>
 <li>
-<p>Your program should print the restaurants in an attractive table, although the formatting does not need to match the sample output exactly.</p>
+<p>Watch out that any string you create ends with a terminating null character, e.g. <code>'\0'</code></p>
 </li>
 <li>
-<p>You can assume that all restaurant names fit into an 32 character buffer.</p>
-</li>
-<li>
-<p>Feel free to re-use code from A01 (such as your printed table)!</p>
+<p>You can assume that all input fits within 1024 characters.</p>
 </li>
 </ul>
 </div>
@@ -206,10 +171,8 @@ Welcome to Dynamic Donna's Restaurant Directory.
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Because the restaurant names can have spaces in them, using scanf requires additional syntax.
-Instead of <code>scanf(" %d", &amp;val);</code>, use <code>scanf(" %d%*c", &amp;val);</code>. The trailing <code>%*c</code> tells scanf
-to read and ignore the newline character at the end of the line. Furthermore, to read the name,
-call <code>scanf(" %[^\n]%*c", name);</code> instead of <code>scanf(" %s", name);</code>.
+To read in a string containing phrases, use the following format string with scanf: <code>scanf("%[^\n]%*c", phrase);</code>
+The <code>%[^\n]</code> will read until the newline is reached. The <code>%*c</code> reads the newline and ignores it.
 </td>
 </tr>
 </table>
@@ -217,110 +180,84 @@ call <code>scanf(" %[^\n]%*c", name);</code> instead of <code>scanf(" %s", name)
 </div>
 </div>
 <div class="sect1">
-<h2 id="_2048">4. 2048</h2>
+<h2 id="_songs">4. Songs</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implement a program, <code>2048.c</code>, that analyzes a board from the game 2048.</p>
-</div>
-<div class="paragraph">
-<p><a href="https://play2048.co/">2048</a> is a puzzle game created by
-Gabriele Cirulli. 2048 consists of a 4x4 grid that contains powers of two.
-Each turn, the player can shift all the values in the grid either up, down, left,
-or right. During shifting, if two matching
-values collide, they combine into a single value that is the sum of them both.
-Values can only combine once in a single turn. Values cannot shift past the
-extents of the grid.</p>
-</div>
-<div class="paragraph">
-<p>For example, Suppose the current state of the board is as follows (zeroes correspond to
-empty spaces)</p>
+<p>Implement a program, <code>songs.c</code>, that fills an array with three or more songs and
+then allows the user to edit the data in the array.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>2 0 0 2
-4 16 8 2
-2 64 32 4
-1024 1024 64 0</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If we shift the values left, we will get the following board configuration</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>4 0 0 0
-4 16 8 2
-2 64 32 4
-2048 64 0 0</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Notice that values shift over empty spaces!</p>
-</div>
-<div class="paragraph">
-<p><strong>Input</strong></p>
-</div>
-<div class="paragraph">
-<p>The input is a 4x4 matrix representing a valid state of a 2048 puzzle.
-Input values will always be one of {0, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024}.
-Integer 0 means an empty space.</p>
-</div>
-<div class="paragraph">
-<p><strong>Output</strong></p>
-</div>
-<div class="paragraph">
-<p>Output the largest value that can result from a shift in any direction.
-If no values can be combined in a shift, then your program should output the largest value on the board.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make 2048</strong>
-gcc -g -Wall -Wvla -Werror 2048.c -o 2048
+<pre class="highlight"><code>$ <strong>make songs</strong>
+gcc -g -Wall -Wvla -Werror songs.c -o songs
+$ <strong>./songs</strong>
+Welcome to Steven Struct's Song List.
 
-$ <strong>cat input1.txt</strong>
-2 0 0 2
-4 16 8 2
-2 64 32 4
-1024 1024 64 0
+0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
+1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
+2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
 
-$ <strong>./2048 < input1.txt</strong>
-The largest value is 2048.
+=======================
 
-$ <strong>cat input2.txt</strong>
-2 0 0 2
-4 16 8 2
-2 64 32 4
-1024 64 1024 0
+Enter a song id to edit [0,1,2]: <strong>1</strong>
+Which attribute do you wish to edit? [artist, title, duration, danceability]: <strong>duration</strong>
+Enter a duration (minutes): <strong>2</strong>
+Enter a duration (seconds): <strong>40</strong>
 
-$ <strong>./2048 < input2.txt</strong>
-The largest value is 128.
+0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
+1) As it was            artist: Harry Styles            duration: 2:40  danceability: 0.70
+2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
 
-$ <strong>cat input3.txt</strong>
-2 0 0 2
-4 0 0 0
-2 0 32 4
-0 0 64 0
+=======================
+$ <strong>./songs</strong>
+Welcome to Steven Struct's Song List.
 
-$ <strong>./2048 < input3.txt</strong>
-The largest value is 4.
+0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
+1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
+2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
 
-$ <strong>cat input4.txt</strong>
-2 0 0 0
-0 0 8 0
-0 0 0 0
-0 0 0 2
+=======================
 
-$ <strong>./2048 < input4.txt</strong>
-The largest value is 8.
+Enter a song id to edit [0,1,2]: <strong>2</strong>
+Which attribute do you wish to edit? [artist, title, duration, danceability]: <strong>artist</strong>
+Enter a artist: <strong>The Who</strong>
 
-$ <strong>cat input5.txt</strong>
-2 2 4 8
-4 0 4 4
-16 16 16 16
-32 16 16 32
+0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
+1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
+2) Wish you were here   artist: The Who                 duration: 5:34  danceability: 0.30
 
-$ <strong>./2048 < input5.txt</strong>
-The largest value is 32.</code></pre>
+=======================
+
+$ <strong>./songs</strong>
+Welcome to Steven Struct's Song List.
+
+0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
+1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
+2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
+
+=======================
+
+Enter a song id to edit [0,1,2]: <strong>5</strong>
+Invalid choice!
+
+$ <strong>./songs</strong>
+Welcome to Steven Struct's Song List.
+
+0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
+1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
+2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
+
+=======================
+
+Enter a song id to edit [0,1,2]: <strong>0</strong>
+Which attribute do you wish to edit? [artist, title, duration, danceability]: <strong>danceability</strong>
+Enter danceability: <strong>0.9</strong>
+
+0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.90
+1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
+2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
+
+=======================</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -329,12 +266,51 @@ The largest value is 32.</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Use <code>scanf(" %d", &amp;val);</code> to load the input values from stdin</p>
+<p>Your program should define a <code>struct song</code> to hold the song information. Duration should be stored in integers, danceability should be a float, and artist and title should be strings.</p>
 </li>
 <li>
-<p>Create a static 4x4 matrix to hold the values. You do not need to use malloc/free.</p>
+<p>Your program should check for a valid song id and print an error message id the user enters an invalid id.</p>
+</li>
+<li>
+<p>Your program should initialize at least 3 songs and store them in an array.</p>
+</li>
+<li>
+<p>Your program should loop through the array of songs to print them in a table. Implementing this feature in a function is a good idea.</p>
+</li>
+<li>
+<p>Your program should support spaces in the song names and titles.</p>
+</li>
+<li>
+<p>Use <code>strcmp</code> to test which attribute the user wants to update.</p>
+</li>
+<li>
+<p>Use <code>strcpy</code> to update the artist or title in the array.</p>
+</li>
+<li>
+<p>Your program should print the songs in an attractive table, although the formatting does not need to match the sample output exactly.</p>
+</li>
+<li>
+<p>You can assume that all song artists and titles fit into a 32 character buffer.</p>
+</li>
+<li>
+<p>Use <code>%-20s</code> to format left-justified strings with 20 spaces of padding.</p>
 </li>
 </ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Because the song artists and titles can have spaces in them, using scanf requires additional syntax.
+Instead of <code>scanf(" %d", &amp;val);</code>, use <code>scanf(" %d%*c", &amp;val);</code>. The trailing <code>%*c</code> tells scanf
+to read and ignore the newline character at the end of the line. Furthermore, to read the name,
+call <code>scanf(" %[^\n]%*c", artist);</code> instead of <code>scanf(" %s", artist);</code>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -342,26 +318,75 @@ The largest value is 32.</code></pre>
 <h2 id="_submit_your_work">5. Submit your Work</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Push you work to github to submit your work.</p>
+<p>Push you work to Github to submit your work.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>$ cd A02
-$ git status
 $ git add *.c
-$ git status
 $ git commit -m "assignment 2 complete"
-$ git status
-$ git push
-$ git status</code></pre>
+$ git push</code></pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_grading_rubric">6. Grading Rubric</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Assignment rubrics</strong></p>
+</div>
+<div class="paragraph">
+<p>Grades are out of 4 points.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>(1 point) exclaim</p>
+</li>
+<li>
+<p>(1 point) acronym</p>
+</li>
+<li>
+<p>(2 points) songs</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Code rubrics</strong></p>
+</div>
+<div class="paragraph">
+<p>For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and
+have good style.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Some credit lost for missing features or bugs, depending on severity of error</p>
+</li>
+<li>
+<p>-12.5% for style errors. See the <a href="../codingstandard.html">class coding style</a> here.</p>
+</li>
+<li>
+<p>-50% for memory errors</p>
+</li>
+<li>
+<p>-100% for failure to checkin work to Github</p>
+</li>
+<li>
+<p>-100% for failure to compile on linux using make</p>
+</li>
+<li>
+<p>-100% for cheating (+ honor board hearing)</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-18 09:36:12 -0500
+Last updated 2023-01-27 12:57:57 -0500
 </div>
 </div>
 </body>

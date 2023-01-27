@@ -148,6 +148,8 @@ index is out of range), domains for the input (for example, are negative values 
 You should use the javadoc method comment style, which lists and comments all
 parameters and return values, shown below:
 
+[source]
+----
 /**
 * Returns random integer in the interval [x, y)
 * @param x The start of the interval
@@ -157,6 +159,7 @@ parameters and return values, shown below:
 int randRange(int x, int y) {
 ...
 }
+----
 
 == In-Line Comments
 

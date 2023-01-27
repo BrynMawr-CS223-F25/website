@@ -8,12 +8,12 @@ include::header.adoc[]
 
 = {title}
 
-**Due Thursday, September 22, before midnight**
+**Due Wednesday, February 1st, before midnight**
 
 The goals for this assignment are:
 
-* Work with pointers
-* Work with malloc/free
+* Work with strings
+* Work with structs
 * Work with arrays
 
 :sectnums:
@@ -32,204 +32,194 @@ Your repository should now contain a new folder named `{ASST}`.
 
 The `fetch` and `merge` commands update your repository with any changes from the original.
 
-= Can't get a word in entwise
+= Exclaim!
 
-    "We must not be hasty." 
-    -- Treebeard 
-
-The https://lotr.fandom.com/wiki/Ents[Ents] in Lord of the Rings were a noble 
-race of tree herders, whose language was "long and sonorous". 
-Ents live a very long time and so speak very...carefully...and....very...s.l.o.w.l.y. 
-
-Write a program ,`slow.c`, that turns a phrase into ent-speech. Your program 
-should ask for the pause length and a phrase to change. Your program should 
-output an ent-phrase. Ent-phrases contain '.' between each letter in the input. 
+Sometimes life can be very frustrating and we just need to shout. 
+Write a program, `exclaim.c` that turns a word into an exclaimation. 
+Your program should loop through each character. If the character 
+is a lowercase letter, replace it with a randomly chosen character 
+from the set `{'@', '!', '#', '*'}`.
 
 Two examples of the running program are shown below. User input is shown in *bold*.
 
 [source,subs="quotes"]
 ----
-$ **make slow**
-gcc -g -Wall -Wvla -Werror slow.c -o slow
-$ **./slow**
-Pause length: **3**
-Text: **Surprise!**
-S...u...r...p...r...i...s...e...!...
-
-$ **./slow**
-Pause length: **5**
-Text: **Hmmm?**
-H.....m.....m.....m.....?.....
+$ **make exclaim**
+gcc -g -Wall -Wvla -Werror exclaim.c -o exclaim
+$ **./exclaim**
+Enter a word: **apple**
+OMG! \*\#!*!
+$ **./exclaim**
+Enter a word: **YOLO!**
+OMG! YOLO!
+$ **./exclaim**
+Enter a word: **Tada!**
+OMG! T*#!!
 ----
 
 Requirements and Hints:
 
-* You can assume that the user will enter a string that fits into a 32 character buffer, e.g. `char buff[32];`
-* Watch out that any string you create ends with a terminating null character, e.g. `'\0'`
-* Use malloc/free to allocate a string that has enough space to store your "slow" speech!
+* You can assume that the user will enter a string that fits into a 32 character buffer, e.g. store the user's input with a variable defined as `char buff[32];`
+* Use the fact that ascii characters correspond to integers to check for a lowercase letter. link:https://www.cs.cmu.edu/~pattis/15-1XX/common/handouts/ascii.html[ASCII Table]
+* Use `rand()` to choose a random character.
 
-= Dynamic restaurants
+= Acronym 
 
-Implement a program, `dynamic_restaurants.c`, that allows users to add restaurants to 
-our restaurant directory. 
-Unlike last week's restaurants, your program only needs the following features: 
-
-. The ability to create an array of new retaurants (use malloc/free)
-. The ability to add a new restaurant to the array of restaurants
-. The ability to print out the current list of restaurants
+Write a program, `acronym.c`, that computes an acronym from a given phrase.
+Your program should create a string consisting of all capital letters from 
+the given phrase.
 
 [source,subs="quotes"]
 ----
-$ **make dynamic_restaurants**
-gcc -g -Wall -Wvla -Werror dynamic_restaurants.c -o dynamic_restaurants
-$ **./dynamic_restaurants**
-Enter a number of restaurants: **3**
-Enter a name: **Sushi Atsumi**
-Open time: **11**
-Close time: **23**
-Stars: **3.5**
-Enter a name: **The Thirsty Horse**
-Open time: **17**
-Close time: **2**
-Stars: **4.5**
-Enter a name: **Magic Bean Coffee**
-Open time: **6**
-Close time: **15**
-Stars: **4.1**
-
-Welcome to Dynamic Donna's Restaurant Directory.
-
-0) Sushi Atsumi         open: 11:00     close: 23:00    stars: 3.5
-1) The Thirsty Horse    open: 17:00     close: 02:00    stars: 4.5
-2) Magic Bean Coffee    open: 06:00     close: 15:00    stars: 4.1
+$ **make acroynm**
+gcc -g -Wall -Wvla -Werror acronym.c -o acronym
+$ **./acronym**
+Enter a phrase: **What Does The Fox Say?**
+Your acronym is WDTFS
+$ **./acronym**
+Enter a phrase: **The Truth Is Out There**
+Your acronym is TTIOT
+$ **./acronym**
+Enter a phrase: **You Only Live Once**
+Your acronym is YOLO
 ----
 
 Requirements and Hints:
 
-* Your program must use malloc/free to allocate the array of restaurants.
-* Your program should print the restaurants in an attractive table, although the formatting does not need to match the sample output exactly.
-* You can assume that all restaurant names fit into an 32 character buffer.
-* Feel free to re-use code from A01 (such as your printed table)!
+* You do not need to handle the case where a capital letter occurs in the middle of a word.
+* Watch out that any string you create ends with a terminating null character, e.g. `'\0'`
+* You can assume that all input fits within 1024 characters.
 
-NOTE: Because the restaurant names can have spaces in them, using scanf requires additional syntax. 
+NOTE: To read in a string containing phrases, use the following format string with scanf: `scanf("%[^\n]%*c", phrase);` 
+The `%[^\n]` will read until the newline is reached. The `%*c` reads the newline and ignores it.
+
+= Songs
+
+Implement a program, `songs.c`, that fills an array with three or more songs and 
+then allows the user to edit the data in the array. 
+
+[source,subs="quotes"]
+----
+$ **make songs**
+gcc -g -Wall -Wvla -Werror songs.c -o songs
+$ **./songs**
+Welcome to Steven Struct's Song List.
+
+0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
+1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
+2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
+
+=======================
+
+Enter a song id to edit [0,1,2]: **1**
+Which attribute do you wish to edit? [artist, title, duration, danceability]: **duration**
+Enter a duration (minutes): **2**
+Enter a duration (seconds): **40**
+
+0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
+1) As it was            artist: Harry Styles            duration: 2:40  danceability: 0.70
+2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
+
+=======================
+$ **./songs**
+Welcome to Steven Struct's Song List.
+
+0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
+1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
+2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
+
+=======================
+
+Enter a song id to edit [0,1,2]: **2**
+Which attribute do you wish to edit? [artist, title, duration, danceability]: **artist**
+Enter a artist: **The Who**
+
+0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
+1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
+2) Wish you were here   artist: The Who                 duration: 5:34  danceability: 0.30
+
+=======================
+
+$ **./songs**
+Welcome to Steven Struct's Song List.
+
+0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
+1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
+2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
+
+=======================
+
+Enter a song id to edit [0,1,2]: **5**
+Invalid choice!
+
+$ **./songs**
+Welcome to Steven Struct's Song List.
+
+0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
+1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
+2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
+
+=======================
+
+Enter a song id to edit [0,1,2]: **0**
+Which attribute do you wish to edit? [artist, title, duration, danceability]: **danceability**
+Enter danceability: **0.9**
+
+0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.90
+1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
+2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
+
+=======================
+----
+
+Requirements and Hints:
+
+* Your program should define a `struct song` to hold the song information. Duration should be stored in integers, danceability should be a float, and artist and title should be strings.
+* Your program should check for a valid song id and print an error message id the user enters an invalid id. 
+* Your program should initialize at least 3 songs and store them in an array.
+* Your program should loop through the array of songs to print them in a table. Implementing this feature in a function is a good idea.
+* Your program should support spaces in the song names and titles.
+* Use `strcmp` to test which attribute the user wants to update.
+* Use `strcpy` to update the artist or title in the array.
+* Your program should print the songs in an attractive table, although the formatting does not need to match the sample output exactly.
+* You can assume that all song artists and titles fit into a 32 character buffer.
+* Use `%-20s` to format left-justified strings with 20 spaces of padding.
+
+NOTE: Because the song artists and titles can have spaces in them, using scanf requires additional syntax. 
 Instead of `scanf(" %d", &val);`, use `scanf(" %d%*c", &val);`. The trailing `%*c` tells scanf 
 to read and ignore the newline character at the end of the line. Furthermore, to read the name, 
-call `scanf(" %[^\n]%*c", name);` instead of `scanf(" %s", name);`.
-
-= 2048
-
-Implement a program, `2048.c`, that analyzes a board from the game 2048. 
-
-link:https://play2048.co/[2048] is a puzzle game created by
-Gabriele Cirulli. 2048 consists of a 4x4 grid that contains powers of two. 
-Each turn, the player can shift all the values in the grid either up, down, left, 
-or right. During shifting, if two matching 
-values collide, they combine into a single value that is the sum of them both. 
-Values can only combine once in a single turn. Values cannot shift past the 
-extents of the grid.
-
-For example, Suppose the current state of the board is as follows (zeroes correspond to 
-empty spaces)
-
-[source]
-----
-2 0 0 2
-4 16 8 2
-2 64 32 4
-1024 1024 64 0
-----
-
-If we shift the values left, we will get the following board configuration
-
-[source]
-----
-4 0 0 0
-4 16 8 2
-2 64 32 4
-2048 64 0 0
-----
-
-Notice that values shift over empty spaces!
-
-**Input**
-
-The input is a 4x4 matrix representing a valid state of a 2048 puzzle. 
-Input values will always be one of {0, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024}.
-Integer 0 means an empty space.
-
-**Output**
-
-Output the largest value that can result from a shift in any direction.
-If no values can be combined in a shift, then your program should output the largest value on the board.
-
-[source,subs="quotes"]
-----
-$ **make 2048**
-gcc -g -Wall -Wvla -Werror 2048.c -o 2048
-
-$ **cat input1.txt**
-2 0 0 2
-4 16 8 2
-2 64 32 4
-1024 1024 64 0
-
-$ **./2048 < input1.txt**
-The largest value is 2048.
-
-$ **cat input2.txt**
-2 0 0 2
-4 16 8 2
-2 64 32 4
-1024 64 1024 0
-
-$ **./2048 < input2.txt**
-The largest value is 128.
-
-$ **cat input3.txt**
-2 0 0 2
-4 0 0 0
-2 0 32 4
-0 0 64 0
-
-$ **./2048 < input3.txt**
-The largest value is 4.
-
-$ **cat input4.txt**
-2 0 0 0
-0 0 8 0
-0 0 0 0
-0 0 0 2
-
-$ **./2048 < input4.txt**
-The largest value is 8.
-
-$ **cat input5.txt**
-2 2 4 8
-4 0 4 4
-16 16 16 16
-32 16 16 32
-
-$ **./2048 < input5.txt**
-The largest value is 32.
-----
-
-Requirements and Hints:
-
-* Use `scanf(" %d", &val);` to load the input values from stdin
-* Create a static 4x4 matrix to hold the values. You do not need to use malloc/free.
+call `scanf(" %[^\n]%*c", artist);` instead of `scanf(" %s", artist);`.
 
 = Submit your Work
 
-Push you work to github to submit your work.
+Push you work to Github to submit your work.
 
-[source]
+[source, subs="attributes"]
 ----
-$ cd A02
-$ git status
+$ cd {ASST}
 $ git add *.c 
-$ git status
 $ git commit -m "assignment 2 complete"
-$ git status
 $ git push
-$ git status
 ----
+
+= Grading Rubric
+
+*Assignment rubrics*
+
+Grades are out of 4 points.
+
+* (1 point) exclaim
+* (1 point) acronym 
+* (2 points) songs
+
+*Code rubrics*
+
+For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
+have good style.
+
+* Some credit lost for missing features or bugs, depending on severity of error
+* -12.5% for style errors. See the link:../codingstandard.html[class coding style] here.
+* -50% for memory errors
+* -100% for failure to checkin work to Github
+* -100% for failure to compile on linux using make
+* -100% for cheating (+ honor board hearing)

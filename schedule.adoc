@@ -12,32 +12,29 @@
 | *Introductions, Hello C* 
 
 * Read: link:https://diveintosystems.org/singlepage/[Appendix 1] 
-* link:assts/asst01.html[Assignment 01]: Due Jan 25
 * link:http://linuxcommand.org/lc3_learning_the_shell.php[Learning the shell]
-* Topics: Programming at the command line, From Java to C 
-* Lab: SSH and Github setup
+* Topics: Programming at the command line, Makefiles, From Java to C 
 
 //-----------------------------
 | 2 
 | Jan 23,25 anchor:week02[]
-| *Pointers* 
+| *More C, Introduction to Pointers* 
 
-* Topics: Function stacks, scope, dynamically-allocated memory (malloc/free), heap
-* link:assts/.html[Assignment 02]: Feb 1
+* Topics: Function stacks, scope 
+* link:assts/asst01.html[Assignment 01]: Due Jan 25
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 2] 
 * link:https://pythontutor.com/c.html#mode=edit[C Tutor]
-* Lab: Editor Workshop
+* Lab: SSH and Github setup
 
 //-----------------------------
 |3
 |Jan 30, Feb 1 anchor:week03[]
 |*Pointers* 
 
-* Topics: Pointer-based data structures, More I/O
-* link:assts/.html[Assignment 03]: Due Feb 8
-* Read: link:https://diveintosystems.org/singlepage/[Chapter 3] 
-* Read: link:http://svslibrary.pbworks.com/f/Data+Structures+and+Algorithm+Analysis+in+C+-+Mark+Allen+Weiss.pdf[Data Structures in C, Mark Allen Weiss, Chpt 3 and 4]
-* Lab: Jam practice
+* Topics: Heap, dynamically-allocated memory (malloc, free), pointer-based data structures, More I/O
+* link:assts/asst02.html[Assignment 02]: Feb 1
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 2] 
+* Lab: Quiz 01 practice, link:studyguide1.html[Study Guide]
 // TODO * link:https://github.com/BrynMawr-CS223-F22/git-workshop[Github workshop] and link:https://github.com/BrynMawr-CS223-S22/git-workshop/blob/main/SSHSetup.md[Setting up SSH keys for Github]
 
 //-----------------------------
@@ -46,8 +43,9 @@
 |*Debugging. Binary and Data Representation I* 
 
 * Topics: GDB, Valgrind, Binary representations of integers
-* link:assts/.html[Assignment 04]: Due Feb 15
-* Read: link:https://diveintosystems.org/singlepage/[Chapter 4.1-4.3] 
+* link:assts/.html[Assignment 03]: Due Feb 8
+* Read: link:http://svslibrary.pbworks.com/f/Data+Structures+and+Algorithm+Analysis+in+C+-+Mark+Allen+Weiss.pdf[Data Structures in C, Mark Allen Weiss, Chpt 3 and 4]
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 3] 
 * Lab: **Code Jam 01**, link:studyguide1.html[Study Guide]
 
 //-----------------------------
@@ -55,8 +53,8 @@
 |Feb 13,15 anchor:week05[]
 |*Binary and Data Representation II* 
 
-* Read: link:https://diveintosystems.org/singlepage/[Chapter 4.4-4.9] 
-* link:assts/.html[Assignment 05]: Due Feb 22 
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 4.1-4.3] 
+* link:assts/.html[Assignment 04]: Due Feb 15
 * Lab: **Jam Redux 01; Study Guide 02**
 
 //-----------------------------
@@ -64,8 +62,9 @@
 |Feb 20,22 anchor:week06[]
 |*Computer architecture, Assembly* 
 
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 4.4-4.9] 
 * Read: link:https://diveintosystems.org/singlepage/[Section 5.1, Chapter 6] 
-* link:assts/.html[Assignment 06]: Due March 1 
+* link:assts/.html[Assignment 05]: Due Feb 22 
 * Lab: **Code Jam 02**, link:studyguide2.html[Study Guide 2]
 
 //-----------------------------
@@ -74,6 +73,7 @@
 |*Assembly I* 
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 7 (7.1-7.3,7.5,7.10), 10] 
+* link:assts/.html[Assignment 06]: Due March 1 
 * Lab: **Jam 02 Redux**
 
 //-----------------------------
