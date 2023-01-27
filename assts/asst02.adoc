@@ -22,11 +22,15 @@ The goals for this assignment are:
 
 Do a *fetch upstream* to obtain the basecode for this assignment. 
 
+The first time you do a `fetch`, you need to set the URL of the upstream repository.
+
+* `git remote add upstream git@github.com:brynmawr-cs223-s23/cs223-assignments.git`
+
 Using the command line
 
 * Open terminal and change your current directory to your assignment repository.
 * Run the command `git fetch upstream`
-* Run the command `git merge upstream/main`
+* Run the command `git merge upstream/master`
 
 Your repository should now contain a new folder named `{ASST}`.
 
