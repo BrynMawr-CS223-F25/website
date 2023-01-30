@@ -15,8 +15,7 @@ Topics:
 * Data types and sizes
 * UNIX commands
 * Function stacks
-* Basic pointers and arrays
-* malloc/free
+* Basic arrays
 
 Write C programs to check your answers. Or you can ask a TA or instructor 
 to give feedback on your responses.

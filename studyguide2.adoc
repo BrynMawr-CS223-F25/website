@@ -15,8 +15,9 @@ Everything from link:studyguide1.html[Study Guide 1], plus
 
 * valgrind/gdb
 * Common memory errors
-* Reading and writing text files
+* malloc/free
 * 2D arrays
+* Reading and writing text files
 
 Write C programs to check your answers. Or you can ask a TA or instructor 
 to give feedback on your responses.
