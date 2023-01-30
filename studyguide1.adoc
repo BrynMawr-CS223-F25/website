@@ -4,6 +4,7 @@ include::header.adoc[]
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
+:stem: latexmath
 
 = {title}
 
@@ -61,7 +62,7 @@ A call to your function should compute stem:[base^{exp}] and might look like:
 result = power(base, exp);
 ----
 
-5) Implement a function `void remove(char* str, char letter)` that removes all occurrences of `letter` 
+5) Implement a function `void removeLetter(char* str, char letter)` that removes all occurrences of `letter` 
 from `str`. Your function should modify the contents of str. Test your function from `main`.
 
 6) Implement a function `isPalindrome` that returns 1 if a given string is a palindrome and 0 otherwise. 
