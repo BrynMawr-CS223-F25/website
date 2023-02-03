@@ -1,6 +1,6 @@
 include::header.adoc[]
 
-:title: Assignment 2: If you malloc something, set it free
+:title: Assignment 3: If you malloc something, set it free
 :Author Initials: ASN
 :Date:    2021-01-29
 :Revision: 0.1
@@ -144,7 +144,7 @@ Because `strtok` splits a line into strings, you will need to convert some of th
 numeric types. Use `atoi` to convert a string to a integer. Use `atof` to a convert a string to 
 a float. 
 
-INFO: The data for this question comes from Spotify. If you would like to 
+NOTE: The data for this question comes from Spotify. If you would like to 
 see the statistics for your own favorite songs, try the developer console 
 link:https://developer.spotify.com/console/get-audio-analysis-track/[here]! 
 You will need to ID of the song, which you can get from your Spotify account by
