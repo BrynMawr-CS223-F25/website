@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.17">
-<title>Assignment 3: Watch where you point!</title>
+<title>Assignment 2: If you malloc something, set it free</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,21 +14,19 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_3_watch_where_you_point">Assignment 3: Watch where you point!</a></li>
+<li><a href="#_assignment_2_if_you_malloc_something_set_it_free">Assignment 2: If you malloc something, set it free</a></li>
 <li><a href="#_update_your_repository">1. Update your repository</a></li>
-<li><a href="#_minesweeper">2. Minesweeper</a></li>
-<li><a href="#_sorted_restaurants">3. Sorted Restaurants</a></li>
-<li><a href="#_matching_braces_due_next_thurs_oct_5">4. Matching braces (Due Next Thurs - Oct 5)</a></li>
-<li><a href="#_submit_your_work">5. Submit your Work</a></li>
+<li><a href="#_cant_get_a_word_in_entwise">2. Can&#8217;t get a word in entwise</a></li>
+<li><a href="#_dynamic_songs">3. Dynamic songs</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_3_watch_where_you_point">Assignment 3: Watch where you point!</h2>
+<h2 id="_assignment_2_if_you_malloc_something_set_it_free">Assignment 2: If you malloc something, set it free</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Thursday, September 29, before midnight</strong></p>
+<p><strong>Due Wednesday, February 8th, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -36,21 +34,15 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Use malloc and free</p>
+<p>Work with pointers</p>
 </li>
 <li>
-<p>Work with 2D arrays</p>
+<p>Work with malloc/free</p>
 </li>
 <li>
-<p>Work with pointer-based data structures</p>
-</li>
-<li>
-<p>Use gdb and valgrind.</p>
+<p>Work with arrays</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p><strong>All programs must run without memory errors and leaks!</strong></p>
 </div>
 </div>
 </div>
@@ -72,7 +64,7 @@
 <p>Run the command <code>git fetch upstream</code></p>
 </li>
 <li>
-<p>Run the command <code>git merge upstream/main</code></p>
+<p>Run the command <code>git merge upstream/master</code></p>
 </li>
 </ul>
 </div>
@@ -85,47 +77,130 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_minesweeper">2. Minesweeper</h2>
+<h2 id="_cant_get_a_word_in_entwise">2. Can&#8217;t get a word in entwise</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Implement a program, <code>minesweeper.c</code>, that generates a minesweeper board.
-In <a href="https://minesweeperonline.com/#">Minesweeper</a>, each cell can either
-contain a bomb or not. Cells without bombs are called safe cells.</p>
+<div class="literalblock">
+<div class="content">
+<pre>"We must not be hasty."
+-- Treebeard</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Your program should take three command line arguments&#8201;&#8212;&#8201;m, n, and p&#8201;&#8212;&#8201;and
-generate a m x n grid of cells where each cell has probability p of containing a
-bomb. Then, you program shoul print out the grid using X for bombs and . (period)
-for safe cells. Finally, your program should output an additional 2D grid with the
-number of neighboring bombs for each cell (above, below, left, right, NW, NE, SW, SE).</p>
+<p>The <a href="https://lotr.fandom.com/wiki/Ents">Ents</a> in Lord of the Rings were a noble
+race of tree herders, whose language was "long and sonorous".
+Ents live a very long time and so speak very&#8230;&#8203;carefully&#8230;&#8203;and&#8230;&#8203;.very&#8230;&#8203;s.l.o.w.l.y.</p>
+</div>
+<div class="paragraph">
+<p>Write a program ,<code>slow.c</code>, that turns a phrase into ent-speech. Your program
+should ask for the pause length and a phrase to change. Your program should
+output an ent-phrase. Ent-phrases contain '.' between each letter in the input.</p>
+</div>
+<div class="paragraph">
+<p>Two examples of the running program are shown below. User input is shown in <strong>bold</strong>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make minesweeper</strong>
-gcc -g -Wall -Wvla -Werror minesweeper.c -o minesweeper
-$ <strong>./minesweeper 3 5 0.4</strong>
-X X . . .
-. . . . .
-. X . . .
+<pre class="highlight"><code>$ <strong>make slow</strong>
+gcc -g -Wall -Wvla -Werror slow.c -o slow
+$ <strong>./slow</strong>
+Pause length: <strong>3</strong>
+Text: <strong>Surprise!</strong>
+S...u...r...p...r...i...s...e...!...
 
-X X 1 0 0
-3 3 2 0 0
-1 X 1 0 0</code></pre>
+$ <strong>./slow</strong>
+Pause length: <strong>5</strong>
+Text: <strong>Hmmm?</strong>
+H.....m.....m.....m.....?.....</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Requirements/Hints:</p>
+<p>Requirements and Hints:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Use malloc and free to allocate a 2D array to store the grid.</p>
+<p>You can assume that the user will enter a string that fits into a 32 character buffer, e.g. <code>char buff[32];</code></p>
 </li>
 <li>
-<p>Use rand() and srand(time(0)) to create random boards</p>
+<p>Watch out that any string you create ends with a terminating null character, e.g. <code>'\0'</code></p>
 </li>
 <li>
-<p>Your program must use command line arguments!</p>
+<p>Use malloc/free to allocate a string that has enough space to store your "slow" speech!</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dynamic_songs">3. Dynamic songs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Implement a program, <code>dynamic_songs.c</code>, that reads songs from a text file into
+an array. <strong>Unlike</strong> last week&#8217;s songs, your program only needs the following features:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The ability to open a CSV file (<code>songlist.csv</code>) and read its contents into an array created with malloc.</p>
+</li>
+<li>
+<p>The ability to read in additional information: tempo, valence, and energy.</p>
+</li>
+<li>
+<p>The ability to run with memory leaks or valgrind errors (remember to call <code>free</code> and <code>fclose</code>!)</p>
+</li>
+<li>
+<p>The ability to set the contents of our dynamic array of songs, based on the file</p>
+</li>
+<li>
+<p>The ability to print out the list of songs</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The CSV this week contains the duration of songs in <em>milliseconds</em>, not seconds!
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The format of the CSV file is</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;Num Songs&gt;,,,,,,
+Title, Artist, Duration (ms), Danceability, Energy, Tempo, Valence
+Canned Heat,Jamiroquai,331760,0.7,0.865,128.04,0.78
+....</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>From the first line, you should only read the first token to get the number of songs.
+The second line is a header that you should skip. All subsequent lines are data that you
+should read into your array.</p>
+</div>
+<div class="paragraph">
+<p>The last 4 columns are based on <a href="https://developer.spotify.com/documentation/web-api/reference/#/operations/get-audio-features">Spotify audio analysis traits</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Danceability (float)</strong> Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.</p>
+</li>
+<li>
+<p><strong>Energy (float)</strong> Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy. For example, death metal has high energy, while a Bach prelude scores low on the scale. Perceptual features contributing to this attribute include dynamic range, perceived loudness, timbre, onset rate, and general entropy.</p>
+</li>
+<li>
+<p><strong>Tempo (float)</strong> The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.</p>
+</li>
+<li>
+<p><strong>Valence (float)</strong> A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).  &gt;= 0&#8656; 1</p>
 </li>
 </ul>
 </div>
@@ -136,129 +211,54 @@ X X 1 0 0
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-To read in <a href="https://diveintosystems.org/book/C2-C_depth/advanced_cmd_line_args.html#<em>c_cmd_line_args</em>">command line arguments</a>, define main with argc and argv parameters
-as follows. The first command line argument is always the program name. <code>argc</code> is
-the number of arguments. You can use <code>atoi</code> and <code>atof</code> to convert from strings
-to numeric types (int and float respectively)
+You can read <code>songlist.CSV</code> with nano but you can also load it into Excel or Google sheets to view the file.
 </td>
 </tr>
 </table>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>int main(int argc, char** argv) {
-  if (argc != 4) {
-    printf("usage: %s m n p\n", argv[0]);
-  }
+<pre class="highlight"><code>$ <strong>make dynamic_songs</strong>
+gcc -g -Wall -Wvla -Werror dynamic_songs.c -o dynamic_songs
+$ <strong>./dynamic_songs</strong>
+Welcome to Dynamic Donna's Danceability Directory.
 
-  return 0;
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_sorted_restaurants">3. Sorted Restaurants</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Implement a program, <code>sorted_restaurants.c</code>, that allows users to add restaurants to a list
-sorted by rating, from highest rated to lowest rated.</p>
-</div>
-<div class="paragraph">
-<p>Your program should have the same features as last week&#8217;s restaurant directory, but should
-use a <em>linked list</em> to store the snacks, rather than an array.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make sorted_restaurants</strong>
-gcc -g -Wall -Wvla -Werror sorted_restaurants.c -o sorted_restaurants
-$ <strong>./sorted_restaurants</strong>
-Enter a number of restaurants: <strong>3</strong>
-Enter a name: <strong>Sushi Atsumi</strong>
-Open time: <strong>11</strong>
-Close time: <strong>23</strong>
-Stars: <strong>3.5</strong>
-Enter a name: <strong>The Thirsty Horse</strong>
-Open time: <strong>17</strong>
-Close time: <strong>2</strong>
-Stars: <strong>4.5</strong>
-Enter a name: <strong>Magic Bean Coffee</strong>
-Open time: <strong>6</strong>
-Close time: <strong>15</strong>
-Stars: <strong>4.1</strong>
-
-Welcome to Sorted Sally's Restaurant Directory.
-
-0) The Thirsty Horse    open: 17:00     close: 2:00     stars: 4.5
-1) Magic Bean Coffee    open: 6:00      close: 15:00    stars: 4.1
-2) Sushi Atsumi         open: 11:00     close: 23:00    stars: 3.5</code></pre>
+0) Canned Heat                  artist: Jamiroquai              duration: 5:31 D: 0.700 E: 0.865 T: 128.040 V: 0.780
+1) Eye of the Tiger             artist: Survivor                duration: 4:05 D: 0.817 E: 0.599 T: 108.873 V: 0.548
+2) The Veldt                    artist: deadmau5                duration: 2:50 D: 0.736 E: 0.759 T: 128.039 V: 0.485
+3) Golden                       artist: Harry Styles            duration: 3:28 D: 0.448 E: 0.838 T: 139.863 V: 0.254
+4) Thunderstruck                artist: AC/DC                   duration: 4:52 D: 0.502 E: 0.890 T: 133.520 V: 0.259
+5) Nonsense                     artist: Madeon                  duration: 3:45 D: 0.543 E: 0.781 T: 87.009 V: 0.695
+6) One More Time                artist: Daft Punk               duration: 5:20 D: 0.613 E: 0.697 T: 122.746 V: 0.476
+7) Around the World             artist: Daft Punk               duration: 7:09 D: 0.956 E: 0.795 T: 121.294 V: 0.841
+8) Lose Yourself to Dance       artist: Daft Punk               duration: 5:53 D: 0.832 E: 0.659 T: 100.163 V: 0.674
+9) 10%                          artist: KAYTRANADA              duration: 3:06 D: 0.794 E: 0.757 T: 107.990 V: 0.615
+10) Easy                        artist: Groove Armada           duration: 5:52 D: 0.657 E: 0.860 T: 124.150 V: 0.590
+11) Halcyon and On and On       artist: Orbital                 duration: 9:27 D: 0.577 E: 0.729 T: 126.988 V: 0.177
+12) Enjoy the Silence           artist: Depeche Mode            duration: 4:17 D: 0.641 E: 0.812 T: 112.777 V: 0.822
+13) Rasputin                    artist: Boney M.                duration: 5:51 D: 0.639 E: 0.893 T: 126.143 V: 0.966
+14) Who's Theme                 artist: Nujabes                 duration: 4:57 D: 0.603 E: 0.485 T: 169.734 V: 0.357
+15) Burn the Witch              artist: Radiohead               duration: 3:40 D: 0.541 E: 0.847 T: 148.937 V: 0.620
+16) Hold Me Now                 artist: Thompson Twins          duration: 4:45 D: 0.785 E: 0.517 T: 108.108 V: 0.859
+17) Crystallize                 artist: Lindsey Stirling        duration: 4:18 D: 0.440 E: 0.623 T: 140.006 V: 0.056</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Requirements/Hints:</p>
+<p>Requirements and Hints:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Implement a function <code>insert_sorted</code>. This function should create a new snack struct and return the first item in the list. See the book, <em>Data structures in C</em> for example implementations of insert.</p>
+<p>Your program must use malloc/free to allocate the array of songs.</p>
 </li>
 <li>
-<p>Implement a function <code>clear</code>. This function should clear and free all items in the list.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_matching_braces_due_next_thurs_oct_5">4. Matching braces (Due Next Thurs - Oct 5)</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Implement a program, <code>match_braces.c</code>, that takes a filename as a command line
-argument and uses a stack to check for matched braces and report any errors.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make match_braces</strong>
-gcc -g -Wall -Wvla -Werror match_braces.c -o match_braces
-$ <strong>./match_braces</strong>
-usage: ./match_braces <filename>
-$ <strong>./match_braces prog.c</strong>
-Cannot open file: prog.c
-$ <strong>./match_braces prog1.c</strong>
-Found matching braces: (21, 32) -> (23, 5)
-Found matching braces: (25, 30) -> (28, 9)
-Found matching braces: (17, 53) -> (29, 5)
-Unmatched brace on Line 31 and Column 1
-Found matching braces: (40, 47) -> (43, 5)
-Found matching braces: (36, 18) -> (47, 1)
-Unmatched brace on Line 34 and Column 34</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements/Hints:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Implement the functions <code>push</code>, <code>pop</code>, <code>clear</code>. Implementing <code>print</code> is also recommended to help you debug your assignment.</p>
+<p>Your program should print the songs in an attractive table, although the formatting does not need to match the sample output exactly.</p>
 </li>
 <li>
-<p>Use to input the filename.</p>
+<p>You can assume that all songs names and artists fit into an 128 character buffer.</p>
 </li>
 <li>
-<p>Print the usage if the user inputs an incorrect number of command line arguments</p>
-</li>
-<li>
-<p>Print an error if your program cannot open the file</p>
-</li>
-<li>
-<p>Use <code>fgetc</code> to read the file one character at a time. Update the current line number when you encounter <code>\n</code>. Update the current column as you read in each character.</p>
-</li>
-<li>
-<p>To check for matched braces, push to the stack when you encounter a '{' and then pop from the stack when you encounter '}'. If the symbols pushed and popped do not match, there is an error.</p>
-</li>
-<li>
-<p>The output of the program should match the line and column numbers that VS Code reports when you check for matched braces.</p>
+<p>Feel free to re-use code from A02 (such as your printed table)!</p>
 </li>
 </ul>
 </div>
@@ -269,50 +269,28 @@ Unmatched brace on Line 34 and Column 34</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-To open and read the file, use a file pointer (FILE*). See <a href="https://diveintosystems.org/book/C2-C_depth/IO.html#_file_inputoutput">File Input/Output</a> for examples.
+Because the song names and artists can have spaces in them, read in the file line by line
+using <code>fgets</code> and then use <code>strtok</code> to split each line using comma as a deliminator <code>,</code>.
+Because <code>strtok</code> splits a line into strings, you will need to convert some of the tokens by
+numeric types. Use <code>atoi</code> to convert a string to a integer. Use <code>atof</code> to a convert a string to
+a float.
 </td>
 </tr>
 </table>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_submit_your_work">5. Submit your Work</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Before submitting, check that</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Your programs run on goldengate using the <code>make</code> command!</p>
-</li>
-<li>
-<p>valgrind does not report any errors!</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Push you work to github to submit your work.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ cd A03
-$ git status
-$ git add *.c
-$ git status
-$ git commit -m "A03 complete"
-$ git status
-$ git push
-$ git status</pre>
-</div>
+<p>INFO: The data for this question comes from Spotify. If you would like to
+see the statistics for your own favorite songs, try the developer console
+<a href="https://developer.spotify.com/console/get-audio-analysis-track/">here</a>!
+You will need to ID of the song, which you can get from your Spotify account by
+right clicking on a song.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-18 09:36:12 -0500
+Last updated 2023-02-03 12:02:38 -0500
 </div>
 </div>
 </body>

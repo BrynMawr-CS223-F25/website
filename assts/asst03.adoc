@@ -1,23 +1,20 @@
 include::header.adoc[]
 
-:title: Assignment 3: Watch where you point!
+:title: Assignment 2: If you malloc something, set it free
 :Author Initials: ASN
-:Date:    2020-08-15
+:Date:    2021-01-29
 :Revision: 0.1
 :ASST: A03
 
 = {title}
 
-**Due Thursday, September 29, before midnight**
+**Due Wednesday, February 8th, before midnight**
 
 The goals for this assignment are:
 
-* Use malloc and free
-* Work with 2D arrays
-* Work with pointer-based data structures
-* Use gdb and valgrind. 
-
-**All programs must run without memory errors and leaks!**
+* Work with pointers
+* Work with malloc/free
+* Work with arrays
 
 :sectnums:
 
@@ -29,151 +26,126 @@ Using the command line
 
 * Open terminal and change your current directory to your assignment repository.
 * Run the command `git fetch upstream`
-* Run the command `git merge upstream/main`
+* Run the command `git merge upstream/master`
 
 Your repository should now contain a new folder named `{ASST}`.
 
 The `fetch` and `merge` commands update your repository with any changes from the original.
 
-= Minesweeper
+= Can't get a word in entwise
 
-Implement a program, `minesweeper.c`, that generates a minesweeper board.
-In link:https://minesweeperonline.com/#[Minesweeper], each cell can either 
-contain a bomb or not. Cells without bombs are called safe cells. 
+    "We must not be hasty." 
+    -- Treebeard 
 
-Your program should take three command line arguments -- m, n, and p -- and 
-generate a m x n grid of cells where each cell has probability p of containing a 
-bomb. Then, you program shoul print out the grid using X for bombs and . (period) 
-for safe cells. Finally, your program should output an additional 2D grid with the 
-number of neighboring bombs for each cell (above, below, left, right, NW, NE, SW, SE). 
+The https://lotr.fandom.com/wiki/Ents[Ents] in Lord of the Rings were a noble 
+race of tree herders, whose language was "long and sonorous". 
+Ents live a very long time and so speak very...carefully...and....very...s.l.o.w.l.y. 
+
+Write a program ,`slow.c`, that turns a phrase into ent-speech. Your program 
+should ask for the pause length and a phrase to change. Your program should 
+output an ent-phrase. Ent-phrases contain '.' between each letter in the input. 
+
+Two examples of the running program are shown below. User input is shown in *bold*.
 
 [source,subs="quotes"]
 ----
-$ **make minesweeper**
-gcc -g -Wall -Wvla -Werror minesweeper.c -o minesweeper
-$ **./minesweeper 3 5 0.4**
-X X . . .
-. . . . .
-. X . . .
+$ **make slow**
+gcc -g -Wall -Wvla -Werror slow.c -o slow
+$ **./slow**
+Pause length: **3**
+Text: **Surprise!**
+S...u...r...p...r...i...s...e...!...
 
-X X 1 0 0
-3 3 2 0 0
-1 X 1 0 0
+$ **./slow**
+Pause length: **5**
+Text: **Hmmm?**
+H.....m.....m.....m.....?.....
 ----
 
-Requirements/Hints:
+Requirements and Hints:
 
-* Use malloc and free to allocate a 2D array to store the grid.
-* Use rand() and srand(time(0)) to create random boards
-* Your program must use command line arguments!
+* You can assume that the user will enter a string that fits into a 32 character buffer, e.g. `char buff[32];`
+* Watch out that any string you create ends with a terminating null character, e.g. `'\0'`
+* Use malloc/free to allocate a string that has enough space to store your "slow" speech!
 
-NOTE: To read in link:https://diveintosystems.org/book/C2-C_depth/advanced_cmd_line_args.html#_c_cmd_line_args_[command line arguments], define main with argc and argv parameters 
-as follows. The first command line argument is always the program name. `argc` is 
-the number of arguments. You can use `atoi` and `atof` to convert from strings 
-to numeric types (int and float respectively)
+= Dynamic songs
+
+Implement a program, `dynamic_songs.c`, that reads songs from a text file into 
+an array. *Unlike* last week's songs, your program only needs the following features: 
+
+. The ability to open a CSV file (`songlist.csv`) and read its contents into an array created with malloc.
+. The ability to read in additional information: tempo, valence, and energy.
+. The ability to run with memory leaks or valgrind errors (remember to call `free` and `fclose`!)
+. The ability to set the contents of our dynamic array of songs, based on the file
+. The ability to print out the list of songs
+
+NOTE: The CSV this week contains the duration of songs in _milliseconds_, not seconds!
+
+The format of the CSV file is
+
 [source]
 ----
-int main(int argc, char** argv) {
-  if (argc != 4) {
-    printf("usage: %s m n p\n", argv[0]);
-  }
-  
-  return 0;
-}
+<Num Songs>,,,,,,
+Title, Artist, Duration (ms), Danceability, Energy, Tempo, Valence
+Canned Heat,Jamiroquai,331760,0.7,0.865,128.04,0.78
+....
 ----
 
-= Sorted Restaurants
+From the first line, you should only read the first token to get the number of songs. 
+The second line is a header that you should skip. All subsequent lines are data that you 
+should read into your array. 
 
-Implement a program, `sorted_restaurants.c`, that allows users to add restaurants to a list 
-sorted by rating, from highest rated to lowest rated. 
+The last 4 columns are based on link:https://developer.spotify.com/documentation/web-api/reference/#/operations/get-audio-features[Spotify audio analysis traits]
 
-Your program should have the same features as last week's restaurant directory, but should 
-use a _linked list_ to store the snacks, rather than an array. 
+* *Danceability (float)* Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.
+* *Energy (float)* Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy. For example, death metal has high energy, while a Bach prelude scores low on the scale. Perceptual features contributing to this attribute include dynamic range, perceived loudness, timbre, onset rate, and general entropy.
+* *Tempo (float)* The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.
+* *Valence (float)* A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).  >= 0<= 1
+
+NOTE: You can read `songlist.CSV` with nano but you can also load it into Excel or Google sheets to view the file. 
 
 [source,subs="quotes"]
 ----
-$ **make sorted_restaurants**
-gcc -g -Wall -Wvla -Werror sorted_restaurants.c -o sorted_restaurants
-$ **./sorted_restaurants**
-Enter a number of restaurants: **3**
-Enter a name: **Sushi Atsumi**
-Open time: **11**
-Close time: **23**
-Stars: **3.5**
-Enter a name: **The Thirsty Horse**
-Open time: **17**
-Close time: **2**
-Stars: **4.5**
-Enter a name: **Magic Bean Coffee**
-Open time: **6**
-Close time: **15**
-Stars: **4.1**
+$ **make dynamic_songs**
+gcc -g -Wall -Wvla -Werror dynamic_songs.c -o dynamic_songs
+$ **./dynamic_songs**
+Welcome to Dynamic Donna's Danceability Directory.
 
-Welcome to Sorted Sally's Restaurant Directory.
-
-0) The Thirsty Horse    open: 17:00     close: 2:00     stars: 4.5
-1) Magic Bean Coffee    open: 6:00      close: 15:00    stars: 4.1
-2) Sushi Atsumi         open: 11:00     close: 23:00    stars: 3.5
+0) Canned Heat                  artist: Jamiroquai              duration: 5:31 D: 0.700 E: 0.865 T: 128.040 V: 0.780
+1) Eye of the Tiger             artist: Survivor                duration: 4:05 D: 0.817 E: 0.599 T: 108.873 V: 0.548
+2) The Veldt                    artist: deadmau5                duration: 2:50 D: 0.736 E: 0.759 T: 128.039 V: 0.485
+3) Golden                       artist: Harry Styles            duration: 3:28 D: 0.448 E: 0.838 T: 139.863 V: 0.254
+4) Thunderstruck                artist: AC/DC                   duration: 4:52 D: 0.502 E: 0.890 T: 133.520 V: 0.259
+5) Nonsense                     artist: Madeon                  duration: 3:45 D: 0.543 E: 0.781 T: 87.009 V: 0.695
+6) One More Time                artist: Daft Punk               duration: 5:20 D: 0.613 E: 0.697 T: 122.746 V: 0.476
+7) Around the World             artist: Daft Punk               duration: 7:09 D: 0.956 E: 0.795 T: 121.294 V: 0.841
+8) Lose Yourself to Dance       artist: Daft Punk               duration: 5:53 D: 0.832 E: 0.659 T: 100.163 V: 0.674
+9) 10%                          artist: KAYTRANADA              duration: 3:06 D: 0.794 E: 0.757 T: 107.990 V: 0.615
+10) Easy                        artist: Groove Armada           duration: 5:52 D: 0.657 E: 0.860 T: 124.150 V: 0.590
+11) Halcyon and On and On       artist: Orbital                 duration: 9:27 D: 0.577 E: 0.729 T: 126.988 V: 0.177
+12) Enjoy the Silence           artist: Depeche Mode            duration: 4:17 D: 0.641 E: 0.812 T: 112.777 V: 0.822
+13) Rasputin                    artist: Boney M.                duration: 5:51 D: 0.639 E: 0.893 T: 126.143 V: 0.966
+14) Who's Theme                 artist: Nujabes                 duration: 4:57 D: 0.603 E: 0.485 T: 169.734 V: 0.357
+15) Burn the Witch              artist: Radiohead               duration: 3:40 D: 0.541 E: 0.847 T: 148.937 V: 0.620
+16) Hold Me Now                 artist: Thompson Twins          duration: 4:45 D: 0.785 E: 0.517 T: 108.108 V: 0.859
+17) Crystallize                 artist: Lindsey Stirling        duration: 4:18 D: 0.440 E: 0.623 T: 140.006 V: 0.056
 ----
 
-Requirements/Hints:
+Requirements and Hints:
 
-* Implement a function `insert_sorted`. This function should create a new snack struct and return the first item in the list. See the book, _Data structures in C_ for example implementations of insert.
-* Implement a function `clear`. This function should clear and free all items in the list.
+* Your program must use malloc/free to allocate the array of songs.
+* Your program should print the songs in an attractive table, although the formatting does not need to match the sample output exactly.
+* You can assume that all songs names and artists fit into an 128 character buffer.
+* Feel free to re-use code from A02 (such as your printed table)!
 
-= Matching braces (Due Next Thurs - Oct 5)
+NOTE: Because the song names and artists can have spaces in them, read in the file line by line 
+using `fgets` and then use `strtok` to split each line using comma as a deliminator `,`. 
+Because `strtok` splits a line into strings, you will need to convert some of the tokens by 
+numeric types. Use `atoi` to convert a string to a integer. Use `atof` to a convert a string to 
+a float. 
 
-Implement a program, `match_braces.c`, that takes a filename as a command line
-argument and uses a stack to check for matched braces and report any errors.
-
-[source,subs="quotes"]
-----
-$ **make match_braces**
-gcc -g -Wall -Wvla -Werror match_braces.c -o match_braces
-$ **./match_braces**
-usage: ./match_braces <filename>
-$ **./match_braces prog.c**
-Cannot open file: prog.c
-$ **./match_braces prog1.c**
-Found matching braces: (21, 32) -> (23, 5)
-Found matching braces: (25, 30) -> (28, 9)
-Found matching braces: (17, 53) -> (29, 5)
-Unmatched brace on Line 31 and Column 1
-Found matching braces: (40, 47) -> (43, 5)
-Found matching braces: (36, 18) -> (47, 1)
-Unmatched brace on Line 34 and Column 34
-----
-
-Requirements/Hints:
-
-* Implement the functions `push`, `pop`, `clear`. Implementing `print` is also recommended to help you debug your assignment.
-* Use to input the filename. 
-* Print the usage if the user inputs an incorrect number of command line arguments
-* Print an error if your program cannot open the file
-* Use `fgetc` to read the file one character at a time. Update the current line number when you encounter `\n`. Update the current column as you read in each character. 
-* To check for matched braces, push to the stack when you encounter a '{' and then pop from the stack when you encounter '}'. If the symbols pushed and popped do not match, there is an error. 
-* The output of the program should match the line and column numbers that VS Code reports when you check for matched braces. 
-
-NOTE: To open and read the file, use a file pointer (FILE*). See link:https://diveintosystems.org/book/C2-C_depth/IO.html#_file_inputoutput[File Input/Output] for examples.
-
-= Submit your Work
-
-Before submitting, check that
-
-* Your programs run on goldengate using the `make` command!
-* valgrind does not report any errors!
-
-Push you work to github to submit your work.
-
-[subs="attributes"]
-----
-$ cd {ASST}
-$ git status
-$ git add *.c 
-$ git status
-$ git commit -m "{ASST} complete"
-$ git status
-$ git push
-$ git status
-----
-
+INFO: The data for this question comes from Spotify. If you would like to 
+see the statistics for your own favorite songs, try the developer console 
+link:https://developer.spotify.com/console/get-audio-analysis-track/[here]! 
+You will need to ID of the song, which you can get from your Spotify account by
+right clicking on a song.
