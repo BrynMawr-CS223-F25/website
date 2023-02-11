@@ -231,7 +231,7 @@ Requirements/Hints:
 * You should read the PPM filename as a command line argument
 * You should report the usage if no file is given to the program
 * You should report an error if the file cannot be read
-* Re-use your implementation of `read_ppm` from link:asst05.html[Assignment 05].
+* Re-use your implementation of `read_ppm` and `write_ppm` from link:asst05.html[Assignment 05].
 * Output the size of the image along with the maximum number of characters it can store
 * For debugging, try printing out values in hex format, e.g. `printf("%02X", c);`
 * This question is a little easier if you use a 1D array because you can cast the `struct ppm_pixel*` array to an `unsigned char*` array.
@@ -277,3 +277,34 @@ $ git status
 $ git push
 $ git status
 ----
+
+
+= Grading Rubric
+
+*Assignment rubrics*
+
+Grades are out of 4 points.
+
+* (1 points) bitmap
+** (0.1 points) style and header comment
+** (0.4 points) uses bitwise operators to display the image in ASCII
+** (0.5 points) no memory errors
+* (1 points) Decode
+** (0.1 points) style and header comment
+** (0.65 points) correct behavior
+** (0.75 points) no memory errors
+* (1.5 points) Encode
+** (0.1 points) style and header comment
+** (0.65 points) correct behavior
+** (0.75 points) no memory errors
+
+*Code rubrics*
+
+For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
+have good style.
+
+* Some credit lost for missing features or bugs, depending on severity of error
+* -5% for style errors. See the link:../codingstandard.html[class coding style] here.
+* -50% for memory errors
+* -100% for failure to checkin work to Github
+* -100% for failure to compile on linux using make

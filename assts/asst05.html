@@ -133,16 +133,25 @@ Install the VS Code extension, "PBM/PPM/PGM Viewer" by ngtystr, so you can easil
 <p>Implement a program, <code>crossword.c</code>, that generates a crossword using two words from
 a user. Your program should create a 2D array of characters to hold your crossword puzzle.
 Your algorithm should identify a common letter between the given words and list one word
-vertically and the other word horizontally. If there is no common letter, place both
-words so they are disconnected within the grid.</p>
+vertically and the other word horizontally. If there is no common letter, print a message and quit.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>$ <strong>make crossword</strong>
 gcc -g -Wall -Wvla -Werror crossword.c -o crossword
-$ <strong>./crossword elephant opinion</strong>
-
-$ <strong>./crossword elephant zoo</strong></code></pre>
+$ <strong>./crossword</strong>
+Usage: ./crossword <word1> <word2>
+$ <strong>./crossword elephant onion</strong>
+. e . . .
+. l . . .
+. e . . .
+. p . . .
+. h . . .
+. a . . .
+o n i o n
+. t . . .
+$ <strong>./crossword elephant zoo</strong>
+No common letter!</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -150,6 +159,9 @@ $ <strong>./crossword elephant zoo</strong></code></pre>
 </div>
 <div class="ulist">
 <ul>
+<li>
+<p>You must store the crossword in a dynamically allocated array.</p>
+</li>
 <li>
 <p>Use malloc and free to allocate a 2D array to store the grid.</p>
 </li>
@@ -181,11 +193,12 @@ to numeric types (int and float respectively)
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>int main(int argc, char** argv) {
-  if (argc != 4) {
-    printf("usage: %s m n p\n", argv[0]);
+<pre class="highlight"><code>int main(int argc, char* argv[]) {
+    if (argc &lt; 3) {
+    printf("Usage: %s &lt;word1&gt; &lt;word2&gt;\n", argv[0]);
+    exit(0);
   }
-
+  // todo: your code here
   return 0;
 }</code></pre>
 </div>
@@ -208,8 +221,17 @@ colors. Each color is represented as a RGB triplet, representing red, green and 
 The properties of the image, such as its size and color format, are specified at the start of the
 file (called its "header information"). PPM supports both ASCII (plain text) and binary data (raw).</p>
 </div>
-<div class="paragraph">
-<p>We will write a funtion that <strong>reads PPM files in binary format</strong>!</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We will write a funtion that <strong>reads PPM files in binary format</strong>!
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>For example, consider the following image</p>
@@ -341,14 +363,14 @@ ppm_pixel** read_ppm(const char* filename, int* width, int* height)</code>. In b
 use the parameters <code>width</code> and <code>height</code> to return the width and height of the image.</p>
 </div>
 <div class="paragraph">
-<p>In the file, <code>test_ppm.c</code>, write a short test that calls your function and prints the
-contents of <code>feep-ascii.ppm</code> like so:</p>
+<p>In the file, <code>test_read.c</code>, write a short test that calls your function and prints the
+contents of <code>feep-raw.ppm</code> like so:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make test_ppm</strong>
-gcc -g -Wall -Wvla -Werror test_ppm.c read_ppm.c -o test_ppm
-$ <strong>./test_ppm</strong>
+<pre class="highlight"><code>$ <strong>make test_read</strong>
+gcc -g -Wall -Wvla -Werror test_read.c read_ppm.c -o test_read
+$ <strong>./test_read</strong>
 Testing file feep-raw.ppm: 4 4
 (0,0,0) (100,0,0) (0,0,0) (255,0,255)
 (0,0,0) (0,255,175) (0,0,0) (0,0,0)
@@ -376,6 +398,15 @@ Testing file feep-raw.ppm: 4 4
 <li>
 <p>Don&#8217;t forget to free your data!</p>
 </li>
+<li>
+<p>Do not modify read_ppm.h. And do not remove the version of the function you do not implement!</p>
+</li>
+<li>
+<p>Make sure your program compiles using the Makefile</p>
+</li>
+<li>
+<p>You can assume the PPM file has a single comment line, starting with <code>#</code></p>
+</li>
 </ul>
 </div>
 </div>
@@ -387,15 +418,15 @@ Similarly to <a href="asst04.html">Assignment 04</a>, you should choose one defi
 implement, depending on whether you use either a "flat array" or an "array of arrays" to store your pixels.</p>
 </div>
 <div class="paragraph">
-<p>The file, <code>test_write_ppm.c</code>, tests your write function if you implemented a 1D array.
-The file, <code>test_write_ppm_2d.c</code>, tests your write function if you implemented a 2D array.
-If it is working correctly, you should see the following output.</p>
+<p>In the file, <code>test_write.c</code>, write a short test that reads in <code>feep_raw.ppm</code> and then writes it to
+a file <code>test.ppm</code> by calling your function. Then, read in <code>test.ppm</code> and print the contents.
+If it is working correctly, you will see the following pixel values.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make test_ppm</strong>
-gcc -g -Wall -Wvla -Werror test_ppm.c write_ppm.C read_ppm.c -o test_ppm
-$ <strong>./test_ppm</strong>
+<pre class="highlight"><code>$ <strong>make test_write</strong>
+gcc -g -Wall -Wvla -Werror test_write.c write_ppm.c read_ppm.c -o test_write
+$ <strong>./test_write</strong>
 Testing file feep-raw.ppm: 4 4
 (0,0,0) (100,0,0) (0,0,0) (255,0,255)
 (0,0,0) (0,255,175) (0,0,0) (0,0,0)
@@ -410,6 +441,15 @@ Testing file feep-raw.ppm: 4 4
 <ul>
 <li>
 <p>Use <code>fprintf</code> to write the header and <code>fwrite</code> to write the binary Data to your file.</p>
+</li>
+<li>
+<p>Do not modify write_ppm.h. And do not remove the version of the function you do not implement!</p>
+</li>
+<li>
+<p>Make sure your program compiles using the Makefile</p>
+</li>
+<li>
+<p>Don&#8217;t forget to write the header comment!</p>
 </li>
 </ul>
 </div>
@@ -464,20 +504,33 @@ $ git status</pre>
 </div>
 </li>
 <li>
-<p>(2 points) most danceable</p>
+<p>(1 points) Read PPM</p>
 <div class="ulist">
 <ul>
 <li>
-<p>(0.1 points) style and header comment</p>
+<p>(0.1 points) style</p>
 </li>
 <li>
-<p>(0.2 points) defines a struct, reads and parses songlist.csv correctly, and has correct user input</p>
+<p>(0.4 points) correct behavior: reads the PPM file in binary format</p>
 </li>
 <li>
-<p>(0.7 points) correctly handles deletion and insertion to a linked list</p>
+<p>(0.5 points) no memory errors</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>(1.0 points) creates and free linked list nodes correctly</p>
+<p>(1 points) Write PPM</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.1 points) style</p>
+</li>
+<li>
+<p>(0.4 points) correct behavior: write the PPM file in binary format</p>
+</li>
+<li>
+<p>(0.5 points) no memory errors</p>
 </li>
 </ul>
 </div>
@@ -515,7 +568,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-11 08:59:16 -0500
+Last updated 2023-02-11 10:18:09 -0500
 </div>
 </div>
 </body>

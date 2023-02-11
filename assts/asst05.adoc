@@ -56,20 +56,30 @@ The `fetch` and `merge` commands update your repository with any changes from th
 Implement a program, `crossword.c`, that generates a crossword using two words from 
 a user. Your program should create a 2D array of characters to hold your crossword puzzle. 
 Your algorithm should identify a common letter between the given words and list one word 
-vertically and the other word horizontally. If there is no common letter, place both 
-words so they are disconnected within the grid.
+vertically and the other word horizontally. If there is no common letter, print a message and quit.
 
 [source,subs="quotes"]
 ----
 $ **make crossword**
 gcc -g -Wall -Wvla -Werror crossword.c -o crossword
-$ **./crossword elephant opinion**
-
+$ **./crossword**
+Usage: ./crossword <word1> <word2>
+$ **./crossword elephant onion**
+. e . . . 
+. l . . . 
+. e . . . 
+. p . . . 
+. h . . . 
+. a . . . 
+o n i o n 
+. t . . . 
 $ **./crossword elephant zoo**
+No common letter!
 ----
 
 Requirements/Hints:
 
+* You must store the crossword in a dynamically allocated array.
 * Use malloc and free to allocate a 2D array to store the grid.
 * Your program must use command line arguments!
 * Your program should print the results so that the words are properly aligned.
@@ -81,11 +91,12 @@ the number of arguments. You can use `atoi` and `atof` to convert from strings
 to numeric types (int and float respectively)
 [source]
 ----
-int main(int argc, char** argv) {
-  if (argc != 4) {
-    printf("usage: %s m n p\n", argv[0]);
+int main(int argc, char* argv[]) {
+    if (argc < 3) {
+    printf("Usage: %s <word1> <word2>\n", argv[0]);
+    exit(0);
   }
-  
+  // todo: your code here
   return 0;
 }
 ----
@@ -103,7 +114,7 @@ colors. Each color is represented as a RGB triplet, representing red, green and 
 The properties of the image, such as its size and color format, are specified at the start of the 
 file (called its "header information"). PPM supports both ASCII (plain text) and binary data (raw). 
 
-We will write a funtion that *reads PPM files in binary format*!
+NOTE: We will write a funtion that *reads PPM files in binary format*!
 
 For example, consider the following image
 
@@ -172,7 +183,6 @@ NOTE: PPM files can be viewed using tools such as Photoshop and Gimp.
 
 == Read PPM
 
-
 For this question, you will implement a function, `read_ppm()`, that can read
 PPM files stored in _binary_ format. This function should take a filename as input
 and return a 2D array of `struct pixel`. A `struct pixel` has the following definition
@@ -198,14 +208,14 @@ If you return an array or arrays, your function should be defined as  `struct
 ppm_pixel** read_ppm(const char* filename, int* width, int* height)`. In both cases, 
 use the parameters `width` and `height` to return the width and height of the image.
 
-In the file, `test_ppm.c`, write a short test that calls your function and prints the
-contents of `feep-ascii.ppm` like so:
+In the file, `test_read.c`, write a short test that calls your function and prints the
+contents of `feep-raw.ppm` like so:
 
 [source,subs="quotes"]
 ----
-$ **make test_ppm**
-gcc -g -Wall -Wvla -Werror test_ppm.c read_ppm.c -o test_ppm
-$ **./test_ppm**
+$ **make test_read**
+gcc -g -Wall -Wvla -Werror test_read.c read_ppm.c -o test_read
+$ **./test_read**
 Testing file feep-raw.ppm: 4 4
 (0,0,0) (100,0,0) (0,0,0) (255,0,255)
 (0,0,0) (0,255,175) (0,0,0) (0,0,0)
@@ -220,6 +230,9 @@ Requirements/Hints:
 * Your function should return a pointer to the array you create in read_ppm
 * You can assume that it is safe to read the header line by line (e.g. using `fgets`).
 * Don't forget to free your data!
+* Do not modify read_ppm.h. And do not remove the version of the function you do not implement!
+* Make sure your program compiles using the Makefile
+* You can assume the PPM file has a single comment line, starting with `#`
 
 
 == Write PPM
@@ -228,15 +241,15 @@ Implement a new function, `write_ppm`, defined in `write_ppm.c`.
 Similarly to link:asst04.html[Assignment 04], you should choose one definition of `write_ppm` to 
 implement, depending on whether you use either a "flat array" or an "array of arrays" to store your pixels. 
 
-The file, `test_write_ppm.c`, tests your write function if you implemented a 1D array.
-The file, `test_write_ppm_2d.c`, tests your write function if you implemented a 2D array.
-If it is working correctly, you should see the following output.
+In the file, `test_write.c`, write a short test that reads in `feep_raw.ppm` and then writes it to 
+a file `test.ppm` by calling your function. Then, read in `test.ppm` and print the contents. 
+If it is working correctly, you will see the following pixel values.
 
 [source,subs="quotes"]
 ----
-$ **make test_ppm**
-gcc -g -Wall -Wvla -Werror test_ppm.c write_ppm.C read_ppm.c -o test_ppm
-$ **./test_ppm**
+$ **make test_write**
+gcc -g -Wall -Wvla -Werror test_write.c write_ppm.c read_ppm.c -o test_write
+$ **./test_write**
 Testing file feep-raw.ppm: 4 4
 (0,0,0) (100,0,0) (0,0,0) (255,0,255)
 (0,0,0) (0,255,175) (0,0,0) (0,0,0)
@@ -247,6 +260,9 @@ Testing file feep-raw.ppm: 4 4
 Requirements/Hints:
 
 * Use `fprintf` to write the header and `fwrite` to write the binary Data to your file.
+* Do not modify write_ppm.h. And do not remove the version of the function you do not implement!
+* Make sure your program compiles using the Makefile
+* Don't forget to write the header comment!
 
 = Submit your work
 
@@ -264,7 +280,6 @@ $ git push
 $ git status
 ----
 
-
 = Grading Rubric
 
 *Assignment rubrics*
@@ -275,11 +290,14 @@ Grades are out of 4 points.
 ** (0.1 points) style and header comment
 ** (0.9 points) correct behavior: asks the user for input and creates the new string
 ** (1.0 points) no memory errors
-* (2 points) most danceable
-** (0.1 points) style and header comment
-** (0.2 points) defines a struct, reads and parses songlist.csv correctly, and has correct user input
-** (0.7 points) correctly handles deletion and insertion to a linked list
-** (1.0 points) creates and free linked list nodes correctly
+* (1 points) Read PPM
+** (0.1 points) style
+** (0.4 points) correct behavior: reads the PPM file in binary format
+** (0.5 points) no memory errors
+* (1 points) Write PPM
+** (0.1 points) style
+** (0.4 points) correct behavior: write the PPM file in binary format
+** (0.5 points) no memory errors
 
 *Code rubrics*
 

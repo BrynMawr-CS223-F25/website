@@ -64,7 +64,7 @@
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 4.4-4.9] 
 * Read: link:https://diveintosystems.org/singlepage/[Section 5.1, Chapter 6] 
-* link:assts/.html[Assignment 05]: Due Feb 22 
+* link:assts/asst05.html[Assignment 05]: Due Feb 22 
 * Lab: **Code Jam 02**, link:studyguide2.html[Study Guide 2]
 
 //-----------------------------
@@ -73,7 +73,7 @@
 |*Computer architecture, Assembly* 
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 7 (7.1-7.3,7.5,7.10), 10] 
-* link:assts/.html[Assignment 06]: Due March 1 
+* link:assts/asst06.html[Assignment 06]: Due March 1 
 * Lab: **Jam 02 Redux**
 
 //-----------------------------
