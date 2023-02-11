@@ -54,7 +54,7 @@
 |*Binary and Data Representation I* 
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 4.1-4.3] 
-* link:assts/.html[Assignment 04]: Due Feb 15
+* link:assts/asst04.html[Assignment 04]: Due Feb 15
 * Lab: **Jam Redux 01; Study Guide 02**
 
 //-----------------------------

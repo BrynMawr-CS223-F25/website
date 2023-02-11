@@ -149,3 +149,31 @@ see the statistics for your own favorite songs, try the developer console
 link:https://developer.spotify.com/console/get-audio-analysis-track/[here]! 
 You will need to ID of the song, which you can get from your Spotify account by
 right clicking on a song.
+
+= Grading Rubric
+
+*Assignment rubrics*
+
+Grades are out of 4 points.
+
+* (1 point) slow
+** (0.1 points) style and header comment
+** (0.5 points) no memory errors
+** (0.4 points) correct behavior: asks the user for input and creates the new string
+* (3 points) dynamic songs
+** (0.15 points) style and header comment
+** (0.05 points) defines a struct to hold the information for each song
+** (0.5 points) correctly handles the duration and prints results in a table 
+** (0.8 points) reads and parses songlist.csv 
+** (1.5 points) creates an array to hold the data from the file (No memory errors)
+
+*Code rubrics*
+
+For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
+have good style.
+
+* Some credit lost for missing features or bugs, depending on severity of error
+* -5% for style errors. See the link:../codingstandard.html[class coding style] here.
+* -50% for memory errors
+* -100% for failure to checkin work to Github
+* -100% for failure to compile on linux using make

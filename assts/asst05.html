@@ -19,10 +19,16 @@
 <li><a href="#_update_your_repository_2">Update your repository</a></li>
 </ul>
 </li>
-<li><a href="#_tiny_bitmaps">1. Tiny Bitmaps</a></li>
-<li><a href="#_write_ppm">2. Write PPM</a></li>
-<li><a href="#_glitch">3. Glitch</a></li>
-<li><a href="#_submit_your_work">4. Submit your work</a></li>
+<li><a href="#_crossword">1. Crossword</a></li>
+<li><a href="#_ppm">2. PPM</a>
+<ul class="sectlevel2">
+<li><a href="#_background">2.1. Background</a></li>
+<li><a href="#_read_ppm">2.2. Read PPM</a></li>
+<li><a href="#_write_ppm">2.3. Write PPM</a></li>
+</ul>
+</li>
+<li><a href="#_submit_your_work">3. Submit your work</a></li>
+<li><a href="#_grading_rubric">4. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
@@ -31,7 +37,7 @@
 <h2 id="_assignment_5_give_a_little_bit">Assignment 5: Give a little bit</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Thursday, Oct 20, before midnight</strong></p>
+<p><strong>Due Wednesday, Feb 23, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -39,13 +45,13 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Directly manipulate basic types at the bit level using masks</p>
+<p>Work with 2D arrays</p>
 </li>
 <li>
-<p>Directly manipulate basic types at the bit level</p>
+<p>Use malloc and free</p>
 </li>
 <li>
-<p>Work with binary files</p>
+<p>Read and write binary files</p>
 </li>
 </ul>
 </div>
@@ -121,35 +127,22 @@ Install the VS Code extension, "PBM/PPM/PGM Viewer" by ngtystr, so you can easil
 </div>
 </div>
 <div class="sect1">
-<h2 id="_tiny_bitmaps">1. Tiny Bitmaps</h2>
+<h2 id="_crossword">1. Crossword</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A <a href="https://sneslab.net/wiki/Graphics_Format">1bpp</a>, or 1-bit-per-pixel,
-sprite stores a grid of black and white pixels using a single bit. 0 denotes
-white and 1 denotes black.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="https://sneslab.net/mw/images/c/c6/saa03_1bpp.png" alt="saa03 1bpp" width="400px">
-</div>
-</div>
-<div class="paragraph">
-<p>In the program, <code>bitmap.c</code>, implement a program that reads in a single 64-bit
-unsigned integer (e.g. <code>unsigned long</code>) and outputs it as an 8x8 1bpp sprite.</p>
+<p>Implement a program, <code>crossword.c</code>, that generates a crossword using two words from
+a user. Your program should create a 2D array of characters to hold your crossword puzzle.
+Your algorithm should identify a common letter between the given words and list one word
+vertically and the other word horizontally. If there is no common letter, place both
+words so they are disconnected within the grid.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>./bitmap < bitmap1.txt</strong>
-Image (unsigned long): ff818181818181ff
-@ @ @ @ @ @ @ @
-@             @
-@             @
-@             @
-@             @
-@             @
-@             @
-@ @ @ @ @ @ @ @
-----</code></pre>
+<pre class="highlight"><code>$ <strong>make crossword</strong>
+gcc -g -Wall -Wvla -Werror crossword.c -o crossword
+$ <strong>./crossword elephant opinion</strong>
+
+$ <strong>./crossword elephant zoo</strong></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -158,18 +151,236 @@ Image (unsigned long): ff818181818181ff
 <div class="ulist">
 <ul>
 <li>
-<p>Your program should <strong>must</strong> use a bitmask! For example, to generate a 64-bit mask that obtains the left-most bit, do <code>0x1ul &lt;&lt; 63</code>. The <code>ul</code> indicates an <code>unsigned long</code> value. <code>0x1</code> is the number one in hexadecimal.</p>
+<p>Use malloc and free to allocate a 2D array to store the grid.</p>
 </li>
 <li>
-<p>The bitmap files store the values as hexadecimal values. To read them in, do <code>unsigned long img; scanf(" %lx", &amp;img);</code>. Use <code>%lx</code> for printf also. You are given basecode that reads in the long integer from stdin.</p>
+<p>Your program must use command line arguments!</p>
+</li>
+<li>
+<p>Your program should print the results so that the words are properly aligned.</p>
+</li>
+<li>
+<p>For extra challenge, try to support more than two words!</p>
 </li>
 </ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To read in <a href="https://diveintosystems.org/book/C2-C_depth/advanced_cmd_line_args.html#<em>c_cmd_line_args</em>">command line arguments</a>, define main with argc and argv parameters
+as follows. The first command line argument is always the program name. <code>argc</code> is
+the number of arguments. You can use <code>atoi</code> and <code>atof</code> to convert from strings
+to numeric types (int and float respectively)
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>int main(int argc, char** argv) {
+  if (argc != 4) {
+    printf("usage: %s m n p\n", argv[0]);
+  }
+
+  return 0;
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_write_ppm">2. Write PPM</h2>
+<h2 id="_ppm">2. PPM</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Implement two functions, <code>read_ppm</code> and <code>write_ppm</code>, that read and write binary PPM files.
+This functions are implemented in the file <code>load_ppm.h</code> and tested using code in <code>test_ppm.c</code>.</p>
+</div>
+<div class="sect2">
+<h3 id="_background">2.1. Background</h3>
+<div class="paragraph">
+<p><a href="http://netpbm.sourceforge.net/doc/ppm.html">PPM (Portable Pix Map)</a>
+ is an image file format that stores the colors of an image as a 2D array of
+colors. Each color is represented as a RGB triplet, representing red, green and blue respectively.
+The properties of the image, such as its size and color format, are specified at the start of the
+file (called its "header information"). PPM supports both ASCII (plain text) and binary data (raw).</p>
+</div>
+<div class="paragraph">
+<p>We will write a funtion that <strong>reads PPM files in binary format</strong>!</p>
+</div>
+<div class="paragraph">
+<p>For example, consider the following image</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://www.cs.swarthmore.edu/~soni/cs35/f13/Labs/images/01/example5000.png" alt="example5000">
+</div>
+</div>
+<div class="paragraph">
+<p>The above image contains a 4x4 grid of colored pixels. Each pixel is a triplet of red-blue-green (RGB) color
+values, each stored as an <code>unsigned char</code>. Unsigned chars have values which range from 0 to 255, where
+smaller values correspond to darker colors. The triplet (0,0,0) corresponds to black. The triplet
+(255,255,255) cooresponds to white. The triplet (255,0,0) corresponds to red. This system of colors is called
+the <a href="https://en.wikipedia.org/wiki/RGB_color_model">RGB Color Model</a> and it is a common standard for
+representing colors on a computer.</p>
+</div>
+<div class="paragraph">
+<p>The RGB colors for the pixels in the above image are as follows</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>(0,0,0)      (100,0,0)    (0,0,0)     (255,0,255)
+(0,0,0)      (0,255,175)  (0,0,0)     (0,0,0)
+(0,0,0)      (0,0,0)      (0,15,175)  (0,0,0)
+(255,0,255)  (0,0,0)      (0,0,0)     (255,255,255)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In binary format (also called <em>raw</em> format), the image is stored as follows.
+To see for yourself, do <code>hexedit feep-raw.ppm</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>00000000   50 36 0A 23  20 43 72 65  61 74 65 64  20 62 79 20  47 49 4D 50  20 76 65 72  P6.# Created by GIMP ver
+00000018   73 69 6F 6E  20 32 2E 31  30 2E 32 34  20 50 4E 4D  20 70 6C 75  67 2D 69 6E  sion 2.10.24 PNM plug-in
+00000030   0A 34 20 34  0A 32 35 35  0A 00 00 00  64 00 00 00  00 00 FF 00  FF 00 00 00  .4 4.255....d...........
+00000048   00 FF AF 00  00 00 00 00  00 00 00 00  00 00 00 00  0F AF 00 00  00 FF 00 FF  ........................
+00000060   00 00 00 00  00 00 FF FF  FF                                                  .........</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The leftmost column is byte number in hexidecimal. For example, 0x18 is 24 in decimal. There are 24 bytes
+on the first row on output. The rightmost column displays the raw data in ASCII, using <code>.</code> for non-visible
+ASCII codes, such as '\0' and 'Escape'.</p>
+</div>
+<div class="paragraph">
+<p>Regardless of format, every PPM file starts the following information in its header.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A "magic number" indicating the type of PPM. Binary types start with "P6".</p>
+</li>
+<li>
+<p>Whitespace  (blanks, tabs, \n, \r, etc)</p>
+</li>
+<li>
+<p>Width and height as ASCII decimal integers (separated by whitespace)</p>
+</li>
+<li>
+<p>Maximum color value as an ASCII decimal integer. <strong>You can assume the Maxval is less than 256, meaning each RGB value is 1 byte.</strong></p>
+</li>
+<li>
+<p>A single whitespace character</p>
+</li>
+<li>
+<p>A raster (e.g. the array of pixels) of Height number of rows and Width number of columns, in order from top to bottom.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>PPM images may contain comments in their header. These must be on their own line and start with the symbol <code>#</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The header information is always in plain text. It is only the pixel data that differs between ASCII and raw formats.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+PPM files can be viewed using tools such as Photoshop and Gimp.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_read_ppm">2.2. Read PPM</h3>
+<div class="paragraph">
+<p>For this question, you will implement a function, <code>read_ppm()</code>, that can read
+PPM files stored in <em>binary</em> format. This function should take a filename as input
+and return a 2D array of <code>struct pixel</code>. A <code>struct pixel</code> has the following definition</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>struct ppm_pixel {
+    unsigned char red;
+    unsigned char green;
+    unsigned char blue;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The user of the function <code>read_ppm</code> is reponsible for freeing the memory allocated by this function.</p>
+</div>
+<div class="paragraph">
+<p>You will re-use this function throughout the semester. For this reason, we place its implementation
+in it&#8217;s own file, <code>read_ppm.c</code>, and use a header file, <code>read_ppm.h</code>, to include it in our main application.</p>
+</div>
+<div class="paragraph">
+<p>You may implement your 2D array of pixels as either a flat array or an array or
+arrays. For example, if you return a flat array, your function should be defined
+as <code>struct ppm_pixel* read_ppm(const char* filename, int* width, int* height)</code>.
+If you return an array or arrays, your function should be defined as  <code>struct
+ppm_pixel** read_ppm(const char* filename, int* width, int* height)</code>. In both cases,
+use the parameters <code>width</code> and <code>height</code> to return the width and height of the image.</p>
+</div>
+<div class="paragraph">
+<p>In the file, <code>test_ppm.c</code>, write a short test that calls your function and prints the
+contents of <code>feep-ascii.ppm</code> like so:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make test_ppm</strong>
+gcc -g -Wall -Wvla -Werror test_ppm.c read_ppm.c -o test_ppm
+$ <strong>./test_ppm</strong>
+Testing file feep-raw.ppm: 4 4
+(0,0,0) (100,0,0) (0,0,0) (255,0,255)
+(0,0,0) (0,255,175) (0,0,0) (0,0,0)
+(0,0,0) (0,0,0) (0,15,175) (0,0,0)
+(255,0,255) (0,0,0) (0,0,0) (255,255,255)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements/Hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Your function should return NULL if the filename is invalid</p>
+</li>
+<li>
+<p>Your function should return NULL if memory cannot be allocated for the image data</p>
+</li>
+<li>
+<p>Your function should return a pointer to the array you create in read_ppm</p>
+</li>
+<li>
+<p>You can assume that it is safe to read the header line by line (e.g. using <code>fgets</code>).</p>
+</li>
+<li>
+<p>Don&#8217;t forget to free your data!</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_write_ppm">2.3. Write PPM</h3>
 <div class="paragraph">
 <p>Implement a new function, <code>write_ppm</code>, defined in <code>write_ppm.c</code>.
 Similarly to <a href="asst04.html">Assignment 04</a>, you should choose one definition of <code>write_ppm</code> to
@@ -204,107 +415,9 @@ Testing file feep-raw.ppm: 4 4
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_glitch">3. Glitch</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><a href="https://en.wikipedia.org/wiki/Glitch_art">Glitch Art</a> is the practice of leveraging technological errors for artistic purposes. Some cool examples can be found here by <a href="https://mobile.twitter.com/glitchartbot">glitchartbot</a>.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="https://www.joelatimer.com/wp-content/uploads/2019/09/JoeLatimer.com-Blog-Featured-Image-Landscape-08-31-19.jpg" alt="JoeLatimer.com Blog Featured Image Landscape 08 31 19" height="300px">
-</div>
-</div>
-<div class="paragraph">
-<p>Then write a program, <code>glitch.c</code>, that reads in a PPM file and "glitches" it. Your program should save the modified PPM in a new file with the suffix "-glitch". For example, if you load in the file
-"monalisa.ppm", you should output a file named "monalisa-glitch.ppm".</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>./glitch monalisa.ppm</strong>
-Reading monalisa.ppm with width 606 and height 771
-Writing file monalisa-glitch.ppm</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Original Image</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Glitched Image</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
-<div class="content">
-<img src="img/monalisa.png" alt="monalisa" height="300px">
-</div>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
-<div class="content">
-<img src="img/monalisa-glitch-v2.0.png" alt="monalisa glitch v2.0" height="300">
-</div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Requirements/Hints:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Save the result to <code>&lt;filename&gt;-glitch.ppm</code></p>
-</li>
-<li>
-<p>To start, implement a minimal glitch, which shifts each color value by either 1 or 2 bits, choosen at random, e.g. <code>newcolorvalue = oldcolorvalue &lt;&lt; (rand() % 2);</code>. Your result should look like</p>
-</li>
-<li>
-<p>Submit your glitched images as part of your submission!</p>
-</li>
-</ul>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Original Image</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Result of random bit shift</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
-<div class="content">
-<img src="img/monalisa.png" alt="monalisa" height="300px">
-</div>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
-<div class="content">
-<img src="img/monalisa-glitch-simple.png" alt="monalisa glitch simple" height="300">
-</div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Feel free to be creative with your glitches. You can use a combination of bit operations, switching colors, adding colors, etc.  Anything goes! Also, feel free to use your own images. PPM images can be exported using <a href="https://www.gimp.org">Gimp</a> or Photoshop.</p>
-</div>
-</div>
 </div>
 <div class="sect1">
-<h2 id="_submit_your_work">4. Submit your work</h2>
+<h2 id="_submit_your_work">3. Submit your work</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Push you work to github to submit your work.</p>
@@ -323,10 +436,86 @@ $ git status</pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_grading_rubric">4. Grading Rubric</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Assignment rubrics</strong></p>
+</div>
+<div class="paragraph">
+<p>Grades are out of 4 points.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>(2 points) crossword</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.1 points) style and header comment</p>
+</li>
+<li>
+<p>(0.9 points) correct behavior: asks the user for input and creates the new string</p>
+</li>
+<li>
+<p>(1.0 points) no memory errors</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>(2 points) most danceable</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.1 points) style and header comment</p>
+</li>
+<li>
+<p>(0.2 points) defines a struct, reads and parses songlist.csv correctly, and has correct user input</p>
+</li>
+<li>
+<p>(0.7 points) correctly handles deletion and insertion to a linked list</p>
+</li>
+<li>
+<p>(1.0 points) creates and free linked list nodes correctly</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Code rubrics</strong></p>
+</div>
+<div class="paragraph">
+<p>For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and
+have good style.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Some credit lost for missing features or bugs, depending on severity of error</p>
+</li>
+<li>
+<p>-5% for style errors. See the <a href="../codingstandard.html">class coding style</a> here.</p>
+</li>
+<li>
+<p>-50% for memory errors</p>
+</li>
+<li>
+<p>-100% for failure to checkin work to Github</p>
+</li>
+<li>
+<p>-100% for failure to compile on linux using make</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-01 16:16:20 -0500
+Last updated 2023-02-11 08:59:16 -0500
 </div>
 </div>
 </body>

@@ -262,7 +262,7 @@ $ brew install cmake
 
 NOTE: A quick way to open terminal is to use spotlight. From the keyboard, type the <cmd> and <spacebar>. Then type terminal at the popup edit field.
 
-Unfortunately, `valgrind` and `gdb` cannot be run natively on mac. 
+Unfortunately, `valgrind` and `gdb` cannot be run natively on mac. However, you may try running `leaks` or `lldb` which are similar. However, we recommend you still test on goldengate or a lab machine.
 
 = Grading Rubric
 
@@ -284,4 +284,3 @@ have good style.
 * -50% for memory errors
 * -100% for failure to checkin work to Github
 * -100% for failure to compile on linux using make
-* -100% for cheating (+ honor board hearing)

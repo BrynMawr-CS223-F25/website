@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.17">
-<title>Assignment 4: Don't be afraid to ASCII</title>
+<title>Assignment 4: Watch where you point!</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,22 +14,20 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_4_dont_be_afraid_to_ascii">Assignment 4: Don&#8217;t be afraid to ASCII</a></li>
-<li><a href="#_background_ppm">Background: PPM</a></li>
-<li><a href="#_update_your_repository_2">1. Update your repository</a></li>
-<li><a href="#_matching_braces">2. Matching braces</a></li>
-<li><a href="#_read_ppm">3. Read PPM</a></li>
-<li><a href="#_ascii_art">4. ASCII Art</a></li>
-<li><a href="#_submit_your_work">5. Submit your work</a></li>
+<li><a href="#_assignment_4_watch_where_you_point">Assignment 4: Watch where you point!</a></li>
+<li><a href="#_update_your_repository">1. Update your repository</a></li>
+<li><a href="#_most_danceable">2. Most danceable</a></li>
+<li><a href="#_submit_your_work">3. Submit your Work</a></li>
+<li><a href="#_grading_rubric">4. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_4_dont_be_afraid_to_ascii">Assignment 4: Don&#8217;t be afraid to ASCII</h2>
+<h2 id="_assignment_4_watch_where_you_point">Assignment 4: Watch where you point!</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Thursday, Oct 6, before midnight</strong></p>
+<p><strong>Due Wednesday, February 16th, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -37,164 +35,23 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Work with files</p>
+<p>Use malloc and free</p>
 </li>
 <li>
-<p>Deepen our understanding of data types</p>
+<p>Work with pointer-based data structures</p>
 </li>
 <li>
-<p>Work with malloc/free</p>
-</li>
-<li>
-<p>Work with 2D arrays</p>
+<p>Use gdb and valgrind.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p><strong>All programs must run without memory errors and leaks!</strong></p>
 </div>
-<h3 id="_update_your_repository" class="discrete">Update your repository</h3>
-<div class="paragraph">
-<p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
-</div>
-<div class="paragraph">
-<p>Using the command line</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Open terminal and change your current directory to your assignment repository.</p>
-</li>
-<li>
-<p>Run the command <code>git fetch upstream</code></p>
-</li>
-<li>
-<p>Run the command <code>git merge upstream/master</code></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Your repository should now contain a new folder named <code>A03</code>.</p>
-</div>
-<div class="paragraph">
-<p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_background_ppm">Background: PPM</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><a href="http://netpbm.sourceforge.net/doc/ppm.html">PPM (Portable Pix Map)</a>
- is an image file format that stores the colors of an image as a 2D array of
-colors. Each color is represented as a RGB triplet, representing red, green and blue respectively.
-The properties of the image, such as its size and color format, are specified at the start of the
-file (called its "header information"). PPM supports both ASCII (plain text) and binary data (raw).</p>
-</div>
-<div class="paragraph">
-<p>We will write a funtion that <strong>reads PPM files in binary format</strong>!</p>
-</div>
-<div class="paragraph">
-<p>For example, consider the following image</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="https://www.cs.swarthmore.edu/~soni/cs35/f13/Labs/images/01/example5000.png" alt="example5000">
-</div>
-</div>
-<div class="paragraph">
-<p>The above image contains a 4x4 grid of colored pixels. Each pixel is a triplet of red-blue-green (RGB) color
-values, each stored as an <code>unsigned char</code>. Unsigned chars have values which range from 0 to 255, where
-smaller values correspond to darker colors. The triplet (0,0,0) corresponds to black. The triplet
-(255,255,255) cooresponds to white. The triplet (255,0,0) corresponds to red. This system of colors is called
-the <a href="https://en.wikipedia.org/wiki/RGB_color_model">RGB Color Model</a> and it is a common standard for
-representing colors on a computer.</p>
-</div>
-<div class="paragraph">
-<p>The RGB colors for the pixels in the above image are as follows</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>(0,0,0)      (100,0,0)    (0,0,0)     (255,0,255)
-(0,0,0)      (0,255,175)  (0,0,0)     (0,0,0)
-(0,0,0)      (0,0,0)      (0,15,175)  (0,0,0)
-(255,0,255)  (0,0,0)      (0,0,0)     (255,255,255)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In binary format (also called <em>raw</em> format), the image is stored as follows.
-To see for yourself, do <code>hexedit feep-raw.ppm</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>00000000   50 36 0A 23  20 43 72 65  61 74 65 64  20 62 79 20  47 49 4D 50  20 76 65 72  P6.# Created by GIMP ver
-00000018   73 69 6F 6E  20 32 2E 31  30 2E 32 34  20 50 4E 4D  20 70 6C 75  67 2D 69 6E  sion 2.10.24 PNM plug-in
-00000030   0A 34 20 34  0A 32 35 35  0A 00 00 00  64 00 00 00  00 00 FF 00  FF 00 00 00  .4 4.255....d...........
-00000048   00 FF AF 00  00 00 00 00  00 00 00 00  00 00 00 00  0F AF 00 00  00 FF 00 FF  ........................
-00000060   00 00 00 00  00 00 FF FF  FF                                                  .........</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The leftmost column is byte number in hexidecimal. For example, 0x18 is 24 in decimal. There are 24 bytes
-on the first row on output. The rightmost column displays the raw data in ASCII, using <code>.</code> for non-visible
-ASCII codes, such as '\0' and 'Escape'.</p>
-</div>
-<div class="paragraph">
-<p>Regardless of format, every PPM file starts the following information in its header.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>A "magic number" indicating the type of PPM. Binary types start with "P6".</p>
-</li>
-<li>
-<p>Whitespace  (blanks, tabs, \n, \r, etc)</p>
-</li>
-<li>
-<p>Width and height as ASCII decimal integers (separated by whitespace)</p>
-</li>
-<li>
-<p>Maximum color value as an ASCII decimal integer. <strong>You can assume the Maxval is less than 256, meaning each RGB value is 1 byte.</strong></p>
-</li>
-<li>
-<p>A single whitespace character</p>
-</li>
-<li>
-<p>A raster (e.g. the array of pixels) of Height number of rows and Width number of columns, in order from top to bottom.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>PPM images may contain comments in their header. These must be on their own line and start with the symbol <code>#</code>.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The header information is always in plain text. It is only the pixel data that differs between ASCII and raw formats.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-PPM files can be viewed using tools such as Photoshop and Gimp.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_update_your_repository_2">1. Update your repository</h2>
+<h2 id="_update_your_repository">1. Update your repository</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
@@ -216,7 +73,7 @@ PPM files can be viewed using tools such as Photoshop and Gimp.
 </ul>
 </div>
 <div class="paragraph">
-<p>Your repository should now contain a new folder named <code>A03</code>.</p>
+<p>Your repository should now contain a new folder named <code>A04</code>.</p>
 </div>
 <div class="paragraph">
 <p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
@@ -224,57 +81,11 @@ PPM files can be viewed using tools such as Photoshop and Gimp.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_matching_braces">2. Matching braces</h2>
+<h2 id="_most_danceable">2. Most danceable</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implement a program, <code>match_braces.c</code>, that takes a filename as a command line
-argument and uses a stack to check for matched braces and report any errors.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make match_braces</strong>
-gcc -g -Wall -Wvla -Werror match_braces.c -o match_braces
-$ <strong>./match_braces</strong>
-usage: ./match_braces <filename>
-$ <strong>./match_braces prog.c</strong>
-Cannot open file: prog.c
-$ <strong>./match_braces prog1.c</strong>
-Found matching braces: (21, 32) -> (23, 5)
-Found matching braces: (25, 30) -> (28, 9)
-Found matching braces: (17, 53) -> (29, 5)
-Unmatched brace on Line 31 and Column 1
-Found matching braces: (40, 47) -> (43, 5)
-Found matching braces: (36, 18) -> (47, 1)
-Unmatched brace on Line 34 and Column 34</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements/Hints:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Implement the functions <code>push</code>, <code>pop</code>, <code>clear</code>. Implementing <code>print</code> is also recommended to help you debug your assignment.</p>
-</li>
-<li>
-<p>Use to input the filename.</p>
-</li>
-<li>
-<p>Print the usage if the user inputs an incorrect number of command line arguments</p>
-</li>
-<li>
-<p>Print an error if your program cannot open the file</p>
-</li>
-<li>
-<p>Use <code>fgetc</code> to read the file one character at a time. Update the current line number when you encounter <code>\n</code>. Update the current column as you read in each character.</p>
-</li>
-<li>
-<p>To check for matched braces, push to the stack when you encounter a '{' and then pop from the stack when you encounter '}'. If the symbols pushed and popped do not match, there is an error.</p>
-</li>
-<li>
-<p>The output of the program should match the line and column numbers that VS Code reports when you check for matched braces.</p>
-</li>
-</ul>
+<p>Implement a program, <code>danceable.c</code>, that allows users to easily access the most
+danceable songs in <code>songlist.csv</code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -283,59 +94,107 @@ Unmatched brace on Line 34 and Column 34</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-To open and read the file, use a file pointer (FILE*). See <a href="https://diveintosystems.org/book/C2-C_depth/IO.html#_file_inputoutput">File Input/Output</a> for examples.
+Unlike last week, <code>songlist.csv</code> <strong>does not</strong> contain the number of songs in the file!
+The format of the CSV file is as follows, containing a line for the header followed by all songs.
 </td>
 </tr>
 </table>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Title, Artist, Duration (ms), Danceability, Energy, Tempo, Valence
+Canned Heat,Jamiroquai,331760,0.7,0.865,128.04,0.78
+....</code></pre>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_read_ppm">3. Read PPM</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>For this question, you will implement a function, <code>read_ppm()</code>, that can read
-PPM files stored in <em>binary</em> format. This function should take a filename as input
-and return a 2D array of <code>struct pixel</code>. A <code>struct pixel</code> has the following definition</p>
+<p>Your program should re-use the code to load songs from a CSV file <strong>except</strong> instead of
+storing the songs in an array, your program should store the songs in a linked list.</p>
+</div>
+<div class="paragraph">
+<p>When the user asks for the most danceable song, your program should find the song with
+the highest danceability, show the user its information, and then delete it from the
+linked list.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>struct ppm_pixel {
-    unsigned char red;
-    unsigned char green;
-    unsigned char blue;
-};</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The user of the function <code>read_ppm</code> is reponsible for freeing the memory allocated by this function.</p>
-</div>
-<div class="paragraph">
-<p>You will re-use this function throughout the semester. For this reason, we place its implementation
-in it&#8217;s own file, <code>read_ppm.c</code>, and use a header file, <code>read_ppm.h</code>, to include it in our main application.</p>
-</div>
-<div class="paragraph">
-<p>You may implement your 2D array of pixels as either a flat array or an array or
-arrays. For example, if you return a flat array, your function should be defined
-as <code>struct ppm_pixel* read_ppm(const char* filename, int* width, int* height)</code>.
-If you return an array or arrays, your function should be defined as  <code>struct
-ppm_pixel** read_ppm(const char* filename, int* width, int* height)</code>. In both cases,
-use the parameters <code>width</code> and <code>height</code> to return the width and height of the image.</p>
-</div>
-<div class="paragraph">
-<p>In the file, <code>test_ppm.c</code>, write a short test that calls your function and prints the
-contents of <code>feep-ascii.ppm</code> like so:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make test_ppm</strong>
-gcc -g -Wall -Wvla -Werror test_ppm.c read_ppm.c -o test_ppm
-$ <strong>./test_ppm</strong>
-Testing file feep-raw.ppm: 4 4
-(0,0,0) (100,0,0) (0,0,0) (255,0,255)
-(0,0,0) (0,255,175) (0,0,0) (0,0,0)
-(0,0,0) (0,0,0) (0,15,175) (0,0,0)
-(255,0,255) (0,0,0) (0,0,0) (255,255,255)</code></pre>
+<pre class="highlight"><code>$ <strong>make danceable</strong>
+gcc -g -Wall -Wvla -Werror danceable.c -o danceable
+$ <strong>./danceable</strong>
+0) Eye of the Tiger             Survivor        (4:05s) D: 0.817 E: 0.599 T: 108.873 V: 0.548
+1) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
+2) Canned Heat                  Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
+3) The Veldt                    deadmau5        (2:50s) D: 0.736 E: 0.759 T: 128.039 V: 0.485
+4) Lose Yourself to Dance       Daft Punk       (5:53s) D: 0.832 E: 0.659 T: 100.163 V: 0.674
+
+Dataset contains 5 songs
+
+=======================
+Press 'd' to show the most danceable song (any other key to quit): <strong>d</strong>
+
+---------------------------------------- Most danceable ------------------------------------
+Lose Yourself to Dance          Daft Punk       (5:53s) D: 0.832 E: 0.659 T: 100.163 V: 0.674
+--------------------------------------------------------------------------------------------
+
+0) Eye of the Tiger             Survivor        (4:05s) D: 0.817 E: 0.599 T: 108.873 V: 0.548
+1) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
+2) Canned Heat                  Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
+3) The Veldt                    deadmau5        (2:50s) D: 0.736 E: 0.759 T: 128.039 V: 0.485
+
+Dataset contains 4 songs
+
+=======================
+Press 'd' to show the most danceable song (any other key to quit): <strong>d</strong>
+
+---------------------------------------- Most danceable ------------------------------------
+Eye of the Tiger                Survivor        (4:05s) D: 0.817 E: 0.599 T: 108.873 V: 0.548
+--------------------------------------------------------------------------------------------
+
+0) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
+1) Canned Heat                  Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
+2) The Veldt                    deadmau5        (2:50s) D: 0.736 E: 0.759 T: 128.039 V: 0.485
+
+Dataset contains 3 songs
+
+=======================
+Press 'd' to show the most danceable song (any other key to quit): <strong>d</strong>
+
+---------------------------------------- Most danceable ------------------------------------
+The Veldt                       deadmau5        (2:50s) D: 0.736 E: 0.759 T: 128.039 V: 0.485
+--------------------------------------------------------------------------------------------
+
+0) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
+1) Canned Heat                  Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
+
+Dataset contains 2 songs
+
+=======================
+Press 'd' to show the most danceable song (any other key to quit): <strong>d</strong>
+
+---------------------------------------- Most danceable ------------------------------------
+Canned Heat                     Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
+--------------------------------------------------------------------------------------------
+
+0) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
+
+Dataset contains 1 songs
+
+=======================
+Press 'd' to show the most danceable song (any other key to quit): <strong>d</strong>
+
+---------------------------------------- Most danceable ------------------------------------
+Thunderstruck                   AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
+--------------------------------------------------------------------------------------------
+
+Dataset contains 0 songs
+
+=======================
+Press 'd' to show the most danceable song (any other key to quit): <strong>d</strong>
+
+Dataset contains 0 songs
+
+=======================
+Press 'd' to show the most danceable song (any other key to quit): <strong>q</strong></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -344,142 +203,23 @@ Testing file feep-raw.ppm: 4 4
 <div class="ulist">
 <ul>
 <li>
-<p>Your function should return NULL if the filename is invalid</p>
+<p>Implement helper functions for printing, removing nodes, clearing the list, and inserting to the list.</p>
 </li>
 <li>
-<p>Your function should return NULL if memory cannot be allocated for the image data</p>
+<p>Make sure your program runs without memory leaks (check with valgrind!)</p>
 </li>
 <li>
-<p>Your function should return a pointer to the array you create in read_ppm</p>
+<p>Make sure to handle the case where the list is empty.</p>
 </li>
 <li>
-<p>You can assume that it is safe to read the header line by line (e.g. using <code>fgets</code>).</p>
-</li>
-<li>
-<p>Don&#8217;t forget to free your data!</p>
+<p>Make sure to clean up your memory if the list is non-empty when the user quits!</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ascii_art">4. ASCII Art</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>When I was a kid, my mom used to bring home dot-matrix printouts of ascii art
-for my sister and I to use as coloring books.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="img/ascii-snoopy.jpg" alt="ascii snoopy"></span></p>
-</div>
-<div class="paragraph">
-<p>For this question, write a program, <code>ascii_image.c</code>, that takes a PPM image as a
-command line argument and displays it as
-<a href="https://en.wikipedia.org/wiki/ASCII_art">ASCII Art</a>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make ascii_image</strong>
-gcc -g -Wall -Wvla -Werror ascii_image.c read_ppm.c -o ascii_image
-$ <strong>./ascii_image feep-raw.ppm</strong>
-Reading feep-raw.ppm with width 4 and height 4
-@#@:
-@;@@
-@@%@
-:@@
-$ <strong>./ascii_image smile-raw.ppm</strong>
-Reading smile-raw.ppm with width 14 and height 19
-@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@
-@@          @@
-@@          @@
-@@          @@
-@@   @  @   @@
-@@          @@
-@@ @      @ @@
-@@  @@@@@@  @@
-@@          @@
-@@          @@
-@@          @@
-@@          @@
-@@          @@
-@@          @@
-@@          @@
-@@          @@
-@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@</code></pre>
-</div>
-</div>
-<h3 id="_algorithm" class="discrete">Algorithm</h3>
-<div class="paragraph">
-<p>Step 1: For each RGB pixel in the image, compute the average intensity as follows</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[I = \frac{1}{3}(R + G + B)\]
-</div>
-</div>
-<div class="paragraph">
-<p>Step 2: Then, assign an ASCII character based on the intensity</p>
-</div>
-<table class="tableblock frame-all grid-all fit-content center">
-<colgroup>
-<col>
-<col>
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Intensity</th>
-<th class="tableblock halign-left valign-top">Symbol</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0-25</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">@</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">26-50</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">#</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">51-75</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">76-100</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">*</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">101-125</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">o</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">126-150</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">151-175</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">:</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">176-200</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">,</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">201-225</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">226-255</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;space&gt;</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_submit_your_work">5. Submit your work</h2>
+<h2 id="_submit_your_work">3. Submit your Work</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Before submitting, check that</p>
@@ -499,11 +239,11 @@ Reading smile-raw.ppm with width 14 and height 19
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ cd A03
+<pre>$ cd A04
 $ git status
 $ git add *.c
 $ git status
-$ git commit -m "A03 complete"
+$ git commit -m "A04 complete"
 $ git status
 $ git push
 $ git status</pre>
@@ -511,35 +251,71 @@ $ git status</pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_grading_rubric">4. Grading Rubric</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Assignment rubrics</strong></p>
+</div>
+<div class="paragraph">
+<p>Grades are out of 4 points.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>(4 points) Most danceable</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.1 points) style and header comment</p>
+</li>
+<li>
+<p>(0.4 points) defines a struct, reads and parses songlist.csv correctly, and has correct user input</p>
+</li>
+<li>
+<p>(1.5 points) correctly handles deletion and insertion to a linked list</p>
+</li>
+<li>
+<p>(2.0 points) creates and free linked list nodes correctly</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Code rubrics</strong></p>
+</div>
+<div class="paragraph">
+<p>For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and
+have good style.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Some credit lost for missing features or bugs, depending on severity of error</p>
+</li>
+<li>
+<p>-5% for style errors. See the <a href="../codingstandard.html">class coding style</a> here.</p>
+</li>
+<li>
+<p>-50% for memory errors</p>
+</li>
+<li>
+<p>-100% for failure to checkin work to Github</p>
+</li>
+<li>
+<p>-100% for failure to compile on linux using make</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-01 16:16:12 -0500
+Last updated 2023-02-11 09:10:25 -0500
 </div>
 </div>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  messageStyle: "none",
-  tex2jax: {
-    inlineMath: [["\\(", "\\)"]],
-    displayMath: [["\\[", "\\]"]],
-    ignoreClass: "nostem|nolatexmath"
-  },
-  asciimath2jax: {
-    delimiters: [["\\$", "\\$"]],
-    ignoreClass: "nostem|noasciimath"
-  },
-  TeX: { equationNumbers: { autoNumber: "none" } }
-})
-MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
-  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
-    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains("stemblock")) {
-      data.math.root.display = "block"
-    }
-    return data
-  })
-})
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
 </body>
 </html>

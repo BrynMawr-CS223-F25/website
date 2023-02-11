@@ -1,114 +1,22 @@
 include::header.adoc[]
 
-:title: Assignment 4: Don't be afraid to ASCII
+:title: Assignment 4: Watch where you point!
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
-:stem: latexmath
-:ASST: A03
+:ASST: A04
 
 = {title}
 
-**Due Thursday, Oct 6, before midnight**
+**Due Wednesday, February 16th, before midnight**
 
 The goals for this assignment are:
 
-* Work with files
-* Deepen our understanding of data types
-* Work with malloc/free
-* Work with 2D arrays
+* Use malloc and free
+* Work with pointer-based data structures
+* Use gdb and valgrind. 
 
 **All programs must run without memory errors and leaks!**
-
-[discrete]
-== Update your repository
-
-Do a *fetch upstream* to obtain the basecode for this assignment. 
-
-Using the command line
-
-* Open terminal and change your current directory to your assignment repository.
-* Run the command `git fetch upstream`
-* Run the command `git merge upstream/master`
-
-Your repository should now contain a new folder named `{ASST}`.
-
-The `fetch` and `merge` commands update your repository with any changes from the original.
-
-= Background: PPM
-
-link:http://netpbm.sourceforge.net/doc/ppm.html[PPM (Portable Pix Map)]
- is an image file format that stores the colors of an image as a 2D array of 
-colors. Each color is represented as a RGB triplet, representing red, green and blue respectively. 
-The properties of the image, such as its size and color format, are specified at the start of the 
-file (called its "header information"). PPM supports both ASCII (plain text) and binary data (raw). 
-
-We will write a funtion that *reads PPM files in binary format*!
-
-For example, consider the following image
-
-image::https://www.cs.swarthmore.edu/~soni/cs35/f13/Labs/images/01/example5000.png[]
-
-//In ASCII format, the above image is stored as follows. To see for yourself, do `cat feep-ascii.ppm`.
-//[source]
-//----
-//P3
-//# This is a comment
-//4 4
-//255
-//0  0  0   100 0  0       0  0  0    255   0 255
-//0  0  0    0 255 175     0  0  0     0    0  0
-//0  0  0    0  0  0       0 15 175    0    0  0
-//255 0 255  0  0  0       0  0  0    255  255 255
-//----
-
-The above image contains a 4x4 grid of colored pixels. Each pixel is a triplet of red-blue-green (RGB) color 
-values, each stored as an `unsigned char`. Unsigned chars have values which range from 0 to 255, where 
-smaller values correspond to darker colors. The triplet (0,0,0) corresponds to black. The triplet 
-(255,255,255) cooresponds to white. The triplet (255,0,0) corresponds to red. This system of colors is called 
-the link:https://en.wikipedia.org/wiki/RGB_color_model[RGB Color Model] and it is a common standard for 
-representing colors on a computer. 
-
-The RGB colors for the pixels in the above image are as follows
-
-[source]
-----
-(0,0,0)      (100,0,0)    (0,0,0)     (255,0,255)
-(0,0,0)      (0,255,175)  (0,0,0)     (0,0,0)
-(0,0,0)      (0,0,0)      (0,15,175)  (0,0,0)
-(255,0,255)  (0,0,0)      (0,0,0)     (255,255,255)
-----
-
-In binary format (also called _raw_ format), the image is stored as follows. 
-To see for yourself, do `hexedit feep-raw.ppm`.
-
-[source]
-----
-00000000   50 36 0A 23  20 43 72 65  61 74 65 64  20 62 79 20  47 49 4D 50  20 76 65 72  P6.# Created by GIMP ver 
-00000018   73 69 6F 6E  20 32 2E 31  30 2E 32 34  20 50 4E 4D  20 70 6C 75  67 2D 69 6E  sion 2.10.24 PNM plug-in
-00000030   0A 34 20 34  0A 32 35 35  0A 00 00 00  64 00 00 00  00 00 FF 00  FF 00 00 00  .4 4.255....d...........
-00000048   00 FF AF 00  00 00 00 00  00 00 00 00  00 00 00 00  0F AF 00 00  00 FF 00 FF  ........................
-00000060   00 00 00 00  00 00 FF FF  FF                                                  .........
-----
-
-The leftmost column is byte number in hexidecimal. For example, 0x18 is 24 in decimal. There are 24 bytes
-on the first row on output. The rightmost column displays the raw data in ASCII, using `.` for non-visible 
-ASCII codes, such as '\0' and 'Escape'.
-
-Regardless of format, every PPM file starts the following information in its header. 
-
-* A "magic number" indicating the type of PPM. Binary types start with "P6".
-* Whitespace  (blanks, tabs, \n, \r, etc)
-* Width and height as ASCII decimal integers (separated by whitespace)
-* Maximum color value as an ASCII decimal integer. *You can assume the Maxval is less than 256, meaning each RGB value is 1 byte.*
-* A single whitespace character
-* A raster (e.g. the array of pixels) of Height number of rows and Width number of columns, in order from top to bottom. 
-
-PPM images may contain comments in their header. These must be on their own line and start with the symbol `#`.
-
-NOTE: The header information is always in plain text. It is only the pixel data that differs between ASCII and raw formats. 
-
-NOTE: PPM files can be viewed using tools such as Photoshop and Gimp.
 
 :sectnums:
 
@@ -126,165 +34,117 @@ Your repository should now contain a new folder named `{ASST}`.
 
 The `fetch` and `merge` commands update your repository with any changes from the original.
 
-= Matching braces 
 
-Implement a program, `match_braces.c`, that takes a filename as a command line
-argument and uses a stack to check for matched braces and report any errors.
+= Most danceable
 
-[source,subs="quotes"]
-----
-$ **make match_braces**
-gcc -g -Wall -Wvla -Werror match_braces.c -o match_braces
-$ **./match_braces**
-usage: ./match_braces <filename>
-$ **./match_braces prog.c**
-Cannot open file: prog.c
-$ **./match_braces prog1.c**
-Found matching braces: (21, 32) -> (23, 5)
-Found matching braces: (25, 30) -> (28, 9)
-Found matching braces: (17, 53) -> (29, 5)
-Unmatched brace on Line 31 and Column 1
-Found matching braces: (40, 47) -> (43, 5)
-Found matching braces: (36, 18) -> (47, 1)
-Unmatched brace on Line 34 and Column 34
-----
+Implement a program, `danceable.c`, that allows users to easily access the most 
+danceable songs in `songlist.csv`. 
 
-Requirements/Hints:
-
-* Implement the functions `push`, `pop`, `clear`. Implementing `print` is also recommended to help you debug your assignment.
-* Use to input the filename. 
-* Print the usage if the user inputs an incorrect number of command line arguments
-* Print an error if your program cannot open the file
-* Use `fgetc` to read the file one character at a time. Update the current line number when you encounter `\n`. Update the current column as you read in each character. 
-* To check for matched braces, push to the stack when you encounter a '{' and then pop from the stack when you encounter '}'. If the symbols pushed and popped do not match, there is an error. 
-* The output of the program should match the line and column numbers that VS Code reports when you check for matched braces. 
-
-NOTE: To open and read the file, use a file pointer (FILE*). See link:https://diveintosystems.org/book/C2-C_depth/IO.html#_file_inputoutput[File Input/Output] for examples.
-
-
-= Read PPM
-
-For this question, you will implement a function, `read_ppm()`, that can read
-PPM files stored in _binary_ format. This function should take a filename as input
-and return a 2D array of `struct pixel`. A `struct pixel` has the following definition
-
+NOTE: Unlike last week, `songlist.csv` *does not* contain the number of songs in the file!
+The format of the CSV file is as follows, containing a line for the header followed by all songs.
 [source]
 ----
-struct ppm_pixel {
-    unsigned char red;
-    unsigned char green;
-    unsigned char blue;
-};
+Title, Artist, Duration (ms), Danceability, Energy, Tempo, Valence
+Canned Heat,Jamiroquai,331760,0.7,0.865,128.04,0.78
+....
 ----
 
-The user of the function `read_ppm` is reponsible for freeing the memory allocated by this function.
+Your program should re-use the code to load songs from a CSV file *except* instead of 
+storing the songs in an array, your program should store the songs in a linked list.
 
-You will re-use this function throughout the semester. For this reason, we place its implementation
-in it's own file, `read_ppm.c`, and use a header file, `read_ppm.h`, to include it in our main application.
-
-You may implement your 2D array of pixels as either a flat array or an array or
-arrays. For example, if you return a flat array, your function should be defined
-as `struct ppm_pixel* read_ppm(const char* filename, int* width, int* height)`.
-If you return an array or arrays, your function should be defined as  `struct
-ppm_pixel** read_ppm(const char* filename, int* width, int* height)`. In both cases, 
-use the parameters `width` and `height` to return the width and height of the image.
-
-In the file, `test_ppm.c`, write a short test that calls your function and prints the
-contents of `feep-ascii.ppm` like so:
+When the user asks for the most danceable song, your program should find the song with 
+the highest danceability, show the user its information, and then delete it from the 
+linked list.
 
 [source,subs="quotes"]
 ----
-$ **make test_ppm**
-gcc -g -Wall -Wvla -Werror test_ppm.c read_ppm.c -o test_ppm
-$ **./test_ppm**
-Testing file feep-raw.ppm: 4 4
-(0,0,0) (100,0,0) (0,0,0) (255,0,255)
-(0,0,0) (0,255,175) (0,0,0) (0,0,0)
-(0,0,0) (0,0,0) (0,15,175) (0,0,0)
-(255,0,255) (0,0,0) (0,0,0) (255,255,255)
+$ **make danceable**
+gcc -g -Wall -Wvla -Werror danceable.c -o danceable
+$ **./danceable**
+0) Eye of the Tiger             Survivor        (4:05s) D: 0.817 E: 0.599 T: 108.873 V: 0.548
+1) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
+2) Canned Heat                  Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
+3) The Veldt                    deadmau5        (2:50s) D: 0.736 E: 0.759 T: 128.039 V: 0.485
+4) Lose Yourself to Dance       Daft Punk       (5:53s) D: 0.832 E: 0.659 T: 100.163 V: 0.674
+
+Dataset contains 5 songs
+
+=======================
+Press 'd' to show the most danceable song (any other key to quit): **d**
+
+---------------------------------------- Most danceable ------------------------------------
+Lose Yourself to Dance          Daft Punk       (5:53s) D: 0.832 E: 0.659 T: 100.163 V: 0.674
+--------------------------------------------------------------------------------------------
+
+0) Eye of the Tiger             Survivor        (4:05s) D: 0.817 E: 0.599 T: 108.873 V: 0.548
+1) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
+2) Canned Heat                  Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
+3) The Veldt                    deadmau5        (2:50s) D: 0.736 E: 0.759 T: 128.039 V: 0.485
+
+Dataset contains 4 songs
+
+=======================
+Press 'd' to show the most danceable song (any other key to quit): **d**
+
+---------------------------------------- Most danceable ------------------------------------
+Eye of the Tiger                Survivor        (4:05s) D: 0.817 E: 0.599 T: 108.873 V: 0.548
+--------------------------------------------------------------------------------------------
+
+0) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
+1) Canned Heat                  Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
+2) The Veldt                    deadmau5        (2:50s) D: 0.736 E: 0.759 T: 128.039 V: 0.485
+
+Dataset contains 3 songs
+
+=======================
+Press 'd' to show the most danceable song (any other key to quit): **d**
+
+---------------------------------------- Most danceable ------------------------------------
+The Veldt                       deadmau5        (2:50s) D: 0.736 E: 0.759 T: 128.039 V: 0.485
+--------------------------------------------------------------------------------------------
+
+0) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
+1) Canned Heat                  Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
+
+Dataset contains 2 songs
+
+=======================
+Press 'd' to show the most danceable song (any other key to quit): **d**
+
+---------------------------------------- Most danceable ------------------------------------
+Canned Heat                     Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
+--------------------------------------------------------------------------------------------
+
+0) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
+
+Dataset contains 1 songs
+
+=======================
+Press 'd' to show the most danceable song (any other key to quit): **d**
+
+---------------------------------------- Most danceable ------------------------------------
+Thunderstruck                   AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
+--------------------------------------------------------------------------------------------
+
+Dataset contains 0 songs
+
+=======================
+Press 'd' to show the most danceable song (any other key to quit): **d**
+
+Dataset contains 0 songs
+
+=======================
+Press 'd' to show the most danceable song (any other key to quit): **q**
 ----
 
 Requirements/Hints:
 
-* Your function should return NULL if the filename is invalid
-* Your function should return NULL if memory cannot be allocated for the image data
-* Your function should return a pointer to the array you create in read_ppm
-* You can assume that it is safe to read the header line by line (e.g. using `fgets`).
-* Don't forget to free your data!
+* Implement helper functions for printing, removing nodes, clearing the list, and inserting to the list.
+* Make sure your program runs without memory leaks (check with valgrind!)
+* Make sure to handle the case where the list is empty.
+* Make sure to clean up your memory if the list is non-empty when the user quits!
 
-= ASCII Art
-
-When I was a kid, my mom used to bring home dot-matrix printouts of ascii art
-for my sister and I to use as coloring books. 
-
-image:ascii-snoopy.jpg[]
-
-For this question, write a program, `ascii_image.c`, that takes a PPM image as a 
-command line argument and displays it as 
-link:https://en.wikipedia.org/wiki/ASCII_art[ASCII Art].  
-
-[source,subs="quotes"]
-----
-$ **make ascii_image**
-gcc -g -Wall -Wvla -Werror ascii_image.c read_ppm.c -o ascii_image
-$ **./ascii_image feep-raw.ppm**
-Reading feep-raw.ppm with width 4 and height 4
-@#@:
-@;@@
-@@%@
-:@@
-$ **./ascii_image smile-raw.ppm**
-Reading smile-raw.ppm with width 14 and height 19
-@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@
-@@          @@
-@@          @@
-@@          @@
-@@   @  @   @@
-@@          @@
-@@ @      @ @@
-@@  @@@@@@  @@
-@@          @@
-@@          @@
-@@          @@
-@@          @@
-@@          @@
-@@          @@
-@@          @@
-@@          @@
-@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@
-----
-
-[discrete]
-== Algorithm
-
-Step 1: For each RGB pixel in the image, compute the average intensity as follows
-
-[stem]
-++++
-I = \frac{1}{3}(R + G + B)
-++++
-
-Step 2: Then, assign an ASCII character based on the intensity
-
-[.center,options="header,autowidth"]
-|===
-| Intensity | Symbol
-
-| 0-25 | @
-| 26-50 | #
-| 51-75 | %
-| 76-100 | *
-| 101-125 | o
-| 126-150 | ;
-| 151-175 | :
-| 176-200 | ,
-| 201-225 | .
-| 226-255 | <space>
-|===
-
-= Submit your work
+= Submit your Work
 
 Before submitting, check that
 
@@ -305,3 +165,25 @@ $ git push
 $ git status
 ----
 
+= Grading Rubric
+
+*Assignment rubrics*
+
+Grades are out of 4 points.
+
+* (4 points) Most danceable
+** (0.1 points) style and header comment
+** (0.4 points) defines a struct, reads and parses songlist.csv correctly, and has correct user input
+** (1.5 points) correctly handles deletion and insertion to a linked list
+** (2.0 points) creates and free linked list nodes correctly
+
+*Code rubrics*
+
+For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
+have good style.
+
+* Some credit lost for missing features or bugs, depending on severity of error
+* -5% for style errors. See the link:../codingstandard.html[class coding style] here.
+* -50% for memory errors
+* -100% for failure to checkin work to Github
+* -100% for failure to compile on linux using make

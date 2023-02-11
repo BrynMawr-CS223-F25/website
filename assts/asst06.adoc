@@ -8,7 +8,7 @@ include::header.adoc[]
 
 = {title}
 
-**Due Thursday, before midnight**
+**Due Wednesday, March 1, before midnight**
 
 The goals for this assignment are:
 
@@ -31,7 +31,37 @@ Your repository should now contain a new folder named `{ASST}`.
 
 The `fetch` and `merge` commands update your repository with any changes from the original.
 
-= Background: Steganography
+
+= Tiny Bitmaps
+
+A link:https://sneslab.net/wiki/Graphics_Format[1bpp], or 1-bit-per-pixel, 
+sprite stores a grid of black and white pixels using a single bit. 0 denotes 
+white and 1 denotes black. 
+
+image::https://sneslab.net/mw/images/c/c6/saa03_1bpp.png[width=400px] 
+
+In the program, `bitmap.c`, implement a program that reads in a single 64-bit 
+unsigned integer (e.g. `unsigned long`) and outputs it as an 8x8 1bpp sprite. 
+
+[source,subs="quotes"]
+$ **./bitmap < bitmap1.txt**
+Image (unsigned long): ff818181818181ff
+@ @ @ @ @ @ @ @
+@             @
+@             @
+@             @
+@             @
+@             @
+@             @
+@ @ @ @ @ @ @ @
+----
+
+Requirements/Hints:
+
+* Your program should *must* use a bitmask! For example, to generate a 64-bit mask that obtains the left-most bit, do `0x1ul << 63`. The `ul` indicates an `unsigned long` value. `0x1` is the number one in hexadecimal.
+* The bitmap files store the values as hexadecimal values. To read them in, do `unsigned long img; scanf(" %lx", &img);`. Use `%lx` for printf also. You are given basecode that reads in the long integer from stdin.
+
+= Steganography
 
 link:https://en.wikipedia.org/wiki/Steganography[Steganography] is the practice of hiding messages in plain sight. In this question, we will hide text messages using the least significant bits of an image. 
 
