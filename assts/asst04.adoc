@@ -175,7 +175,7 @@ Grades are out of 4 points.
 ** (0.1 points) style and header comment
 ** (0.4 points) defines a struct, reads and parses songlist.csv correctly, and has correct user input
 ** (1.5 points) correctly handles deletion and insertion to a linked list
-** (2.0 points) creates and free linked list nodes correctly
+** (2.0 points) handles file and linked list nodes correctly (no memory errors!)
 
 *Code rubrics*
 
