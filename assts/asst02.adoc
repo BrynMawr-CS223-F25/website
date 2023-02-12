@@ -213,8 +213,17 @@ $ git push
 Grades are out of 4 points.
 
 * (1 point) exclaim
+** (0.1 points) style and header comment
+** (0.4 points) correct behavior: asks the user for input and creates the new string
+** (0.5 points) no memory errors
 * (1 point) acronym 
+** (0.1 points) style and header comment
+** (0.4 points) correct behavior: asks the user for input and creates the new string
+** (0.5 points) no memory errors
 * (2 points) songs
+** (0.2 points) style and header comment
+** (0.8 points) correct behavior: reads file, prints output with columns and supports editing
+** (1.0 points) no memory errors
 
 *Code rubrics*
 
