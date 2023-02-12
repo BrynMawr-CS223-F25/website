@@ -15,7 +15,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 [.anns]
 
 * Current Agenda: link:#week05[Week 05]
-* link:assts/asst04.html[Assignment 04]: *Due Feb 16th*. 
+* link:assts/asst04.html[Assignment 04]: *Due Feb 15th*. 
 
 == Course Info
 
