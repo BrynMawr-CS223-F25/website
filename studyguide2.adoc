@@ -150,17 +150,7 @@ int main(int argc, char *argv[]) {
 
 Let's help Billie use GDB to find and fix their crash.
 
-* What command do we use to debug Billie's program using GDB?
-* What GDB command can we use to run the program?
-* When we run, the program stops with the following error. What GDB command can we use to find the function and line where the program stopped?
-[source]
-----
-Starting program: /home/billie/cs223/a.out
-
-Program received signal SIGSEGV, Segmentation fault.
-0x00005555555551b8 in initfunc ()
-----
-* The GDB terminal does not show human readable symbols. How do we fix this?
+* What is a segmentation fault?
 * What GDB command can we use to place a breakpoint at the start of the functions `main` and `initfunc`?
 * What GDB command can we use to execute the next line?
 * How do you print the parameters of `initfunc`?
