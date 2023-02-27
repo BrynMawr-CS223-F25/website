@@ -8,14 +8,15 @@ include::header.adoc[]
 
 = {title}
 
-**EXTENDED Due Monday, November 7th, before 5pm**
+**Due (In Class) Wednesday, March 15th, 1pm**
+
+**This is a written assignment, not a coding assignment!**
 
 The goals for this assignment are:
 
 * Understand basic x86_64 assembly instructions, especially memory addressing
 * Visualize the execution of x86_64 assembly instructions
 
-This is a written assignment, not a coding assignment!
 
 :sectnums:
 

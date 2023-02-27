@@ -74,7 +74,7 @@
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 7 (7.1-7.3,7.5,7.10), 10] 
 * link:assts/asst06.html[Assignment 06]: Due March 1 
-* Lab: **Jam 02 Redux**
+* Lab: **Jam 02 Redux; Study Guide 03** link:studyguide2.html[Study Guide 3]
 
 //-----------------------------
 |8
@@ -86,18 +86,18 @@
 //-----------------------------
 |9
 |March 13,15 anchor:week09[]
-|*Assembly II* 
+|*The operating system, Processes* 
 
-* link:assts/.html[Assignment 07]: Due March 22
+* link:assts/asst07.html[Assignment 07]: Due March 15
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 7 (7.1-7.3,7.5,7.10), 10] 
 
 //-----------------------------
 |10
 |March 20, 22 anchor:week10[]
-|*The operating system, Processes* 
+|*Processes and Inter-process communication (IPC)* 
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 13, skip section 13.3] 
-* link:assts/.html[Assignment 08]: Due March 29
+* link:assts/.html[Assignment 08]: Due March 22
 * Lab: **Jam 03 Redux; Jam 04 Study Guide**
 
 //-----------------------------
@@ -106,20 +106,20 @@
 |*Processes and Inter-process communication (IPC)* 
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 13.4-13.6] 
-* link:assts/.html[Assignment 09]: Due April 5
+* link:assts/.html[Assignment 09]: Due March 29th
 * **Jam 04**: link:studyguide4.html[Study Guide 4]
 
 //-----------------------------
-|11
+|12
 |April 3,5 anchor:week12[]
 |*Inter-process communication, Threads I* 
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 14] 
-* link:assts/.html[Assignment 10]: Due April 12
+* link:assts/.html[Assignment 10]: Due April 4
 * **Jam 04 Redux; Jam 05 Study Guide**
 
 //-----------------------------
-|12
+|13
 |April 10,12 anchor:week13[]
 |*Threads II* 
 
@@ -128,7 +128,7 @@
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 14] 
 
 //-----------------------------
-|13
+|14
 |April 17,19 anchor:week14[]
 |*Memory* 
 
@@ -138,7 +138,7 @@
 * Lab: **Jam 03**: link:studyguide3.html[Study Guide 3]
 
 //-----------------------------
-|14
+|15
 |April 24,26 anchor:week15[]
 |*Code Optimization, C++* 
 
