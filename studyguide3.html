@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.17">
+<meta name="generator" content="Asciidoctor 2.0.15">
 <title>Study Guide 3</title>
 <link rel="stylesheet" href="style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -13,16 +13,16 @@
 <div id="header">
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
+<ul class="sectlevel2">
 <li><a href="#_study_guide_3">Study Guide 3</a></li>
-<li><a href="#_practice_questions">Practice questions</a></li>
+<li><a href="#_additional_practice_questions">Additional Practice questions</a></li>
+<li><a href="#_programming">Programming</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_study_guide_3">Study Guide 3</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_study_guide_3">Study Guide 3</h3>
 <div class="paragraph">
 <p>Code Jams are open book. 40 minutes in lab.</p>
 </div>
@@ -56,10 +56,8 @@
 to give feedback on your responses.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_practice_questions">Practice questions</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_additional_practice_questions">Additional Practice questions</h3>
 <div class="paragraph">
 <p>1) Convert the following binary numbers to hexadecimal and decimal. Try without a calculator (but use a calculator to check your results)</p>
 </div>
@@ -109,7 +107,7 @@ to give feedback on your responses.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>4) Compute the results of the following decimal expressions using 4-bit unsigned integers. Indicate whether there is overflow. Express your final answer in hexadecimal. Show your work.</p>
+<p>4) Compute the results of the following decimal expressions using 4-bit unsigned integers. Express your final answer in hexadecimal. Show your work.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -164,10 +162,7 @@ to give feedback on your responses.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>5) Convert the following hexadecimal number to a floating-point number: <code>0x 3f c0 00 00</code></p>
-</div>
-<div class="paragraph">
-<p>6) Compute the results of the following decimal expressions using 4-bit signed integers. Indicate whether there is overflow. Express your final answer in hexadecimal. Show your answer.</p>
+<p>5) Compute the results of the following decimal expressions using 4-bit signed integers. Express your final answer in hexadecimal. Show your answer.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -222,7 +217,45 @@ to give feedback on your responses.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>7) Consider the following struct.
+<p>6) Convert the following hexadecimal number <code>0x 3f c0 00 00</code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>to a floating point number</p>
+</li>
+<li>
+<p>to an unsigned integer</p>
+</li>
+<li>
+<p>to a signed integer</p>
+</li>
+<li>
+<p>to an 32-bit RGBA color, e.g. consider each byte as a value for red, green, blue, and alpha</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>6) Convert the following hexadecimal number <code>0x 3f 6a 42</code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>to an unsigned integer</p>
+</li>
+<li>
+<p>to a signed integer</p>
+</li>
+<li>
+<p>to an 24-bit RGBA color, e.g. consider each byte as a value for red, green, blue, and alpha</p>
+</li>
+<li>
+<p>to an ASCII character string</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>8) Consider the following struct.
 Draw the contents and layout of a variable of this struct type, assuming the variable is placed in memory starting at address 0xfffffe40.</p>
 </div>
 <div class="listingblock">
@@ -235,7 +268,7 @@ Draw the contents and layout of a variable of this struct type, assuming the var
 </div>
 </div>
 <div class="paragraph">
-<p>8) Sheldon uses the following program to write an unsigned integer to a file in binary format.</p>
+<p>9) Sheldon uses the following program to write an unsigned integer to a file in binary format.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -265,7 +298,7 @@ int main() {
 </div>
 </div>
 <div class="paragraph">
-<p>8) Ava implemented the following program to keep track of her finances. However, it&#8217;s not working properly. What is going on and how can she fix it?</p>
+<p>9) Ava implemented the following program to keep track of her finances. However, it&#8217;s not working properly. What is going on and how can she fix it?</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -332,13 +365,45 @@ What would you like to do? (d = deposit,w = withdraw)
 </div>
 </div>
 <div class="paragraph">
-<p>9) Write a program, <code>lswizzle.c</code> that shifts all the bits in an unsigned integer to the left, wrapping the most significant bit into the least significant bit. For example, if the integer has binary representation <code>0b 1010 0110 0000 0000</code>, the result should be <code>0b 0100 1100 000 0001</code>.</p>
+<p>10) Consider the following program</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>1 #include &lt;stdio.h&gt;
+ 2
+ 3 int main() {
+ 4 unsigned char a = 0x7E;
+ 5 unsigned char leftMask = 0xC0;
+ 6 unsigned char rightMask = 0x03;
+ 7 unsigned char left = (leftMask &amp; a) ;
+ 8 unsigned char right = (rightMask &amp; a) ;
+ 9 unsigned char leftShift = left &gt;&gt; 4;
+ 10 unsigned char rightShift = right &lt;&lt; 4;
+ 11 unsigned flipped = leftShift | rightShift;
+ 12</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What is the value of <code>a</code> in binary?</p>
+</li>
+<li>
+<p>What is the value of <code>flipped</code>? Show your work to give a rationale for your answer.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programming">Programming</h3>
+<div class="paragraph">
+<p>1) Write a program, <code>lswizzle.c</code> that shifts all the bits in an unsigned integer to the left, wrapping the most significant bit into the least significant bit. For example, if the integer has binary representation <code>0b 1010 0110 0000 0000</code>, the result should be <code>0b 0100 1100 000 0001</code>.</p>
 </div>
 <div class="paragraph">
-<p>10) Write a program, <code>odd.c</code> that uses xor to identify the single element that appears an odd number of times in the following list: [4, 6, 8, 8, 6, 2, 3, 4, 3].</p>
+<p>2) Write a program, <code>odd.c</code> that uses xor to identify the single element that appears an odd number of times in the following list: [4, 6, 8, 8, 6, 2, 3, 4, 3].</p>
 </div>
 <div class="paragraph">
-<p>11) Write a program, <code>flag.c</code>, that allows the user to set or unset a specific bit in an unsigned integer.</p>
+<p>3) Write a program, <code>flag.c</code>, that allows the user to set or unset a specific bit in an unsigned integer.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -354,10 +419,9 @@ Your new number: 0x6d (109)</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-18 09:36:12 -0500
+Last updated 2023-02-27 11:07:09 -0500
 </div>
 </div>
 </body>

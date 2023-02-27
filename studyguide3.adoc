@@ -5,7 +5,7 @@ include::header.adoc[]
 :Date:    2020-08-15
 :Revision: 0.1
 
-= {title}
+== {title}
 
 Code Jams are open book. 40 minutes in lab.
 
@@ -22,7 +22,7 @@ Everything from link:studyguide2.html[Study Guide 2], plus
 Write C programs to check your answers. Or you can ask a TA or instructor 
 to give feedback on your responses.
 
-= Practice questions
+== Additional Practice questions
 
 1) Convert the following binary numbers to hexadecimal and decimal. Try without a calculator (but use a calculator to check your results) 
 
@@ -42,7 +42,7 @@ to give feedback on your responses.
 * 54
 * 25
 
-4) Compute the results of the following decimal expressions using 4-bit unsigned integers. Indicate whether there is overflow. Express your final answer in hexadecimal. Show your work.
+4) Compute the results of the following decimal expressions using 4-bit unsigned integers. Express your final answer in hexadecimal. Show your work.
 
 [cols="1,5"]
 |===
@@ -91,9 +91,7 @@ to give feedback on your responses.
 //|yes/no
 |=== 
 
-5) Convert the following hexadecimal number to a floating-point number: `0x 3f c0 00 00`
-
-6) Compute the results of the following decimal expressions using 4-bit signed integers. Indicate whether there is overflow. Express your final answer in hexadecimal. Show your answer.
+5) Compute the results of the following decimal expressions using 4-bit signed integers. Express your final answer in hexadecimal. Show your answer.
 
 [cols="1,5"]
 |===
@@ -142,7 +140,21 @@ to give feedback on your responses.
 //|yes/no
 |=== 
 
-7) Consider the following struct. 
+6) Convert the following hexadecimal number `0x 3f c0 00 00`
+
+* to a floating point number
+* to an unsigned integer
+* to a signed integer
+* to an 32-bit RGBA color, e.g. consider each byte as a value for red, green, blue, and alpha
+
+6) Convert the following hexadecimal number `0x 3f 6a 42`
+
+* to an unsigned integer
+* to a signed integer
+* to an 24-bit RGBA color, e.g. consider each byte as a value for red, green, blue, and alpha
+* to an ASCII character string
+
+8) Consider the following struct. 
 Draw the contents and layout of a variable of this struct type, assuming the variable is placed in memory starting at address 0xfffffe40. 
 
 [source]
@@ -154,7 +166,7 @@ struct foo {
 };
 ----
 
-8) Sheldon uses the following program to write an unsigned integer to a file in binary format.
+9) Sheldon uses the following program to write an unsigned integer to a file in binary format.
 
 [source]
 ----
@@ -182,7 +194,7 @@ When they inspect the file using hexedit, they see the following result. Does it
 00000018
 ----
 
-8) Ava implemented the following program to keep track of her finances. However, it's not working properly. What is going on and how can she fix it?
+9) Ava implemented the following program to keep track of her finances. However, it's not working properly. What is going on and how can she fix it?
 
 [source]
 ----
@@ -248,11 +260,34 @@ What would you like to do? (d = deposit,w = withdraw)
 ^C
 ----
 
-9) Write a program, `lswizzle.c` that shifts all the bits in an unsigned integer to the left, wrapping the most significant bit into the least significant bit. For example, if the integer has binary representation `0b 1010 0110 0000 0000`, the result should be `0b 0100 1100 000 0001`.
+10) Consider the following program
 
-10) Write a program, `odd.c` that uses xor to identify the single element that appears an odd number of times in the following list: [4, 6, 8, 8, 6, 2, 3, 4, 3]. 
+[source]
+----
+1 #include <stdio.h>
+ 2
+ 3 int main() {
+ 4 unsigned char a = 0x7E;
+ 5 unsigned char leftMask = 0xC0;
+ 6 unsigned char rightMask = 0x03;
+ 7 unsigned char left = (leftMask & a) ;
+ 8 unsigned char right = (rightMask & a) ;
+ 9 unsigned char leftShift = left >> 4;
+ 10 unsigned char rightShift = right << 4;
+ 11 unsigned flipped = leftShift | rightShift;
+ 12 
+----
 
-11) Write a program, `flag.c`, that allows the user to set or unset a specific bit in an unsigned integer.
+* What is the value of `a` in binary?
+* What is the value of `flipped`? Show your work to give a rationale for your answer. 
+
+== Programming
+
+1) Write a program, `lswizzle.c` that shifts all the bits in an unsigned integer to the left, wrapping the most significant bit into the least significant bit. For example, if the integer has binary representation `0b 1010 0110 0000 0000`, the result should be `0b 0100 1100 000 0001`.
+
+2) Write a program, `odd.c` that uses xor to identify the single element that appears an odd number of times in the following list: [4, 6, 8, 8, 6, 2, 3, 4, 3]. 
+
+3) Write a program, `flag.c`, that allows the user to set or unset a specific bit in an unsigned integer.
 
 [source,subs=quotes]
 ----
