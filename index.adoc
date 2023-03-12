@@ -16,7 +16,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 * Current Agenda: link:#week09[Week 09]
 * link:assts/asst07.html[Assignment 07]: *Written! Due March 15th In Class!*. 
-* *Final Exam* will be a scheduled exam May 4th, 9:30am
+* *Final Exam* will be a scheduled exam May 4th, 9:30am (3 hours, open book)
 
 == Course Info
 
