@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.17">
-<title>Assignment 8: Hold on to your memories</title>
+<meta name="generator" content="Asciidoctor 2.0.18">
+<title>Assignment 9: Many processes make light work</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,25 +14,20 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_8_hold_on_to_your_memories">Assignment 8: Hold on to your memories</a></li>
-<li><a href="#_description">1. Description</a></li>
-<li><a href="#_code_setup">2. Code setup</a></li>
-<li><a href="#_mylloc_list">3. mylloc_list</a></li>
-<li><a href="#_memory_statistics">4. Memory statistics</a>
-<ul class="sectlevel2">
-<li><a href="#_readme_due_nov_17th_in_class">4.1. README (<strong>Due Nov 17th in class</strong>)</a></li>
-</ul>
-</li>
-<li><a href="#_submit_your_work">5. Submit your work</a></li>
+<li><a href="#_assignment_9_many_processes_make_light_work">Assignment 9: Many processes make light work</a></li>
+<li><a href="#_mandelbrot_set">Mandelbrot Set</a></li>
+<li><a href="#_single">1. Single</a></li>
+<li><a href="#_multiple">2. Multiple</a></li>
+<li><a href="#_submit_your_work">3. Submit your work</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_8_hold_on_to_your_memories">Assignment 8: Hold on to your memories</h2>
+<h2 id="_assignment_9_many_processes_make_light_work">Assignment 9: Many processes make light work</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Due Thursday, , before midnight</p>
+<p><strong>Due Wednesday, March 22, at midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -40,13 +35,13 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Understand void* types and pointer arithmetic</p>
+<p>Implement an algorithm using multiple processes with fork()</p>
 </li>
 <li>
-<p>More linked list practice</p>
+<p>Compare single- and multi-process implementation performance</p>
 </li>
 <li>
-<p>Better understand malloc and free, particularly the use of the free list</p>
+<p>Work with fork(), wait(), process ids, and shared memory</p>
 </li>
 </ul>
 </div>
@@ -71,7 +66,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>Your repository should now contain a new folder named <code>A08</code>.</p>
+<p>Your repository should now contain a new folder named <code>A09</code>.</p>
 </div>
 <div class="paragraph">
 <p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
@@ -79,307 +74,312 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_description">1. Description</h2>
+<h2 id="_mandelbrot_set">Mandelbrot Set</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this assignment, we will implement our own version of malloc and free based on
-"first-fit" strategy and analyze its performance.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Mandelbrot_set">mandelbrot set</a> is fractal popularized by
+Benoit Mandelbrot in 1980.</p>
 </div>
 <div class="paragraph">
-<p>For this assignment, you should submit both</p>
+<p>The mandelbrot set consists of the set of complex numbers z for which \(z^2 + c\) does not diverge to infinity when z starts at 0. To visualize this set, recall that a <a href="https://en.wikipedia.org/wiki/Complex_number">complex number</a>, \(z = x + yi\), can be visualized as a 2D point \((x,y)\). Although the set derives from complex
+numbers, we can compute the set by thinking about 2D coordinates, \((x,y)\).</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>your code, and</p>
-</li>
-<li>
-<p>a written report, <strong>due in class, November 17th</strong></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_code_setup">2. Code setup</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Your basecode includes the following source files</p>
+<p>To see whether the complex number \((x,y)\) diverges, we simply need a loop that repeatedly computes \(z^2 + c\). If we expand the
+complex number multiplication of \(z = x + y*i\), z will change each iteration based on the following algorith. To test for divergence, we check whether z goes
+out of the bounds of 4*4. If z does go out of bounds, we assign it a color based on how quickly it "escaped" the distance 4*4. If after MAX iterations, z is still
+smaller than 4*4, it belongs to the set and we color it black.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>mylloc_list.c</code> - Malloc/free implementation that implements a free list with first-fit strategy (corresponds to <code>mhysa.c</code> in reading)</p>
-</li>
-<li>
-<p><code>rand.c</code> - Utilities for generating random sizes of memory</p>
-</li>
-<li>
-<p><code>sbrk.c</code> - Utilities for extending the amount of memory allocated to a program</p>
-</li>
-<li>
-<p><code>memstats.c</code> - A benchmark program</p>
-</li>
-<li>
-<p><code>unit_tests.c</code> - Unit tests for your malloc/free implementation</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>The last thing we need to draw the set is the region of values for x and y that bound the set.
+X should vary from -2.0 to 0.47. Y should vary from -1.12 to 1.12. Here is the full algorithm.
+Assume that the image width and height are the same, e.g. square images.</p>
 </div>
-<div class="admonitionblock note">
-<table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>for each row in the image
+   for each col in the image
+      xfrac = row / image_size
+      yfrac = col / image_size
+      x0 = xmin + xfrac * (xmax - xmin)
+      y0 = ymin + yfrac * (ymax - ymin)
+
+      x = 0
+      y = 0
+      iter = 0
+      while (iter &lt; MAX &amp;&amp; x*x + y*y &lt; 2*2)
+        xtmp = x*x - y*y + x0
+        y = 2*x*y + y0
+        x = xtmp
+        iter++
+
+      if (iter &lt; MAX) // escaped
+        color = palette[iter]
+      else
+        color = black
+
+      write color to image at location (row,col)</code></pre>
+</div>
+</div>
+<h3 id="_palette" class="discrete">Palette</h3>
+<div class="paragraph">
+<p>The palette should contain the same number of colors as MAX iterations.
+Use <code>ppm_pixel</code> to represent colors in the pallet. You can either generate
+random colors or compute a base color and jitter it e.g.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
 <tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This assignment is based on the reading: "My malloc: mylloc and mhysa" by
-Johan Montelius, posted to Slack. You should complete the reading and finish the
-implementation of <code>mylloc_list.c</code> <em>before</em> starting the assignment.
-</td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="img/mandelbrot-random.gif" alt="mandelbrot random">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>for each palette color
+  red = rand() % 255
+  green = rand() % 255
+  blue = rand() % 255</code></pre>
+</div>
+</div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="img/mandelbrot-jitter.gif" alt="mandelbrot jitter">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>basered = rand() % 255
+basegreen = rand() % 255
+baseblue = rand() % 255
+for each palette color
+  red = basered + rand() % 100 - 50
+  green = basegreen + rand() % 100 - 50
+  blue = baseblue + rand() % 100 - 50</code></pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
-</div>
 <div class="sect1">
-<h2 id="_mylloc_list">3. mylloc_list</h2>
+<h2 id="_single">1. Single</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In <code>mylloc_list.c</code>, implement malloc and free based on the reading.</p>
+<p>In the file, <code>single_mandelbrot</code>, compute a program that outputs a PPM image of the mandelbrot
+set. You have been given basecode that initializes the following values from command line arguments. This code uses the <a href="https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/">getopt function</a>.</p>
 </div>
 <div class="paragraph">
-<p>Recall that the reading steps you through implementing your own malloc/free
-based on a free list and a <em>first-fit</em> strategy.  This implementation uses a
-header to keep track of the memory requested from <code>sbrk</code>.  When we re-use memory
-that is freed, we typically will not re-use the entire block of memory. Modify
-the implementation from the reading to</p>
+<p>Arguments:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Extend this header to keep track of both the requested size and the amount of memory
-currently used in the chunk.</p>
+<p><code>-s &lt;size&gt;</code> the image width and height</p>
+</li>
+<li>
+<p><code>-l &lt;xmin&gt;</code> the leftmost coordinate, e.g. minimum x value</p>
+</li>
+<li>
+<p><code>-r &lt;xmax&gt;</code> the rightmost coordinate, e.g. maximum x value</p>
+</li>
+<li>
+<p><code>-t &lt;ymin&gt;</code> the topmost coordinate, e.g. minimum y value</p>
+</li>
+<li>
+<p><code>-b &lt;ymax&gt;</code> the bottommost coordinate, e.g. maximum y value</p>
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre class="highlight"><code>struct chunk {
-  int size; // size of memory allocated from sbrk
-  int used; // *NEW*: amount currently in use
-  struct chunk *next;
-};</code></pre>
+<img src="img/A09.png" alt="A09" height="400">
 </div>
 </div>
 <div class="paragraph">
-<p>Use the unit tests included with your assignment to test that your implementation is correct</p>
+<p>When you run your program, you should get the output such as the following</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make all</strong>
-gcc -g -Wall -Wvla -Werror memstats.c mylloc_list.c sbrk.c rand.c -o memstats -lm
-gcc -g -Wall -Wvla -Werror unit_tests.c mylloc_list.c sbrk.c rand.c -o unit_tests -lm
-$ <strong>./unit_tests</strong>
-Running tests...
-test 1: size 0 returns NULL: PASSED
-test 2: flist is NULL to start: PASSED
-test 3: flist is empty after first malloc: PASSED
-test 4: correct amount allocated: PASSED
-test 5: header size correct: PASSED
-test 6: header used correct: PASSED
-test 7: flist is non-empty after free: PASSED
-test 8: flist is empty: PASSED
-test9: correct amount allocated: PASSED
-test 10: header size correct: PASSED
-test 11: header used correct: PASSED
-test 12: flist is not empty: PASSED
-test 13: current-init correct size: PASSED
-test 14: header size correct: PASSED
-test 15: header used correct: PASSED
-test 16: flist's first node has correct size: PASSED
-test 17: flist is non-empty: PASSED
-test 18: flist's second node has correct size: PASSED</code></pre>
+<pre class="highlight"><code>$ <strong>make single_mandelbrot</strong>
+$ <strong>./single_mandelbrot</strong>
+Generating mandelbrot with size 480x480
+  X range = [-2.0000,0.4700]
+  Y range = [-1.1200,1.1200]
+Computed mandelbrot set (480x480) in 0.323261 seconds
+Writing file: mandelbrot-480-1649001071.ppm</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_memory_statistics">4. Memory statistics</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>In <code>memstats.c</code>, implement the function <code>memstats</code> to print the following information</p>
+<p>Requirements and hints:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The total number of memory blocks allocated by malloc, along with</p>
-<div class="ulist">
-<ul>
-<li>
-<p>The number of total blocks which are currently in-use</p>
+<p>You should re-use your PPM functions from A06. If you use a 2D array of arrays, be sure to modify and commit <code>read_ppm.h</code>!</p>
 </li>
 <li>
-<p>The number of total blocks which are currently free</p>
+<p>Allocate an array of pixels using malloc and then save the final image using <code>write_ppm</code>.</p>
+</li>
+<li>
+<p>You should output the number of seconds needed to compute the image. Use this <a href="https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c">class example, matrix.c</a> for an example.</p>
+</li>
+<li>
+<p>Your output filename should have the format <code>mandelbrot-&lt;size&gt;-&lt;timestamp&gt;.ppm</code>. The timestamp can be obtained by calling <code>time(0)</code>.</p>
+</li>
+<li>
+<p>Set a random seed to ensure that the color palette is different each time, e.g. <code>srand(time(0))</code></p>
+</li>
+<li>
+<p>In your <code>README.adoc</code>, call <code>single_mandelbrot</code> with sizes of 100, 400, 800, 1000, and 2000. Record the number of seconds it takes to compute each image.</p>
+</li>
+<li>
+<p>(Optional) Experiment with visualizing other regions of the mandelbrot set. For example, if you run with <code>./single_mandelbrot -s 480 -l -0.02524993 -r 0.00975 -b -0.8172 -t -0.79725</code>, you get the following image</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p>The total amount of memory allocated by malloc, along with</p>
-<div class="ulist">
-<ul>
-<li>
-<p>The total amount of memory currently in-use</p>
-</li>
-<li>
-<p>The total amount of memory currently free</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>The amount of underutilised memory as a percentage. This is the percent of memory that is held in buffers but not being used.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>For example, your function might produce the following output</p>
-</div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre class="highlight"><code>Total blocks: 8 Free blocks: 6 Used blocks: 2
-Total memory allocated: 9665 Free memory: 4427 Used memory: 5238
-Underutilized memory: 0.48</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You are given code to simulate many random allocations and frees. After
-implementing your function, you should get the following output.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>./memstats</strong>
-Starting test..
-The initial top of the heap is 0x7feffe84d010.
----------------
-0
-Allocating 452 bytes at index 0
-Allocating 1042 bytes at index 4
-Allocating 45 bytes at index 1
-Freeing index 0
-Allocating 68 bytes at index 0
-Freeing index 1
-Freeing index 0
-Allocating 127 bytes at index 3
-Allocating 1141 bytes at index 2
-Allocating 89 bytes at index 1
-The new top of the heap is 0x7feffe84db31.
-Increased by 2849 (0xb21) bytes
-Total blocks: 5 Free blocks: 1 Used blocks: 4
-Total memory allocated: 2769 Free memory: 45 Used memory: 2724
-Underutilized memory: 0.12
----------------
-1
-Freeing index 3
-Allocating 47 bytes at index 0
-Freeing index 4
-Freeing index 1
-Freeing index 2
-Freeing index 0
-Allocating 3426 bytes at index 1
-Freeing index 1
-Allocating 39 bytes at index 2
-Allocating 163 bytes at index 4
-The new top of the heap is 0x7feffe84e8a3.
-Increased by 3442 (0xd72) bytes
-Total blocks: 6 Free blocks: 4 Used blocks: 2
-Total memory allocated: 6195 Free memory: 2317 Used memory: 3878
-Underutilized memory: 0.95
----------------
-2
-Allocating 1658 bytes at index 3
-Allocating 1812 bytes at index 0
-Freeing index 3
-Allocating 39 bytes at index 3
-Allocating 156 bytes at index 1
-Freeing index 3
-Freeing index 1
-Freeing index 4
-Freeing index 2
-Allocating 921 bytes at index 1
-The new top of the heap is 0x7feffe84f651.
-Increased by 3502 (0xdae) bytes
-Total blocks: 8 Free blocks: 6 Used blocks: 2
-Total memory allocated: 9665 Free memory: 4427 Used memory: 5238
-Underutilized memory: 0.48
-Time is 4.1e-05</code></pre>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_readme_due_nov_17th_in_class">4.1. README (<strong>Due Nov 17th in class</strong>)</h3>
-<div class="paragraph">
-<p>Read this section and answer the corresponding questions. We will visualize the execution of <code>memstats.c</code> for Round 1.
-When the program starts, we have no buffers allocated and the free list is empty.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="img/memstats0.png" alt="memstats0"></span></p>
-</div>
-<div class="paragraph">
-<p>After the first 3 allocations, the buffers and free list look as follows:</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="img/memstats1.png" alt="memstats1"></span></p>
-</div>
-<div class="paragraph">
-<p>After the next iteration, we have</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="img/memstats2.png" alt="memstats2"></span></p>
-</div>
-<div class="paragraph">
-<p>After the next iteration, we have
-<span class="image"><img src="img/memstats3.png" alt="memstats3"></span></p>
-</div>
-<div class="paragraph">
-<p>After the next iteration, we have
-<span class="image"><img src="img/memstats4.png" alt="memstats4"></span></p>
-</div>
-<div class="paragraph">
-<p>At the end of round 1, the buffers and free list look as follows</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="img/memstats5.png" alt="memstats5"></span></p>
-</div>
-<div class="paragraph">
-<p>Answer the following questions:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Why is the total memory allocated equal to 2769 bytes?</p>
-</li>
-<li>
-<p>If the total memory is equal to 2769 bytes, why did the heap increase by 2849 bytes?</p>
-</li>
-<li>
-<p>Why is the underutilized memory 12%?</p>
-</li>
-<li>
-<p>Draw the buffers and free list after round 1</p>
-</li>
-<li>
-<p>Draw the buffers and free list after round 2</p>
-</li>
-</ol>
+<img src="img/mandelbrot-480-subregion.png" alt="mandelbrot 480 subregion">
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_submit_your_work">5. Submit your work</h2>
+<h2 id="_multiple">2. Multiple</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Submit both your code (by midnight) <strong>and</strong> your written questions (due in class Thursday).</p>
+<p>In the file, <code>multi_mandelbrot</code>, compute a program that outputs a PPM image of
+the mandelbrot set using multiple processes spawned with <code>fork()</code>.  Your
+basecode implements the same command line arguments in with <code>single_mandelbrot</code>.</p>
+</div>
+<div class="paragraph">
+<p>Your program should use <code>shared memory</code> to split the computation of the image across
+4 child processes. After each child completes, the parent process should save the
+result to a file using <code>write_ppm</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./multi_mandelbrot</strong>
+Generating mandelbrot with size 480x480
+  Num processes = 4
+  X range = [-2.0000,0.4700]
+  Y range = [-1.1200,1.1200]
+Launched child process: 9150
+Launched child process: 9151
+9150) Sub-image block: cols (0, 240) to rows (0,240)
+9151) Sub-image block: cols (240, 480) to rows (0,240)
+Launched child process: 9152
+9152) Sub-image block: cols (0, 240) to rows (240,480)
+Launched child process: 9153
+9153) Sub-image block: cols (240, 480) to rows (240,480)
+Child process complete: 9150
+Child process complete: 9152
+Child process complete: 9151
+Child process complete: 9153
+Computed mandelbrot set (480x480) in 0.152178 seconds
+Writing file: multi-mandelbrot-480-1649001405.ppm</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/A09-multi.png" alt="A09 multi" height="400">
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements and hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You should re-use your PPM functions from A06. If you use a 2D array of arrays, be sure to modify and commit <code>read_ppm.h</code>!</p>
+</li>
+<li>
+<p>Allocate an array of pixels using <code>shared memory</code> and then save the final image using <code>write_ppm</code>. Use the example from class as a reference.</p>
+</li>
+<li>
+<p>Print the pids and work tasks for each child.</p>
+</li>
+<li>
+<p>Refactor the code from <code>single_mandelbrot</code> to compute the mandelbrot set using a function. Then re-use the same function in both <code>single_mandelbrot.c</code> and <code>multi_mandelbrot.c</code></p>
+</li>
+<li>
+<p>Use <code>fork()</code> to create 4 child processes and <code>wait()</code> to wait for each to complete.</p>
+</li>
+<li>
+<p>You should output the number of seconds needed to compute the image. Use this <a href="https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c">class example, matrix.c</a> for an example.</p>
+</li>
+<li>
+<p>Your output filename should have the format <code>multi-mandelbrot-&lt;size&gt;-&lt;timestamp&gt;.ppm</code>. The timestamp can be obtained by calling <code>time(0)</code>.</p>
+</li>
+<li>
+<p>Set a random seed to ensure that the color palette is different each time, e.g. <code>srand(time(0))</code></p>
+</li>
+<li>
+<p>In your <code>README.adoc</code>, call <code>single_mandelbrot</code> with sizes of 100, 400, 800, 1000, and 2000. Record the number of seconds it takes to compute each image.</p>
+</li>
+</ul>
+</div>
+<h3 id="_cleaning_up_leaked_shared_memory_files" class="discrete">Cleaning up leaked shared memory files</h3>
+<div class="paragraph">
+<p>If a program does not detatch and remove a shared memory file, the system can
+run out of shared memory resources. We can clean up these files manually.</p>
+</div>
+<div class="paragraph">
+<p>To check for shared memory files on your system, run the command <code>ipcs</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>ipcs -m</strong>
+
+<em><em></em><em> shared Memory Segments </em><em></em></em>_
+key        shmid      owner      perms      bytes      nattch     status
+0x00000000 4          alinen     644        41         0
+0x00000000 5          alinen     644        41         0
+0x00000000 6          alinen     644        41         0
+0x00000000 7          alinen     644        41         0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To remove a shared memory file, run the command <code>ipcrm -m &lt;shmid&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>We have given you a script, <a href="shm_cleanup.sh"><code>shm_cleanup.sh</code></a>, that will remove all shared
+memory files on your system.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>ipcs -m</strong>
+
+<em><em></em></em> Shared Memory Segments <em><em></em><em></em>
+key        shmid      owner      perms      bytes      nattch     status
+0x00000000 4          alinen     644        41         0
+0x00000000 5          alinen     644        41         0
+0x00000000 6          alinen     644        41         0
+0x00000000 7          alinen     644        41         0
+
+$ <strong>./shm_cleanup.sh</strong>
+$ <strong>ipcs -m</strong>
+
+</em><em><em>_ Shared Memory Segments </em><em></em></em>_
+key        shmid      owner      perms      bytes      nattch     status</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_submit_your_work">3. Submit your work</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Submit both your code, images, <strong>and</strong> a brief report containing your results in your README.</p>
 </div>
 <div class="paragraph">
 <p>1) Push your code work to github</p>
@@ -400,7 +400,7 @@ $ git status</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-01 16:16:41 -0500
+Last updated 2023-03-12 16:01:30 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

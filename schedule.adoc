@@ -74,7 +74,7 @@
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 7 (7.1-7.3,7.5,7.10), 10] 
 * link:assts/asst06.html[Assignment 06]: Due March 1 
-* Lab: **Jam 02 Redux; Study Guide 03** link:studyguide2.html[Study Guide 3]
+* Lab: **Jam 02 Redux; Study Guide 03** link:studyguide3.html[Study Guide 3]
 
 //-----------------------------
 |8
@@ -89,43 +89,44 @@
 |*The operating system, Processes* 
 
 * link:assts/asst07.html[Assignment 07]: Due March 15 **Hardcopy due in class!**
-* Read: link:https://diveintosystems.org/singlepage/[Chapter 7 (7.1-7.3,7.5,7.10), 10] 
+* Lab: **Study Guide 03** link:studyguide3.html[Study Guide 3]
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 13, skip section 13.3] 
 
 //-----------------------------
 |10
 |March 20, 22 anchor:week10[]
 |*Processes and Inter-process communication (IPC)* 
 
-* Read: link:https://diveintosystems.org/singlepage/[Chapter 13, skip section 13.3] 
-* link:assts/.html[Assignment 08]: Due March 22
-* Lab: **Jam 03 Redux; Jam 04 Study Guide**
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 13.4-13.6] 
+* link:assts/.html[Assignment 08,Part I]: Due March 22
+* Lab: **Quiz 03**
 
 //-----------------------------
 |11
 |March 27,29 anchor:week11[]
-|*Processes and Inter-process communication (IPC)* 
+|*Inter-process communication, Threads I* 
 
-* Read: link:https://diveintosystems.org/singlepage/[Chapter 13.4-13.6] 
-* link:assts/.html[Assignment 09]: Due March 29th
-* **Jam 04**: link:studyguide4.html[Study Guide 4]
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 14] 
+* link:assts/.html[Assignment 08,Part II]: Due March 29
+* Lab: **Study Guide 04**: link:studyguide4.html[Study Guide 4]
 
 //-----------------------------
 |12
 |April 3,5 anchor:week12[]
-|*Inter-process communication, Threads I* 
+|*Inter-process communication, Threads II* 
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 14] 
-* link:assts/.html[Assignment 10]: Due April 4
-* **Jam 04 Redux; Jam 05 Study Guide**
+* link:assts/.html[Assignment 09, Part I]: Due April 5
+* Lab: **Quiz 04**
 
 //-----------------------------
 |13
 |April 10,12 anchor:week13[]
-|*Threads II* 
+|*Threads III* 
 
-* link:assts/.html[Assignment 11]: Due April 19
-* Lab: **Jam 05**, link:studyguide5.html[Study Guide 5]
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 14] 
+* link:assts/.html[Assignment 09, Part II]: Due April 12
+* **Jam 05 Study Guide**: link:studyguide5.html[Study Guide 5]
 
 //-----------------------------
 |14
@@ -134,8 +135,8 @@
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 11.1-11.3] 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 11.5, Malloc Handout] 
-* link:assts/asst12.html[Assignment 12]: Due April 26
-* Lab: **Jam 03**: link:studyguide3.html[Study Guide 3]
+* link:assts/asst10.html[Assignment 10]: Due April 26
+* Lab: **Quiz 05**, link:studyguide5.html[Study Guide 5]
 
 //-----------------------------
 |15
@@ -143,7 +144,7 @@
 |*Code Optimization, C++* 
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 12] 
-* link:studyguide6.html[Study Guide 6]
+* Lab: **Jam 06 Study Guide** link:studyguide6.html[Study Guide 6]
 * link:studyguide-final.html[Final Study Guide]
 
 |===
