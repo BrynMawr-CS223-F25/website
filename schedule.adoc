@@ -88,7 +88,7 @@
 |March 13,15 anchor:week09[]
 |*The operating system, Processes* 
 
-* link:assts/asst07.html[Assignment 07]: Due March 15 **Hardcopy due in class!**
+* link:assts/asst07.html[Assignment 07]: Due March 15 **Hardcopy due at Park 200B**
 * Lab: **Study Guide 03** link:studyguide3.html[Study Guide 3]
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 13, skip section 13.3] 
 
@@ -98,7 +98,7 @@
 |*Processes and Inter-process communication (IPC)* 
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 13.4-13.6] 
-* link:assts/.html[Assignment 08,Part I]: Due March 22
+* link:assts/asst08-1.html[Assignment 08,Part I]: Due March 22
 * Lab: **Quiz 03**
 
 //-----------------------------
@@ -107,7 +107,7 @@
 |*Inter-process communication, Threads I* 
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 14] 
-* link:assts/.html[Assignment 08,Part II]: Due March 29
+* link:assts/asst08-2.html[Assignment 08,Part II]: Due March 29
 * Lab: **Study Guide 04**: link:studyguide4.html[Study Guide 4]
 
 //-----------------------------
