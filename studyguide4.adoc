@@ -48,12 +48,12 @@ Can you answer the following?
 #include <stdio.h>
 int main() {
   int a = 40;
-  int value = a / 2;
+  int value = a << 2;
   printf("values = %d", value); 
 }
 ----
 
-2) Try modifying the assembly code from Q1 to divide by 4 instead of 2. 
+2) Try modifying the assembly code from Q1 to shift by 4 instead of 2. 
 Edit the file `div.S` and use the command `gcc div.S` to build `a.out`.
 
 {nbsp} +

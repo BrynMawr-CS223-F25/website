@@ -84,13 +84,13 @@
 <pre class="highlight"><code>#include &lt;stdio.h&gt;
 int main() {
   int a = 40;
-  int value = a / 2;
+  int value = a &lt;&lt; 2;
   printf("values = %d", value);
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>2) Try modifying the assembly code from Q1 to divide by 4 instead of 2.
+<p>2) Try modifying the assembly code from Q1 to shift by 4 instead of 2.
 Edit the file <code>div.S</code> and use the command <code>gcc div.S</code> to build <code>a.out</code>.</p>
 </div>
 <div class="paragraph">
@@ -487,7 +487,7 @@ Edit the file <code>div.S</code> and use the command <code>gcc div.S</code> to b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-17 19:27:53 -0500
+Last updated 2023-03-27 12:10:12 -0400
 </div>
 </div>
 </body>
