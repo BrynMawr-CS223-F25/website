@@ -1,15 +1,15 @@
 include::header.adoc[]
 
-:title: Assignment 8: Hold on to your memories
+:title: Assignment 10: Hold on to your memories
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
 :stem: latexmath
-:ASST: A08
+:ASST: A10
 
 = {title}
 
-Due Thursday, , before midnight
+Due Wednesday, 19th, before midnight
 
 The goals for this assignment are:
 
@@ -38,12 +38,12 @@ The `fetch` and `merge` commands update your repository with any changes from th
 = Description
 
 In this assignment, we will implement our own version of malloc and free based on 
-"first-fit" strategy and analyze its performance. 
+"first-fit" strategy and analyze its behavior. 
 
 For this assignment, you should submit both 
 
 * your code, and
-* a written report, *due in class, November 17th*
+* a written report, *due in class, April 12th*
 
 = Code setup
 
@@ -120,7 +120,7 @@ In `memstats.c`, implement the function `memstats` to print the following inform
 * The total amount of memory allocated by malloc, along with
 ** The total amount of memory currently in-use 
 ** The total amount of memory currently free 
-* The amount of underutilised memory as a percentage. This is the percent of memory that is held in buffers but not being used.
+* The amount of underutilised memory as a percentage. This is the percent of memory that has been allocated by `sbrk` but not being used by the application.
 
 For example, your function might produce the following output
 

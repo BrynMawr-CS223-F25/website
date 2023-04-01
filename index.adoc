@@ -14,9 +14,9 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* Current Agenda: link:#week11[Week 11]
-* link:assts/asst08-2.html[Assignment 08 (Part 2)]: Due March 29th, by midnight. 
-* *Final Exam* will be a scheduled exam May 4th, 9:30am (3 hours, open book) in Park 245
+* Current Agenda: link:#week12[Week 12]
+* link:assts/asst09-1.html[Assignment 09 (Part 1)]: Due April 5th, by midnight. 
+* *Final Exam* will be a scheduled exam May 4th, 9:30am (3 hours, open book/laptop) in Park 245
 
 == Course Info
 

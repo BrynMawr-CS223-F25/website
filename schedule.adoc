@@ -104,7 +104,7 @@
 //-----------------------------
 |11
 |March 27,29 anchor:week11[]
-|*Inter-process communication, Threads I* 
+|*Threads I* 
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 14] 
 * link:assts/asst08-2.html[Assignment 08,Part II]: Due March 29
@@ -113,10 +113,10 @@
 //-----------------------------
 |12
 |April 3,5 anchor:week12[]
-|*Inter-process communication, Threads II* 
+|*Threads II* 
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 14] 
-* link:assts/.html[Assignment 09, Part I]: Due April 5
+* link:assts/asst09-1.html[Assignment 09, Part I]: Due April 5
 * Lab: **Quiz 04**
 
 //-----------------------------
@@ -125,7 +125,7 @@
 |*Threads III* 
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 14] 
-* link:assts/.html[Assignment 09, Part II]: Due April 12
+* link:assts/asst09-2.html[Assignment 09, Part II]: Due April 12
 * **Jam 05 Study Guide**: link:studyguide5.html[Study Guide 5]
 
 //-----------------------------
