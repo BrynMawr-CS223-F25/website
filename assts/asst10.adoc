@@ -9,7 +9,7 @@ include::header.adoc[]
 
 = {title}
 
-Due Wednesday, 19th, before midnight
+Due Wednesday, April 19th, before midnight
 
 The goals for this assignment are:
 
@@ -193,7 +193,7 @@ Underutilized memory: 0.48
 Time is 4.1e-05
 ----
 
-== README (*Due Nov 17th in class*)
+== README (*Due April 19th in class*)
 
 Read this section and answer the corresponding questions. We will visualize the execution of `memstats.c` for Round 1.
 When the program starts, we have no buffers allocated and the free list is empty. 
@@ -228,7 +228,7 @@ Answer the following questions:
 
 = Submit your work
 
-Submit both your code (by midnight) *and* your written questions (due in class Thursday).
+Submit both your code (by midnight) *and* your written questions (due in class Wednesday).
 
 1) Push your code work to github
 
