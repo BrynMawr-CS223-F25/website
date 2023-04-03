@@ -16,6 +16,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 * Current Agenda: link:#week12[Week 12]
 * link:assts/asst09-1.html[Assignment 09 (Part 1)]: Due April 5th, by midnight. 
+* *Class Canceled: April 19th*
 * *Final Exam* will be a scheduled exam May 4th, 9:30am (3 hours, open book/laptop) in Park 245
 
 == Course Info

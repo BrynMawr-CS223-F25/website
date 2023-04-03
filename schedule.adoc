@@ -122,28 +122,29 @@
 //-----------------------------
 |13
 |April 10,12 anchor:week13[]
-|*Threads III* 
+|*Memory* 
 
-* Read: link:https://diveintosystems.org/singlepage/[Chapter 14] 
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 11.1-11.3] 
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 11.5, Malloc Handout] 
 * link:assts/asst09-2.html[Assignment 09, Part II]: Due April 12
 * **Jam 05 Study Guide**: link:studyguide5.html[Study Guide 5]
 
 //-----------------------------
 |14
-|April 17,19 anchor:week14[]
-|*Memory* 
+|April 17 anchor:week14[]
+|*Memory, Compiling and linking, Code optimization* 
 
-* Read: link:https://diveintosystems.org/singlepage/[Chapter 11.1-11.3] 
-* Read: link:https://diveintosystems.org/singlepage/[Chapter 11.5, Malloc Handout] 
+* *NO Class April 19th!*
+* Read: link:https://diveintosystems.org/singlepage/[Chapter 12] 
+* Read: link:https://diveintosystems.org/singlepage/[Section 2.9.5] 
 * link:assts/asst10.html[Assignment 10]: Due April 26
 * Lab: **Quiz 05**, link:studyguide5.html[Study Guide 5]
 
 //-----------------------------
 |15
 |April 24,26 anchor:week15[]
-|*Code Optimization, C++* 
+|*C++* 
 
-* Read: link:https://diveintosystems.org/singlepage/[Chapter 12] 
 * Lab: **Jam 06 Study Guide** link:studyguide6.html[Study Guide 6]
 * link:studyguide-final.html[Final Study Guide]
 
