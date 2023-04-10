@@ -15,33 +15,17 @@ to help you organize the material so you can access it quickly.
 
 The exam will be a mix of written answers and coding.
 
-Topics:
-
-Everything from link:studyguide6.html[Study Guide 6], plus
-
-* Parallel program performance
-* Code optimization
-
 = Coding Instructions
 
-Your final exam will have the following instructions (but with a *different* repository URL)
-
-A special repository has been created for you on Github with the url
+Your final exam will have two coding questions. You should check in your code to
+ the following repository:
 
 [source]
 ----
-git@github.com:BrynMawr-CS223-F22/<YOUR_USERNAME>-final-exam-practice.git
+git@github.com:BrynMawr-CS223-F22/<YOUR_USERNAME>-code.git
 ----
 
-Your username is your university email, e.g. one of
-
-[cols="1,1,1,1"]
-|===
-| amarmerada | ychen1 | cragobar | ddinh
-| dsoemitro | bho | jfabiandub | jkang1
-| jtorres | ssitaf | tduong | tfeshbach
-| tchinzorig | | |
-|===
+Your username is your university email
 
 Part of your final grade is your ability to clone your repository, commit, and 
 push your code.
@@ -56,7 +40,7 @@ If a question is unclear, state your assumptions and answer best you can.
 
 = Git and coding practice
 
-Try cloning the repository above and writing code for the following questions.
+Try updating the repository above and writing code for the following questions.
 
 1) Write a multi-threaded program, `average.c`, that computes the average of a
 list of numbers (at least 4 threads). You can assume that the size of the list
@@ -65,3 +49,8 @@ can be evenly divided by 4.
 2) Write a program, `flip.c` that reads in a text file and writes it to a new file with each word reversed. 
 
 3) Write a program, `odd.c` that uses xor to identify the single element that appears an odd number of times in the following list: [4, 6, 8, 8, 6, 2, 3, 4, 3]. 
+
+= Short answer practice
+
+Can you briefly answer the following questions with a sentence or two?
+
