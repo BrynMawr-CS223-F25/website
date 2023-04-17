@@ -126,6 +126,7 @@
 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 11.1-11.3] 
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 11.5, Malloc Handout] 
+* Read: link:https://diveintosystems.org/singlepage/[Section 2.9.5] 
 * link:assts/asst09-2.html[Assignment 09, Part II]: Due April 12
 * **Jam 05 Study Guide**: link:studyguide5.html[Study Guide 5]
 
@@ -136,8 +137,8 @@
 
 * *NO Class April 19th!*
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 12] 
-* Read: link:https://diveintosystems.org/singlepage/[Section 2.9.5] 
-* link:assts/asst10.html[Assignment 10]: Due April 26
+* link:assts/asst10.html[Assignment 10]: Due April 19
+* **Jam 06 Study Guide**: link:studyguide6.html[Study Guide 6]
 
 //-----------------------------
 |15
