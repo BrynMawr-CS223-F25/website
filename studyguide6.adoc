@@ -221,15 +221,8 @@ for (int i = 0; i < N; i++) {
 
 Short answers
 
-* What is the difference between compiling and linking?
-* What is a library? When would you use one?
-* What are differences between an application and a library?
-* What is the difference between static and dynamic libraries? Why might you want to use one over the other?
-* What does the pre-processor do?
-* What is the purpose of compiling and linking?
 * Give examples of the types of code that the compiler can optimize
-* Give an example of code that cannot be optimized by the compiler
-* What is the difference between a header file (.h) and an implementation file (*.c)? 
+* Give an example of code that cannot be optimized by the compiler?
 
 1) Ann-marie has the following errors when she tried to build. What type of error is it (compile, link, runtime, or logical)? How can she fix it?
 
@@ -254,34 +247,43 @@ for (int i = 0; i < strlen(text); i++) {
 }
 ----
 
+////
+== Compiling and linking
 
-//== Compiling and linking
-//
-//4) Tymothy would like to create a library for creating color pallettes. The
-//functions in their library would have the following APIs. 
-//
-//[source]
-//----
-//struct ppm_pixel {
-//  union {
-//    struct {
-//      unsigned char red;
-//      unsigned char green;
-//      unsigned char blue;
-//    };
-//    unsigned char colors[3];
-//  };
-//};
-//
-//// Creates and initializes a pallet with the given number of random colors
-//struct ppm_pixel* create_pallette(int size);
-//
-//// Frees the memory associated with the given pallette
-//void delete_pallette(struct ppm_pixel* pallette);
-//----
-//
-//* How can Tymothy use `ar` to create a static library?
-//* How can Tymothy use `gcc` to create a shared library?
-//* How might Tymothy implement the given functions?
-//* Are the commands for building a library different
-//* How can Tymothy use the functions in their library? Write a program that tests the pallet function.
+* What is the difference between compiling and linking?
+* What is a library? When would you use one?
+* What are differences between an application and a library?
+* What is the difference between static and dynamic libraries? Why might you want to use one over the other?
+* What does the pre-processor do?
+* What is the purpose of compiling and linking?
+* What is the difference between a header file (.h) and an implementation file (*.c)? 
+
+1) Tymothy would like to create a library for creating color pallettes. The
+functions in their library would have the following APIs. 
+
+[source]
+----
+struct ppm_pixel {
+  union {
+    struct {
+      unsigned char red;
+      unsigned char green;
+      unsigned char blue;
+    };
+    unsigned char colors[3];
+  };
+};
+
+// Creates and initializes a pallet with the given number of random colors
+struct ppm_pixel* create_pallette(int size);
+
+// Frees the memory associated with the given pallette
+void delete_pallette(struct ppm_pixel* pallette);
+----
+
+* How can Tymothy use `ar` to create a static library?
+* How can Tymothy use `gcc` to create a shared library?
+* How might Tymothy implement the given functions?
+* Are the commands for building a library different
+* How can Tymothy use the functions in their library? Write a program that tests the pallet function.
+////
