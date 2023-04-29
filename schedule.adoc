@@ -133,9 +133,9 @@
 //-----------------------------
 |14
 |April 17 anchor:week14[]
-|*Memory, Compiling and linking, Code optimization* 
+|*Memory, Code optimization* 
 
-* *NO Class April 19th!*
+* *No Class April 19th!*
 * Read: link:https://diveintosystems.org/singlepage/[Chapter 12] 
 * link:assts/asst10.html[Assignment 10]: Due April 19
 * **Jam 06 Study Guide**: link:studyguide6.html[Study Guide 6]

@@ -17,7 +17,19 @@
 <li><a href="#_study_guide_for_final">Study Guide for Final</a></li>
 <li><a href="#_coding_instructions">Coding Instructions</a></li>
 <li><a href="#_git_and_coding_practice">Git and coding practice</a></li>
-<li><a href="#_short_answer_practice">Short answer practice</a></li>
+<li><a href="#_short_answer_practice">Short answer practice</a>
+<ul class="sectlevel2">
+<li><a href="#_c_programming_and_tools">C programming and tools</a></li>
+<li><a href="#_binary_representations_of_data">Binary Representations of Data</a></li>
+<li><a href="#_von_neuman_architecture">Von Neuman Architecture</a></li>
+<li><a href="#_x86_64_assembly">x86_64 Assembly</a></li>
+<li><a href="#_operating_system">Operating system</a></li>
+<li><a href="#_processes">Processes</a></li>
+<li><a href="#_threads">Threads</a></li>
+<li><a href="#_memory">Memory</a></li>
+<li><a href="#_compiler_optimizations">Compiler optimizations</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -82,10 +94,100 @@ list of numbers (at least 4 threads). You can assume that the size of the list
 can be evenly divided by 4.</p>
 </div>
 <div class="paragraph">
-<p>2) Write a program, <code>flip.c</code> that reads in a text file and writes it to a new file with each word reversed.</p>
+<p>2) Write a program, <code>odd.c</code> that uses xor to identify the single element that appears an odd number of times in the following list: [4, 6, 8, 8, 6, 2, 3, 4, 3].</p>
 </div>
 <div class="paragraph">
-<p>3) Write a program, <code>odd.c</code> that uses xor to identify the single element that appears an odd number of times in the following list: [4, 6, 8, 8, 6, 2, 3, 4, 3].</p>
+<p>3) Write a program, <code>flip.c</code> that reads in a text file and reverses each word.
+Use file redirection so you can read from standard input (e.g. with scanf) and then write to standard output (e.g. with printf).
+A perfect answer should not reverse punctuation (commas, colons, semi-colons and periods). You do not need
+to preserve whitespace.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make flip</strong>
+$ <strong>cat input.txt</strong>
+This is a test input for
+the question flip. The quick, brown fox
+loves to jump and sing. But does the cat sing also?
+$ <strong>./flip < input.txt</strong>
+sihT si a tset tupni rof eht noitseuq pilf. ehT kciuq, nworb xof sevol ot pmuj and gnis. tuB seod eht tac gnis osla?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>4) Write a program, <code>flags.c</code>, that asks the user for an animal code and
+then prints the animal&#8217;s attributes. Attributes are stored in the code like
+so:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The lowest order bit stores whether the animal can fly.</p>
+</li>
+<li>
+<p>The second lowest order bit stores whether the animal can swim.</p>
+</li>
+<li>
+<p>The third lowest order bit stores whether the animal can run.</p>
+</li>
+<li>
+<p>The fourth lowest order bit stores whether the animal can climb.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example, if the animal&#8217;s code is <code>0x46</code>, the binary representation is
+<code>0b 0100 0110</code> and we see the animal can swim and run.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make flags</strong>
+gcc -g -Wall -Wvla -Werror flags.c -o flags
+$ <strong>./flags</strong>
+Enter an animal code: 70
+Hex code: 46
+Your animal can swim!
+Your animal can run!
+$ <strong>./flags</strong>
+Enter an animal code: 31
+Hex code: 1f
+Your animal can fly!
+Your animal can swim!
+Your animal can run!
+Your animal can climb!
+$ <strong>./flags</strong>
+Enter an animal code: 16
+Hex code: 10</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Your program should use bitwise operators for full credit. A straight-forward approach is to define masks for each attribute and then test the code against each mask.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>5) Write a program, <code>longest.c</code>, that asks the user for a list of words and prints
+out the longest one. You can assume that each word fits in a buffer with 32 characters.
+Your program should use malloc for full credit.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make longest</strong>
+gcc -g -Wall -Wvla -Werror longest.c -o longest -lm
+$ <strong>./longest</strong>
+Enter a number of words: 4
+word: apple
+word: pea
+word: tomato
+word: cucumber
+The longest word is cucumber.</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -95,12 +197,401 @@ can be evenly divided by 4.</p>
 <div class="paragraph">
 <p>Can you briefly answer the following questions with a sentence or two?</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>What is systems programming?</p>
+</li>
+<li>
+<p>What is the execution stack? What is a stack frame?</p>
+</li>
+<li>
+<p>What is the heap?</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_c_programming_and_tools">C programming and tools</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Why is systems programming often done in assembler, C, and C++?</p>
+</li>
+<li>
+<p>What is git? How does git differ from Github?</p>
+</li>
+<li>
+<p>What are the purposes of git&#8217;s add, commit, push and pull commands?</p>
+</li>
+<li>
+<p>What is the terminal? the command line? the command prompt?</p>
+</li>
+<li>
+<p>What is a shell? What shell do we use on goldengate?</p>
+</li>
+<li>
+<p>What is the difference between static and dynamic allocation of memory?</p>
+</li>
+<li>
+<p>How do we dynamically allocate memory in C?</p>
+</li>
+<li>
+<p>Think of an example where we would need to allocate memory dynamically?</p>
+</li>
+<li>
+<p>What is a pointer?</p>
+</li>
+<li>
+<p>What are common uses of pointers in C?</p>
+</li>
+<li>
+<p>What are the differences between pass-by-value and pass-by-pointer?</p>
+</li>
+<li>
+<p>Think of an example where we would need to pass a function argument by pointer.</p>
+</li>
+<li>
+<p>What is a segmentation fault? Give three (or more) coding mistakes that cause segmentation faults.</p>
+</li>
+<li>
+<p>What is valgrind? How do we use it?</p>
+</li>
+<li>
+<p>What is gdb? How can we use it?</p>
+</li>
+<li>
+<p>What is malloc and free?</p>
+</li>
+<li>
+<p>What does the compiler do? What do we need the compiler?</p>
+</li>
+<li>
+<p>What is a binary executable file?</p>
+</li>
+<li>
+<p>Why do we need to recompile C code to run on different hardware and operating systems?</p>
+</li>
+<li>
+<p>What is a library? What does the linker do?</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_binary_representations_of_data">Binary Representations of Data</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>How are strings represented in binary?</p>
+</li>
+<li>
+<p>How are floating-point numbers represented in binary?</p>
+</li>
+<li>
+<p>What is a bit?</p>
+</li>
+<li>
+<p>What is a byte? e.g. How many bits are in a byte?</p>
+</li>
+<li>
+<p>Suppose we have 4 bytes of data in memory. How do we know whether these bytes represent string, floating-point number, color, or integer?</p>
+</li>
+<li>
+<p>What is overflow? When does it occur for signed integers? When do it occur for unsigned integers?</p>
+</li>
+<li>
+<p>How do we negate a binary number?</p>
+</li>
+<li>
+<p>What is signed extension?</p>
+</li>
+<li>
+<p>What is the difference between text and binary files? How can we read and write from either?</p>
+</li>
+<li>
+<p>What is the different between little endian and big endian byte ordering?</p>
+</li>
+<li>
+<p>Why (and when) is padding added to structs?</p>
+</li>
+<li>
+<p>What is the difference between logical and arithmetic shifts?</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_von_neuman_architecture">Von Neuman Architecture</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>What is the CPU?</p>
+</li>
+<li>
+<p>What is RAM?</p>
+</li>
+<li>
+<p>What is ISA?</p>
+</li>
+<li>
+<p>What are the five main components of any Von Neuman Architecture?</p>
+</li>
+<li>
+<p>What is the ALU?</p>
+</li>
+<li>
+<p>What are registers? Name several important registers that are contained in the CPU.</p>
+</li>
+<li>
+<p>What is a hardware bus?</p>
+</li>
+<li>
+<p>What four steps are performed by the computing architecture everytime it executed an instruction.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_x86_64_assembly">x86_64 Assembly</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>What is assembly language?</p>
+</li>
+<li>
+<p>What types of operands are there in assembly?</p>
+</li>
+<li>
+<p>How does assembly handle data types?</p>
+</li>
+<li>
+<p>What does the <code>lea</code> instruction do? How does it differ from the <code>mov</code> command?</p>
+</li>
+<li>
+<p>How are parameters passed to functions?</p>
+</li>
+<li>
+<p>How is machine code generated from source code? What is the relationship between machine code and assembly?</p>
+</li>
+<li>
+<p>What is a register?</p>
+</li>
+<li>
+<p>What is a memory form?</p>
+</li>
+<li>
+<p>What do the registers %rsp and %rbp represent? How do they relate to functions?</p>
+</li>
+<li>
+<p>What the do the registers %rax and %eax typically represent? When do we use one versus the other?</p>
+</li>
+<li>
+<p>What two steps occur when the CPU executes the instruction <code>push %rbp</code>?</p>
+</li>
+<li>
+<p>What two steps occur when the CPU executes the instruction <code>pop %rbp</code>?</p>
+</li>
+<li>
+<p>What does <code>callq</code> do?</p>
+</li>
+<li>
+<p>What does <code>retq</code> do?</p>
+</li>
+<li>
+<p>How is the function stack implemented in assembler?</p>
+</li>
+<li>
+<p>Why do buffer overflows present security risks? What is the easiest way to avoid security risks with buffer overflows?</p>
+</li>
+<li>
+<p>What does it mean to <code>reverse engineer</code> a program?</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_operating_system">Operating system</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>What is the operating system?</p>
+</li>
+<li>
+<p>What happens when the operating system runs a program?</p>
+</li>
+<li>
+<p>Name three operating systems.</p>
+</li>
+<li>
+<p>What does it mean to say that processes have a "lone view" of the operating system?</p>
+</li>
+<li>
+<p>What is the BIOS or UEFI for?</p>
+</li>
+<li>
+<p>Why do processes <code>time share</code> the CPU? What are the benefits of time sharing?</p>
+</li>
+<li>
+<p>What must the OS do to context switch between processes?</p>
+</li>
+<li>
+<p>What is virtual address space (VAS)? What are some advantages of VAS?</p>
+</li>
+<li>
+<p>When does the OS send the SIGSEGV signal?</p>
+</li>
+<li>
+<p>How do we send a kill signal to a process?</p>
+</li>
+<li>
+<p>What is the difference between an interrupt and a trap?</p>
+</li>
+<li>
+<p>Why do we need interrupts and traps?</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_processes">Processes</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>What is a process?</p>
+</li>
+<li>
+<p>What states can a process be in?</p>
+</li>
+<li>
+<p>What is IPC?</p>
+</li>
+<li>
+<p>Why do we need special mechanisms, such as pipes or sockets, to communicate between processes?</p>
+</li>
+<li>
+<p>How can you kill a process using <code>ps</code> ?</p>
+</li>
+<li>
+<p>What states can a process be in?</p>
+</li>
+<li>
+<p>What is a zombie process?</p>
+</li>
+<li>
+<p>What are the different states that a process can be in?</p>
+</li>
+<li>
+<p>Why might we want to register a signal handler for the SIGKILL or SIGSEGV signal?</p>
+</li>
+<li>
+<p>What are the differences between shared memory, signals and pipes?</p>
+</li>
+<li>
+<p>For processes to run concurrently, what is needed in terms of hardware?</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_threads">Threads</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>What is a thread?</p>
+</li>
+<li>
+<p>What is a mutex? When do we need to use mutex?</p>
+</li>
+<li>
+<p>What is a race condition?</p>
+</li>
+<li>
+<p>What does it mean for a task to be atomic?</p>
+</li>
+<li>
+<p>What is deadlock?</p>
+</li>
+<li>
+<p>What does it mean for a function to be thread safe?</p>
+</li>
+<li>
+<p>Why and when might we want to use multiple threads?</p>
+</li>
+<li>
+<p>When might we want to use multiple processes versus multiple threads?</p>
+</li>
+<li>
+<p>For threads to run concurrently, what is needed in terms of hardware?</p>
+</li>
+<li>
+<p>When designing a multi-threaded application, what factors should we consider?</p>
+</li>
+<li>
+<p>What mechanisms can we use to synchronize between threads?</p>
+</li>
+<li>
+<p>What is a <code>critical section</code> of code?
+*</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_memory">Memory</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>What is the memory hierarchy?</p>
+</li>
+<li>
+<p>What are some examples of primary storage?</p>
+</li>
+<li>
+<p>What are some examples of secondary storage?</p>
+</li>
+<li>
+<p>What is locality and what impact does it have on performance?</p>
+</li>
+<li>
+<p>What is sbrk()? Why do we use functions such as malloc and free, rather than call sbrk() directly from our programs?</p>
+</li>
+<li>
+<p>In the reading on <code>malloc</code>, what was the purpose of the free list?</p>
+</li>
+<li>
+<p>What are three characteristics of different types of memory?</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_compiler_optimizations">Compiler optimizations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>What are different metrics we might consider for optimizing a program?</p>
+</li>
+<li>
+<p>What types of optimizations can the compiler do?</p>
+</li>
+<li>
+<p>What types of optimizations can the compiler NOT do?</p>
+</li>
+<li>
+<p>What is function inlining?</p>
+</li>
+<li>
+<p>What is loop unrolling?</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-04-10 12:34:36 -0400
+Last updated 2023-04-29 15:21:04 -0400
 </div>
 </div>
 </body>

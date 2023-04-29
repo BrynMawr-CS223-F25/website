@@ -46,11 +46,214 @@ Try updating the repository above and writing code for the following questions.
 list of numbers (at least 4 threads). You can assume that the size of the list
 can be evenly divided by 4.
 
-2) Write a program, `flip.c` that reads in a text file and writes it to a new file with each word reversed. 
+2) Write a program, `odd.c` that uses xor to identify the single element that appears an odd number of times in the following list: [4, 6, 8, 8, 6, 2, 3, 4, 3]. 
 
-3) Write a program, `odd.c` that uses xor to identify the single element that appears an odd number of times in the following list: [4, 6, 8, 8, 6, 2, 3, 4, 3]. 
+3) Write a program, `flip.c` that reads in a text file and reverses each word.
+Use file redirection so you can read from standard input (e.g. with scanf) and then write to standard output (e.g. with printf).
+A perfect answer should not reverse punctuation (commas, colons, semi-colons and periods). You do not need 
+to preserve whitespace. 
+
+[source, subs="quotes"]
+----
+$ *make flip*
+$ *cat input.txt*
+This is a test input for
+the question flip. The quick, brown fox
+loves to jump and sing. But does the cat sing also?
+$ *./flip < input.txt*
+sihT si a tset tupni rof eht noitseuq pilf. ehT kciuq, nworb xof sevol ot pmuj and gnis. tuB seod eht tac gnis osla? 
+----
+
+
+4) Write a program, `flags.c`, that asks the user for an animal code and 
+then prints the animal's attributes. Attributes are stored in the code like 
+so:
+
+* The lowest order bit stores whether the animal can fly.
+* The second lowest order bit stores whether the animal can swim.
+* The third lowest order bit stores whether the animal can run.
+* The fourth lowest order bit stores whether the animal can climb.
+
+For example, if the animal's code is `0x46`, the binary representation is 
+`0b 0100 0110` and we see the animal can swim and run.
+
+[source,subs="quotes"]
+----
+$ **make flags**
+gcc -g -Wall -Wvla -Werror flags.c -o flags
+$ **./flags**
+Enter an animal code: 70
+Hex code: 46
+Your animal can swim!
+Your animal can run!
+$ **./flags**
+Enter an animal code: 31
+Hex code: 1f
+Your animal can fly!
+Your animal can swim!
+Your animal can run!
+Your animal can climb!
+$ **./flags**
+Enter an animal code: 16
+Hex code: 10
+----
+
+NOTE: Your program should use bitwise operators for full credit. A straight-forward approach is to define masks for each attribute and then test the code against each mask.
+
+5) Write a program, `longest.c`, that asks the user for a list of words and prints
+out the longest one. You can assume that each word fits in a buffer with 32 characters.
+Your program should use malloc for full credit.
+
+[source,subs="quotes"]
+----
+$ **make longest**
+gcc -g -Wall -Wvla -Werror longest.c -o longest -lm
+$ **./longest**
+Enter a number of words: 4
+word: apple
+word: pea
+word: tomato
+word: cucumber
+The longest word is cucumber.
+----
+
 
 = Short answer practice
 
 Can you briefly answer the following questions with a sentence or two?
 
+* What is systems programming?
+* What is the execution stack? What is a stack frame?
+* What is the heap?
+
+== C programming and tools
+
+* Why is systems programming often done in assembler, C, and C++?
+* What is git? How does git differ from Github?
+* What are the purposes of git's add, commit, push and pull commands?
+* What is the terminal? the command line? the command prompt?
+* What is a shell? What shell do we use on goldengate?
+* What is the difference between static and dynamic allocation of memory?
+* How do we dynamically allocate memory in C?
+* Think of an example where we would need to allocate memory dynamically?
+* What is a pointer? 
+* What are common uses of pointers in C?
+* What are the differences between pass-by-value and pass-by-pointer?
+* Think of an example where we would need to pass a function argument by pointer.
+* What is a segmentation fault? Give three (or more) coding mistakes that cause segmentation faults. 
+* What is valgrind? How do we use it?
+* What is gdb? How can we use it? 
+* What is malloc and free?
+* What does the compiler do? What do we need the compiler?
+* What is a binary executable file?
+* Why do we need to recompile C code to run on different hardware and operating systems?
+* What is a library? What does the linker do? 
+
+== Binary Representations of Data
+
+* How are strings represented in binary?
+* How are floating-point numbers represented in binary?
+* What is a bit?
+* What is a byte? e.g. How many bits are in a byte?
+* Suppose we have 4 bytes of data in memory. How do we know whether these bytes represent string, floating-point number, color, or integer? 
+* What is overflow? When does it occur for signed integers? When do it occur for unsigned integers?
+* How do we negate a binary number?
+* What is signed extension?
+* What is the difference between text and binary files? How can we read and write from either?
+* What is the different between little endian and big endian byte ordering?
+* Why (and when) is padding added to structs?
+* What is the difference between logical and arithmetic shifts?
+
+== Von Neuman Architecture
+
+* What is the CPU?
+* What is RAM?
+* What is ISA?
+* What are the five main components of any Von Neuman Architecture?
+* What is the ALU?
+* What are registers? Name several important registers that are contained in the CPU.
+* What is a hardware bus?
+* What four steps are performed by the computing architecture everytime it executed an instruction.
+
+== x86_64 Assembly
+
+* What is assembly language?
+* What types of operands are there in assembly?
+* How does assembly handle data types?
+* What does the `lea` instruction do? How does it differ from the `mov` command?
+* How are parameters passed to functions?
+* How is machine code generated from source code? What is the relationship between machine code and assembly?
+* What is a register? 
+* What is a memory form?
+* What do the registers %rsp and %rbp represent? How do they relate to functions?
+* What the do the registers %rax and %eax typically represent? When do we use one versus the other? 
+* What two steps occur when the CPU executes the instruction `push %rbp`?
+* What two steps occur when the CPU executes the instruction `pop %rbp`?
+* What does `callq` do?
+* What does `retq` do?
+* How is the function stack implemented in assembler? 
+* Why do buffer overflows present security risks? What is the easiest way to avoid security risks with buffer overflows?
+* What does it mean to `reverse engineer` a program?
+
+== Operating system
+
+* What is the operating system?
+* What happens when the operating system runs a program?
+* Name three operating systems.
+* What does it mean to say that processes have a "lone view" of the operating system?
+* What is the BIOS or UEFI for?
+* Why do processes `time share` the CPU? What are the benefits of time sharing?
+* What must the OS do to context switch between processes?
+* What is virtual address space (VAS)? What are some advantages of VAS?
+* When does the OS send the SIGSEGV signal?
+* How do we send a kill signal to a process?
+* What is the difference between an interrupt and a trap?
+* Why do we need interrupts and traps?
+
+== Processes
+
+* What is a process? 
+* What states can a process be in?
+* What is IPC?
+* Why do we need special mechanisms, such as pipes or sockets, to communicate between processes?
+* How can you kill a process using `ps` ?
+* What states can a process be in?
+* What is a zombie process?
+* What are the different states that a process can be in?
+* Why might we want to register a signal handler for the SIGKILL or SIGSEGV signal?
+* What are the differences between shared memory, signals and pipes?
+* For processes to run concurrently, what is needed in terms of hardware?
+ 
+== Threads 
+
+* What is a thread?
+* What is a mutex? When do we need to use mutex?
+* What is a race condition?
+* What does it mean for a task to be atomic?
+* What is deadlock?
+* What does it mean for a function to be thread safe?
+* Why and when might we want to use multiple threads?
+* When might we want to use multiple processes versus multiple threads?
+* For threads to run concurrently, what is needed in terms of hardware?
+* When designing a multi-threaded application, what factors should we consider?
+* What mechanisms can we use to synchronize between threads?
+* What is a `critical section` of code?
+* 
+
+== Memory
+
+* What is the memory hierarchy?
+* What are some examples of primary storage?
+* What are some examples of secondary storage?
+* What is locality and what impact does it have on performance? 
+* What is sbrk()? Why do we use functions such as malloc and free, rather than call sbrk() directly from our programs?
+* In the reading on `malloc`, what was the purpose of the free list?
+* What are three characteristics of different types of memory?
+
+== Compiler optimizations
+
+* What are different metrics we might consider for optimizing a program?
+* What types of optimizations can the compiler do? 
+* What types of optimizations can the compiler NOT do? 
+* What is function inlining?
+* What is loop unrolling?
