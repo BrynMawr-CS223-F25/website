@@ -15,6 +15,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 [.anns]
 
 * *Final Exam* will be a scheduled exam May 4th, 9:30am (3 hours, open book/laptop) in Park 245
+* Check out the link:studyguide-final.html[Final Study Guide]
 
 == Course Info
 
