@@ -15,6 +15,17 @@ to help you organize the material so you can access it quickly.
 
 The exam will be a mix of written answers and coding.
 
+Topics:
+
+Everything!
+
+* link:studyguide1.html[Study Guide 1] 
+* link:studyguide2.html[Study Guide 2] 
+* link:studyguide3.html[Study Guide 3] 
+* link:studyguide4.html[Study Guide 4] 
+* link:studyguide5.html[Study Guide 5] 
+* link:studyguide6.html[Study Guide 6] 
+
 = Coding Instructions
 
 Your final exam will have two coding questions. You should check in your code to
