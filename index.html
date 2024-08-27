@@ -11,7 +11,7 @@
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>CMSC 223: Systems Programming&#8201;&#8212;&#8201;Spring 2023</h1>
+<h1>CMSC 223: Systems Programming&#8201;&#8212;&#8201;Fall 2023</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -20,8 +20,17 @@
 <li><a href="#_meeting_times">Meeting Times</a></li>
 </ul>
 </li>
-<li><a href="#_text_and_tools">Text and Tools</a></li>
 <li><a href="#_schedule"><strong>Schedule</strong></a></li>
+<li><a href="#_text_and_tools">Text and Tools</a>
+<ul class="sectlevel2">
+<li><a href="#_unix_bash_makefiles">Unix, Bash, Makefiles</a></li>
+<li><a href="#_editors">Editors</a></li>
+<li><a href="#_git">Git</a></li>
+<li><a href="#_c_language">C Language</a></li>
+<li><a href="#_gdb">GDB</a></li>
+<li><a href="#_valgrind">Valgrind</a></li>
+</ul>
+</li>
 <li><a href="#_grading_policies">Grading Policies</a>
 <ul class="sectlevel2">
 <li><a href="#_labs_and_exams">Labs and exams</a></li>
@@ -31,10 +40,9 @@
 </li>
 <li><a href="#_academic_integrity">Academic Integrity</a></li>
 <li><a href="#_academic_accommodations">Academic Accommodations</a></li>
+<li><a href="#_covid_policy">Covid Policy</a></li>
 <li><a href="#_academic_support">Academic support</a></li>
-<li><a href="#_covid">Covid</a></li>
 <li><a href="#_title_ix">Title IX</a></li>
-<li><a href="#_external_links">External Links</a></li>
 </ul>
 </div>
 </div>
@@ -47,10 +55,7 @@
 <div class="ulist anns">
 <ul>
 <li>
-<p><strong>Final Exam</strong> will be a scheduled exam May 4th, 9:30am (3 hours, open book/laptop) in Park 245</p>
-</li>
-<li>
-<p>Check out the <a href="studyguide-final.html">Final Study Guide</a></p>
+<p>Welcome to Fall 2024! For those of you who are about to rock, I salute you!</p>
 </li>
 </ul>
 </div>
@@ -63,12 +68,13 @@
 <p><strong>Welcome to CS223: Systems Programming</strong>!</p>
 </div>
 <div class="paragraph">
-<p>Systems programming provides a foundation for the implementation of programs and
-toolkits that serve as infrastructure for other software, such as compilers,
-operating systems, networking APIs, and graphics engines.  Topics include
+<p>Systems programming is the foundation of all software and toolkits that serve as
+infrastructure for other software, such as compilers,
+operating systems, networking APIs, and graphics engines. Systems programming directly
+interacts with machine characteristics and low-level data types. Class topics include
 pointers, bit representations of data, x86_64 assembly, memory management,
 processes, and threads.  In this class, students will gain hands-on experience
-implementing low-level algorithms and data structures using C.  Furthermore,
+implementing low-level algorithms and data structures using C. Additionally,
 students will build technical skills related to makefiles, interactive
 debugging, version control, and command-line shell interaction. C++ and STL
 will be introduced at the end of the course.</p>
@@ -91,49 +97,31 @@ will be introduced at the end of the course.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Lecture</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Park 245</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Monday and Wednesday 1:10 PM - 2:30 PM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Park 159</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tuesday and Thursday 11:40 AM - 1:00 PM</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Lab</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Park 230</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Monday 2:40 PM - 4:00 PM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Thursday 2:40 PM - 4:00 PM</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Office Hours - Prof. Normoyle</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">200A</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Wednesdays, 2:30-3:30 PM, or by appointment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Office Hours - Prof. Aline Normoyle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">200B</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friday, 9:30-11:00 AM</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Office Hours - Jasmine</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Office Hours - Paprika Chen</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Park 231</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Wednesdays, 7-8 PM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TBA</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Office Hours - Synarah</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Office Hours - Celia Chen</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Park 231</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tuesdays, 6-7 PM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TBA</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_text_and_tools">Text and Tools</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Dive into Systems</strong> by Suzanne J. Matthews, Tia Newhall, and Kevin C. Webb.  Available free online from <a href="https://diveintosystems.org/">Dive into Systems</a></p>
-</li>
-<li>
-<p><strong>Github Account</strong> Please go to <a href="https://github.com/">github.com</a> and register. You will be using github to submit assignments.</p>
-</li>
-<li>
-<p><strong>Slack</strong> Please go to <a href="https://slack.com/signin">slack.com</a>. Our workspace is BrynMawr-CS223-S23. You can ask questions and request one-on-one help over zoom using this course&#8217;s slack channel.</p>
-</li>
-</ul>
 </div>
 </div>
 </div>
@@ -160,14 +148,14 @@ on lecture content, worksheets, and assignments.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Jan 18 <a id="week01"></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">September 3, 5 <a id="week01"></a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><strong>Introductions, Hello C</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Appendix 1</a></p>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_appendix_1_chapter_1_for_java_programmers">Appendix 1</a></p>
 </li>
 <li>
 <p><a href="http://linuxcommand.org/lc3_learning_the_shell.php">Learning the shell</a></p>
@@ -175,12 +163,18 @@ on lecture content, worksheets, and assignments.</p>
 <li>
 <p>Topics: Programming at the command line, Makefiles, From Java to C</p>
 </li>
+<li>
+<p><a href="assts/asst01.html">Assignment 01</a>: Due Sept 6</p>
+</li>
+<li>
+<p>Lab: SSH and Github setup</p>
+</li>
 </ul>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Jan 23,25 <a id="week02"></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sept 10, 12 <a id="week02"></a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><strong>More C, Introduction to Pointers</strong></p>
 </div>
@@ -190,23 +184,23 @@ on lecture content, worksheets, and assignments.</p>
 <p>Topics: Function stacks, scope</p>
 </li>
 <li>
-<p><a href="assts/asst01.html">Assignment 01</a>: Due Jan 25</p>
-</li>
-<li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Sections 2.1-2.8, 2.9 (Command line arguments only)</a></p>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_a_deeper_dive_into_c_programming">Sections 2.1-2.8, 2.9 (Command line arguments only)</a></p>
 </li>
 <li>
 <p><a href="https://pythontutor.com/c.html#mode=edit">C Tutor</a></p>
 </li>
 <li>
-<p>Lab: SSH and Github setup</p>
+<p>Lab Sept 12: Quiz 01 practice, <a href="studyguide1.html">Study Guide: Quiz 01</a></p>
+</li>
+<li>
+<p><a href="assts/asst02.html">Assignment 02</a>: Sept 12</p>
 </li>
 </ul>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Jan 30, Feb 1 <a id="week03"></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sept 17, 19 <a id="week03"></a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><strong>Pointers, malloc/free</strong></p>
 </div>
@@ -216,20 +210,20 @@ on lecture content, worksheets, and assignments.</p>
 <p>Topics: Heap, dynamically-allocated memory (malloc, free), More arrays</p>
 </li>
 <li>
-<p><a href="assts/asst02.html">Assignment 02</a>: Feb 1</p>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_a_deeper_dive_into_c_programming">Sections 2.1-2.8, 2.9 (Command line arguments only)</a></p>
 </li>
 <li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Sections 2.1-2.8, 2.9 (Command line arguments only)</a></p>
+<p>Lab Sept 19: <strong>Quiz 01</strong></p>
 </li>
 <li>
-<p>Lab: Quiz 01 practice, <a href="studyguide1.html">Study Guide</a></p>
+<p><a href="assts/asst03.html">Assignment 03</a>: Due Feb 8</p>
 </li>
 </ul>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Feb 6,8 <a id="week04"></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sept 24, 26 <a id="week04"></a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><strong>Pointer-based data structures. Debugging.</strong></p>
 </div>
@@ -239,88 +233,68 @@ on lecture content, worksheets, and assignments.</p>
 <p>Topics: Linked lists in C. GDB, Valgrind</p>
 </li>
 <li>
-<p><a href="assts/asst03.html">Assignment 03</a>: Due Feb 8</p>
-</li>
-<li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Sections 3.1-3.3</a></p>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_c_debugging_tools">Sections 3.1-3.3</a></p>
 </li>
 <li>
 <p>Read: <a href="http://svslibrary.pbworks.com/f/Data+Structures+and+Algorithm+Analysis+in+C+-+Mark+Allen+Weiss.pdf">Data Structures in C, Mark Allen Weiss, Chpt 3</a></p>
 </li>
 <li>
-<p>Lab: <strong>Code Jam 01</strong>, <a href="studyguide1.html">Study Guide</a></p>
+<p>Sept 26 Lab: Quiz 02 Practice, <a href="studyguide2.html">Study Guide: Quiz 02</a></p>
 </li>
 </ul>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Feb 13,15 <a id="week05"></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Oct 1,3 <a id="week05"></a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><strong>Binary and Data Representation I</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Chapter 4.1-4.3</a></p>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_binary_and_data_representation">Chapter 4.1-4.3</a></p>
 </li>
 <li>
-<p><a href="assts/asst04.html">Assignment 04</a>: Due Feb 15</p>
+<p><a href="assts/asst04.html">Assignment 04</a>:</p>
 </li>
 <li>
-<p>Lab: <strong>Jam Redux 01; Study Guide 02</strong></p>
+<p>Lab Oct 3:  <strong>Quiz 02</strong></p>
 </li>
 </ul>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Feb 20,22 <a id="week06"></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Oct 8, 10 <a id="week06"></a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Binary and Data Representation II</strong></p>
+<p><strong>Binary and Data Representation II, Intro to Assembly</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Chapter 4.4-4.9</a></p>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_binary_and_data_representation">Chapter 4.4-4.9</a></p>
 </li>
 <li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Section 5.1, Chapter 6</a></p>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_what_von_neumann_knew_computer_architecture">Section 5, 5.1</a></p>
 </li>
 <li>
-<p><a href="assts/asst05.html">Assignment 05</a>: Due Feb 22</p>
+<p>Read: <a href="https://diveintosystems.org/singlepage/##_assembly_chapter">Chapter 6</a></p>
 </li>
 <li>
-<p>Lab: <strong>Code Jam 02</strong>, <a href="studyguide2.html">Study Guide 2</a></p>
+<p><a href="assts/asst05.html">Assignment 05</a>:</p>
+</li>
+<li>
+<p>Lab Oct 10: Practice Quiz 03, <a href="studyguide3.html">Study Guide 3</a></p>
 </li>
 </ul>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Feb 27, March 1 <a id="week07"></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Oct 16,19 <a id="week08"></a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Computer architecture, Assembly</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Chapter 7 (7.1-7.3,7.5,7.10), 10</a></p>
-</li>
-<li>
-<p><a href="assts/asst06.html">Assignment 06</a>: Due March 1</p>
-</li>
-<li>
-<p>Lab: <strong>Jam 02 Redux; Study Guide 03</strong> <a href="studyguide3.html">Study Guide 3</a></p>
-</li>
-</ul>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">March 6,8 <a id="week08"></a></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Spring Break</strong></p>
+<p><strong>Fall Break</strong></p>
 </div>
 <div class="ulist">
 <ul>
@@ -331,78 +305,104 @@ on lecture content, worksheets, and assignments.</p>
 </div></div></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Oct 22, 24 <a id="week07"></a></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Assembly</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_x64_assembly_chapter">Chapter 7 (7.1-7.3,7.5,7.10), 10</a></p>
+</li>
+<li>
+<p><a href="assts/asst06.html">Assignment 06</a>:</p>
+</li>
+<li>
+<p>Lab: Practice Quiz 04 <a href="studyguide4.html">Study Guide: Quiz 04</a></p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">March 13,15 <a id="week09"></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Oct 29,31 <a id="week09"></a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><strong>The operating system, Processes</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="assts/asst07.html">Assignment 07</a>: Due March 15 <strong>Hardcopy due at Park 200B</strong></p>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_the_operating_system">Chapter 13, skip section 13.3</a></p>
 </li>
 <li>
-<p>Lab: <strong>Study Guide 03</strong> <a href="studyguide3.html">Study Guide 3</a></p>
+<p><a href="assts/asst07.html">Assignment 07</a>: Due TODO <strong>Hardcopy due at Park 200B</strong></p>
 </li>
 <li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Chapter 13, skip section 13.3</a></p>
+<p>Lab:</p>
 </li>
 </ul>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">March 20, 22 <a id="week10"></a></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Processes and Inter-process communication (IPC)</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Chapter 13.4-13.6</a></p>
-</li>
-<li>
-<p><a href="assts/asst08-1.html">Assignment 08,Part I</a>: Due March 22</p>
-</li>
-<li>
-<p>Lab: <strong>Quiz 03</strong></p>
-</li>
-</ul>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">March 27,29 <a id="week11"></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nov 5, 7 <a id="week10"></a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><strong>Threads I</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Chapter 14</a></p>
+<p>Nov 5: NO CLASS. ELECTION Day</p>
 </li>
 <li>
-<p><a href="assts/asst08-2.html">Assignment 08,Part II</a>: Due March 29</p>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_the_operating_system">Chapter 13.4-13.6</a></p>
 </li>
 <li>
-<p>Lab: <strong>Study Guide 04</strong>: <a href="studyguide4.html">Study Guide 4</a></p>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_some_advanced_c_features">Section 2.9.3, 2.9.4 (void* andpointer arithmetic)</a></p>
+</li>
+<li>
+<p><a href="assts/TODO.html">Assignment 08</a>: Due</p>
+</li>
+<li>
+<p>Lab:</p>
 </li>
 </ul>
 </div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">April 3,5 <a id="week12"></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nov 12, 14 <a id="week11"></a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><strong>Threads II</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Chapter 14</a></p>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era">Chapter 14</a></p>
 </li>
 <li>
-<p><a href="assts/asst09-1.html">Assignment 09, Part I</a>: Due April 5</p>
+<p><a href="assts/TODO.html">Assignment 09</a>: Due</p>
+</li>
+<li>
+<p>Lab: <a href="studyguide4.html">Study Guide 4</a></p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nov 19,21 <a id="week12"></a></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Threads III</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era">Chapter 14</a></p>
+</li>
+<li>
+<p><a href="assts/TODO.html">Assignment 10, Part I</a>: Due</p>
 </li>
 <li>
 <p>Lab: <strong>Quiz 04</strong></p>
@@ -412,33 +412,24 @@ on lecture content, worksheets, and assignments.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">13</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">April 10,12 <a id="week13"></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nov 26 <a id="week13"></a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Memory</strong></p>
+<p><strong>Threads IV</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Chapter 11.1-11.3</a></p>
+<p>Nov 28: Thanksgiving, NO CLASS</p>
 </li>
 <li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Chapter 11.5, Malloc Handout</a></p>
-</li>
-<li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Section 2.9.5</a></p>
-</li>
-<li>
-<p><a href="assts/asst09-2.html">Assignment 09, Part II</a>: Due April 12</p>
-</li>
-<li>
-<p><strong>Jam 05 Study Guide</strong>: <a href="studyguide5.html">Study Guide 5</a></p>
+<p><a href="assts/TODO.html">Assignment 10, Part II</a>: Due</p>
 </li>
 </ul>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">April 17 <a id="week14"></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dec 3,5 <a id="week14"></a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><strong>Memory, Code optimization</strong></p>
 </div>
@@ -448,20 +439,21 @@ on lecture content, worksheets, and assignments.</p>
 <p><strong>No Class April 19th!</strong></p>
 </li>
 <li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/">Chapter 12</a></p>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_storage_and_the_memory_hierarchy">Chapter 11.1-11.3</a></p>
 </li>
 <li>
-<p><a href="assts/asst10.html">Assignment 10</a>: Due April 19</p>
+<p>Read: <a href="https://diveintosystems.org/singlepage/#_code_optimization">Chapter 12</a></p>
 </li>
 <li>
-<p><strong>Jam 06 Study Guide</strong>: <a href="studyguide6.html">Study Guide 6</a></p>
+<p><a href="assts/asst10.html">Assignment 10</a>: Due April 19
+*</p>
 </li>
 </ul>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">15</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">April 24,26 <a id="week15"></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dec 10,12 <a id="week15"></a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><strong>C++</strong></p>
 </div>
@@ -481,6 +473,123 @@ on lecture content, worksheets, and assignments.</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_text_and_tools">Text and Tools</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Dive into Systems</strong> by Suzanne J. Matthews, Tia Newhall, and Kevin C. Webb.  Available free online from <a href="https://diveintosystems.org/">Dive into Systems</a></p>
+</li>
+<li>
+<p><a href="https://patilsai.wordpress.com/wp-content/uploads/2019/07/data_structures_and_algorithm_analysis_in_c.pdf">Data Structures in C by Mark Allen Weiss</a></p>
+</li>
+<li>
+<p><strong>Github Account</strong> Please go to <a href="https://github.com/">github.com</a> and register. You will be using github to submit assignments.</p>
+</li>
+<li>
+<p><strong>Slack</strong> Please go to <a href="https://slack.com/signin">slack.com</a>. Our workspace is BrynMawr-CS223-F24. You can ask questions and request one-on-one help over zoom using this course&#8217;s slack channel.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_unix_bash_makefiles">Unix, Bash, Makefiles</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.tutorialspoint.com/unix/index.htm">Unix Tutorial</a></p>
+</li>
+<li>
+<p><a href="https://www.gnu.org/software/bash/manual/bash.pdf">Bash Manual</a></p>
+</li>
+<li>
+<p><a href="https://oit.ua.edu/wp-content/uploads/2020/12/Linux_bash_cheat_sheet-1.pdf">Bash Cheatsheet</a></p>
+</li>
+<li>
+<p><a href="https://www.gnu.org/software/make/manual/html_node/Introduction.html">Makefiles</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_editors">Editors</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://www.tldp.org/HOWTO/Emacs-Beginner-HOWTO.html">Emacs howto</a></p>
+</li>
+<li>
+<p><a href="https://openvim.com/">VIM Interactive Tutorial</a></p>
+</li>
+<li>
+<p><a href="https://vim.rtorr.com/">VIM Cheat Sheet</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_git">Git</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.github.com/en/get-started/start-your-journey/about-github-and-git">Getting started with git and Github</a></p>
+</li>
+<li>
+<p><a href="https://education.github.com/git-cheat-sheet-education.pdf">Git cheat sheet</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_c_language">C Language</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://usuaris.tinet.cat/bertolin/pdfs/c_programming_language.pdf">The C programming language</a></p>
+</li>
+<li>
+<p><a href="https://www.bell-labs.com/usr/dmr/www/chist.html">History of C (by Dennis M. Ritchie)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gdb">GDB</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://diveintosystems.org/singlepage/#_debugging_with_gdb">GDB Getting Started</a></p>
+</li>
+<li>
+<p><a href="https://darkdust.net/files/GDB%20Cheat%20Sheet.pdf">GDB Cheatsheet</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_valgrind">Valgrind</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://diveintosystems.org/singlepage/#_debugging_memory_with_valgrind">Valgrind Getting Started</a></p>
+</li>
+<li>
+<p><a href="https://www.cs.brynmawr.edu/Courses/cs355/info/Valgrind.html">Valgrind tutorial</a></p>
+</li>
+<li>
+<p><a href="https://cs3157.github.io/www/2022-9/guides/valgrind.html">Understanding Valgrind Errors</a></p>
+</li>
+<li>
+<p><a href="https://www.cs.swarthmore.edu/~newhall/unixhelp/valgrind.php">Valgrind Guide</a></p>
+</li>
+<li>
+<p><a href="https://student.cs.uwaterloo.ca/~cs241/valgrind/">Debugging Valgrind Errors</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_grading_policies">Grading Policies</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -495,15 +604,15 @@ as a weighted average of all grades according to the following weights:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">35%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">45%</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Final Exam</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">25%</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Assignments</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">25%</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Lab work and Quizzes (Code Jams)</p></td>
 </tr>
 <tr>
@@ -549,12 +658,11 @@ component of the class.</p>
 <div class="paragraph">
 <p>Lab exercises will be passed out in lab. These exercises are intended to be short and
 will typically ask you to reproduce demos from class or tackle concepts you will need
-for your assignment. Lab execises should be handed in at the end of lab.</p>
+for your assignment. Lab exercises should be handed in at the end of lab.</p>
 </div>
 <div class="paragraph">
 <p>Class exercises will be passed out in class. These exercises are intended to be
-short and will typically ask you to practice concepts from lecture.  Class
-execises should be handed in at the end of class.</p>
+short and will typically ask you to practice concepts from lecture.</p>
 </div>
 <div class="paragraph">
 <p>Assignments will be posted Saturdays and due Friday before midnight.  You are
@@ -562,7 +670,7 @@ strongly encouraged to start early so that you can ask questions. See the
 syllabus for links to the assignments.</p>
 </div>
 <div class="paragraph">
-<p>You will submit your assignments electronically using <a href="www.dropbox.com">Dropbox</a>.</p>
+<p>You will submit your assignments electronically using git.</p>
 </div>
 </div>
 <div class="sect2">
@@ -577,18 +685,20 @@ from class. Most of this work will be due in lecture or labs. The
 weekly time commitment for this course is aimed to be approximately 10 hours per week.</p>
 </div>
 <div class="paragraph">
-<p>Assignments will generally be due on Wednesdays. However, you may request up to <strong>one</strong> late
-days (until Thursday) if necessary. No submissions beyond Thursday will be accepted.
+<p>Assignments will generally be due on Fridays. However, you may request up to <strong>one</strong> late
+day (until Saturday) if necessary. No submissions beyond Saturday will be accepted.
 This allows us time to grade assignments. And it helps prevent you from falling
-behind.</p>
+behind. Note that with weekly assignments, you can miss a week or two without losing
+much points on a final grade.</p>
 </div>
 <div class="paragraph">
-<p>If you need to miss a code jam, let the instructor know and the missed credit for the code jam
+<p>If you need to miss a quiz, we will not have make-ups. Instead, the missed credit for the quiz
 will be added to the final exam.</p>
 </div>
 <div class="paragraph">
-<p>You may need to provide a doctor&#8217;s note if you need special accomodations due to a
-medical emergency.</p>
+<p>You may need to provide a doctor&#8217;s note if you need special accommodations due to a
+medical emergency. If you require an accommodation for exams and quizzes, this must be submitted
+to the instructor within the first two weeks or class.</p>
 </div>
 </div>
 </div>
@@ -603,36 +713,63 @@ integrity. <a href="https://www.brynmawr.edu/deans/academic-and-community-integr
 <div class="paragraph">
 <p>As you progress in this course, you will see that programming is a creative
 process, similar to writing. The same problem can be solved in
-multiple ways. It&#8217;s essential that you develop your own skills for developing
+multiple ways. It&#8217;s <em>essential</em> that you develop your own skills for developing
 algorithms and implementing them through programs.</p>
 </div>
 <div class="paragraph">
-<p><strong>Discussing ideas and approaches to problems with others on a general level is
-fine (in fact, we encourage you to discuss general strategies with each other),
-but you should never read anyone else&#8217;s code or let anyone else read your
-code.</strong>  All code you submit should be your own with the following permissible
-exceptions: code distributed in class, and code found in the course text book.
-In these cases, you should always include detailed comments that indicates on
-which parts of the assignment you received help, and what your sources were.</p>
+<p>Quizzes and exams will be <em>closed book</em>. You will be able to bring a
+single cheat sheet with you. <strong>The goal of assignments and labs is to help you
+prepare for quizzes and exams!</strong> If you can sit down, focus, and answer sample
+questions within a time limit, you will be ready ace the exams for this class.
+Incidentally, you will also be ready to ace a job interview on this topic.</p>
+</div>
+<div class="paragraph">
+<p>Integrity Guidelines:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Please don&#8217;t hesitate to ask the awesome teaching assistants (TAs) for help. They provide TA hours most week nights and are excellent mentors!</p>
+<p>DO discuss ideas and approaches with your classmates.</p>
 </li>
 <li>
-<p>Please discuss the readings and associated topics with each other. Work together to understand the material. Reading groups to discuss the material are highly recommended&#8201;&#8212;&#8201;we will explore many ideas and it helps to have multiple people working together to understand them.</p>
+<p>DO discuss ideas and approaches with your TAs and instructor.</p>
 </li>
 <li>
-<p>It is fine to discuss the topics covered in the homeworks, to discuss approaches to problems, and to sketch out general solutions. However, you MUST write up the homework answers, solutions, and programs individually without sharing specific details, mathematical results, program code, etc.</p>
+<p>DO search for documentation and sample programs for built-in C functions and C syntax.</p>
 </li>
 <li>
-<p>Under NO circumstances should you share computer code with another student.  Similarly, you are not permitted to use code found on the internet for any of your assignments.</p>
+<p>DO use code from our text books and class (with attribution).</p>
 </li>
 <li>
-<p>Exams, of course, must be your own individual work.</p>
+<p>DON&#8217;T use Chat-GPT (or other LLMs) to generate solutions.</p>
+</li>
+<li>
+<p>DON&#8217;T copy full solutions, from online tutorials, previous students, etc</p>
+</li>
+<li>
+<p>DON&#8217;T use functions and C syntax that is disallowed by the Makefile. We are deliberately using simple and portable C.</p>
+</li>
+<li>
+<p>DON&#8217;T modify any basecode that comes with your assignment.</p>
+</li>
+<li>
+<p>DON&#8217;T ever share your code with other students.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>It&#8217;s ultimately up to you to learn from your assignments! Remember, no one is
+going to hire you to do work that they can easily do themselves using a search
+or AI program generator. The programs in this course are simple enough for an AI
+or search or two to solve. But the next level of programs will not be so simple. You must
+do the work yourself. This is the only way you will develop the skills and
+expertise to reach your full potential.</p>
+</div>
+<div class="paragraph">
+<p>One final point: we will be using open-source repositories for homeworks in this class.
+Thus, it will be possible to see what other students (and previous students) have submitted.
+If you copy from others' repositories, it will be obvious to everyone involved! Only look
+at other solutions after you have finished your own first!</p>
 </div>
 </div>
 </div>
@@ -674,6 +811,21 @@ Services website. (<a href="http://www.brynmawr.edu/access-services/" class="bar
 </div>
 </div>
 <div class="sect1">
+<h2 id="_covid_policy">Covid Policy</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Lectures and labs will have a <em>mask-friendly</em> policy.  All are welcome to wear a
+mask if they so wish, but no one is mandated to wear a mask.</p>
+</div>
+<div class="paragraph">
+<p>If you are symptomatic (coughing, sore throat, or running nose), please either
+stay at home or come into campus with a mask. Lectures will be recorded so they
+can be watched later. Missed lab activities and quizzes will have their grade
+credit transferred to the final.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_academic_support">Academic support</h2>
 <div class="sectionbody">
 <div class="ulist">
@@ -682,21 +834,6 @@ Services website. (<a href="http://www.brynmawr.edu/access-services/" class="bar
 <p><a href="https://www.brynmawr.edu/academicsupport/academic-and-student-support-services">Academic Support, including help with math and quantitative skills!</a></p>
 </li>
 </ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_covid">Covid</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Out of consideration of others, we ask that no one return to campus with COVID
-or any other easily communicable virus. If you are experiencing any symptoms,
-please self-test for COVID prior to your initial return to campus.</p>
-</div>
-<div class="paragraph">
-<p>For a full outline of college policies,
-<a href="https://www.brynmawr.edu/news/spring-semester-health-safety-policies-recommendations">please
-read the documentation here</a>.</p>
 </div>
 </div>
 </div>
@@ -735,18 +872,11 @@ website:</p>
 <div class="paragraph">
 <p><a href="https://www.haverford.edu/sexual-misconduct">Haverford Sexual Misconduct Policy</a></p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_external_links">External Links</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Links that are related to the course may be posted here. If you have suggestions for links, let us know.</p>
-</div>
 <div class="ulist unstyled">
 <ul class="unstyled">
 <li>
-<p>This site was generated with <a href="https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/">asciidoctor</a></p>
+<p>This site was generated with <a href="https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/">asciidoctor</a>
+t cheat</p>
 </li>
 </ul>
 </div>
@@ -755,7 +885,7 @@ website:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-04-29 15:25:54 -0400
+Last updated 2024-08-27 19:19:58 -0400
 </div>
 </div>
 </body>

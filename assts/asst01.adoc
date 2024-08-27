@@ -9,7 +9,7 @@ include::header.adoc[]
 
 = {title}
 
-**Due Wednesday, January 25, before midnight**
+**Due Friday, September 6, before midnight**
 
 The goals for this assignment are:
 
@@ -257,7 +257,6 @@ Then, to install additional dependencies, execute the following commands form te
 ----
 $ brew install vim
 $ brew install git
-$ brew install hexdump
 $ brew install cmake
 ----
 

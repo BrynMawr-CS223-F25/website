@@ -5,21 +5,36 @@ integrity. link:https://www.brynmawr.edu/deans/academic-and-community-integrity[
 
 As you progress in this course, you will see that programming is a creative
 process, similar to writing. The same problem can be solved in
-multiple ways. It's essential that you develop your own skills for developing
+multiple ways. It's _essential_ that you develop your own skills for developing
 algorithms and implementing them through programs. 
 
-*Discussing ideas and approaches to problems with others on a general level is
-fine (in fact, we encourage you to discuss general strategies with each other),
-but you should never read anyone else's code or let anyone else read your
-code.*  All code you submit should be your own with the following permissible
-exceptions: code distributed in class, and code found in the course text book.
-In these cases, you should always include detailed comments that indicates on
-which parts of the assignment you received help, and what your sources were.
+Quizzes and exams will be _closed book_. You will be able to bring a 
+single cheat sheet with you. *The goal of assignments and labs is to help you 
+prepare for quizzes and exams!* If you can sit down, focus, and answer sample 
+questions within a time limit, you will be ready ace the exams for this class. 
+Incidentally, you will also be ready to ace a job interview on this topic. 
 
+Integrity Guidelines: 
 
-*  Please don't hesitate to ask the awesome teaching assistants (TAs) for help. They provide TA hours most week nights and are excellent mentors!
-*  Please discuss the readings and associated topics with each other. Work together to understand the material. Reading groups to discuss the material are highly recommended -- we will explore many ideas and it helps to have multiple people working together to understand them.
-*  It is fine to discuss the topics covered in the homeworks, to discuss approaches to problems, and to sketch out general solutions. However, you MUST write up the homework answers, solutions, and programs individually without sharing specific details, mathematical results, program code, etc. 
-*  Under NO circumstances should you share computer code with another student.  Similarly, you are not permitted to use code found on the internet for any of your assignments.
-*  Exams, of course, must be your own individual work.
+* DO discuss ideas and approaches with your classmates.
+* DO discuss ideas and approaches with your TAs and instructor.
+* DO search for documentation and sample programs for built-in C functions and C syntax.
+* DO use code from our text books and class (with attribution).
 
+* DON'T use Chat-GPT (or other LLMs) to generate solutions.
+* DON'T copy full solutions, from online tutorials, previous students, etc
+* DON'T use functions and C syntax that is disallowed by the Makefile. We are deliberately using simple and portable C.
+* DON'T modify any basecode that comes with your assignment. 
+* DON'T ever share your code with other students.
+
+It's ultimately up to you to learn from your assignments! Remember, no one is
+going to hire you to do work that they can easily do themselves using a search
+or AI program generator. The programs in this course are simple enough for an AI
+or search or two to solve. But the next level of programs will not be so simple. You must
+do the work yourself. This is the only way you will develop the skills and
+expertise to reach your full potential. 
+
+One final point: we will be using open-source repositories for homeworks in this class. 
+Thus, it will be possible to see what other students (and previous students) have submitted. 
+If you copy from others' repositories, it will be obvious to everyone involved! Only look 
+at other solutions after you have finished your own first!

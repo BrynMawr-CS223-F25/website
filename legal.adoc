@@ -1,13 +1,3 @@
-== Covid
-
-Out of consideration of others, we ask that no one return to campus with COVID
-or any other easily communicable virus. If you are experiencing any symptoms,
-please self-test for COVID prior to your initial return to campus.
-
-For a full outline of college policies,
-link:https://www.brynmawr.edu/news/spring-semester-health-safety-policies-recommendations[please
-read the documentation here].
-
 == Title IX
  
 Bryn Mawr/Haverford College is committed to fostering a safe and inclusive

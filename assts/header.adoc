@@ -7,4 +7,4 @@
 :xrefstyle: short
 :leveloffset: +1
 :toc: left
-:csweb: https://www.cs.brynmawr.edu/~alinen/lab-website/cs110
+:csweb: https://www.cs.brynmawr.edu/~alinen

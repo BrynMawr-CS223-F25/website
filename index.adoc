@@ -6,7 +6,7 @@ include::header.adoc[]
 
 :course: CMSC 223
 :title: Systems Programming
-:term: Spring 2023
+:term: Fall 2023
 
 = {course}: {title} -- {term}
 
@@ -14,19 +14,19 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* *Final Exam* will be a scheduled exam May 4th, 9:30am (3 hours, open book/laptop) in Park 245
-* Check out the link:studyguide-final.html[Final Study Guide]
+* Welcome to Fall 2024! For those of you who are about to rock, I salute you!
 
 == Course Info
 
 **Welcome to CS223: Systems Programming**! 
 
-Systems programming provides a foundation for the implementation of programs and
-toolkits that serve as infrastructure for other software, such as compilers,
-operating systems, networking APIs, and graphics engines.  Topics include
+Systems programming is the foundation of all software and toolkits that serve as 
+infrastructure for other software, such as compilers,
+operating systems, networking APIs, and graphics engines. Systems programming directly 
+interacts with machine characteristics and low-level data types. Class topics include
 pointers, bit representations of data, x86_64 assembly, memory management,
 processes, and threads.  In this class, students will gain hands-on experience
-implementing low-level algorithms and data structures using C.  Furthermore,
+implementing low-level algorithms and data structures using C. Additionally,
 students will build technical skills related to makefiles, interactive
 debugging, version control, and command-line shell interaction. C++ and STL
 will be introduced at the end of the course. 
@@ -40,19 +40,13 @@ will be introduced at the end of the course.
 |===
 | Activity | Location | Time
 
-| Lecture | Park 245 | Monday and Wednesday 1:10 PM - 2:30 PM 
-| Lab | Park 230 | Monday 2:40 PM - 4:00 PM 
-| Office Hours - Prof. Normoyle | 200A | Wednesdays, 2:30-3:30 PM, or by appointment
-| Office Hours - Jasmine | Park 231 | Wednesdays, 7-8 PM 
-| Office Hours - Synarah | Park 231 | Tuesdays, 6-7 PM
+| Lecture | Park 159 | Tuesday and Thursday 11:40 AM - 1:00 PM 
+| Lab | Park 230 | Thursday 2:40 PM - 4:00 PM 
+| Office Hours - Prof. Aline Normoyle | 200B | Friday, 9:30-11:00 AM
+| Office Hours - Paprika Chen | Park 231 | TBA 
+| Office Hours - Celia Chen | Park 231 | TBA
 
 |===
-
-== Text and Tools
-
-*  **Dive into Systems** by Suzanne J. Matthews, Tia Newhall, and Kevin C. Webb.  Available free online from link:https://diveintosystems.org/[Dive into Systems]
-*  **Github Account** Please go to link:https://github.com/[github.com] and register. You will be using github to submit assignments. 
-*  **Slack** Please go to link:https://slack.com/signin[slack.com]. Our workspace is BrynMawr-CS223-S23. You can ask questions and request one-on-one help over zoom using this course's slack channel. 
 
 == **Schedule**
 
@@ -61,6 +55,51 @@ on lecture content, worksheets, and assignments.
 
 include::schedule.adoc[]
 
+== Text and Tools
+
+*  **Dive into Systems** by Suzanne J. Matthews, Tia Newhall, and Kevin C. Webb.  Available free online from link:https://diveintosystems.org/[Dive into Systems]
+* link:https://patilsai.wordpress.com/wp-content/uploads/2019/07/data_structures_and_algorithm_analysis_in_c.pdf[Data Structures in C by Mark Allen Weiss]
+*  **Github Account** Please go to link:https://github.com/[github.com] and register. You will be using github to submit assignments. 
+*  **Slack** Please go to link:https://slack.com/signin[slack.com]. Our workspace is BrynMawr-CS223-F24. You can ask questions and request one-on-one help over zoom using this course's slack channel. 
+
+=== Unix, Bash, Makefiles
+    
+* link:https://www.tutorialspoint.com/unix/index.htm[Unix Tutorial]
+* link:https://www.gnu.org/software/bash/manual/bash.pdf[Bash Manual]
+* link:https://oit.ua.edu/wp-content/uploads/2020/12/Linux_bash_cheat_sheet-1.pdf[Bash Cheatsheet]
+* link:https://www.gnu.org/software/make/manual/html_node/Introduction.html[Makefiles]
+* link:http://linuxcommand.org/lc3_learning_the_shell.php[Learning the shell]
+
+=== Editors
+
+* link:http://www.tldp.org/HOWTO/Emacs-Beginner-HOWTO.html[Emacs howto]
+* link:https://openvim.com/[VIM Interactive Tutorial]
+* link:https://vim.rtorr.com/[VIM Cheat Sheet]
+
+=== Git
+
+* link:https://docs.github.com/en/get-started/start-your-journey/about-github-and-git[Getting started with git and Github]
+* link:https://education.github.com/git-cheat-sheet-education.pdf[Git cheat sheet]
+
+=== C Language
+
+* link:https://usuaris.tinet.cat/bertolin/pdfs/c_programming_language.pdf[The C programming language] 
+* link:https://www.bell-labs.com/usr/dmr/www/chist.html[History of C (by Dennis M. Ritchie)]
+
+=== GDB 
+
+* link:https://diveintosystems.org/singlepage/#_debugging_with_gdb[GDB Getting Started]
+* link:https://darkdust.net/files/GDB%20Cheat%20Sheet.pdf[GDB Cheatsheet]
+
+=== Valgrind
+
+* link:https://diveintosystems.org/singlepage/#_debugging_memory_with_valgrind[Valgrind Getting Started]
+* link:https://www.cs.brynmawr.edu/Courses/cs355/info/Valgrind.html[Valgrind tutorial]
+* link:https://cs3157.github.io/www/2022-9/guides/valgrind.html[Understanding Valgrind Errors]
+* link:https://www.cs.swarthmore.edu/~newhall/unixhelp/valgrind.php[Valgrind Guide]
+* link:https://student.cs.uwaterloo.ca/~cs241/valgrind/[Debugging Valgrind Errors]
+
+
 == Grading Policies
 
 All graded work will receive a grade, 4.0, 3.7, 3.3, 3.0, 2.7, 2.3, 2.0, 1.7,
@@ -68,9 +107,9 @@ All graded work will receive a grade, 4.0, 3.7, 3.3, 3.0, 2.7, 2.3, 2.0, 1.7,
 as a weighted average of all grades according to the following weights:
 
 |===
-|35% | Final Exam
-|30% | Assignments
-|30% | Lab work and Quizzes (Code Jams)
+|45% | Final Exam
+|25% | Assignments
+|25% | Lab work and Quizzes (Code Jams)
 | 5% | Participation
 |===
 
@@ -84,7 +123,7 @@ include::integrity.adoc[]
 
 include::accomodations.adoc[]
 
-//include::covidpolicy.adoc[]
+include::covidpolicy.adoc[]
 
 == Academic support
  
@@ -92,9 +131,6 @@ include::accomodations.adoc[]
 
 include::legal.adoc[]
 
-== External Links
-
-Links that are related to the course may be posted here. If you have suggestions for links, let us know.
-
 [unstyled]
  * This site was generated with link:https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[asciidoctor]
+t cheat
