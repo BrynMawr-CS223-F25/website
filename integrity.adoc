@@ -1,7 +1,9 @@
 == Academic Integrity
 
-At Bryn Mawr, we assume students are trustworthy and work with honesty and 
-integrity. link:https://www.brynmawr.edu/deans/academic-and-community-integrity[Look here for information about Bryn Mawr's Honor Code.] 
+Copied and unattributed work will receive zero credit. At Bryn Mawr, we assume students are
+trustworthy and work with honesty and integrity.
+link:https://www.brynmawr.edu/deans/academic-and-community-integrity[Look here
+for information about Bryn Mawr's Honor Code.] 
 
 As you progress in this course, you will see that programming is a creative
 process, similar to writing. The same problem can be solved in
@@ -11,8 +13,8 @@ algorithms and implementing them through programs.
 Quizzes and exams will be _closed book_. You will be able to bring a 
 single cheat sheet with you. *The goal of assignments and labs is to help you 
 prepare for quizzes and exams!* If you can sit down, focus, and answer sample 
-questions within a time limit, you will be ready ace the exams for this class. 
-Incidentally, you will also be ready to ace a job interview on this topic. 
+questions within a time limit, you will ace the exams for this class. 
+Incidentally, you will also be prepared to ace a job interview on this topic! 
 
 Integrity Guidelines: 
 
