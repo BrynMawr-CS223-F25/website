@@ -5,7 +5,7 @@ include::header.adoc[]
 
 :course: CMSC 223
 :title: Systems Programming
-:term: Fall 2023
+:term: Fall 2024
 
 = {course}: {title} -- {term}
 
@@ -45,8 +45,8 @@ will be introduced at the end of the course.
 | Lecture | Park 159 | Tuesday and Thursday 11:40 AM - 1:00 PM 
 | Lab | Park 230 | Thursday 2:40 PM - 4:00 PM 
 | Office Hours - Prof. Aline Normoyle | 200B | Friday, 9:30-11:00 AM
-| Office Hours - Paprika Chen | Park 231 | TBA 
-| Office Hours - Celia Chen | Park 231 | TBA
+| Office Hours - Paprika Chen | Park 231 | Tuesdays, 7-9 PM  
+| Office Hours - Yue Chen | Park 231 | Thursdays, 7-9 PM
 
 |===
 
