@@ -1,4 +1,3 @@
-//https://www.cs.swarthmore.edu/courses/CS31/S21/
 include::header.adoc[]
 //override default to include table css
 :stylesheet: front.css
@@ -15,6 +14,9 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 [.anns]
 
 * Welcome to Fall 2024! For those of you who are about to rock, I salute you!
+* First lecture will be on Tuesday, September 3rd, 11:40AM in room Park 159.
+* First assignment is Due Sept 6th. link:assts/asst01.html[Assignment 01: Hello C!]
+* First lab will be on Thursday, September 5th, 2:40PM in Park 230. We will go over git and using Github
 
 == Course Info
 
