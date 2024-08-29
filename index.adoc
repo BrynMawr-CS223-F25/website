@@ -7,7 +7,9 @@ include::header.adoc[]
 :title: Systems Programming
 :term: Fall 2024
 
-= {course}: {title} -- {term}
+= {course}: {title} 
+
+Term: {term}
 
 Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
@@ -21,6 +23,8 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 == Course Info
 
 **Welcome to CS223: Systems Programming**! 
+
+image::matrix_original.jpg[]
 
 Systems programming is the foundation of all software and toolkits that serve as 
 infrastructure for other software, such as compilers,
