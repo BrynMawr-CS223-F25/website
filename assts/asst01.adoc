@@ -204,11 +204,24 @@ $ git push
 Run `git status` to check the result of the previous git command.
 Check the Github website to make sure that your program uploaded correctly. 
 
-= (Optional) Set up your own development environment
+= (Optional) Set up a remote development environment with our server goldengate
 
-Having your own development environment will allow you to write code outside of lab.
+A remote development environment will allow you to run code from goldengate, a remote 
+server, from within an integrated development environment.
 
-NOTE: All programs must run on the lab's Linux environment. Make sure you test your work on the lab machines if you work on your laptop! 
+For this option, your need to use VS Code with the Remote-SSH extension to VS Code.
+
+* link:https://code.visualstudio.com/[VS Code]
+* link:https://code.visualstudio.com/docs/remote/ssh[Remote SSH Tutorial]
+
+= (Optional) Set up your own local development environment
+
+A local development environment allows you to write code on your own desktop or
+laptop. With a local development environment, you will be able to run your code even 
+after you graduate from college. 
+
+NOTE: All programs must run on the lab's Linux environment. Make sure you test
+your work on the lab machines if you work on your laptop! 
 
 == Windows
 
