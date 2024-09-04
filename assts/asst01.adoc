@@ -106,7 +106,7 @@ This will download a local account of the repository to your computer.
 [discrete]
 == Build hello.c
 
-In the directory `A00`, you will have a sample file, `hello.c` and makefile `Makefile`. Try building and running.
+In the directory `{ASST}`, you will have a sample file, `hello.c` and makefile `Makefile`. Try building and running.
 
 [source]
 ----
@@ -118,7 +118,7 @@ Hello World
 [discrete]
 == Math Game
 
-In the directory, `A00`, implement a simple math game that asks a user a series of addition problems 
+In the directory, `{ASST}`, implement a simple math game that asks a user a series of addition problems 
 and keeps track of the number of correct responses. 
 
 [source]
