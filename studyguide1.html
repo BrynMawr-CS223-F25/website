@@ -24,7 +24,7 @@
 <h2 id="_study_guide_1">Study Guide 1</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Code Jams are open book. 40 minutes in lab.</p>
+<p>Quizzes will be closed book. 30 minutes in lab.</p>
 </div>
 <div class="paragraph">
 <p>Topics:</p>
@@ -95,7 +95,29 @@ to give feedback on your responses.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>3) When Willow runs her program from the command line, she gets the following error? What is happening and how can she fix it?</p>
+<p>3) Suppose Willa is in their home directory, <code>/home/willa</code>. Write commands to produce the following directory structure.
+Willa contains two sub-directories, A ad B, and one file <code>hello.c</code>. B contains a sub-directory C and file <code>test.txt</code>.
+Below is a visualization of it where child directories are indented.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>\home\willa
+  A
+  B
+    C
+    test.txt
+  hello.c</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>How can you compile a c program?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>4) When Willow runs her program from the command line, she gets the following error? What is happening and how can she fix it?</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -106,24 +128,7 @@ Command 'hello' not found</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>4) Implement and test a power function (for positive integer exponents only).
-A call to your function should compute \(base^{exp}\) and might look like:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>result = power(base, exp);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>5) Implement a function <code>void removeLetter(char* str, char letter)</code> that removes all occurrences of <code>letter</code>
-from <code>str</code>. Your function should modify the contents of str. Test your function from <code>main</code>.</p>
-</div>
-<div class="paragraph">
-<p>6) Implement a function <code>isPalindrome</code> that returns 1 if a given string is a palindrome and 0 otherwise.
-Your function can be iterative or recursive. Test your function from <code>main</code>.</p>
-</div>
-<div class="paragraph">
-<p>7) The following program crashes. What is the problem and how can we fix it?</p>
+<p>5) The following program crashes. What is the problem and how can we fix it?</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -138,7 +143,7 @@ int main() {
 </div>
 </div>
 <div class="paragraph">
-<p>8) The following program crashes. What is the problem and how can we fix it?</p>
+<p>6) The following program crashes. What is the problem and how can we fix it?</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -158,7 +163,7 @@ int main() {
 </div>
 </div>
 <div class="paragraph">
-<p>9) What is the output of this program?</p>
+<p>7) What is the output of this program?</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -194,7 +199,7 @@ int arg_modifier(int x, int *y) {
 </div>
 </div>
 <div class="paragraph">
-<p>10) Draw the state of the function stack and heap for the program above in <code>arg_modifier</code>. Assume the
+<p>8) Draw the state of the function stack and heap for the program above in <code>arg_modifier</code>. Assume the
 user entered the values 6 and 1.  Draw the stack at the point in the execution
 right before the return from the arg_modifier function, and consider the
 following questions:</p>
@@ -215,12 +220,59 @@ following questions:</p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>9) Consider the following code. Find and fix the errors in the associated stack diagram.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>float foo(float* vals, int n)
+{
+  float x = 0.0;
+  for (int i = 0; i &lt; n; i++)
+  {
+    x += vals[i];
+  }
+  return x;
+}
+
+void main()
+{
+  float heights[3] = {6.1f, 5.2f, 4.9f};
+  float a = foo(heights, 3);
+  float b = a / 3;
+  // draw stack here
+  printf("%.2f\n", b);
+}</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/studyguide01-badstack.png" alt="studyguide01 badstack">
+</div>
+</div>
+<div class="paragraph">
+<p>10) Write code that implements a power function (for positive integer exponents only).
+A call to your function should compute \(base^{exp}\) and might look like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>result = power(base, exp);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>11) Write code that implements a function <code>void removeLetter(char* str, char letter)</code> that removes all occurrences of <code>letter</code>
+from <code>str</code>. Your function should modify the contents of str. (To check your work, implement your program and test it from <code>main</code>).</p>
+</div>
+<div class="paragraph">
+<p>12) Write code that implements a function <code>isPalindrome</code> that returns 1 if a given string is a palindrome and 0 otherwise.
+Your function can be iterative or recursive. Test your function from <code>main</code>.</p>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-08-27 09:58:07 -0400
+Last updated 2024-09-12 08:24:52 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

@@ -8,7 +8,7 @@ include::header.adoc[]
 
 = {title}
 
-Code Jams are open book. 40 minutes in lab.
+Quizzes will be closed book. 30 minutes in lab.
 
 Topics:
 
@@ -44,7 +44,23 @@ Hint: To check your answers, use the `sizeof()` function.
 * How can you create a file in the directory `foo` called `test.c`?
 * How can you compile a c program? 
 
-3) When Willow runs her program from the command line, she gets the following error? What is happening and how can she fix it?
+3) Suppose Willa is in their home directory, `/home/willa`. Write commands to produce the following directory structure.
+Willa contains two sub-directories, A ad B, and one file `hello.c`. B contains a sub-directory C and file `test.txt`. 
+Below is a visualization of it where child directories are indented. 
+
+[source]
+----
+\home\willa
+  A
+  B
+    C
+    test.txt
+  hello.c
+----
+
+* How can you compile a c program? 
+
+4) When Willow runs her program from the command line, she gets the following error? What is happening and how can she fix it?
 
 [source]
 ----
@@ -54,21 +70,7 @@ $ hello
 Command 'hello' not found
 ----
 
-4) Implement and test a power function (for positive integer exponents only). 
-A call to your function should compute stem:[base^{exp}] and might look like:
-
-[source]
-----
-result = power(base, exp);
-----
-
-5) Implement a function `void removeLetter(char* str, char letter)` that removes all occurrences of `letter` 
-from `str`. Your function should modify the contents of str. Test your function from `main`.
-
-6) Implement a function `isPalindrome` that returns 1 if a given string is a palindrome and 0 otherwise. 
-Your function can be iterative or recursive. Test your function from `main`. 
-
-7) The following program crashes. What is the problem and how can we fix it?
+5) The following program crashes. What is the problem and how can we fix it?
 
 [source]
 ----
@@ -82,7 +84,7 @@ int main() {
 }
 ----
 
-8) The following program crashes. What is the problem and how can we fix it?
+6) The following program crashes. What is the problem and how can we fix it?
 
 [source]
 ----
@@ -101,7 +103,7 @@ int main() {
 }
 ----
 
-9) What is the output of this program?
+7) What is the output of this program?
 
 [source]
 ----
@@ -136,7 +138,7 @@ int arg_modifier(int x, int *y) {
 }
 ----
 
-10) Draw the state of the function stack and heap for the program above in `arg_modifier`. Assume the 
+8) Draw the state of the function stack and heap for the program above in `arg_modifier`. Assume the 
 user entered the values 6 and 1.  Draw the stack at the point in the execution
 right before the return from the arg_modifier function, and consider the
 following questions:
@@ -145,3 +147,43 @@ following questions:
 * Where are the parameter values located?
 * What value does each parameter get?
 * What variables are in scope of `arg_modifier`?
+
+9) Consider the following code. Find and fix the errors in the associated stack diagram.
+
+[source]
+----
+float foo(float* vals, int n)
+{
+  float x = 0.0;
+  for (int i = 0; i < n; i++)
+  {
+    x += vals[i];
+  }
+  return x;
+}
+
+void main()
+{
+  float heights[3] = {6.1f, 5.2f, 4.9f};
+  float a = foo(heights, 3);
+  float b = a / 3;
+  // draw stack here
+  printf("%.2f\n", b);
+}
+----
+
+image::studyguide01-badstack.png[]
+
+10) Write code that implements a power function (for positive integer exponents only). 
+A call to your function should compute stem:[base^{exp}] and might look like:
+
+[source]
+----
+result = power(base, exp);
+----
+
+11) Write code that implements a function `void removeLetter(char* str, char letter)` that removes all occurrences of `letter` 
+from `str`. Your function should modify the contents of str. (To check your work, implement your program and test it from `main`).
+
+12) Write code that implements a function `isPalindrome` that returns 1 if a given string is a palindrome and 0 otherwise. 
+Your function can be iterative or recursive. Test your function from `main`. 
