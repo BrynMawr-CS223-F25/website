@@ -58,8 +58,6 @@ Below is a visualization of it where child directories are indented.
   hello.c
 ----
 
-* How can you compile a c program? 
-
 4) When Willow runs her program from the command line, she gets the following error? What is happening and how can she fix it?
 
 [source]
