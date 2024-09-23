@@ -15,8 +15,9 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* Next assignment is Due Sept 20th. link:assts/asst03.html[Assignment 03: If you malloc something, set it free]
-* Lab Quiz 1: link:studyguide1.html[Study Guide for Quiz 1]
+* Next assignment is Due Sept 27th. link:assts/asst04.html[Assignment 04: Watch where you point]
+* Lab Study: link:studyguide2.html[Study Guide for Quiz 2]
+* Our final exam will be **self-scheduled** during the period Dec 15-20, 2024.
 
 == Course Info
 
