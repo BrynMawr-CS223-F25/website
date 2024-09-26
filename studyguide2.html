@@ -272,20 +272,89 @@ int main() {
 </div>
 </div>
 <div class="paragraph">
-<p>5) Write a program that reads in a text file and writes it to a new file with each word reversed.</p>
+<p>6) Draw the stack diagram for the following program. Does the list get created correctly? Why or why not?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct node {
+  int val;
+  struct node* next;
+};
+
+struct node* insert_front(int val, struct node* head) {
+  struct node* n = malloc(sizeof(struct node));
+  if (n == NULL) {
+    printf("ERROR: Out of space!\n");
+    exit(1);
+  }
+  n-&gt;val = val;
+  n-&gt;next = head;
+  return n;
+}
+
+void print(struct node* list) {
+  for (struct node* n = list; n != NULL; n = n-&gt;next) {
+    printf("Val: %d\n", n-&gt;val);
+  }
+}
+
+int main() {
+  struct node* n3 = insert_front(2, NULL);
+  // draw stack here
+  struct node* n2 = insert_front(1, n3);
+  struct node* n1 = insert_front(0, n2);
+
+  free(n1);
+  free(n2);
+  free(n3);
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>6) Write a program that swaps the first and last element of a linked list.</p>
+<p>7) Draw the stack diagram for the following program. Does the list get created correctly? Why or why not?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>struct node {
+  int val;
+  struct node* next;
+};
+
+void insert_front(int val, struct node** head) {
+  struct node* n = malloc(sizeof(struct node));
+  if (n == NULL) {
+    printf("ERROR: Out of space!\n");
+    exit(1);
+  }
+  n-&gt;val = val;
+  n-&gt;next = *head;
+  *head = n;
+}
+
+int main() {
+  struct node *head = NULL;
+  insert_front(0, &amp;head);
+  // draw stack here
+  insert_front(1, &amp;head);
+  insert_front(2, &amp;head);
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>7) Write a program that inserts nodes to a binary tree. Add a function that also prints the nodes of the tree using pre-order, in-order, and post-order traversals.</p>
+<p>8) Write a program that reads in a text file and writes it to a new file with each word reversed.</p>
+</div>
+<div class="paragraph">
+<p>9) Write a program that swaps the first and last element of a linked list.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-08-27 09:58:07 -0400
+Last updated 2024-09-26 11:02:02 -0400
 </div>
 </div>
 </body>

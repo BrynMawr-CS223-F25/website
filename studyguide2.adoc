@@ -203,8 +203,80 @@ int main() {
 }
 ----
 
-5) Write a program that reads in a text file and writes it to a new file with each word reversed. 
+6) Draw the stack diagram for the following program. Does the list get created correctly? Why or why not?
 
-6) Write a program that swaps the first and last element of a linked list.
+[source]
+----
+#include <stdio.h>
+#include <stdlib.h>
 
-7) Write a program that inserts nodes to a binary tree. Add a function that also prints the nodes of the tree using pre-order, in-order, and post-order traversals.
+struct node {
+  int val;
+  struct node* next;
+};
+
+struct node* insert_front(int val, struct node* head) {
+  struct node* n = malloc(sizeof(struct node));
+  if (n == NULL) {
+    printf("ERROR: Out of space!\n");
+    exit(1);
+  }
+  n->val = val;
+  n->next = head;
+  return n;
+}
+
+void print(struct node* list) {
+  for (struct node* n = list; n != NULL; n = n->next) {
+    printf("Val: %d\n", n->val);
+  }
+}
+
+int main() {
+  struct node* n3 = insert_front(2, NULL);
+  // draw stack here
+  struct node* n2 = insert_front(1, n3);
+  struct node* n1 = insert_front(0, n2);
+
+  free(n1);
+  free(n2);
+  free(n3);
+}
+----
+
+
+7) Draw the stack diagram for the following program. Does the list get created correctly? Why or why not?
+
+[source]
+----
+
+struct node {
+  int val;
+  struct node* next;
+};
+
+void insert_front(int val, struct node** head) {
+  struct node* n = malloc(sizeof(struct node));
+  if (n == NULL) {
+    printf("ERROR: Out of space!\n");
+    exit(1);
+  }
+  n->val = val;
+  n->next = *head;
+  *head = n;
+}
+
+int main() {
+  struct node *head = NULL;
+  insert_front(0, &head);
+  // draw stack here
+  insert_front(1, &head);
+  insert_front(2, &head);
+}
+
+----
+
+8) Write a program that reads in a text file and writes it to a new file with each word reversed. 
+
+9) Write a program that swaps the first and last element of a linked list.
+
