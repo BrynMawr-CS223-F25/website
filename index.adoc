@@ -15,8 +15,8 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* Next assignment is Due Sept 27th. link:assts/asst04.html[Assignment 04: Watch where you point]
-* Lab Study: link:studyguide2.html[Study Guide for Quiz 2]
+* Next assignment is Due Oct 4th. link:assts/asst05.html[Assignment 05: Give a little bit]
+* QUIZ 3 in Lab Oct 3: link:studyguide2.html[Study Guide for Quiz 2]
 * Our final exam will be **self-scheduled** during the period Dec 15-20, 2024.
 
 == Course Info
