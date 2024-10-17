@@ -21,8 +21,9 @@
 </ul>
 </li>
 <li><a href="#_threaded_mandelbrot">2. Threaded Mandelbrot</a></li>
-<li><a href="#_submit_your_work">3. Submit your work</a></li>
-<li><a href="#_grading_rubric">4. Grading Rubric</a></li>
+<li><a href="#_performance_comparison">3. Performance comparison</a></li>
+<li><a href="#_submit_your_work">4. Submit your work</a></li>
+<li><a href="#_grading_rubric">5. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
@@ -125,7 +126,7 @@ Writing file: mandelbrot-480-1649001071.ppm</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>You should re-use your PPM functions from A06.</p>
+<p>You should re-use your PPM functions from previous assignments.</p>
 </li>
 <li>
 <p>Allocate an array of pixels using malloc and then save the final image using <code>write_ppm</code>.</p>
@@ -306,7 +307,7 @@ Writing file: mandelbrot-480-1650116924.ppm</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>You can re-use your PPM and mandelbrot functions from A09. You should re-use your implementation for read/write PPM as well.</p>
+<p>You should re-use your PPM functions from previous assignments.</p>
 </li>
 <li>
 <p>Create four threads. Each thread should process a quadrant of the image.</p>
@@ -334,10 +335,19 @@ Writing file: mandelbrot-480-1650116924.ppm</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_submit_your_work">3. Submit your work</h2>
+<h2 id="_performance_comparison">3. Performance comparison</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Submit both your code and images.</p>
+<p>Compare the performance between the single and threaded mandelbrot versions. Fill in <code>Readme.adoc</code>
+with your hardware specifications and runtime statistics.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_submit_your_work">4. Submit your work</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Submit both your code and <strong>images</strong>.</p>
 </div>
 <div class="paragraph">
 <p>1) Push your code work to github</p>
@@ -356,7 +366,7 @@ $ git status</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">4. Grading Rubric</h2>
+<h2 id="_grading_rubric">5. Grading Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
@@ -367,14 +377,23 @@ $ git status</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(2 points) Mandelbrot</p>
+<p>(1 points) Mandelbrot</p>
 <div class="ulist">
 <ul>
 <li>
 <p>(0.1 points) style and header comment</p>
 </li>
 <li>
-<p>(0.4 points)</p>
+<p>(0.1 points) Supports given command line arguments</p>
+</li>
+<li>
+<p>(0.1 points) Generates image with correct filename</p>
+</li>
+<li>
+<p>(0.1 points) Allocate an array of pixels using malloc</p>
+</li>
+<li>
+<p>(0.1 points) Correct output (including orientation); Outputs duration; Random colors</p>
 </li>
 <li>
 <p>(0.5 points) no memory errors</p>
@@ -390,13 +409,31 @@ $ git status</code></pre>
 <p>(0.1 points) style and header comment</p>
 </li>
 <li>
-<p>(1.4 points)</p>
+<p>(0.1 points) Supports given command line arguments</p>
 </li>
 <li>
-<p>(1.5 points) no memory errors</p>
+<p>(0.1 points) Generates image with correct filename</p>
+</li>
+<li>
+<p>(0.1 points) Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.</p>
+</li>
+<li>
+<p>(0.1 points) Allocate an array of pixels using malloc and then save the final image using <code>write_ppm</code>.</p>
+</li>
+<li>
+<p>(0.1 points) Do not declare global variables! Use parameters to send data to each thread&#8217;s start_routine.</p>
+</li>
+<li>
+<p>(0.4 points) Correct output (including orientation); Outputs duration; Random colors</p>
+</li>
+<li>
+<p>(1 points) no memory errors</p>
 </li>
 </ul>
 </div>
+</li>
+<li>
+<p>(1 points) Comparison of runtime between the single and threaded versions</p>
 </li>
 </ul>
 </div>
@@ -431,7 +468,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-10-17 13:22:20 -0400
+Last updated 2024-10-17 14:52:34 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

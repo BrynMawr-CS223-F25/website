@@ -34,7 +34,6 @@ The `fetch` and `merge` commands update your repository with any changes from th
 
 = Mandelbrot
 
-
 In the file, `single_mandelbrot.c`, compute a program that outputs a PPM image of the mandelbrot 
 set. You have been given basecode that initializes the following values from command line arguments. This code uses the link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt function].
 
@@ -63,7 +62,7 @@ Writing file: mandelbrot-480-1649001071.ppm
 
 Requirements and hints:
 
-* You should re-use your PPM functions from A06. 
+* You should re-use your PPM functions from previous assignments. 
 * Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
 * You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. 
 * Your output filename should have the format `mandelbrot-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
@@ -185,7 +184,7 @@ Writing file: mandelbrot-480-1650116924.ppm
 
 Requirements and hints:
 
-* You can re-use your PPM and mandelbrot functions from A09. You should re-use your implementation for read/write PPM as well.
+* You should re-use your PPM functions from previous assignments. 
 * Create four threads. Each thread should process a quadrant of the image.
 * Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.
 * Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
@@ -194,9 +193,14 @@ Requirements and hints:
 * Your output filename should have the format `mandelbrot-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
 * Set a random seed to ensure that the color palette is different each time, e.g. `srand(time(0))` 
 
+= Performance comparison
+
+Compare the performance between the single and threaded mandelbrot versions. Fill in `Readme.adoc` 
+with your hardware specifications and runtime statistics. 
+
 = Submit your work
 
-Submit both your code and images.
+Submit both your code and *images*.
 
 1) Push your code work to github
 
@@ -218,14 +222,23 @@ $ git status
 
 Grades are out of 4 points.
 
-* (2 points) Mandelbrot
+* (1 points) Mandelbrot
 ** (0.1 points) style and header comment
-** (0.4 points) 
+** (0.1 points) Supports given command line arguments
+** (0.1 points) Generates image with correct filename
+** (0.1 points) Allocate an array of pixels using malloc
+** (0.1 points) Correct output (including orientation); Outputs duration; Random colors
 ** (0.5 points) no memory errors
 * (2 points) Threaded Mandelbrot
 ** (0.1 points) style and header comment
-** (1.4 points) 
-** (1.5 points) no memory errors
+** (0.1 points) Supports given command line arguments
+** (0.1 points) Generates image with correct filename
+** (0.1 points) Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.
+** (0.1 points) Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
+** (0.1 points) Do not declare global variables! Use parameters to send data to each thread's start_routine.
+** (0.4 points) Correct output (including orientation); Outputs duration; Random colors
+** (1 points) no memory errors
+* (1 points) Comparison of runtime between the single and threaded versions
 
 *Code rubrics*
 
