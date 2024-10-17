@@ -9,7 +9,7 @@ include::header.adoc[]
 
 = {title}
 
-// Due Wednesday, April 19th, before midnight
+Due Friday, December 8th, before midnight. **Written portion is due in class, December 7th**
 
 The goals for this assignment are:
 
@@ -43,7 +43,7 @@ In this assignment, we will implement our own version of malloc and free based o
 For this assignment, you should submit both 
 
 * your code, and
-* a written report, *due in class, April 12th*
+* a written report, *due in class*
 
 = Code setup
 
@@ -193,7 +193,7 @@ Underutilized memory: 0.48
 Time is 4.1e-05
 ----
 
-== README (*Due April 19th in class*)
+== README (*Due in class as a hardcopy*)
 
 Read this section and answer the corresponding questions. We will visualize the execution of `memstats.c` for Round 1.
 When the program starts, we have no buffers allocated and the free list is empty. 
@@ -242,3 +242,30 @@ $ git status
 $ git push
 $ git status
 ----
+
+
+= Grading Rubric
+
+*Assignment rubrics*
+
+Grades are out of 4 points.
+
+* (2 points) mylloc_list
+** (0.1 points) style and header comment
+** (1.9 points) passes all tests
+* (1 points) memstats
+** (0.1 points) style and header comment
+** (0.9 points) correct output 
+* (1 points) Readme
+
+*Code rubrics*
+
+For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
+have good style.
+
+* Some credit lost for missing features or bugs, depending on severity of error
+* -5% for style errors. See the link:../codingstandard.html[class coding style] here.
+* -50% for memory errors
+* -100% for failure to checkin work to Github
+* -100% for failure to compile on linux using make
+
