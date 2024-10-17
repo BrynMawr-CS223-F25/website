@@ -151,7 +151,7 @@ to give feedback on your responses.
 
 * to an unsigned integer
 * to a signed integer
-* to an 24-bit RGBA color, e.g. consider each byte as a value for red, green, blue, and alpha
+* to an 24-bit RGBA color, e.g. consider each byte as a value for red, green, and blue
 * to an ASCII character string
 
 8) Consider the following struct. 

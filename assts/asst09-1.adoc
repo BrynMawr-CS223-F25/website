@@ -1,6 +1,6 @@
 include::header.adoc[]
 
-:title: Assignment 09 (Part 1): Follow the thread
+:title: Assignment 09: Mandelbrot Set
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
@@ -56,6 +56,8 @@ Requirements:
 
 * Your program should load the _binary_ file, `data.bin`. This file stores a sequence of non-sorted integers. The first value in the file holds the number of integers. link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec10/readbinary.c[This class example shows how to read in binary data]. Your program should read the first integer to get the size, malloc an array with the given size, and then read in the data as a big block.
 * Your program should split the work of searching through the data between each thread.
+
+
 
 = Threaded Mandelbrot
 

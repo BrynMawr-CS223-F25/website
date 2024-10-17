@@ -1,0 +1,112 @@
+include::header.adoc[]
+
+:title: Assignment 9: Many processes make light work
+:Author Initials: ASN
+:Date:    2020-08-15
+:Revision: 0.1
+:stem: latexmath
+:ASST: A08
+
+= {title}
+
+**Due Friday, November 1, at midnight**
+
+The goals for this assignment are:
+
+* Implement an algorithm using multiple processes with fork()
+* Implement your own simple shell program
+
+[discrete]
+== Update your repository
+
+Do a *fetch upstream* to obtain the basecode for this assignment. 
+
+Using the command line
+
+* Open terminal and change your current directory to your assignment repository.
+* Run the command `git fetch upstream`
+* Run the command `git merge upstream/master`
+
+Your repository should now contain a new folder named `{ASST}`.
+
+The `fetch` and `merge` commands update your repository with any changes from the original.
+
+:sectnums:
+
+= Warm-up
+
+In the file, `warmup.c`, implement a program that spawns processes according to the following diagram.
+
+image::processes.png[]]
+
+[source, subs="quotes"]
+----
+$ **make warmup**
+gcc -g -Wall -Wvla -Werror warmup.c -o warmup
+$ **./warmup**
+17300] A0
+17300] B0
+17301] B1
+17301] Bye
+17300] C0
+17300] Bye
+17302] C1
+17302] Bye
+----
+
+Requirements:
+
+* Your program should print the messages as shown above.
+* Your program should use fork() to spawn processes.
+* Call `getpid()` to show the process ids for each print message.
+
+= Simple Shell
+
+In the file, `shell.c`, implement a program that implements a simple shell. 
+
+Requirements:
+
+* TODO
+* todo
+
+= Submit your work
+
+Push your code to github to submit your work
+
+[source]
+----
+$ git status
+$ git add . 
+$ git status
+$ git commit -m "assignment complete"
+$ git status
+$ git push
+$ git status
+----
+
+= Grading Rubric
+
+*Assignment rubrics*
+
+Grades are out of 4 points.
+
+* (1 points) Warmup
+** (0.1 points) style and header comment
+** (0.4 points) prints correct messages, uses fork() and getpid()
+** (0.5 points) no memory errors
+* (3 points) Simple shell 
+** (0.1 points) style and header comment
+** (1.4 points) 
+** (1.5 points) no memory errors
+
+*Code rubrics*
+
+For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
+have good style.
+
+* Some credit lost for missing features or bugs, depending on severity of error
+* -5% for style errors. See the link:../codingstandard.html[class coding style] here.
+* -50% for memory errors
+* -100% for failure to checkin work to Github
+* -100% for failure to compile on linux using make
+

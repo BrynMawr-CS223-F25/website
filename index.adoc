@@ -15,8 +15,8 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* Next assignment is Due Oct 11th. link:assts/asst06.html[Assignment 06: Secret Messages]
-* Lab Oct 10: link:studyguide3.html[Study Guide for Quiz 3]
+* Next assignment is Due Oct 25th. link:assts/asst07.html[Assignment 07: Some Assembly Required]
+* *Quiz 03* Oct 24: link:studyguide3.html[Study Guide for Quiz 3]
 * Our final exam will be **self-scheduled** during the period Dec 15-20, 2024.
 
 == Course Info
