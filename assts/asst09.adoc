@@ -32,35 +32,35 @@ The `fetch` and `merge` commands update your repository with any changes from th
 
 :sectnums:
 
+= Grep
 
-= Search
-
-In the file, `search.c`, implement a program that uses N threads to search for a value in a list. 
-Your program should load the binary file `data.bin` and then split the workload between the N threads.
+In the file, `grep.c`, implement a program that uses N threads to search for a keyword 
+recursively in a set of files or directories. This question implements a simplified version of 
+the command `grep`.
 
 [source, subs="quotes"]
 ----
-$ **make search**
-gcc -g -Wall -Wvla -Werror search.c -o search -lpthreads
-$ **./search 2**
-Enter a value to search: **3**
-Thread 2 found 3 at index 5003
-$ **./search 2**
-Enter a value to search: **5003**
-Thread 1 found 5003 at index 3
-$ **./search 2**
-Enter a value to search: **-2**
-Not found!
+$ **make grep**
+gcc -g -Wall -Wvla -Werror grep.c -o grep -lpthreads
+$ **./grep Skeleton `find /home/alinen/public/dart/ -name "*.c"`
 ----
 
 Requirements:
 
-* Your program should load the _binary_ file, `data.bin`. This file stores a sequence of non-sorted integers. The first value in the file holds the number of integers. link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec10/readbinary.c[This class example shows how to read in binary data]. Your program should read the first integer to get the size, malloc an array with the given size, and then read in the data as a big block.
-* Your program should split the work of searching through the data between each thread.
 
-= Matrix multiplication
+= Code Analysis
 
-= Grep
+This question has two parts. In the first part, you will implement a tree data structure that can contain 
+any number of children. In the second part, you will use this data structure to store and query 
+the class hierarchy of a large open-source repository.
+
+== Tree
+
+Implement a tree data structure capable of storing any number of children. 
+
+== Class hierarchy
+
+Using N threads, construct the class hierarchy for the open-source repository, `dart`, stored on goldengate at `/home/alinen/public/dart`.
 
 = Submit your work
 
@@ -86,18 +86,18 @@ $ git status
 
 Grades are out of 4 points.
 
-* (1 points) Simple Search
+* (1 points) Grep
 ** (0.1 points) style and header comment
 ** (0.4 points) 
 ** (0.5 points) no memory errors
-* (1 points) Matrix Multiply
-** (0.1 points) style and header comment
-** (1.4 points) 
-** (1.5 points) no memory errors
-* (2 points) Grep
+* (2 points) Tree
 ** (0.1 points) style and header comment
 ** (0.9 points) 
 ** (1 points) no memory errors
+* (1 points) Class Hierarchy 
+** (0.1 points) style and header comment
+** (0.4 points) 
+** (0.5 points) no memory errors
 
 *Code rubrics*
 

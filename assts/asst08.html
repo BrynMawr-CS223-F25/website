@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Assignment 9: Many processes make light work</title>
+<title>Assignment 9: Personal Shell</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,7 +14,7 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_9_many_processes_make_light_work">Assignment 9: Many processes make light work</a></li>
+<li><a href="#_assignment_9_personal_shell">Assignment 9: Personal Shell</a></li>
 <li><a href="#_warm_up">1. Warm-up</a></li>
 <li><a href="#_simple_shell">2. Simple Shell</a></li>
 <li><a href="#_submit_your_work">3. Submit your work</a></li>
@@ -24,7 +24,7 @@
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_9_many_processes_make_light_work">Assignment 9: Many processes make light work</h2>
+<h2 id="_assignment_9_personal_shell">Assignment 9: Personal Shell</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Due Friday, November 1, at midnight</strong></p>
@@ -35,10 +35,13 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Implement an algorithm using multiple processes with fork()</p>
+<p>Gain experience working with <code>fork()</code>.</p>
 </li>
 <li>
-<p>Implement your own simple shell program</p>
+<p>Use OS system calls in your C program.</p>
+</li>
+<li>
+<p>Implement your own simple shell program.</p>
 </li>
 </ul>
 </div>
@@ -120,18 +123,62 @@ $ <strong>./warmup</strong>
 <div class="paragraph">
 <p>In the file, <code>shell.c</code>, implement a program that implements a simple shell.</p>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="img/RainbowShell.png" alt="RainbowShell" width="640px">
+</div>
+</div>
 <div class="paragraph">
 <p>Requirements:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>TODO</p>
+<p>Your program should print a prompt. At minimum, your prompt should show the current working directory and look distinct from the lab machine prompts. In other words, it should be easy to tell what shell if running from the terminal.</p>
 </li>
 <li>
-<p>todo</p>
+<p>Use the <code>readline()</code> function to get user input. This function supports backspace, tab completion, and more. <a href="https://www.man7.org/linux/man-pages/man3/readline.3.html">Documentation for readline can be found here</a>.</p>
+</li>
+<li>
+<p>Use the <code>add_history()</code> function to save user history. This will allow arrow keys to work. <a href="https://www.man7.org/linux/man-pages/man3/readline.3.html">Documentation for readline can be found here</a>.</p>
+</li>
+<li>
+<p>Your program should quit if the users types <code>exit</code>.</p>
+</li>
+<li>
+<p>When the user gives a command, split it into a command and arguments and then fork a command to execute it.</p>
+</li>
+<li>
+<p>Your terminal should wait for the command to finish. If the command terminates with an error, report the error.</p>
 </li>
 </ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can print with colors to the console using ANSI escape sequences.
+For example, <code>printf(\x1b[32m "Green Text" \x1b[0m);</code> will print green text. <a href="https://azrael.digipen.edu/~mmead/www/mg/ansicolors/index.html">Here is a good guide!</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Most prompts print helpful information. Above, we use the
+system commands <code>gethostname</code>, <code>getcwd</code>, and <code>getpwuid(geteuid())</code> to get the
+machine name, the current working directory, and current user respectively.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -173,7 +220,7 @@ $ git status</code></pre>
 <p>(0.1 points) style and header comment</p>
 </li>
 <li>
-<p>(0.4 points) prints correct messages, uses fork() and getpid()</p>
+<p>(0.4 points) prints correct messages, uses <code>fork()</code> and <code>getpid()</code></p>
 </li>
 <li>
 <p>(0.5 points) no memory errors</p>
@@ -189,15 +236,58 @@ $ git status</code></pre>
 <p>(0.1 points) style and header comment</p>
 </li>
 <li>
-<p>(1.4 points)</p>
+<p>(1.4 points) Displays unique prompt with current working directory</p>
 </li>
 <li>
-<p>(1.5 points) no memory errors</p>
+<p>Uses <code>readline()</code> and <code>add_history()</code></p>
+</li>
+<li>
+<p>Quits when the user types <code>exit</code>.</p>
+</li>
+<li>
+<p>Forks a process to run the user&#8217;s command.</p>
+</li>
+<li>
+<p>Reports the return status of the command when the child process completes.</p>
+</li>
+<li>
+<p>Has a unique prompt appearance</p>
+</li>
+<li>
+<p>(1.5 points) no memory errors.</p>
 </li>
 </ul>
 </div>
 </li>
 </ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When using <code>readline()</code>, valgrind will report that some of your memory is
+<em>still reachable</em>. This memory is not leaked. It hasn&#8217;t been cleaned up yet from
+`readline()&#8217;s internal memory. For example, output such as the following is ok
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>==3504== HEAP SUMMARY:
+==3504==     in use at exit: 204,143 bytes in 221 blocks
+==3504==   total heap usage: 453 allocs, 232 frees, 244,790 bytes allocated
+==3504==
+==3504== LEAK SUMMARY:
+==3504==    definitely lost: 0 bytes in 0 blocks
+==3504==    indirectly lost: 0 bytes in 0 blocks
+==3504==      possibly lost: 0 bytes in 0 blocks
+==3504==    still reachable: 204,143 bytes in 221 blocks
+==3504==         suppressed: 0 bytes in 0 blocks</pre>
+</div>
 </div>
 <div class="paragraph">
 <p><strong>Code rubrics</strong></p>
@@ -230,7 +320,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-10-17 10:23:30 -0400
+Last updated 2024-10-17 17:12:50 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

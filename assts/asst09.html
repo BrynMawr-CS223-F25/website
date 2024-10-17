@@ -15,11 +15,15 @@
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_assignment_09_follow_the_thread">Assignment 09: Follow the thread</a></li>
-<li><a href="#_search">1. Search</a></li>
-<li><a href="#_matrix_multiplication">2. Matrix multiplication</a></li>
-<li><a href="#_grep">3. Grep</a></li>
-<li><a href="#_submit_your_work">4. Submit your work</a></li>
-<li><a href="#_grading_rubric">5. Grading Rubric</a></li>
+<li><a href="#_grep">1. Grep</a></li>
+<li><a href="#_code_analysis">2. Code Analysis</a>
+<ul class="sectlevel2">
+<li><a href="#_tree">2.1. Tree</a></li>
+<li><a href="#_class_hierarchy">2.2. Class hierarchy</a></li>
+</ul>
+</li>
+<li><a href="#_submit_your_work">3. Submit your work</a></li>
+<li><a href="#_grading_rubric">4. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
@@ -69,56 +73,49 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_search">1. Search</h2>
+<h2 id="_grep">1. Grep</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the file, <code>search.c</code>, implement a program that uses N threads to search for a value in a list.
-Your program should load the binary file <code>data.bin</code> and then split the workload between the N threads.</p>
+<p>In the file, <code>grep.c</code>, implement a program that uses N threads to search for a keyword
+recursively in a set of files or directories. This question implements a simplified version of
+the command <code>grep</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make search</strong>
-gcc -g -Wall -Wvla -Werror search.c -o search -lpthreads
-$ <strong>./search 2</strong>
-Enter a value to search: <strong>3</strong>
-Thread 2 found 3 at index 5003
-$ <strong>./search 2</strong>
-Enter a value to search: <strong>5003</strong>
-Thread 1 found 5003 at index 3
-$ <strong>./search 2</strong>
-Enter a value to search: <strong>-2</strong>
-Not found!</code></pre>
+<pre class="highlight"><code>$ <strong>make grep</strong>
+gcc -g -Wall -Wvla -Werror grep.c -o grep -lpthreads
+$ <strong>*./grep Skeleton <code>find /home/alinen/public/dart/ -name "</strong>.c"</code></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Requirements:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Your program should load the <em>binary</em> file, <code>data.bin</code>. This file stores a sequence of non-sorted integers. The first value in the file holds the number of integers. <a href="https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec10/readbinary.c">This class example shows how to read in binary data</a>. Your program should read the first integer to get the size, malloc an array with the given size, and then read in the data as a big block.</p>
-</li>
-<li>
-<p>Your program should split the work of searching through the data between each thread.</p>
-</li>
-</ul>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_matrix_multiplication">2. Matrix multiplication</h2>
+<h2 id="_code_analysis">2. Code Analysis</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>This question has two parts. In the first part, you will implement a tree data structure that can contain
+any number of children. In the second part, you will use this data structure to store and query
+the class hierarchy of a large open-source repository.</p>
+</div>
+<div class="sect2">
+<h3 id="_tree">2.1. Tree</h3>
+<div class="paragraph">
+<p>Implement a tree data structure capable of storing any number of children.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_class_hierarchy">2.2. Class hierarchy</h3>
+<div class="paragraph">
+<p>Using N threads, construct the class hierarchy for the open-source repository, <code>dart</code>, stored on goldengate at <code>/home/alinen/public/dart</code>.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grep">3. Grep</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_submit_your_work">4. Submit your work</h2>
+<h2 id="_submit_your_work">3. Submit your work</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Submit both your code and images.</p>
@@ -140,7 +137,7 @@ $ git status</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">5. Grading Rubric</h2>
+<h2 id="_grading_rubric">4. Grading Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
@@ -151,7 +148,7 @@ $ git status</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(1 points) Simple Search</p>
+<p>(1 points) Grep</p>
 <div class="ulist">
 <ul>
 <li>
@@ -167,23 +164,7 @@ $ git status</code></pre>
 </div>
 </li>
 <li>
-<p>(1 points) Matrix Multiply</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(0.1 points) style and header comment</p>
-</li>
-<li>
-<p>(1.4 points)</p>
-</li>
-<li>
-<p>(1.5 points) no memory errors</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>(2 points) Grep</p>
+<p>(2 points) Tree</p>
 <div class="ulist">
 <ul>
 <li>
@@ -194,6 +175,22 @@ $ git status</code></pre>
 </li>
 <li>
 <p>(1 points) no memory errors</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>(1 points) Class Hierarchy</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.1 points) style and header comment</p>
+</li>
+<li>
+<p>(0.4 points)</p>
+</li>
+<li>
+<p>(0.5 points) no memory errors</p>
 </li>
 </ul>
 </div>
@@ -231,7 +228,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-10-17 13:21:51 -0400
+Last updated 2024-10-17 15:13:06 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">
