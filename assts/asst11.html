@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Assignment 11: Buddhabrot</title>
+<title>Assignment 11: Where others fear to thread</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,19 +14,25 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_11_buddhabrot">Assignment 11: Buddhabrot</a></li>
-<li><a href="#_buddhabrot">1. Buddhabrot</a></li>
-<li><a href="#_submit_your_work">2. Submit your work</a></li>
-<li><a href="#_grading_rubric">3. Grading Rubric</a></li>
+<li><a href="#_assignment_11_where_others_fear_to_thread">Assignment 11: Where others fear to thread</a></li>
+<li><a href="#_grep">1. Grep</a></li>
+<li><a href="#_code_analysis">2. Code Analysis</a>
+<ul class="sectlevel2">
+<li><a href="#_tree">2.1. Tree</a></li>
+<li><a href="#_dependencies">2.2. Dependencies</a></li>
+</ul>
+</li>
+<li><a href="#_submit_your_work">3. Submit your work</a></li>
+<li><a href="#_grading_rubric">4. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_11_buddhabrot">Assignment 11: Buddhabrot</h2>
+<h2 id="_assignment_11_where_others_fear_to_thread">Assignment 11: Where others fear to thread</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, November 22nd, before midnight</strong></p>
+<p><strong>Due Sunday, December 1 before midnight (No late submissions accepted)</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -34,10 +40,13 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Implement multi-thread algorithms using the pthread library</p>
+<p>Implement multi-threaded algorithms using the pthread library</p>
 </li>
 <li>
-<p>Use mutex and barrier to coordinate between different threads</p>
+<p>Implement a tree data structure</p>
+</li>
+<li>
+<p>Work with OS system calls</p>
 </li>
 </ul>
 </div>
@@ -62,7 +71,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>Your repository should now contain a new folder named <code>A09</code>.</p>
+<p>Your repository should now contain a new folder named <code>A11</code>.</p>
 </div>
 <div class="paragraph">
 <p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
@@ -70,222 +79,168 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_buddhabrot">1. Buddhabrot</h2>
+<h2 id="_grep">1. Grep</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the file, <code>buddhabrot.c</code>, compute a program that outputs a PPM image of
-the Buddhabrot using multiple threads.</p>
+<p>This question implements a simplified version of the bash command <code>grep</code>. Grep searches a list of files
+for a given keyword or expression. For example, the following command searches for the keyword <code>public</code>
+in a list of source files. We use the <code>find</code> command to generate the list of source files to search.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ <strong>grep public <code>find code -name "*.h"</code></strong>
+code/Seal.h:class Seal : public Animal
+code/Seal.h:public:
+code/Walk.h:class Walk : public Locomotion
+code/Walk.h:public:
+code/Animal.h:public:
+code/Duck.h:class Duck : public Bird
+code/Duck.h:public:
+code/Locomotion.h:public:
+code/Fly.h:class Fly : public Locomotion
+code/Fly.h:public:
+code/Bird.h:class Bird : public Animal
+code/Bird.h:public:
+code/Swim.h:class Swim : public Locomotion
+code/Swim.h:public:
+code/Fish.h:class Fish : public Animal
+code/Fish.h:public:
+code/Whale.h:class Whale : public Fish
+code/Whale.h:public:</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>The <a href="https://en.wikipedia.org/wiki/Buddhabrot">Buddhabrot</a> visualizes the trajectory of each point (x,y)
-as it escapes the mandelbrot set. The color of each pixel represents the probability of a point (x,y)
-visiting it while we calculate whether or not it belongs to the mandelbrot set.</p>
+<p>In the file, <code>grep.c</code>, implement a program that uses N threads to search for a keyword
+in a set of files.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make grep</strong>
+gcc -g -Wall -Wvla -Werror grep.c -o grep -lpthreads
+$ <strong>./grep</strong>
+usage: ./grep <NumThreads> <Keyword> <Files>
+$ <strong>./grep 3 public <code>find code -name "*.h"</code></strong>
+Searching 10 files for keyword: public
+Thread 0 searching 4 files (3 to 7)
+Thread 1 searching 3 files (7 to 10)
+Thread 2 searching 3 files (10 to 13)
+0) code/Seal.h:class Seal : public Animal
+0) code/Seal.h:public:
+0) code/Walk.h:class Walk : public Locomotion
+0) code/Walk.h:public:
+0) code/Animal.h:public:
+0) code/Duck.h:class Duck : public Bird
+2) code/Swim.h:class Swim : public Locomotion
+1) code/Locomotion.h:public:
+2) code/Swim.h:public:
+0) code/Duck.h:public:
+1) code/Fly.h:class Fly : public Locomotion
+1) code/Fly.h:public:
+2) code/Fish.h:class Fish : public Animal
+2) code/Fish.h:public:
+2) code/Whale.h:class Whale : public Fish
+2) code/Whale.h:public:
+1) code/Bird.h:class Bird : public Animal
+1) code/Bird.h:public:
+Elapsed time is 0.000979
+Thread 0 found 7 lines containing keyword: public
+Thread 1 found 5 lines containing keyword: public
+Thread 2 found 6 lines containing keyword: public</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Computing the Buddhabrot set requires three steps:</p>
+<p>Requirements:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>First, determine whether a point is in the mandelbrot set. Recall the points within the set remain less than 2*2 and are given a black color. Store whether a point escapes as a boolean in its own 2D array.</p>
+<p>Your program should take the number of threads, keyword, and a list of files as command line arguments</p>
 </li>
 <li>
-<p>Second, for the points that <em>do</em> escape, you must update counts for each (x,y) coordinate visited. Store these counts in its own 2D array. Also keep track of the max count for any pixel.</p>
+<p>Subdivide the files among the N threads. Note that the number of files may not divide evenly between threads.</p>
 </li>
 <li>
-<p>Third, you must turn the counts from step 2 into a color. The final colors should be written to a 2D array of ppm_pixel (either flat or an array of arrays) and then written.</p>
+<p>Use a mutex to ensure that threads do not interrupt each others printing</p>
+</li>
+<li>
+<p>Print the totals and sub-division of files similarly to the output above</p>
+</li>
+<li>
+<p>Use the <code>fgets</code> to process the lines in each file</p>
+</li>
+<li>
+<p>Use the function <code>strstr</code> defined in <code>string.h</code> to search lines of text for the keyword. <a href="https://en.cppreference.com/w/c/string/byte/strstr">Documentation is here</a></p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>Each of the above steps can be parallelized using threads. The second step will require a mutex to ensure that the counts are set correctly. Below are suggested algorithms for
-computing each step.</p>
-</div>
-<div class="paragraph">
-<p><strong>Step 1: Determine mandelbrot set membership</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>for each row in the image
-   for each col in the image
-      xfrac = row / image_size
-      yfrac = col / image_size
-      x0 = xmin + xfrac * (xmax - xmin)
-      y0 = ymin + yfrac * (ymax - ymin)
-
-      x = 0
-      y = 0
-      iter = 0
-      while (iter &lt; MAX &amp;&amp; x*x + y*y &lt; 2*2)
-        xtmp = x*x - y*y + x0
-        y = 2*x*y + y0
-        x = xtmp
-        iter++
-
-      if (iter &lt; MAX) // escaped
-        set membership at (row,col) to false
-      else
-        set membership at (row,col) to true</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Step 2: Compute visited counts</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>for each row in the image
-   for each col in the image
-      if (row,col) belongs to the mandelbrot set, continue
-
-      xfrac = row / image_size
-      yfrac = col / image_size
-      x0 = xmin + xfrac * (xmax - xmin)
-      y0 = ymin + yfrac * (ymax - ymin)
-
-      x = 0
-      y = 0
-      while (x*x + y*y &lt; 2*2)
-        xtmp = x*x - y*y + x0
-        y = 2*x*y + y0
-        x = xtmp
-
-        yrow = round(size * (y - ymin)/(ymax - ymin))
-        xcol = round(size * (x - xmin)/(xmax - xmin))
-        if (yrow &lt; 0 || yrow &gt;= size) continue; // out of range
-        if (xcol &lt; 0 || xcol &gt;= size) continue; // out of range
-
-        increment count at (yrow, xcol)
-        update max count</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Step 3: Compute colors</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>gamma = 0.681
-factor = 1.0/gamma
-for each row in the image
-   for each col in the image
-      value = 0
-
-      if counts at (row,col) are greater than zero
-        value = log(counts[row][col]) / log(max_count)
-        value = pow(value, factor)
-
-      color.red = value * 255
-      color.green = value * 255
-      color.blue = value * 255
-
-      write color to image at location (row,col)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Each thread should compute the three steps on a quadrant of the image. Below
-is a suggested outline for your thread&#8217;s start routine.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>void * start(void* data) {
-
-  // perform step 1
-  // perform step 2
-
-  // use a thread barrier to wait for all threads to finish steps 1 and 2
-  // perform step 3
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>./buddhabrot</strong>
-Generating buddhabrot with size 480x480
-  Num processes = 4
-  X range = [-2.5000,1.0000]
-  Y range = [-1.1200,1.1200]
-  Generating mandelbrot with size 480x480
-  X range = [-2.0000,1.0000]
-  Y range = [-1.1200,1.1200]
-Thread 140583141971712) sub-image block: cols (0, 240) to rows (0,240)
-Thread 140583133579008) sub-image block: cols (240, 480) to rows (0,240)
-Thread 140583125186304) sub-image block: cols (0, 240) to rows (240,480)
-Thread 140583116793600) sub-image block: cols (240, 480) to rows (240,480)
-Thread 140583141971712) finished
-Thread 140583133579008) finished
-Thread 140583125186304) finished
-Thread 140583116793600) finished
-Computed buddhabrot set (480x480) in 0.123721 seconds
-Writing file: buddhabrot-480-1650141479.ppm</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="img/buddhabrot-2000-1650142988.png" alt="buddhabrot 2000 1650142988" height="400"></span></p>
-</div>
-<div class="paragraph">
-<p>Requirements and hints:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>You can re-use your PPM and mandelbrot functions from A10. You should re-use your implementation for read/write PPM as well.</p>
-</li>
-<li>
-<p>Each thread should run all three steps on a quadrant of the image.</p>
-</li>
-<li>
-<p>You will need a <code>pthread_barrier_t</code> to wait for all counts to be computed before computing the colors</p>
-</li>
-<li>
-<p>Notice that the range of x and y might need to be larger to see the probability distribution</p>
-</li>
-<li>
-<p>Use mutex to compute the counts</p>
-</li>
-<li>
-<p>You should output the number of seconds needed to compute the image. Use this <a href="https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c">class example, matrix.c</a> for an example.</p>
-</li>
-<li>
-<p>Your output filename should have the format <code>buddhabrot-&lt;size&gt;-&lt;timestamp&gt;.ppm</code>. The timestamp can be obtained by calling <code>time(0)</code>.</p>
-</li>
-<li>
-<p>You may use global variables for this program.</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Above, we compute a greyscale mandelbrot. To add colors, compute counts for the red, green, and blue channels separately, using different values for maxIterations in each. For example the following image used 5000 for red, 500 for green, and 50 for blue.
-</td>
-</tr>
-</table>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/buddhabrot-Small.png" alt="buddhabrot Small" height="400">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Other chaotic sets can be visualized in the same way as the Buddhabrot. To see more, read about <a href="https://flam3.com/flame_draves.pdf">Fractal Frames</a>.
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_submit_your_work">2. Submit your work</h2>
+<h2 id="_code_analysis">2. Code Analysis</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This question has two parts. In the first part, you will implement a search tree with string keys.
+In the second part, you will use the tree to store the source files from a directory, along with their
+dependency information. Similarly to your <code>grep</code> implementation, you will build the tree using multiple
+threads.</p>
+</div>
+<div class="sect2">
+<h3 id="_tree">2.1. Tree</h3>
+<div class="paragraph">
+<p>In the file, <code>tree.c</code>, implement a binary search tree. Do not change the header
+<code>tree.h</code>, nor the function declarations in <code>tree.c</code>. We recommend using the book
+"Data Structures and Algorithm Analysis in C" by Mark Allen Weiss. See the
+<a href="../index.html">course webpage for a link</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You must not modify the basecode for <code>tree.h</code> or <code>tree.c</code></p>
+</li>
+<li>
+<p>Your output should match the above and pass all tests</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dependencies">2.2. Dependencies</h3>
+<div class="paragraph">
+<p>A <em>dependency</em> is a general software term for any software required by another. In this question,
+we will analyze dependencies between files, as determined by <code>#include</code> statements. For example,
+the file "Animal.h" depends on "string.h". We can represent such dependencies using a graph, where
+nodes represent files and directed edges represent dependencies. With this representation, a node
+with no outgoing edges has no dependencies.</p>
+</div>
+<div class="paragraph">
+<p>In the file, <code>dependency.c</code>, implement a program that uses N threads to build a binary search tree of a
+given set of files. The nodes of the binary search tree should also contain a list of dependencies that
+point to other nodes in the tree. This data structure should make it easy to look up a file by name and
+then trace through the dependencies between files.</p>
+</div>
+<div class="paragraph">
+<p>Requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use a mutex to avoid race conditions when setting up the tree and graph data structures</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_submit_your_work">3. Submit your work</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Submit both your code and images.</p>
@@ -307,7 +262,7 @@ $ git status</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">3. Grading Rubric</h2>
+<h2 id="_grading_rubric">4. Grading Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
@@ -318,23 +273,49 @@ $ git status</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(4 points) Threaded Buddhabrot</p>
+<p>(1 points) Grep</p>
 <div class="ulist">
 <ul>
 <li>
-<p>(0.4 points) style and header comment</p>
+<p>(0.1 points) style and header comment</p>
 </li>
 <li>
-<p>(0.4 points) Generated image with correct filename</p>
+<p>(0.4 points)</p>
 </li>
 <li>
-<p>(0.2 points) Supports given command line arguments</p>
+<p>(0.5 points) no memory errors</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>(1.0 points) Correct output, thread coordination, and output performance statistics</p>
+<p>(1 points) Tree</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.1 points) style and header comment</p>
 </li>
 <li>
-<p>(2.0 points) no memory errors</p>
+<p>(0.9 points)</p>
+</li>
+<li>
+<p>(1 points) no memory errors</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>(2 points) Dependencies</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.1 points) style and header comment</p>
+</li>
+<li>
+<p>(0.4 points)</p>
+</li>
+<li>
+<p>(0.5 points) no memory errors</p>
 </li>
 </ul>
 </div>
@@ -372,7 +353,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-10-17 13:55:21 -0400
+Last updated 2024-10-18 12:50:17 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

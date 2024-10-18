@@ -73,6 +73,7 @@ include::schedule.adoc[]
 * link:https://www.gnu.org/software/bash/manual/bash.pdf[Bash Manual]
 * link:https://oit.ua.edu/wp-content/uploads/2020/12/Linux_bash_cheat_sheet-1.pdf[Bash Cheatsheet]
 * link:https://www.gnu.org/software/make/manual/html_node/Introduction.html[Makefiles]
+* link:https://makefiletutorial.com/[Makefile Tutorial]
 * link:http://linuxcommand.org/lc3_learning_the_shell.php[Learning the shell]
 
 === Editors

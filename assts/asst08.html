@@ -160,11 +160,23 @@ $ <strong>./warmup</strong>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-You can print with colors to the console using ANSI escape sequences.
-For example, <code>printf(\x1b[32m "Green Text" \x1b[0m);</code> will print green text. <a href="https://azrael.digipen.edu/~mmead/www/mg/ansicolors/index.html">Here is a good guide!</a>
+You can print with colors to the console using ANSI escape sequences (see below).
+For example, <code>printf(ANSI_COLOR_GREEN "Green Text" ANSI_COLOR_RESET);</code> will print green text. <a href="https://azrael.digipen.edu/~mmead/www/mg/ansicolors/index.html">Here is a good guide!</a>
 </td>
 </tr>
 </table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// Helpful macros for working with color
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"</pre>
+</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -320,7 +332,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-10-17 17:12:50 -0400
+Last updated 2024-10-18 11:58:05 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Assignment 09: Follow the thread</title>
+<title>Assignment 9: Mandelbrot Set</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,25 +14,25 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_09_follow_the_thread">Assignment 09: Follow the thread</a></li>
-<li><a href="#_grep">1. Grep</a></li>
-<li><a href="#_code_analysis">2. Code Analysis</a>
+<li><a href="#_assignment_9_mandelbrot_set">Assignment 9: Mandelbrot Set</a></li>
+<li><a href="#_mandelbrot">1. Mandelbrot</a>
 <ul class="sectlevel2">
-<li><a href="#_tree">2.1. Tree</a></li>
-<li><a href="#_class_hierarchy">2.2. Class hierarchy</a></li>
+<li><a href="#_background_mandelbrot_set">1.1. Background: Mandelbrot Set</a></li>
 </ul>
 </li>
-<li><a href="#_submit_your_work">3. Submit your work</a></li>
-<li><a href="#_grading_rubric">4. Grading Rubric</a></li>
+<li><a href="#_threaded_mandelbrot">2. Threaded Mandelbrot</a></li>
+<li><a href="#_performance_comparison">3. Performance comparison</a></li>
+<li><a href="#_submit_your_work">4. Submit your work</a></li>
+<li><a href="#_grading_rubric">5. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_09_follow_the_thread">Assignment 09: Follow the thread</h2>
+<h2 id="_assignment_9_mandelbrot_set">Assignment 9: Mandelbrot Set</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, November 8 before midnight</strong></p>
+<p><strong>Due Friday, November 8th, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -73,52 +73,281 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grep">1. Grep</h2>
+<h2 id="_mandelbrot">1. Mandelbrot</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the file, <code>grep.c</code>, implement a program that uses N threads to search for a keyword
-recursively in a set of files or directories. This question implements a simplified version of
-the command <code>grep</code>.</p>
+<p>In the file, <code>single_mandelbrot.c</code>, compute a program that outputs a PPM image of the mandelbrot
+set. You have been given basecode that initializes the following values from command line arguments. This code uses the <a href="https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/">getopt function</a>.</p>
+</div>
+<div class="paragraph">
+<p>Arguments:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>-s &lt;size&gt;</code> the image width and height</p>
+</li>
+<li>
+<p><code>-l &lt;xmin&gt;</code> the leftmost coordinate, e.g. minimum x value</p>
+</li>
+<li>
+<p><code>-r &lt;xmax&gt;</code> the rightmost coordinate, e.g. maximum x value</p>
+</li>
+<li>
+<p><code>-t &lt;ymin&gt;</code> the topmost coordinate, e.g. minimum y value</p>
+</li>
+<li>
+<p><code>-b &lt;ymax&gt;</code> the bottommost coordinate, e.g. maximum y value</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/A09.png" alt="A09" height="400">
+</div>
+</div>
+<div class="paragraph">
+<p>When you run your program, you should get the output such as the following</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make grep</strong>
-gcc -g -Wall -Wvla -Werror grep.c -o grep -lpthreads
-$ <strong>*./grep Skeleton <code>find /home/alinen/public/dart/ -name "</strong>.c"</code></code></pre>
+<pre class="highlight"><code>$ <strong>make single_mandelbrot</strong>
+$ <strong>./single_mandelbrot</strong>
+Generating mandelbrot with size 480x480
+  X range = [-2.0000,0.4700]
+  Y range = [-1.1200,1.1200]
+Computed mandelbrot set (480x480) in 0.323261 seconds
+Writing file: mandelbrot-480-1649001071.ppm</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Requirements:</p>
+<p>Requirements and hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You should re-use your PPM functions from previous assignments.</p>
+</li>
+<li>
+<p>Allocate an array of pixels using malloc and then save the final image using <code>write_ppm</code>.</p>
+</li>
+<li>
+<p>You should output the number of seconds needed to compute the image. Use this <a href="https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c">class example, matrix.c</a> for an example.</p>
+</li>
+<li>
+<p>Your output filename should have the format <code>mandelbrot-&lt;size&gt;-&lt;timestamp&gt;.ppm</code>. The timestamp can be obtained by calling <code>time(0)</code>.</p>
+</li>
+<li>
+<p>Set a random seed to ensure that the color palette is different each time, e.g. <code>srand(time(0))</code></p>
+</li>
+<li>
+<p>(Optional) Experiment with visualizing other regions of the mandelbrot set. For example, if you run with <code>./single_mandelbrot -s 480 -l -0.02524993 -r 0.00975 -b -0.8172 -t -0.79725</code>, you get the following image</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/mandelbrot-480-subregion.png" alt="mandelbrot 480 subregion">
+</div>
+</div>
+<div class="sect2">
+<h3 id="_background_mandelbrot_set">1.1. Background: Mandelbrot Set</h3>
+<div class="paragraph">
+<p>The <a href="https://en.wikipedia.org/wiki/Mandelbrot_set">mandelbrot set</a> is fractal popularized by
+Benoit Mandelbrot in 1980.</p>
+</div>
+<div class="paragraph">
+<p>The mandelbrot set consists of the set of complex numbers z for which \(z^2 + c\) does not diverge to infinity when z starts at 0. To visualize this set, recall that a <a href="https://en.wikipedia.org/wiki/Complex_number">complex number</a>, \(z = x + yi\), can be visualized as a 2D point \((x,y)\). Although the set derives from complex
+numbers, we can compute the set by thinking about 2D coordinates, \((x,y)\).</p>
+</div>
+<div class="paragraph">
+<p>To see whether the complex number \((x,y)\) diverges, we simply need a loop that repeatedly computes \(z^2 + c\). If we expand the
+complex number multiplication of \(z = x + y*i\), z will change each iteration based on the following algorith. To test for divergence, we check whether z goes
+out of the bounds of 4*4. If z does go out of bounds, we assign it a color based on how quickly it "escaped" the distance 4*4. If after MAX iterations, z is still
+smaller than 4*4, it belongs to the set and we color it black.</p>
+</div>
+<div class="paragraph">
+<p>The last thing we need to draw the set is the region of values for x and y that bound the set.
+X should vary from -2.0 to 0.47. Y should vary from -1.12 to 1.12. Here is the full algorithm.
+Assume that the image width and height are the same, e.g. square images.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>for each row in the image
+   for each col in the image
+      xfrac = row / image_size
+      yfrac = col / image_size
+      x0 = xmin + xfrac * (xmax - xmin)
+      y0 = ymin + yfrac * (ymax - ymin)
+
+      x = 0
+      y = 0
+      iter = 0
+      while (iter &lt; MAX &amp;&amp; x*x + y*y &lt; 2*2)
+        xtmp = x*x - y*y + x0
+        y = 2*x*y + y0
+        x = xtmp
+        iter++
+
+      if (iter &lt; MAX) // escaped
+        color = palette[iter]
+      else
+        color = black
+
+      write color to image at location (row,col)</code></pre>
+</div>
+</div>
+<h3 id="_palette" class="discrete">Palette</h3>
+<div class="paragraph">
+<p>The palette should contain the same number of colors as MAX iterations.
+Use <code>ppm_pixel</code> to represent colors in the pallet. You can either generate
+random colors or compute a base color and jitter it e.g.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="img/mandelbrot-random.gif" alt="mandelbrot random">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>for each palette color
+  red = rand() % 255
+  green = rand() % 255
+  blue = rand() % 255</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="img/mandelbrot-jitter.gif" alt="mandelbrot jitter">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>basered = rand() % 255
+basegreen = rand() % 255
+baseblue = rand() % 255
+for each palette color
+  red = basered + rand() % 100 - 50
+  green = basegreen + rand() % 100 - 50
+  blue = baseblue + rand() % 100 - 50</code></pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_code_analysis">2. Code Analysis</h2>
+<h2 id="_threaded_mandelbrot">2. Threaded Mandelbrot</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This question has two parts. In the first part, you will implement a tree data structure that can contain
-any number of children. In the second part, you will use this data structure to store and query
-the class hierarchy of a large open-source repository.</p>
+<p>Implement a multi-threaded version of the mandelbrot set that you implemented for <a href="asst09.html">Assignment 09</a>.</p>
 </div>
-<div class="sect2">
-<h3 id="_tree">2.1. Tree</h3>
 <div class="paragraph">
-<p>Implement a tree data structure capable of storing any number of children.</p>
+<p>In the file, <code>thread_mandelbrot.c</code>, compute a program that outputs a PPM image of the mandelbrot
+set. You have been given basecode that initializes the following values from command line arguments. This code uses the <a href="https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/">getopt function</a>.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_class_hierarchy">2.2. Class hierarchy</h3>
 <div class="paragraph">
-<p>Using N threads, construct the class hierarchy for the open-source repository, <code>dart</code>, stored on goldengate at <code>/home/alinen/public/dart</code>.</p>
+<p>Arguments:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>-s &lt;size&gt;</code> the image width and height</p>
+</li>
+<li>
+<p><code>-l &lt;xmin&gt;</code> the leftmost coordinate, e.g. minimum x value</p>
+</li>
+<li>
+<p><code>-r &lt;xmax&gt;</code> the rightmost coordinate, e.g. maximum x value</p>
+</li>
+<li>
+<p><code>-t &lt;ymin&gt;</code> the topmost coordinate, e.g. minimum y value</p>
+</li>
+<li>
+<p><code>-b &lt;ymax&gt;</code> the bottommost coordinate, e.g. maximum y value</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When you run your program, you should get the output such as the following</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make thread_mandelbrot</strong>
+$ <strong>./thread_mandelbrot</strong>
+Generating mandelbrot with size 480x480
+  X range = [-2.0000,0.4700]
+  Y range = [-1.1200,1.1200]
+Thread 140392055985920) sub-image block: cols (0, 240) to rows (0,240)
+Thread 140392047593216) sub-image block: cols (240, 480) to rows (0,240)
+Thread 140392039200512) sub-image block: cols (0, 240) to rows (240,480)
+Thread 140392030807808) sub-image block: cols (240, 480) to rows (240,480)
+Thread 140392055985920) finished
+Thread 140392047593216) finished
+Thread 140392039200512) finished
+Thread 140392030807808) finished
+Computed mandelbrot set (480x480) in 0.143906 seconds
+Writing file: mandelbrot-480-1650116924.ppm</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements and hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You should re-use your PPM functions from previous assignments.</p>
+</li>
+<li>
+<p>Create four threads. Each thread should process a quadrant of the image.</p>
+</li>
+<li>
+<p>Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.</p>
+</li>
+<li>
+<p>Allocate an array of pixels using malloc and then save the final image using <code>write_ppm</code>.</p>
+</li>
+<li>
+<p>Do not declare global variables! Use parameters to send data to each thread&#8217;s start_routine.</p>
+</li>
+<li>
+<p>You should output the number of seconds needed to compute the image. Use this <a href="https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c">class example, matrix.c</a> for an example. The performance should be comparable to your multi_mandelbrot version from A09.</p>
+</li>
+<li>
+<p>Your output filename should have the format <code>mandelbrot-&lt;size&gt;-&lt;timestamp&gt;.ppm</code>. The timestamp can be obtained by calling <code>time(0)</code>.</p>
+</li>
+<li>
+<p>Set a random seed to ensure that the color palette is different each time, e.g. <code>srand(time(0))</code></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_submit_your_work">3. Submit your work</h2>
+<h2 id="_performance_comparison">3. Performance comparison</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Submit both your code and images.</p>
+<p>Compare the performance between the single and threaded mandelbrot versions. Fill in <code>Readme.adoc</code>
+with your hardware specifications and runtime statistics.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_submit_your_work">4. Submit your work</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Submit both your code and <strong>images</strong>.</p>
 </div>
 <div class="paragraph">
 <p>1) Push your code work to github</p>
@@ -137,7 +366,7 @@ $ git status</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">4. Grading Rubric</h2>
+<h2 id="_grading_rubric">5. Grading Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
@@ -148,14 +377,23 @@ $ git status</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(1 points) Grep</p>
+<p>(1 points) Mandelbrot</p>
 <div class="ulist">
 <ul>
 <li>
 <p>(0.1 points) style and header comment</p>
 </li>
 <li>
-<p>(0.4 points)</p>
+<p>(0.1 points) Supports given command line arguments</p>
+</li>
+<li>
+<p>(0.1 points) Generates image with correct filename</p>
+</li>
+<li>
+<p>(0.1 points) Allocate an array of pixels using malloc</p>
+</li>
+<li>
+<p>(0.1 points) Correct output (including orientation); Outputs duration; Random colors</p>
 </li>
 <li>
 <p>(0.5 points) no memory errors</p>
@@ -164,14 +402,29 @@ $ git status</code></pre>
 </div>
 </li>
 <li>
-<p>(2 points) Tree</p>
+<p>(2 points) Threaded Mandelbrot</p>
 <div class="ulist">
 <ul>
 <li>
 <p>(0.1 points) style and header comment</p>
 </li>
 <li>
-<p>(0.9 points)</p>
+<p>(0.1 points) Supports given command line arguments</p>
+</li>
+<li>
+<p>(0.1 points) Generates image with correct filename</p>
+</li>
+<li>
+<p>(0.1 points) Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.</p>
+</li>
+<li>
+<p>(0.1 points) Allocate an array of pixels using malloc and then save the final image using <code>write_ppm</code>.</p>
+</li>
+<li>
+<p>(0.1 points) Do not declare global variables! Use parameters to send data to each thread&#8217;s start_routine.</p>
+</li>
+<li>
+<p>(0.4 points) Correct output (including orientation); Outputs duration; Random colors</p>
 </li>
 <li>
 <p>(1 points) no memory errors</p>
@@ -180,20 +433,7 @@ $ git status</code></pre>
 </div>
 </li>
 <li>
-<p>(1 points) Class Hierarchy</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(0.1 points) style and header comment</p>
-</li>
-<li>
-<p>(0.4 points)</p>
-</li>
-<li>
-<p>(0.5 points) no memory errors</p>
-</li>
-</ul>
-</div>
+<p>(1 points) Comparison of runtime between the single and threaded versions</p>
 </li>
 </ul>
 </div>
@@ -228,7 +468,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-10-17 15:13:06 -0400
+Last updated 2024-10-18 10:32:42 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

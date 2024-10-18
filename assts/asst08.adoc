@@ -76,8 +76,20 @@ Requirements:
 * When the user gives a command, split it into a command and arguments and then fork a command to execute it. 
 * Your terminal should wait for the command to finish. If the command terminates with an error, report the error.
 
-NOTE: You can print with colors to the console using ANSI escape sequences. 
-For example, `printf(\x1b[32m "Green Text" \x1b[0m);` will print green text. link:https://azrael.digipen.edu/~mmead/www/mg/ansicolors/index.html[Here is a good guide!]
+NOTE: You can print with colors to the console using ANSI escape sequences (see below). 
+For example, `printf(ANSI_COLOR_GREEN "Green Text" ANSI_COLOR_RESET);` will print green text. link:https://azrael.digipen.edu/~mmead/www/mg/ansicolors/index.html[Here is a good guide!]
+
+[code]
+----
+// Helpful macros for working with color
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+----
 
 NOTE: Most prompts print helpful information. Above, we use the 
 system commands `gethostname`, `getcwd`, and `getpwuid(geteuid())` to get the 
