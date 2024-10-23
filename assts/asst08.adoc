@@ -76,6 +76,8 @@ Requirements:
 * When the user gives a command, split it into a command and arguments and then fork a command to execute it. 
 * Your terminal should wait for the command to finish. If the command terminates with an error, report the error.
 
+NOTE: `readline` is a package that is installed on goldengate and in our labs. However, you may need to install it on your own machine. On Unix systems, this can be done by running `sudo apt install libreadline-dev`  
+
 NOTE: You can print with colors to the console using ANSI escape sequences (see below). 
 For example, `printf(ANSI_COLOR_GREEN "Green Text" ANSI_COLOR_RESET);` will print green text. link:https://azrael.digipen.edu/~mmead/www/mg/ansicolors/index.html[Here is a good guide!]
 
