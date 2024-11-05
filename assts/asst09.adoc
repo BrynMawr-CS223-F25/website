@@ -18,17 +18,8 @@ The goals for this assignment are:
 [discrete]
 == Update your repository
 
-Do a *fetch upstream* to obtain the basecode for this assignment. 
-
-Using the command line
-
-* Open terminal and change your current directory to your assignment repository.
-* Run the command `git fetch upstream`
-* Run the command `git merge upstream/master`
-
-Your repository should now contain a new folder named `{ASST}`.
-
-The `fetch` and `merge` commands update your repository with any changes from the original.
+NOTE: Do a *SYNC FORK* to obtain the basecode for this assignment. 
+This is a button on your Github repository. 
 
 :sectnums:
 
