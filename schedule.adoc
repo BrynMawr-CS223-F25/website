@@ -117,7 +117,7 @@
 |Nov 19,21 anchor:week12[]
 |*Threads IV* 
 
-* Nov 21, NO CLASS
+* Nov 21, NO CLASS!!
 * Read: link:https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era[Chapter 14] 
 * link:assts/asst11.html[Assignment 11]: Due Dec 1 (No extensions)
 * Lab: **Quiz 05**

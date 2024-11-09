@@ -17,6 +17,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 * Next assignment is Due Nov 8st. link:assts/asst10.html[Assignment 10: Buddhabrot]
 * *Quiz 05* Nov 21: link:studyguide5.html[Study Guide for Quiz 5]
+* **NO CLASS** Nov 21! We will still have the quiz in lab.
 * Our final exam will be **self-scheduled** during the period Dec 15-20, 2024.
 * Final Exam Review Session: Dec 16th, 11:40am-1:00pm, Park 230.
 * Additional office hours: Dec 17th, 11:40am-1:00pm, Park 200A.
