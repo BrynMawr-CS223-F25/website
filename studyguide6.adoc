@@ -13,12 +13,142 @@ Topics:
 
 Everything from link:studyguide5.html[Study Guide 5], plus
 
+* Intermediate threads
 * Memory hierarchy, primary and secondary storage, caches, temporal and spatial locality
 * Advanced pointers, pointer arithmetic, void*, function pointers, pass by pointer
 * Implementations of malloc and free. sbrk()
 * Code optimization best practices
 
 = Practice questions
+
+== Threads
+
+2) The following multi-threaded program simulates two bank accounts. But it's not working correctly. What is going on and how can we fix it?
+
+[source]
+----
+struct account {
+  pthread_mutex_t lock;
+  int balance;
+};
+
+void *Transfer(void *args){
+  struct account** accounts = (struct account**) args;
+  struct account* fromAcct = accounts[FROM];
+  struct account* toAcct = accounts[TO];
+
+  for (int i = 0; i < 10000; i++) {
+    pthread_mutex_lock(&fromAcct->lock);
+    pthread_mutex_lock(&toAcct->lock);
+
+    fromAcct->balance -= 25;
+    toAcct->balance += 25;
+
+    pthread_mutex_unlock(&fromAcct->lock);
+    pthread_mutex_unlock(&toAcct->lock);
+  }
+
+  return NULL;
+}
+
+int main() {
+
+  // create accounts for A and B
+  struct account accountA;
+  struct account accountB;
+  accountA.balance = 100;
+  accountB.balance = 50;
+  pthread_mutex_init(&accountA.lock, NULL);
+  pthread_mutex_init(&accountB.lock, NULL);
+  printf("Starting balances:\n");
+  printf("\tA: %d\n", accountA.balance);
+  printf("\tB: %d\n", accountB.balance);
+
+  // create threads
+  struct account* transformA2B[2];
+  transformA2B[0] = &accountA;
+  transformA2B[1] = &accountB;
+
+  struct account* transformB2A[2];
+  transformB2A[0] = &accountB;
+  transformB2A[1] = &accountA;
+
+  pthread_t A2B, B2A;
+  pthread_create(&A2B, NULL, Transfer, &transformA2B);
+  pthread_create(&B2A, NULL, Transfer, &transformB2A);
+
+  // wait for threads to finish
+  pthread_join(A2B, NULL);
+  pthread_join(B2A, NULL);
+
+  printf("Ending balances:\n");
+  printf("\tA: %d\n", accountA.balance);
+  printf("\tB: %d\n", accountB.balance);
+
+  // cleanup
+  pthread_mutex_destroy(&accountA.lock);
+  pthread_mutex_destroy(&accountB.lock);
+
+  return 0;
+}
+----
+
+3) The following multi-threaded program attempts to count the numbers in a list that are greater than 1000 but isn't working correctly. What is going on and how can we fix it?
+
+
+[source]
+----
+#define SIZE 100000
+
+static unsigned long long count = 0;
+struct thread_data {
+  int start_index;
+  int end_index;
+  int* array;
+};
+
+void *countOver1000(void *userdata) {
+  struct thread_data *data = (struct thread_data *) userdata;
+
+  for (int i = data->start_index; i < data->end_index; i++) {
+    if (data->array[i] > 1000) {
+      count++;
+    }
+  }
+  return (void*) NULL;
+}
+
+int main(int argc, char *argv[]) {
+  srand(time(0));
+
+  int values[SIZE];
+  unsigned long long test = 0;
+  for (int i = 0; i < SIZE; i++) {
+    values[i] = rand() % SIZE;
+    if (values[i] > 1000) test++;
+  }
+
+  printf("Test with 4 threads\n");
+  pthread_t threads[4];
+  struct thread_data data[4];
+  int subsize = SIZE/4; // assume multiple of 4
+  for (int i = 0; i < 4; i++) {
+    data[i].array = values;
+    data[i].start_index = subsize*i;
+    data[i].end_index = subsize*(i+1);
+    pthread_create(&threads[i], NULL, countOver1000, (void*) &data[i]);
+  }
+
+  for (int i = 0; i < 4; i++) {
+    pthread_join(threads[i], NULL);
+  }
+
+  printf("Answer with threads: %llu\n", count);
+  printf("Correct answer: %llu\n", test);
+
+  return 0;
+}
+----
 
 == Advanced pointers
 

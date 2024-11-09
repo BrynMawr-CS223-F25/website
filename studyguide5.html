@@ -29,7 +29,7 @@
 <h2 id="_study_guide_5">Study Guide 5</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Code Jams are open book. 40 minutes in lab.</p>
+<p>Quizzes are closed book. 30 minutes in lab.</p>
 </div>
 <div class="paragraph">
 <p>Topics:</p>
@@ -40,36 +40,15 @@
 <div class="ulist">
 <ul>
 <li>
-<p>The operating system, interrupts, traps, processes, virtual memory, zombies</p>
+<p>The operating system, processes, signals, virtual memory</p>
 </li>
 <li>
 <p>fork(), wait(), pid, ps</p>
 </li>
 <li>
-<p>Interprocess communication: signals, shared memory, pipes, sockets</p>
-</li>
-<li>
-<p>POSIX threads</p>
-</li>
-<li>
-<p>mutex, barrier</p>
-</li>
-<li>
-<p>deadlock, thread safety</p>
+<p>Basic POSIX threads</p>
 </li>
 </ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-We skipped signals this semester (Spring 2023). You do not need to study this topic
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
@@ -79,7 +58,7 @@ We skipped signals this semester (Spring 2023). You do not need to study this to
 <div class="sect2">
 <h3 id="_os_processes">OS, Processes</h3>
 <div class="paragraph">
-<p>1) Short answer</p>
+<p>1) Example short answer questions</p>
 </div>
 <div class="ulist">
 <ul>
@@ -90,7 +69,13 @@ We skipped signals this semester (Spring 2023). You do not need to study this to
 <p>What is the BIOS or UEFI for?</p>
 </li>
 <li>
-<p>What is virtual address space (VAS)? Why is it useful?</p>
+<p>What is virtual address space (VAS)?</p>
+</li>
+<li>
+<p>Why do we need a virtual address space (VAS)?</p>
+</li>
+<li>
+<p>Why might a processed be in a blocked state?</p>
 </li>
 <li>
 <p>What is a process?</p>
@@ -108,22 +93,46 @@ We skipped signals this semester (Spring 2023). You do not need to study this to
 <p>How can you kill a process using <code>ps</code> ?</p>
 </li>
 <li>
-<p>What states can a process be in?</p>
-</li>
-<li>
 <p>What is a zombie process?</p>
 </li>
 <li>
 <p>What are the different states that a process can be in?</p>
 </li>
 <li>
-<p>Why might we want to register a signal handler for the SIGKILL or SIGSEGV signal?</p>
+<p>What is a signal handler?</p>
+</li>
+<li>
+<p>Why might we want to register a signal handler?</p>
 </li>
 <li>
 <p>When does the OS send the SIGSEGV signal?</p>
 </li>
 <li>
-<p>What are the differences between shared memory, signals and pipes?</p>
+<p>When does the OS send the SIGINT signal?</p>
+</li>
+<li>
+<p>When does the OS send the SIGCHD signal?</p>
+</li>
+<li>
+<p>What happens when a process calls fork?</p>
+</li>
+<li>
+<p>What is a thread?</p>
+</li>
+<li>
+<p>What are the differences between threads and processes?</p>
+</li>
+<li>
+<p>Why and when might we want to use multiple threads?</p>
+</li>
+<li>
+<p>When might we want to use multiple processes versus multiple threads?</p>
+</li>
+<li>
+<p>What is a function pointer?</p>
+</li>
+<li>
+<p>What is a void* pointer?</p>
 </li>
 </ul>
 </div>
@@ -145,7 +154,7 @@ We skipped signals this semester (Spring 2023). You do not need to study this to
 </div>
 </div>
 <div class="paragraph">
-<p>3) Draw the process hierarchy created by executing the following program. For each process in the hierarchy, list its output (e.g. what does each process print)?</p>
+<p>3) Draw the process timeline created by executing the following program. For each created process, list its output (e.g. what does each process print)?</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -176,7 +185,79 @@ We skipped signals this semester (Spring 2023). You do not need to study this to
 </div>
 </div>
 <div class="paragraph">
-<p>4) What type of event does SIGINT represent? Write a program that registers a signal handler for SIGINT?</p>
+<p>4) Draw the process timeline created by executing the following program. For each created process, list its output (e.g. what does each process print)? How many processes are created?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>int main() {
+  pid_t ret;
+
+  printf("A\n");
+
+  for (int i = 0; i &lt; 3; i++)
+  {
+     ret = fork();
+     if (ret == 0) // child
+     {
+        printf("B%d\n", i);
+     }
+  }
+
+  printf("Z\n");
+  return 0;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>5) Draw the process timeline created by executing the following program. For each created process, list its output (e.g. what does each process print)? How many processes are created?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>int main() {
+  pid_t ret;
+
+  printf("A\n");
+
+  for (int i = 0; i &lt; 3; i++)
+  {
+     ret = fork();
+     if (ret == 0) // child
+     {
+        printf("B%d\n", i);
+        exit(0);
+     }
+  }
+
+  printf("Z\n");
+  return 0;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>6) Draw the process timeline created by executing the following program. For each created process, list its output (e.g. what does each process print)? How many processes are created?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>int main() {
+  pid_t ret;
+
+  int value = 10;
+  printf("A%d\n", value);
+
+  ret = fork();
+  if (ret == 0) // child
+  {
+     value--;
+  }
+  else
+  {
+     value++;
+  }
+
+  printf("Z%d\n", value);
+  return 0;
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -185,166 +266,123 @@ We skipped signals this semester (Spring 2023). You do not need to study this to
 <h2 id="_threads">Threads</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Short answer</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>What is a thread?</p>
-</li>
-<li>
-<p>What is a mutex? When do we need to use mutex?</p>
-</li>
-<li>
-<p>What is a race condition?</p>
-</li>
-<li>
-<p>What is deadlock?</p>
-</li>
-<li>
-<p>What does it mean for a function to be thread safe?</p>
-</li>
-<li>
-<p>Why and when might we want to use multiple threads?</p>
-</li>
-<li>
-<p>When might we want to use multiple processes versus multiple threads?</p>
-</li>
-</ul>
+<p>1) Sketch a multi-threaded program (N threads) that computes the average of a list of numbers. You can assume that the size of the list can be evenly divided by N.</p>
 </div>
 <div class="paragraph">
-<p>1) Write a multi-threaded program (2 threads) that computes the average of a list of numbers. You can assume that the size of the list can be evenly divided by 2. Sketch a stack diagram for this program using a list of 4 numbers.</p>
-</div>
-<div class="paragraph">
-<p>2) The following multi-threaded program simulates two bank accounts. But it&#8217;s not working correctly. What is going on and how can we fix it?</p>
+<p>2) Draw the stack diagram for the following program with two threads.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>struct account {
-  pthread_mutex_t lock;
-  int balance;
+<pre class="highlight"><code>struct thread_data {
+  float s;
+  int start_index;
+  int end_index;
+  float* array;
 };
 
-void *Transfer(void *args){
-  struct account** accounts = (struct account**) args;
-  struct account* fromAcct = accounts[FROM];
-  struct account* toAcct = accounts[TO];
-
-  for (int i = 0; i &lt; 10000; i++) {
-    pthread_mutex_lock(&amp;fromAcct-&gt;lock);
-    pthread_mutex_lock(&amp;toAcct-&gt;lock);
-
-    fromAcct-&gt;balance -= 25;
-    toAcct-&gt;balance += 25;
-
-    pthread_mutex_unlock(&amp;fromAcct-&gt;lock);
-    pthread_mutex_unlock(&amp;toAcct-&gt;lock);
+void *scalar_multiply(void *userdata) {
+  struct thread_data *data = (struct thread_data *) userdata;
+  for (int i = data-&gt;start_index; i &lt; data-&gt;end_index; i++) {
+    data-&gt;array[i] = sqrt(i)* data-&gt;s;
   }
-
   return NULL;
 }
 
-int main() {
+int main(int argc, char **argv) {
+  int i;
+  int nthreads;
+  pthread_t *thread_array;
+  long *thread_ids;
+  struct thread_data *tdata;
+  float data[100000];
 
-  // create accounts for A and B
-  struct account accountA;
-  struct account accountB;
-  accountA.balance = 100;
-  accountB.balance = 50;
-  pthread_mutex_init(&amp;accountA.lock, NULL);
-  pthread_mutex_init(&amp;accountB.lock, NULL);
-  printf("Starting balances:\n");
-  printf("\tA: %d\n", accountA.balance);
-  printf("\tB: %d\n", accountB.balance);
+  if (argc !=2) {
+    fprintf(stderr, "usage: %s &lt;n&gt;\n", argv[0]);
+    fprintf(stderr, "where &lt;n&gt; is the number of threads\n");
+    return 1;
+  }
+  nthreads = strtol(argv[1], NULL, 10);
 
-  // create threads
-  struct account* transformA2B[2];
-  transformA2B[0] = &amp;accountA;
-  transformA2B[1] = &amp;accountB;
+  // Allocate space for thread structs and identifiers.
+  thread_array = malloc(nthreads * sizeof(pthread_t));
+  thread_ids = malloc(nthreads * sizeof(long));
+  tdata = malloc(nthreads * sizeof(struct thread_data));
 
-  struct account* transformB2A[2];
-  transformB2A[0] = &amp;accountB;
-  transformB2A[1] = &amp;accountA;
+  struct timeval tstart, tend;
+  gettimeofday(&amp;tstart, NULL);
+  // Assign each thread an ID and create all the threads.
+  int subsize = (int) (100000 / (nthreads-1));
+  for (i = 0; i &lt; nthreads; i++) {
+    thread_ids[i] = i;
+    tdata[i].s = 3.14;
+    tdata[i].start_index = i*subsize;
+    tdata[i].end_index = (i+1)*subsize % 100000;
+    tdata[i].array = data;
+    pthread_create(&amp;thread_array[i], NULL, scalar_multiply, &amp;tdata[i]);
+  }
 
-  pthread_t A2B, B2A;
-  pthread_create(&amp;A2B, NULL, Transfer, &amp;transformA2B);
-  pthread_create(&amp;B2A, NULL, Transfer, &amp;transformB2A);
+  /* Join all the threads. Main will pause in this loop until all threads
+   * have returned from the thread function. */
+  for (i = 0; i &lt; nthreads; i++) {
+    pthread_join(thread_array[i], NULL);
+  }
+  gettimeofday(&amp;tend, NULL);
 
-  // wait for threads to finish
-  pthread_join(A2B, NULL);
-  pthread_join(B2A, NULL);
+  float timer = tend.tv_sec - tstart.tv_sec + (tend.tv_usec - tstart.tv_usec)/1.e6;
+  printf("scalar_multiply time is %g\n", timer);
 
-  printf("Ending balances:\n");
-  printf("\tA: %d\n", accountA.balance);
-  printf("\tB: %d\n", accountB.balance);
-
-  // cleanup
-  pthread_mutex_destroy(&amp;accountA.lock);
-  pthread_mutex_destroy(&amp;accountB.lock);
+  free(thread_array);
+  free(thread_ids);
+  free(tdata);
 
   return 0;
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>3) The following multi-threaded program attempts to count the numbers in a list that are greater than 1000 but isn&#8217;t working correctly. What is going on and how can we fix it?</p>
+<p>3) Draw the stack diagram for the following program with two threads.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>#define SIZE 100000
-
-static unsigned long long count = 0;
-struct thread_data {
-  int start_index;
-  int end_index;
-  int* array;
+<pre class="highlight"><code>struct foo {
+   long id;
+   char message[16];
 };
 
-void *countOver1000(void *userdata) {
-  struct thread_data *data = (struct thread_data *) userdata;
-
-  for (int i = data-&gt;start_index; i &lt; data-&gt;end_index; i++) {
-    if (data-&gt;array[i] &gt; 1000) {
-      count++;
-    }
-  }
-  return (void*) NULL;
+void *HelloWorld(void *id) {
+  struct foo *holder = (struct foo *) id;
+  printf("%s world! I am thread %ld\n", holder-&gt;message, holder-&gt;id);
+  return NULL;
 }
 
-int main(int argc, char *argv[]) {
-  srand(time(0));
+int main(int argc, char **argv) {
+  struct foo holder1, holder2;
+  holder1.id = 1;
+  strcpy(holder1.message, "caio");
 
-  int values[SIZE];
-  unsigned long long test = 0;
-  for (int i = 0; i &lt; SIZE; i++) {
-    values[i] = rand() % SIZE;
-    if (values[i] &gt; 1000) test++;
-  }
+  holder2.id = 2;
+  strcpy(holder2.message, "aloha");
 
-  printf("Test with 4 threads\n");
-  pthread_t threads[4];
-  struct thread_data data[4];
-  int subsize = SIZE/4; // assume multiple of 4
-  for (int i = 0; i &lt; 4; i++) {
-    data[i].array = values;
-    data[i].start_index = subsize*i;
-    data[i].end_index = subsize*(i+1);
-    pthread_create(&amp;threads[i], NULL, countOver1000, (void*) &amp;data[i]);
-  }
-
-  for (int i = 0; i &lt; 4; i++) {
-    pthread_join(threads[i], NULL);
-  }
-
-  printf("Answer with threads: %llu\n", count);
-  printf("Correct answer: %llu\n", test);
-
+  long* retval1 = NULL, *retval2 = NULL;
+  pthread_t thread1, thread2;
+  pthread_create(&amp;thread1, NULL, HelloWorld, &amp;holder1);
+  pthread_create(&amp;thread2, NULL, HelloWorld, &amp;holder2);
+  pthread_join(thread1, NULL);
+  pthread_join(thread2, NULL);
   return 0;
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>4) Ann-marie has the following errors when she tries to build. What type of error is it (compile, link, runtime, or logical)? How can she fix it?</p>
+<p>4) Draw the stack diagram for the following program with four threads.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>5) Ann-marie has the following errors when she tries to build. What type of error is it (compile, link, runtime, or logical)? How can she fix it?</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -366,12 +404,66 @@ thread-argv.c:112:9: warning: implicit declaration of function â€˜pthread_joinâ€
       |         ^~~~~~~~~~~~</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>5) What is the output of the following program? Draw the stack diagram.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#include &lt;stdio.h&gt;
+
+typedef void (*functionType)(int a, int b);
+
+void example(int a, int b) {
+  printf("This is a function stored as data! %d %d\n", a, b);
+}
+
+int main() {
+  functionType myFunction = example;
+  (*myFunction)(10, 3);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>6) Indicate which of the following dereferences are safe.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+  void* generic = NULL;
+  int a = 3;
+  double b = 4.5;
+  generic = &amp;a;
+  generic = &amp;b;
+
+  printf("test %f\n", *generic);
+
+  double* double_ptr = (double *) generic;
+  printf("test %f\n", *double_ptr);
+
+  double* int_ptr = (int *) generic;
+  printf("test %d\n", *int_ptr);
+
+  generic = &amp;a;
+
+  double* double_ptr = (double *) generic;
+  printf("test %f\n", *double_ptr);
+
+  double* int_ptr = (int *) generic;
+  printf("test %d\n", *int_ptr);
+
+  return 0;
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-08-27 09:58:07 -0400
+Last updated 2024-11-09 15:41:34 -0500
 </div>
 </div>
 </body>
