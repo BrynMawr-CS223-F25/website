@@ -22,9 +22,10 @@ The goals for this assignment are:
 
 Do a *fetch upstream* to obtain the basecode for this assignment. 
 
-Using the command line
+Using the command line, make sure that you have the correct upstream repository and do a fetch upstream to get the basecode for this assignment.
 
 * Open terminal and change your current directory to your assignment repository.
+* `git remote set-url upstream git@github.com:brynmawr-cs223-f24/cs223-assignments.git`
 * Run the command `git fetch upstream`
 * Run the command `git merge upstream/master`
 
