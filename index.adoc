@@ -15,7 +15,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* Next assignment is Due Dec 1st. link:assts/asst11.html[Assignment 11: We others fear to thread]
+* Next assignment is Due Dec 1st. link:assts/asst11.html[Assignment 11: Where others fear to thread]
 * *Quiz 05* Nov 21: link:studyguide5.html[Study Guide for Quiz 5]
 * **NO CLASS** Nov 21! We will still have the quiz in lab.
 * Our final exam will be **self-scheduled** during the period Dec 15-20, 2024.
