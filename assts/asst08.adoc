@@ -124,12 +124,11 @@ Grades are out of 4 points.
 ** (0.5 points) no memory errors
 * (3 points) Simple shell 
 ** (0.1 points) style and header comment
-** (1.4 points) Displays unique prompt with current working directory
-** Uses `readline()` and `add_history()`
-** Quits when the user types `exit`.
-** Forks a process to run the user's command. 
-** Reports the return status of the command when the child process completes.
-** Has a unique prompt appearance
+** (0.7 points) Displays unique prompt with current working directory
+** (0.3 points) Uses `readline()` and `add_history()`
+** (0.1 points) Quits when the user types `exit`.
+** (0.1 points) Forks a process to run the user's command. 
+** (0.1 points) Reports the return status of the command when the child process completes.
 ** (1.5 points) no memory errors. 
 
 NOTE: When using `readline()`, valgrind will report that some of your memory is

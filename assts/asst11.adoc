@@ -126,7 +126,7 @@ We recommend using the book
 "Data Structures and Algorithm Analysis in C" by Mark Allen Weiss. See the
 link:../index.html[course webpage for a link].
 
-[code]
+[code,subs="quotes"]
 ----
 $ **make ./tree_tests**
 gcc -g -Wall -Wvla -Werror -Wno-unused-variable -Wno-unused-but-set-variable tree_tests.c tree.c -o tree_tests -lpthread
