@@ -51,7 +51,7 @@ in a set of files.
 $ **make grep**
 gcc -g -Wall -Wvla -Werror grep.c -o grep -lpthreads
 $ **./grep**
-usage: ./grep <NumThreads> <Keyword> <Files>
+usage: ./grep NumThreads Keyword Files
 ----
 
 // Need to include an image because backtick does not work
