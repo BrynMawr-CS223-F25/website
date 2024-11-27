@@ -94,6 +94,18 @@ in a list of source files. We use the <code>find</code> command to generate the 
 <img src="img/grep.png" alt="grep" width="500px">
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Make sure you include the backticks, e.g. <code> ` </code>. This adds the filenames found by <code>find</code> as command line arguments to <code>grep</code>.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>In the file, <code>grep.c</code>, implement a program that uses N threads to search for a keyword
 in a set of files.</p>
@@ -103,7 +115,7 @@ in a set of files.</p>
 <pre class="highlight"><code>$ <strong>make grep</strong>
 gcc -g -Wall -Wvla -Werror grep.c -o grep -lpthreads
 $ <strong>./grep</strong>
-usage: ./grep NumThreads Keyword Files</code></pre>
+usage: ./grep <code><</code>NumThreads<code>></code> <code><</code>Keyword<code>></code> <code><</code>Files<code>></code></code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -414,7 +426,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-11-27 10:06:16 -0500
+Last updated 2024-11-27 10:11:12 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">
