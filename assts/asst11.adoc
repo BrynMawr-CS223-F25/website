@@ -41,28 +41,7 @@ This question implements a simplified version of the bash command `grep`. Grep s
 for a given keyword or expression. For example, the following command searches for the keyword `public` 
 in a list of source files. We use the `find` command to generate the list of source files to search.
 
-[code, subs="quotes"]
-----
-$ **grep public `` ` ``find code -name "*.h"`` ` ``**
-code/Seal.h:class Seal : public Animal
-code/Seal.h:public:
-code/Walk.h:class Walk : public Locomotion
-code/Walk.h:public:
-code/Animal.h:public:
-code/Duck.h:class Duck : public Bird
-code/Duck.h:public:
-code/Locomotion.h:public:
-code/Fly.h:class Fly : public Locomotion
-code/Fly.h:public:
-code/Bird.h:class Bird : public Animal
-code/Bird.h:public:
-code/Swim.h:class Swim : public Locomotion
-code/Swim.h:public:
-code/Fish.h:class Fish : public Animal
-code/Fish.h:public:
-code/Whale.h:class Whale : public Fish
-code/Whale.h:public:
-----
+image::grep.png[width=300px]
 
 In the file, `grep.c`, implement a program that uses N threads to search for a keyword 
 in a set of files. 
@@ -73,34 +52,10 @@ $ **make grep**
 gcc -g -Wall -Wvla -Werror grep.c -o grep -lpthreads
 $ **./grep**
 usage: ./grep <NumThreads> <Keyword> <Files>
-$ **./grep 3 public `find code -name "*.h"`**
-Searching 10 files for keyword: public
-Thread 0 searching 4 files (3 to 7)
-Thread 1 searching 3 files (7 to 10)
-Thread 2 searching 3 files (10 to 13)
-0) code/Seal.h:class Seal : public Animal
-0) code/Seal.h:public:
-0) code/Walk.h:class Walk : public Locomotion
-0) code/Walk.h:public:
-0) code/Animal.h:public:
-0) code/Duck.h:class Duck : public Bird
-2) code/Swim.h:class Swim : public Locomotion
-1) code/Locomotion.h:public:
-2) code/Swim.h:public:
-0) code/Duck.h:public:
-1) code/Fly.h:class Fly : public Locomotion
-1) code/Fly.h:public:
-2) code/Fish.h:class Fish : public Animal
-2) code/Fish.h:public:
-2) code/Whale.h:class Whale : public Fish
-2) code/Whale.h:public:
-1) code/Bird.h:class Bird : public Animal
-1) code/Bird.h:public:
-Elapsed time is 0.000979
-Thread 0 found 7 lines containing keyword: public
-Thread 1 found 5 lines containing keyword: public
-Thread 2 found 6 lines containing keyword: public
 ----
+
+// Need to include an image because backtick does not work
+image::thread-grep.png[width=300px]
 
 Requirements:
 

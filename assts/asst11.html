@@ -89,27 +89,9 @@
 for a given keyword or expression. For example, the following command searches for the keyword <code>public</code>
 in a list of source files. We use the <code>find</code> command to generate the list of source files to search.</p>
 </div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre>$ <strong>grep public <code> ` </code>find code -name "*.h"<code> ` </code></strong>
-code/Seal.h:class Seal : public Animal
-code/Seal.h:public:
-code/Walk.h:class Walk : public Locomotion
-code/Walk.h:public:
-code/Animal.h:public:
-code/Duck.h:class Duck : public Bird
-code/Duck.h:public:
-code/Locomotion.h:public:
-code/Fly.h:class Fly : public Locomotion
-code/Fly.h:public:
-code/Bird.h:class Bird : public Animal
-code/Bird.h:public:
-code/Swim.h:class Swim : public Locomotion
-code/Swim.h:public:
-code/Fish.h:class Fish : public Animal
-code/Fish.h:public:
-code/Whale.h:class Whale : public Fish
-code/Whale.h:public:</pre>
+<img src="img/grep.png" alt="grep" width="300px">
 </div>
 </div>
 <div class="paragraph">
@@ -121,34 +103,12 @@ in a set of files.</p>
 <pre class="highlight"><code>$ <strong>make grep</strong>
 gcc -g -Wall -Wvla -Werror grep.c -o grep -lpthreads
 $ <strong>./grep</strong>
-usage: ./grep <NumThreads> <Keyword> <Files>
-$ <strong>./grep 3 public <code>find code -name "*.h"</code></strong>
-Searching 10 files for keyword: public
-Thread 0 searching 4 files (3 to 7)
-Thread 1 searching 3 files (7 to 10)
-Thread 2 searching 3 files (10 to 13)
-0) code/Seal.h:class Seal : public Animal
-0) code/Seal.h:public:
-0) code/Walk.h:class Walk : public Locomotion
-0) code/Walk.h:public:
-0) code/Animal.h:public:
-0) code/Duck.h:class Duck : public Bird
-2) code/Swim.h:class Swim : public Locomotion
-1) code/Locomotion.h:public:
-2) code/Swim.h:public:
-0) code/Duck.h:public:
-1) code/Fly.h:class Fly : public Locomotion
-1) code/Fly.h:public:
-2) code/Fish.h:class Fish : public Animal
-2) code/Fish.h:public:
-2) code/Whale.h:class Whale : public Fish
-2) code/Whale.h:public:
-1) code/Bird.h:class Bird : public Animal
-1) code/Bird.h:public:
-Elapsed time is 0.000979
-Thread 0 found 7 lines containing keyword: public
-Thread 1 found 5 lines containing keyword: public
-Thread 2 found 6 lines containing keyword: public</code></pre>
+usage: ./grep <NumThreads> <Keyword> <Files></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/thread-grep.png" alt="thread grep" width="300px">
 </div>
 </div>
 <div class="paragraph">
@@ -454,7 +414,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-11-27 09:59:09 -0500
+Last updated 2024-11-27 10:04:28 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">
