@@ -43,7 +43,7 @@ in a list of source files. We use the `find` command to generate the list of sou
 
 [code, subs="quotes"]
 ----
-$ **grep public `find code -name "*.h"`**
+$ **grep public ``find code -name "*.h"``**
 code/Seal.h:class Seal : public Animal
 code/Seal.h:public:
 code/Walk.h:class Walk : public Locomotion
