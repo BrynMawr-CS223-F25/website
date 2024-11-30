@@ -9,7 +9,7 @@ include::header.adoc[]
 
 = {title}
 
-Due Friday, December 8th, before midnight. **Written portion is due in class, December 7th**
+Due Friday, December 6th, before midnight. **Written portion is due December 5th - no late work accepted**
 
 The goals for this assignment are:
 

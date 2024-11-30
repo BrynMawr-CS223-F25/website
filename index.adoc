@@ -16,8 +16,8 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 [.anns]
 
 * Next assignment is Due Dec 1st. link:assts/asst11.html[Assignment 11: Where others fear to thread]
-* *Quiz 05* Nov 21: link:studyguide5.html[Study Guide for Quiz 5]
-* **NO CLASS** Nov 21! We will still have the quiz in lab.
+* Last assignment is Due Dec 5th (written - no late work accepted) and 6th. link:assts/asst12.html[Assignment 12: Hold on to your memories]
+* Lab Dec 5th: We work on the written part of assignment 12.
 * Our final exam will be **self-scheduled** during the period Dec 15-20, 2024.
 * Final Exam Review Session: Dec 16th, 11:40am-1:00pm, Park 230.
 * Additional office hours: Dec 17th, 11:40am-1:00pm, Park 200A.
