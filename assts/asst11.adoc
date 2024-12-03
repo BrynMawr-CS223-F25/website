@@ -136,7 +136,7 @@ giving the filename.
 
 [code, subs="quotes"]
 ----
-$ **./dependency 3 `````find code -name "*.h" -o -name "*.cpp"`````**
+$ **./dependency 3 `` ` ``find code -name "*.h" -o -name "*.cpp"`` ` ``**
 Processing 11 files
 Thread 0 processing 4 files (arguments 2 to 6)
 Thread 1 processing 4 files (arguments 6 to 10)
