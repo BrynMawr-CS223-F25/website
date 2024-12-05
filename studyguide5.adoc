@@ -172,11 +172,6 @@ int main() {
 
 = Threads
 
-//* What is a mutex? When do we need to use mutex?
-//* What is a race condition?
-//* What is deadlock?
-//* What does it mean for a function to be thread safe?
-
 1) Sketch a multi-threaded program (N threads) that computes the average of a list of numbers. You can assume that the size of the list can be evenly divided by N. 
 
 
