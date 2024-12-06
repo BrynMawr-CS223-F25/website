@@ -258,6 +258,10 @@ Grades are out of 4 points.
 ** (0.9 points) correct output 
 * (1 points) Readme
 
+NOTE: valgrind won't work for this assignment. You do not need to check for memory errors on this assignment.
+
+// TODO: Next smemester: get students to use valgrind header!!!`
+
 *Code rubrics*
 
 For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
@@ -265,7 +269,6 @@ have good style.
 
 * Some credit lost for missing features or bugs, depending on severity of error
 * -5% for style errors. See the link:../codingstandard.html[class coding style] here.
-* -50% for memory errors
 * -100% for failure to checkin work to Github
 * -100% for failure to compile on linux using make
 
