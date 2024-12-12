@@ -137,7 +137,7 @@
 
 * Read: link:https://diveintosystems.org/singlepage/#_storage_and_the_memory_hierarchy[Chapter 11.1-11.3] 
 * link:assts/asst12.html[Assignment 12]: Due Dec 6
-* Lab Dec 5, Final Practice, link:studyguide-final.html[Final Study Guide]
+* Lab Dec 5, A12 Readmes (Due Dec 5)
 
 //-----------------------------
 |15
@@ -145,7 +145,7 @@
 |*Code Optimization, C++* 
 
 * Read: link:https://diveintosystems.org/singlepage/#_code_optimization[Chapter 12] 
-* Lab Dec 5, Final Practice, link:studyguide-final.html[Final Study Guide]
+* Lab Dec 12, link:studyguide-final[Final Study Guide], link:studyguide6.html[Study Guide 6]
 
 |===
 

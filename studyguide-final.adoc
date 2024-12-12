@@ -7,13 +7,7 @@ include::header.adoc[]
 
 = {title}
 
-The final will be 3 hours, open-book and open-laptop.
-
-Study as if the exam were closed book. You will run out of 
-time if you have to frequently look up answers. Create cheat-sheets 
-to help you organize the material so you can access it quickly.
-
-The exam will be a mix of written answers and coding.
+The final will be 3 hours, closed-book. One written cheat sheet, front and back.
 
 Topics:
 
@@ -25,109 +19,6 @@ Everything!
 * link:studyguide4.html[Study Guide 4] 
 * link:studyguide5.html[Study Guide 5] 
 * link:studyguide6.html[Study Guide 6] 
-
-= Coding Instructions
-
-Your final exam will have two coding questions. You should check in your code to
- the following repository:
-
-[source]
-----
-git@github.com:BrynMawr-CS223-F22/<YOUR_USERNAME>-code.git
-----
-
-Your username is your university email
-
-Part of your final grade is your ability to clone your repository, commit, and 
-push your code.
-
-If you are not able to submit your programs with git, please email them to 
-me immediately after your exam period. Programs that are submitted well past
-your exam period may not be graded.
-
-For full credit, your programs must compile and run on unix with no memory errors.
-
-If a question is unclear, state your assumptions and answer best you can.
-
-= Git and coding practice
-
-Try updating the repository above and writing code for the following questions.
-
-1) Write a multi-threaded program, `average.c`, that computes the average of a
-list of numbers (at least 4 threads). You can assume that the size of the list
-can be evenly divided by 4.
-
-2) Write a program, `odd.c` that uses xor to identify the single element that appears an odd number of times in the following list: [4, 6, 8, 8, 6, 2, 3, 4, 3]. 
-
-3) Write a program, `flip.c` that reads in a text file and reverses each word.
-Use file redirection so you can read from standard input (e.g. with scanf) and then write to standard output (e.g. with printf).
-A perfect answer should not reverse punctuation (commas, colons, semi-colons and periods). You do not need 
-to preserve whitespace. 
-
-[source, subs="quotes"]
-----
-$ *make flip*
-$ *cat input.txt*
-This is a test input for
-the question flip. The quick, brown fox
-loves to jump and sing. But does the cat sing also?
-$ *./flip < input.txt*
-sihT si a tset tupni rof eht noitseuq pilf. ehT kciuq, nworb xof sevol ot pmuj and gnis. tuB seod eht tac gnis osla? 
-----
-
-
-4) Write a program, `flags.c`, that asks the user for an animal code and 
-then prints the animal's attributes. Attributes are stored in the code like 
-so:
-
-* The lowest order bit stores whether the animal can fly.
-* The second lowest order bit stores whether the animal can swim.
-* The third lowest order bit stores whether the animal can run.
-* The fourth lowest order bit stores whether the animal can climb.
-
-For example, if the animal's code is `0x46`, the binary representation is 
-`0b 0100 0110` and we see the animal can swim and run.
-
-[source,subs="quotes"]
-----
-$ **make flags**
-gcc -g -Wall -Wvla -Werror flags.c -o flags
-$ **./flags**
-Enter an animal code: 70
-Hex code: 46
-Your animal can swim!
-Your animal can run!
-$ **./flags**
-Enter an animal code: 31
-Hex code: 1f
-Your animal can fly!
-Your animal can swim!
-Your animal can run!
-Your animal can climb!
-$ **./flags**
-Enter an animal code: 16
-Hex code: 10
-----
-
-NOTE: Your program should use bitwise operators for full credit. A straight-forward approach is to define masks for each attribute and then test the code against each mask.
-
-5) Write a program, `longest.c`, that asks the user for a list of words and prints
-out the longest one. You can assume that each word fits in a buffer with 32 characters.
-Your program should use malloc for full credit.
-
-[source,subs="quotes"]
-----
-$ **make longest**
-gcc -g -Wall -Wvla -Werror longest.c -o longest -lm
-$ **./longest**
-Enter a number of words: 4
-word: apple
-word: pea
-word: tomato
-word: cucumber
-The longest word is cucumber.
-----
-
 
 = Short answer practice
 

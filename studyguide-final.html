@@ -15,8 +15,6 @@
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_study_guide_for_final">Study Guide for Final</a></li>
-<li><a href="#_coding_instructions">Coding Instructions</a></li>
-<li><a href="#_git_and_coding_practice">Git and coding practice</a></li>
 <li><a href="#_short_answer_practice">Short answer practice</a>
 <ul class="sectlevel2">
 <li><a href="#_c_programming_and_tools">C programming and tools</a></li>
@@ -38,15 +36,7 @@
 <h2 id="_study_guide_for_final">Study Guide for Final</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The final will be 3 hours, open-book and open-laptop.</p>
-</div>
-<div class="paragraph">
-<p>Study as if the exam were closed book. You will run out of
-time if you have to frequently look up answers. Create cheat-sheets
-to help you organize the material so you can access it quickly.</p>
-</div>
-<div class="paragraph">
-<p>The exam will be a mix of written answers and coding.</p>
+<p>The final will be 3 hours, closed-book. One written cheat sheet, front and back.</p>
 </div>
 <div class="paragraph">
 <p>Topics:</p>
@@ -75,147 +65,6 @@ to help you organize the material so you can access it quickly.</p>
 <p><a href="studyguide6.html">Study Guide 6</a></p>
 </li>
 </ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_coding_instructions">Coding Instructions</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Your final exam will have two coding questions. You should check in your code to
- the following repository:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>git@github.com:BrynMawr-CS223-F22/&lt;YOUR_USERNAME&gt;-code.git</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Your username is your university email</p>
-</div>
-<div class="paragraph">
-<p>Part of your final grade is your ability to clone your repository, commit, and
-push your code.</p>
-</div>
-<div class="paragraph">
-<p>If you are not able to submit your programs with git, please email them to
-me immediately after your exam period. Programs that are submitted well past
-your exam period may not be graded.</p>
-</div>
-<div class="paragraph">
-<p>For full credit, your programs must compile and run on unix with no memory errors.</p>
-</div>
-<div class="paragraph">
-<p>If a question is unclear, state your assumptions and answer best you can.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_git_and_coding_practice">Git and coding practice</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Try updating the repository above and writing code for the following questions.</p>
-</div>
-<div class="paragraph">
-<p>1) Write a multi-threaded program, <code>average.c</code>, that computes the average of a
-list of numbers (at least 4 threads). You can assume that the size of the list
-can be evenly divided by 4.</p>
-</div>
-<div class="paragraph">
-<p>2) Write a program, <code>odd.c</code> that uses xor to identify the single element that appears an odd number of times in the following list: [4, 6, 8, 8, 6, 2, 3, 4, 3].</p>
-</div>
-<div class="paragraph">
-<p>3) Write a program, <code>flip.c</code> that reads in a text file and reverses each word.
-Use file redirection so you can read from standard input (e.g. with scanf) and then write to standard output (e.g. with printf).
-A perfect answer should not reverse punctuation (commas, colons, semi-colons and periods). You do not need
-to preserve whitespace.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make flip</strong>
-$ <strong>cat input.txt</strong>
-This is a test input for
-the question flip. The quick, brown fox
-loves to jump and sing. But does the cat sing also?
-$ <strong>./flip < input.txt</strong>
-sihT si a tset tupni rof eht noitseuq pilf. ehT kciuq, nworb xof sevol ot pmuj and gnis. tuB seod eht tac gnis osla?</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>4) Write a program, <code>flags.c</code>, that asks the user for an animal code and
-then prints the animal&#8217;s attributes. Attributes are stored in the code like
-so:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The lowest order bit stores whether the animal can fly.</p>
-</li>
-<li>
-<p>The second lowest order bit stores whether the animal can swim.</p>
-</li>
-<li>
-<p>The third lowest order bit stores whether the animal can run.</p>
-</li>
-<li>
-<p>The fourth lowest order bit stores whether the animal can climb.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>For example, if the animal&#8217;s code is <code>0x46</code>, the binary representation is
-<code>0b 0100 0110</code> and we see the animal can swim and run.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make flags</strong>
-gcc -g -Wall -Wvla -Werror flags.c -o flags
-$ <strong>./flags</strong>
-Enter an animal code: 70
-Hex code: 46
-Your animal can swim!
-Your animal can run!
-$ <strong>./flags</strong>
-Enter an animal code: 31
-Hex code: 1f
-Your animal can fly!
-Your animal can swim!
-Your animal can run!
-Your animal can climb!
-$ <strong>./flags</strong>
-Enter an animal code: 16
-Hex code: 10</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Your program should use bitwise operators for full credit. A straight-forward approach is to define masks for each attribute and then test the code against each mask.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>5) Write a program, <code>longest.c</code>, that asks the user for a list of words and prints
-out the longest one. You can assume that each word fits in a buffer with 32 characters.
-Your program should use malloc for full credit.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make longest</strong>
-gcc -g -Wall -Wvla -Werror longest.c -o longest -lm
-$ <strong>./longest</strong>
-Enter a number of words: 4
-word: apple
-word: pea
-word: tomato
-word: cucumber
-The longest word is cucumber.</code></pre>
-</div>
 </div>
 </div>
 </div>
@@ -619,7 +468,7 @@ The longest word is cucumber.</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-08-27 09:58:07 -0400
+Last updated 2024-12-12 15:18:05 -0500
 </div>
 </div>
 </body>
