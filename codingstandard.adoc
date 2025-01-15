@@ -12,10 +12,7 @@ include::header.adoc[]
 link:http://www.cs.haverford.edu/courses/cmsc106/style.pdf[This guide is based on the style guide for Data Structures (CS206) 
 written by Dianna Xu].
 
-*Disclaimer* 
-
-Note that the code we create during class and in the notes is for illustrative purposes – it often will not
-adhere to these guidelines.
+Submitted code should adhere to the coding standard. 
 
 == Design Guide
 
