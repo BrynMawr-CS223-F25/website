@@ -8,9 +8,9 @@ include::header.adoc[]
 
 = {title}
 
-//**Due (Hardcopy In Class) Wednesday, March 15th, 1pm**
+**Due (Hardcopy) Thursday, March 6th**
 
-//**This is a written assignment, not a coding assignment!**
+**This is a written assignment, not a coding assignment!**
 
 The goals for this assignment are:
 

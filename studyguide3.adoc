@@ -7,7 +7,7 @@ include::header.adoc[]
 
 == {title}
 
-Code Jams are open book. 40 minutes in lab.
+Quizzes are closed book. You can bring one written cheat sheet. 30 minutes in class.
 
 Topics:
 

@@ -7,7 +7,7 @@ include::header.adoc[]
 
 = {title}
 
-Quizzes are closed book. 30 minutes in lab.
+Quizzes are closed book. You can bring one written cheat sheet. 30 minutes in class.
 
 Topics:
 

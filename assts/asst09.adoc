@@ -9,7 +9,7 @@ include::header.adoc[]
 
 = {title}
 
-*Due Friday, November 8th, before midnight*
+*Due Friday, March 28th, before midnight*
 
 The goals for this assignment are:
 

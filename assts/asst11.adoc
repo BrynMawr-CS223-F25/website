@@ -9,7 +9,7 @@ include::header.adoc[]
 
 = {title}
 
-*Due Sunday, December 1 before midnight (No late submissions accepted)*
+*Due Friday, April 18 before midnight (No late submissions accepted)*
 
 The goals for this assignment are:
 
