@@ -113,9 +113,9 @@ as a weighted average of all grades according to the following weights:
 
 |===
 |45% | Final Exam
-|25% | Assignments
-|25% | Lab work and Quizzes (Code Jams)
-| 5% | Participation
+|15% | Assignments
+|35% | Code jams and quizzes
+| 5% | Lab practice and class participation
 |===
 
 include::quizzes.adoc[]
