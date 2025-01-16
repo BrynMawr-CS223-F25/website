@@ -5,7 +5,7 @@ include::header.adoc[]
 
 :course: CMSC 223
 :title: Systems Programming
-:term: Fall 2024
+:term: Spring 2025
 
 = {course}: {title} 
 
@@ -15,8 +15,9 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* Welcome!
-* Assignment 
+* Welcome to systems programming!
+* Assignment 01 is Posted! link:assts/asst01.html[Assignment 01]: Due January 24
+* Our first lab will be on January 21st about using github
 
 == Course Info
 
