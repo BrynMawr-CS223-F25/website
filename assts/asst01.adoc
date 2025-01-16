@@ -5,7 +5,6 @@ include::header.adoc[]
 :Date:    2020-08-15
 :Revision: 0.1
 :ASST: A01
-:repo: https://github.com/BrynMawr-CS223-F24/
 
 = {title}
 
@@ -78,7 +77,7 @@ machine if you have setup your development environment there.
 
 Fork the repository from here: 
 
-link:{repo}/cs223-f24-assignments[]
+link:{repo}/cs223-{semester}-assignments[]
 
 Fork is a button located on the top, right on Github.
 
@@ -88,17 +87,17 @@ Fork is a button located on the top, right on Github.
 From _your own account_, clone the repository you just forked. The URL should look 
 something like the following
 
-[source]
+[source, subs="attributes"]
 ----
-git@github.com:<YOURUSERNAME>/cs223-assignments[]
+git@github.com:<YOURUSERNAME>/cs223-{semester}-assignments[]
 ----
 
 Use the "Code" button on Github to copy the URL. Then run the following command
 from terminal.
 
-[source]
+[source, subs="attributes"]
 ----
-git clone git@github.com:<YOURUSERNAME>/cs223-assignments[]
+git clone git@github.com:<YOURUSERNAME>/cs223-{semester}-assignments[]
 ----
 
 This will download a local account of the repository to your computer.

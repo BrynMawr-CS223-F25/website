@@ -5,7 +5,7 @@ include::header.adoc[]
 :Date:    2020-08-15
 :Revision: 0.1
 :stem: latexmath
-:ASST: A10
+:ASST: A12
 
 = {title}
 

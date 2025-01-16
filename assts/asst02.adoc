@@ -24,7 +24,7 @@ Do a *fetch upstream* to obtain the basecode for this assignment.
 
 The first time you do a `fetch`, you need to set the URL of the upstream repository.
 
-* `git remote add upstream git@github.com:brynmawr-cs223-f24/cs223-assignments.git`
+* `git remote add upstream git@github.com:brynmawr-cs223-{semester}/cs223-{semester}-assignments.git`
 
 Using the command line
 
@@ -39,7 +39,7 @@ The `fetch` and `merge` commands update your repository with any changes from th
 = Exclaim!
 
 Sometimes life can be very frustrating and we just need to shout. 
-Write a program, `exclaim.c` that turns a word into an exclaimation. 
+Write a program, `exclaim.c` that turns a word into an exclamation. 
 Your program should loop through each character. If the character 
 is a lowercase letter, replace it with a randomly chosen character 
 from the set `{'@', '!', '#', '*'}`.
