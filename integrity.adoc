@@ -14,18 +14,23 @@ implementing them through programs.
 Quizzes and exams will be _closed book_. You will be able to bring a 
 single cheat sheet with you. 
 
-The goal of assignments and labs is to help you 
-prepare for quizzes and exams. If you can sit down, focus, and answer 
-questions within a time limit, you will ace the exams for this class. 
+The goal of assignments and labs is to help you prepare for quizzes and exams.
+The goals of quizzes and exams are to help you internalize the material (and
+provide feedback on how well you understand the material) so that you can grow
+towards your full potential as someone who can solve technical problems and who
+can create their own systems and devices.  If you can sit down, focus, and
+answer questions within a time limit, you understand the material and can
+communicate that understanding to someone else. 
 *If you are doing worksheets and assignments but not doing well on quizzes, 
-you need to re-think how you are approaching assignments.* After completing an 
-assignment, you should be able to 
+you need to re-think how you are approaching assignments.* You can assess
+whether you're  effectively using assignments to learn if you can do the
+following after completing it:
 
 * Explain how your code works to someone else, without looking at your code
 * Explain the system calls necessary to complete your assignment without looking them up online
 * Write a similar program within a few minutes, without looking up help online
 
-I can provide advice based on what has helped me learn how to program:
+Here is advice that has worked well for me. 
 
 * Most beneficial: writing my own programs from scratch, followed by stepping line by line using a debugger to make sure it worked as intended
 * When stuck, debugging the program with the help of a more experienced developer
@@ -35,15 +40,17 @@ I do not recommend relying on stack overflow, copying old solutions, and using C
 *The absolute worst way to program is by cutting and pasting code you don't understand, guessing your 
 way to something that kind of works.* 
 
-I am not going to police how you study and develop skills. But I will be assessing you on the results 
-of your effort. If you're not doing well, you need to figure out how to work differently. 
+I am not going to police how you study and develop skills.  If you're not doing
+well, you need to figure out how to work differently. 
 
-Guidelines: 
+Do's: 
 
 * DO discuss ideas and approaches with your classmates.
 * DO discuss ideas and approaches with your TAs and instructor.
 * DO search for documentation and sample programs for built-in C functions and C syntax.
 * DO use code from our text books and class (with attribution).
+
+Don'ts:
 
 * DON'T use Chat-GPT (or other LLMs) to generate solutions.
 * DON'T copy full solutions, from online tutorials, previous students, etc

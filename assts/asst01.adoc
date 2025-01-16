@@ -23,7 +23,7 @@ The goals for this assignment are:
 = Try slack
 
 I will be inviting you all to join the course slack channel. In the
-introduction channel, say and introduce yourself:
+`#social` channel, say and introduce yourself:
 
 * What is your preferred name and pronouns?
 * Share with us your favorite emojji. :)
@@ -34,7 +34,7 @@ We will use Slack for
 * Links to zoom and calend.ly
 * Questions and errata for assignments and labs
 
-You can also use Slack to talk directly to me and the TAs, or even to each other!
+You can also use Slack to talk directly to me and the TAs, or even to each other.
 
 = Sign-up for Github
 
@@ -115,7 +115,7 @@ Hello World
 ----
 
 [discrete]
-== Math Game
+== Guessing Game
 
 In the directory, `{ASST}`, implement a simple math game that asks a user a series of addition problems 
 and keeps track of the number of correct responses. 
@@ -150,6 +150,8 @@ Requirements:
 * Print a completion message 
 * Compiles with `make`
 * No memory errors using `valgrind`
+* Your program should include a header comment with your name and brief file description 
+* Your program should adhere to the following link:../codingstandard.htm[coding style].
 
 NOTE: To check for valgrind errors, run your program like so. Look for the 
 message "no leaks are possible". Make sure there are no errors reported. We will talk 
@@ -184,6 +186,17 @@ You answered 2/3 correctly.
 ==5184== 
 ==5184== For lists of detected and suppressed errors, rerun with: -s
 ==5184== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+----
+
+NOTE: Below is an example of a header comment
+
+[source]
+----
+/***************************************************                            
+ * mathgame.c                                                                   
+ * Author: Jimmy Wonderful
+ * Implements a math game                                                       
+ */       
 ----
 
 [discrete]
