@@ -16,9 +16,9 @@
 <ul class="sectlevel1">
 <li><a href="#_assignment_2_learn_to_c">Assignment 2: Learn to C</a></li>
 <li><a href="#_update_your_repository">1. Update your repository</a></li>
-<li><a href="#_exclaim">2. Exclaim!</a></li>
-<li><a href="#_acronym">3. Acronym</a></li>
-<li><a href="#_songs">4. Songs</a></li>
+<li><a href="#_bad_password">2. Bad password</a></li>
+<li><a href="#_snackbar">3. Snackbar</a></li>
+<li><a href="#_shift_cypher">4. Shift Cypher</a></li>
 <li><a href="#_submit_your_work">5. Submit your Work</a></li>
 <li><a href="#_grading_rubric">6. Grading Rubric</a></li>
 </ul>
@@ -90,237 +90,157 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_exclaim">2. Exclaim!</h2>
+<h2 id="_bad_password">2. Bad password</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Sometimes life can be very frustrating and we just need to shout.
-Write a program, <code>exclaim.c</code> that turns a word into an exclamation.
-Your program should loop through each character. If the character
-is a lowercase letter, replace it with a randomly chosen character
-from the set <code>{'@', '!', '#', '*'}</code>.</p>
-</div>
-<div class="paragraph">
-<p>Two examples of the running program are shown below. User input is shown in <strong>bold</strong>.</p>
+<p>Write a program, <code>password.c</code>, that asks the user for a word and creates a bad password from it.
+You can assume that all characters are lowercase.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make exclaim</strong>
-gcc -g -Wall -Wvla -Werror exclaim.c -o exclaim
-$ <strong>./exclaim</strong>
-Enter a word: <strong>apple</strong>
-OMG! *#!*!
-$ <strong>./exclaim</strong>
-Enter a word: <strong>YOLO!</strong>
-OMG! YOLO!
-$ <strong>./exclaim</strong>
-Enter a word: <strong>Tada!</strong>
-OMG! T*#!!</code></pre>
+<pre class="highlight"><code>$ <strong>make password</strong>
+gcc password.c -o password
+$ <strong>./password</strong>
+Enter a word: <strong>elephant</strong>
+Your bad password is 313ph@nt
+$ <strong>./password</strong>
+Enter a word: <strong>hello</strong>
+Your bad password is h311o
+$ <strong>./password</strong>
+Enter a word: <strong>rhythm</strong>
+Your bad password is rhythm</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Requirements and Hints:</p>
+<p>Your bad password algorithm should</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>You can assume that the user will enter a string that fits into a 32 character buffer, e.g. store the user&#8217;s input with a variable defined as <code>char buff[32];</code></p>
+<p>Replace 'e&#8217;s with '3&#8217;s</p>
 </li>
 <li>
-<p>Use the fact that ascii characters correspond to integers to check for a lowercase letter. <a href="https://www.cs.cmu.edu/~pattis/15-1XX/common/handouts/ascii.html">ASCII Table</a></p>
+<p>Replace 'l&#8217;s with '1&#8217;s</p>
 </li>
 <li>
-<p>Use <code>rand()</code> to choose a random character.</p>
+<p>Replace 'a&#8217;s with '@'s</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_acronym">3. Acronym</h2>
+<h2 id="_snackbar">3. Snackbar</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Write a program, <code>acronym.c</code>, that computes an acronym from a given phrase.
-Your program should create a string consisting of all capital letters from
-the given phrase.</p>
+<p>Write a program, <code>snackbar.c</code>, that maintains a list of snacks available for purchase.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make acroynm</strong>
-gcc -g -Wall -Wvla -Werror acronym.c -o acronym
-$ <strong>./acronym</strong>
-Enter a phrase: <strong>What Does The Fox Say?</strong>
-Your acronym is WDTFS
-$ <strong>./acronym</strong>
-Enter a phrase: <strong>The Truth Is Out There</strong>
-Your acronym is TTIOT
-$ <strong>./acronym</strong>
-Enter a phrase: <strong>You Only Live Once</strong>
-Your acronym is YOLO</code></pre>
+<pre class="highlight"><code>$ <strong>make snackbar</strong>
+gcc snackbar.c -o snackbar
+
+$ <strong>./snackbar</strong>
+Welcome to Steven Struct's Snack Bar.
+
+How much money do you have? <strong>5</strong>
+
+0) Coco Puffs           cost: $1.50     quantity: 4
+1) Manchego cheese      cost: $15.50    quantity: 6
+2) Magic beans          cost: $0.50     quantity: 0
+
+What snack would you like to buy? [0,1,2] <strong>1</strong>
+You can't afford it!
+
+$ <strong>./snackbar</strong>
+Welcome to Steven Struct's Snack Bar.
+
+How much money do you have? <strong>5</strong>
+
+0) Coco Puffs           cost: $1.50     quantity: 4
+1) Manchego cheese      cost: $15.50    quantity: 6
+2) Magic beans          cost: $0.50     quantity: 0
+
+What snack would you like to buy? [0,1,2] <strong>2</strong>
+Sorry, we are out of Magic beans
+
+$ <strong>./snackbar</strong>
+Welcome to Steven Struct's Snack Bar.
+
+How much money do you have? <strong>5</strong>
+
+0) Coco Puffs           cost: $1.50     quantity: 4
+1) Manchego cheese      cost: $15.50    quantity: 6
+2) Magic beans          cost: $0.50     quantity: 0
+
+What snack would you like to buy? [0,1,2] <strong>0</strong>
+You bought Coco Puffs
+You have $3.50 left</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Requirements and Hints:</p>
+<p>Requirements:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>You do not need to handle the case where a capital letter occurs in the middle of a word.</p>
+<p>Your program should define a <code>struct snack</code> that stores a name, cost, and quantity</p>
 </li>
 <li>
-<p>Watch out that any string you create ends with a terminating null character, e.g. <code>'\0'</code></p>
+<p>Your program should define at least three snacks and store them in an array</p>
 </li>
 <li>
-<p>You can assume that all input fits within 1024 characters.</p>
+<p>Your program should be similar to the given output but feel free to customize it!</p>
 </li>
 </ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-To read in a string containing phrases, use the following format string with scanf: <code>scanf("%[^\n]%*c", phrase);</code>
-The <code>%[^\n]</code> will read until the newline is reached. The <code>%*c</code> reads the newline and ignores it.
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_songs">4. Songs</h2>
+<h2 id="_shift_cypher">4. Shift Cypher</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implement a program, <code>songs.c</code>, that fills an array with three or more songs and
-then allows the user to edit the data in the array.</p>
+<p>Write a program, <code>cypher.c</code>, that asks the user for a word and then encodes it
+using a shift cypher. A shift cypher replaces each letter with a letter that is
+X positions from it in the alphabet. For example, is the letter is 'a' and the
+shift is 2, we replace 'a' with a 'c'. You can assume that all inputs are
+lowercase and do not contain special characters.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make songs</strong>
-gcc -g -Wall -Wvla -Werror songs.c -o songs
-$ <strong>./songs</strong>
-Welcome to Steven Struct's Song List.
-
-0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
-1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
-2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
-
-=======================
-
-Enter a song id to edit [0,1,2]: <strong>1</strong>
-Which attribute do you wish to edit? [artist, title, duration, danceability]: <strong>duration</strong>
-Enter a duration (minutes): <strong>2</strong>
-Enter a duration (seconds): <strong>40</strong>
-
-0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
-1) As it was            artist: Harry Styles            duration: 2:40  danceability: 0.70
-2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
-
-=======================
-$ <strong>./songs</strong>
-Welcome to Steven Struct's Song List.
-
-0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
-1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
-2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
-
-=======================
-
-Enter a song id to edit [0,1,2]: <strong>2</strong>
-Which attribute do you wish to edit? [artist, title, duration, danceability]: <strong>artist</strong>
-Enter a artist: <strong>The Who</strong>
-
-0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
-1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
-2) Wish you were here   artist: The Who                 duration: 5:34  danceability: 0.30
-
-=======================
-
-$ <strong>./songs</strong>
-Welcome to Steven Struct's Song List.
-
-0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
-1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
-2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
-
-=======================
-
-Enter a song id to edit [0,1,2]: <strong>5</strong>
-Invalid choice!
-
-$ <strong>./songs</strong>
-Welcome to Steven Struct's Song List.
-
-0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
-1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
-2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
-
-=======================
-
-Enter a song id to edit [0,1,2]: <strong>0</strong>
-Which attribute do you wish to edit? [artist, title, duration, danceability]: <strong>danceability</strong>
-Enter danceability: <strong>0.9</strong>
-
-0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.90
-1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
-2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
-
-=======================</code></pre>
+<pre class="highlight"><code>$ <strong>make cypher</strong>
+gcc cypher.c -o cypher
+$ <strong>./cypher</strong>
+Enter a word: <strong>elephant</strong>
+Enter a shift: <strong>2</strong>
+Your cypher is gngrjcpv
+$ <strong>./cypher </strong>
+Enter a word: <strong>gngrjcpv</strong>
+Enter a shift: <strong>-2</strong>
+Your cypher is <strong>elephant
+$ </strong>./cypher <strong>
+Enter a word: </strong>hello<strong>
+Enter a shift: </strong>7<strong>
+Your cypher is olssv
+$ </strong>./cypher <strong>
+Enter a word: </strong>a<strong>
+Enter a shift: </strong>-2<strong>
+Your cypher is y
+$ </strong>./cypher <strong>
+Enter a word: </strong>z<strong>
+Enter a shift: </strong>2**
+Your cypher is b</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Requirements and Hints:</p>
+<p>Hints:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Your program should define a <code>struct song</code> to hold the song information. Duration should be stored in integers, danceability should be a float, and artist and title should be strings.</p>
-</li>
-<li>
-<p>Your program should check for a valid song id and print an error message id the user enters an invalid id.</p>
-</li>
-<li>
-<p>Your program should initialize at least 3 songs and store them in an array.</p>
-</li>
-<li>
-<p>Your program should loop through the array of songs to print them in a table. Implementing this feature in a function is a good idea.</p>
-</li>
-<li>
-<p>Your program should support spaces in the song names and titles.</p>
-</li>
-<li>
-<p>Use <code>strcmp</code> to test which attribute the user wants to update.</p>
-</li>
-<li>
-<p>Use <code>strcpy</code> to update the artist or title in the array.</p>
-</li>
-<li>
-<p>Your program should print the songs in an attractive table, although the formatting does not need to match the sample output exactly.</p>
-</li>
-<li>
-<p>You can assume that all song artists and titles fit into a 32 character buffer.</p>
-</li>
-<li>
-<p>Use <code>%-20s</code> to format left-justified strings with 20 spaces of padding.</p>
+<p>Recall that characters as represented as digits in ASCII. A straight-forward implementation can add offsets to each character of the word.</p>
 </li>
 </ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Because the song artists and titles can have spaces in them, using scanf requires additional syntax.
-Instead of <code>scanf(" %d", &amp;val);</code>, use <code>scanf(" %d%*c", &amp;val);</code>. The trailing <code>%*c</code> tells scanf
-to read and ignore the newline character at the end of the line. Furthermore, to read the name,
-call <code>scanf(" %[^\n]%*c", artist);</code> instead of <code>scanf(" %s", artist);</code>.
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
@@ -352,7 +272,7 @@ $ git push</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(1 point) exclaim</p>
+<p>(1 point) password</p>
 <div class="ulist">
 <ul>
 <li>
@@ -368,7 +288,7 @@ $ git push</code></pre>
 </div>
 </li>
 <li>
-<p>(1 point) acronym</p>
+<p>(1 point) cypher</p>
 <div class="ulist">
 <ul>
 <li>
@@ -384,14 +304,14 @@ $ git push</code></pre>
 </div>
 </li>
 <li>
-<p>(2 points) songs</p>
+<p>(2 points) snackbar</p>
 <div class="ulist">
 <ul>
 <li>
 <p>(0.2 points) style and header comment</p>
 </li>
 <li>
-<p>(0.8 points) correct behavior: reads file, prints output with columns and supports editing</p>
+<p>(0.8 points) correct behavior</p>
 </li>
 <li>
 <p>(1.0 points) no memory errors</p>
@@ -432,7 +352,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-15 20:58:20 -0500
+Last updated 2025-01-18 14:20:04 -0500
 </div>
 </div>
 </body>

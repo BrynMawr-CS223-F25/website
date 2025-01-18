@@ -16,9 +16,10 @@
 <ul class="sectlevel1">
 <li><a href="#_assignment_3_if_you_malloc_something_set_it_free">Assignment 3: If you malloc something, set it free</a></li>
 <li><a href="#_update_your_repository">1. Update your repository</a></li>
-<li><a href="#_cant_get_a_word_in_entwise">2. Can&#8217;t get a word in entwise</a></li>
-<li><a href="#_dynamic_songs">3. Dynamic songs</a></li>
-<li><a href="#_grading_rubric">4. Grading Rubric</a></li>
+<li><a href="#_repeat_repeat_repeat">2. Repeat! Repeat! Repeat!</a></li>
+<li><a href="#_dynamic_snackbar">3. Dynamic snackbar</a></li>
+<li><a href="#_wampus">4. Wampus</a></li>
+<li><a href="#_grading_rubric">5. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
@@ -78,188 +79,95 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cant_get_a_word_in_entwise">2. Can&#8217;t get a word in entwise</h2>
+<h2 id="_repeat_repeat_repeat">2. Repeat! Repeat! Repeat!</h2>
 <div class="sectionbody">
-<div class="literalblock">
-<div class="content">
-<pre>"We must not be hasty."
--- Treebeard</pre>
-</div>
-</div>
 <div class="paragraph">
-<p>The <a href="https://lotr.fandom.com/wiki/Ents">Ents</a> in Lord of the Rings were a noble
-race of tree herders, whose language was "long and sonorous".
-Ents live a very long time and so speak very&#8230;&#8203;carefully&#8230;&#8203;and&#8230;&#8203;.very&#8230;&#8203;s.l.o.w.l.y.</p>
-</div>
-<div class="paragraph">
-<p>Write a program ,<code>slow.c</code>, that turns a phrase into ent-speech. Your program
-should ask for the pause length and a phrase to change. Your program should
-output an ent-phrase. Ent-phrases contain '.' between each letter in the input.</p>
-</div>
-<div class="paragraph">
-<p>Two examples of the running program are shown below. User input is shown in <strong>bold</strong>.</p>
+<p>Implement a program, <code>repeat.c</code>, that asks the user for a string <code>s</code> and an integer <code>n</code> and
+then creates a new string that repeats <code>s</code> <code>n</code> times.  For example, if the user inputs <code>"ha"</code> and
+the number <code>3</code>, the program creates a string <code>"hahaha"</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make slow</strong>
-gcc -g -Wall -Wvla -Werror slow.c -o slow
-$ <strong>./slow</strong>
-Pause length: <strong>3</strong>
-Text: <strong>Surprise!</strong>
-S...u...r...p...r...i...s...e...!...
-
-$ <strong>./slow</strong>
-Pause length: <strong>5</strong>
-Text: <strong>Hmmm?</strong>
-H.....m.....m.....m.....?.....</code></pre>
+<pre class="highlight"><code>$ <strong>make repeat</strong>
+gcc repeat.c -o repeat
+$ <strong>./repeat</strong>
+Enter a word: <strong>ha</strong>
+Enter a count: <strong>3</strong>
+Your word is hahaha
+$ <strong>./repeat</strong>
+Enter a word: <strong>ha</strong>
+Enter a count: <strong>1000</strong>
+hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
+hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
+hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
+hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
+hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
+hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
+[truncated]
+$ <strong>./repeat</strong>
+Enter a word: <strong>hi</strong>
+Enter a count: <strong>1000000000000</strong>
+Cannot allocate new string. Exiting...</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Requirements and Hints:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>You can assume that the user will enter a string that fits into a 32 character buffer, e.g. <code>char buff[32];</code></p>
-</li>
-<li>
-<p>Watch out that any string you create ends with a terminating null character, e.g. <code>'\0'</code></p>
-</li>
-<li>
-<p>Use malloc/free to allocate a string that has enough space to store your "slow" speech!</p>
-</li>
-</ul>
+<p>Requirements/Hints:
+* Your program can assume that the user enters words that are smaller than 32 characters.
+* Your program should use <code>malloc</code> and <code>free</code>.
+* Your program should check that <code>malloc</code> is successful.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_dynamic_songs">3. Dynamic songs</h2>
+<h2 id="_dynamic_snackbar">3. Dynamic snackbar</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implement a program, <code>dynamic_songs.c</code>, that reads songs from a text file into
-an array. <strong>Unlike</strong> last week&#8217;s songs, your program only needs the following features:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>The ability to open a CSV file (<code>songlist.csv</code>) and read its contents into an array created with malloc.</p>
-</li>
-<li>
-<p>The ability to read in additional information: tempo, valence, and energy.</p>
-</li>
-<li>
-<p>The ability to run with memory leaks or valgrind errors (remember to call <code>free</code> and <code>fclose</code>!)</p>
-</li>
-<li>
-<p>The ability to set the contents of our dynamic array of songs, based on the file</p>
-</li>
-<li>
-<p>The ability to print out the list of songs</p>
-</li>
-</ol>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The CSV this week contains the duration of songs in <em>milliseconds</em>, not seconds!
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The format of the CSV file is</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>&lt;Num Songs&gt;,,,,,,
-Title, Artist, Duration (ms), Danceability, Energy, Tempo, Valence
-Canned Heat,Jamiroquai,331760,0.7,0.865,128.04,0.78
-....</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>From the first line, you should only read the first token to get the number of songs.
-The second line is a header that you should skip. All subsequent lines are data that you
-should read into your array.</p>
-</div>
-<div class="paragraph">
-<p>The last 4 columns are based on <a href="https://developer.spotify.com/documentation/web-api/reference/#/operations/get-audio-features">Spotify audio analysis traits</a></p>
+<p>Implement a program, <code>dynamic_snackbar.c</code>, that allows users to add snacks to the snackbar.
+Unlike last week&#8217;s snackbar, your program only needs two features:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Danceability (float)</strong> Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.</p>
+<p>The ability to add a new snack to the list of snacks</p>
 </li>
 <li>
-<p><strong>Energy (float)</strong> Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy. For example, death metal has high energy, while a Bach prelude scores low on the scale. Perceptual features contributing to this attribute include dynamic range, perceived loudness, timbre, onset rate, and general entropy.</p>
-</li>
-<li>
-<p><strong>Tempo (float)</strong> The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.</p>
-</li>
-<li>
-<p><strong>Valence (float)</strong> A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).  &gt;= 0&#8656; 1</p>
+<p>The ability to print out the current list of snacks</p>
 </li>
 </ul>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-You can read <code>songlist.CSV</code> with nano but you can also load it into Excel or Google sheets to view the file.
-</td>
-</tr>
-</table>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make dynamic_songs</strong>
-gcc -g -Wall -Wvla -Werror dynamic_songs.c -o dynamic_songs
-$ <strong>./dynamic_songs</strong>
-Welcome to Dynamic Donna's Danceability Directory.
+<pre class="highlight"><code>$ <strong>make dynamic_snackbar</strong>
+gcc dynamic_snackbar.c -o dynamic_snackbar
+$ <strong>./dynamic_snackbar</strong>
+Enter a number of snacks: <strong>3</strong>
+Enter a name: <strong>Slurm</strong>
+Enter a cost: <strong>1.50</strong>
+Enter a quantity: <strong>3</strong>
+Enter a name: <strong>Beans</strong>
+Enter a cost: <strong>5</strong>
+Enter a quantity: <strong>1</strong>
+Enter a name: <strong>Carrots</strong>
+Enter a cost: <strong>2</strong>
+Enter a quantity: <strong>10</strong>
 
-0) Canned Heat                  artist: Jamiroquai              duration: 5:31 D: 0.700 E: 0.865 T: 128.040 V: 0.780
-1) Eye of the Tiger             artist: Survivor                duration: 4:05 D: 0.817 E: 0.599 T: 108.873 V: 0.548
-2) The Veldt                    artist: deadmau5                duration: 2:50 D: 0.736 E: 0.759 T: 128.039 V: 0.485
-3) Golden                       artist: Harry Styles            duration: 3:28 D: 0.448 E: 0.838 T: 139.863 V: 0.254
-4) Thunderstruck                artist: AC/DC                   duration: 4:52 D: 0.502 E: 0.890 T: 133.520 V: 0.259
-5) Nonsense                     artist: Madeon                  duration: 3:45 D: 0.543 E: 0.781 T: 87.009 V: 0.695
-6) One More Time                artist: Daft Punk               duration: 5:20 D: 0.613 E: 0.697 T: 122.746 V: 0.476
-7) Around the World             artist: Daft Punk               duration: 7:09 D: 0.956 E: 0.795 T: 121.294 V: 0.841
-8) Lose Yourself to Dance       artist: Daft Punk               duration: 5:53 D: 0.832 E: 0.659 T: 100.163 V: 0.674
-9) 10%                          artist: KAYTRANADA              duration: 3:06 D: 0.794 E: 0.757 T: 107.990 V: 0.615
-10) Easy                        artist: Groove Armada           duration: 5:52 D: 0.657 E: 0.860 T: 124.150 V: 0.590
-11) Halcyon and On and On       artist: Orbital                 duration: 9:27 D: 0.577 E: 0.729 T: 126.988 V: 0.177
-12) Enjoy the Silence           artist: Depeche Mode            duration: 4:17 D: 0.641 E: 0.812 T: 112.777 V: 0.822
-13) Rasputin                    artist: Boney M.                duration: 5:51 D: 0.639 E: 0.893 T: 126.143 V: 0.966
-14) Who's Theme                 artist: Nujabes                 duration: 4:57 D: 0.603 E: 0.485 T: 169.734 V: 0.357
-15) Burn the Witch              artist: Radiohead               duration: 3:40 D: 0.541 E: 0.847 T: 148.937 V: 0.620
-16) Hold Me Now                 artist: Thompson Twins          duration: 4:45 D: 0.785 E: 0.517 T: 108.108 V: 0.859
-17) Crystallize                 artist: Lindsey Stirling        duration: 4:18 D: 0.440 E: 0.623 T: 140.006 V: 0.056</code></pre>
+Welcome to Dynamic Donna's Snack Bar.
+
+0) Slurm                cost: $1.50     quantity: 3
+1) Beans                cost: $5.00     quantity: 1
+2) Carrots              cost: $2.00     quantity: 10</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Requirements and Hints:</p>
+<p>Requirements/Hints:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Your program must use malloc/free to allocate the array of songs.</p>
+<p>You must use malloc to create an array large enough to hold all the snacks</p>
 </li>
 <li>
-<p>Your program should print the songs in an attractive table, although the formatting does not need to match the sample output exactly.</p>
-</li>
-<li>
-<p>You can assume that all songs names and artists fit into an 128 character buffer.</p>
-</li>
-<li>
-<p>Feel free to re-use code from A02 (such as your printed table)!</p>
+<p>Use scanf to get the number of snacks and their attributes</p>
 </li>
 </ul>
 </div>
@@ -270,35 +178,26 @@ Welcome to Dynamic Donna's Danceability Directory.
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Because the song names and artists can have spaces in them, read in the file line by line
-using <code>fgets</code> and then use <code>strtok</code> to split each line using comma as a deliminator <code>,</code>.
-Because <code>strtok</code> splits a line into strings, you will need to convert some of the tokens by
-numeric types. Use <code>atoi</code> to convert a string to a integer. Use <code>atof</code> to a convert a string to
-a float.
+You do not need to type in the attributes every time. You can put the inputs in a file and then use redirection to load it.
 </td>
 </tr>
 </table>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The data for this question comes from Spotify. If you would like to
-see the statistics for your own favorite songs, try the developer console
-<a href="https://developer.spotify.com/console/get-audio-analysis-track/">here</a>!
-You will need to ID of the song, which you can get from your Spotify account by
-right clicking on a song.
-</td>
-</tr>
-</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code></code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">4. Grading Rubric</h2>
+<h2 id="_wampus">4. Wampus</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_grading_rubric">5. Grading Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
@@ -309,7 +208,7 @@ right clicking on a song.
 <div class="ulist">
 <ul>
 <li>
-<p>(1 point) slow</p>
+<p>(1 point) repeat</p>
 <div class="ulist">
 <ul>
 <li>
@@ -325,23 +224,36 @@ right clicking on a song.
 </div>
 </li>
 <li>
-<p>(3 points) dynamic songs</p>
+<p>(1 point) wampus</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.1 points) style and header comment</p>
+</li>
+<li>
+<p>(0.5 points) no memory errors</p>
+</li>
+<li>
+<p>(0.4 points) correct behavior: uses a command line argument to get the size and outputs the correct board</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>(2 points) dynamic snackbar</p>
 <div class="ulist">
 <ul>
 <li>
 <p>(0.15 points) style and header comment</p>
 </li>
 <li>
-<p>(0.05 points) defines a struct to hold the information for each song</p>
+<p>(0.05 points) defines a struct to hold the information for each snack</p>
 </li>
 <li>
-<p>(0.5 points) correctly handles the duration and prints results in a table</p>
+<p>(0.8 points) correctly loads data and prints results in a table</p>
 </li>
 <li>
-<p>(0.8 points) reads and parses songlist.csv</p>
-</li>
-<li>
-<p>(1.5 points) creates an array to hold the data from the file (No memory errors)</p>
+<p>(1 points) creates an array using malloc to hold the data from the file (No memory errors)</p>
 </li>
 </ul>
 </div>
@@ -379,7 +291,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-15 20:26:43 -0500
+Last updated 2025-01-18 14:31:05 -0500
 </div>
 </div>
 </body>

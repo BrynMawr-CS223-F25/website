@@ -115,7 +115,7 @@ Hello World
 ----
 
 [discrete]
-== Guessing Game
+== Math Game
 
 In the directory, `{ASST}`, implement a simple math game that asks a user a series of addition problems 
 and keeps track of the number of correct responses. 

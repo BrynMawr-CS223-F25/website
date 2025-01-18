@@ -112,27 +112,8 @@ test 18: flist's second node has correct size: PASSED
 
 = Memory statistics
 
-In `memstats.c`, implement the function `memstats` to print the following information
-
-* The total number of memory blocks allocated by malloc, along with
-** The number of total blocks which are currently in-use 
-** The number of total blocks which are currently free 
-* The total amount of memory allocated by malloc, along with
-** The total amount of memory currently in-use 
-** The total amount of memory currently free 
-* The amount of underutilised memory as a percentage. This is the percent of memory that has been allocated by `sbrk` but not being used by the application.
-
-For example, your function might produce the following output
-
-[source]
-----
-Total blocks: 8 Free blocks: 6 Used blocks: 2
-Total memory allocated: 9665 Free memory: 4427 Used memory: 5238
-Underutilized memory: 0.48
-----
-
-You are given code to simulate many random allocations and frees. After
-implementing your function, you should get the following output.
+In `memstats.c`, implement a program that simulates a series of memory 
+allocations and then outputs an image that visualizes the memory usage. 
 
 [source,subs="quotes"]
 ----

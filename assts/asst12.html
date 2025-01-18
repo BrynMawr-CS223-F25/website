@@ -208,54 +208,8 @@ test 18: flist's second node has correct size: PASSED</code></pre>
 <h2 id="_memory_statistics">4. Memory statistics</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In <code>memstats.c</code>, implement the function <code>memstats</code> to print the following information</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The total number of memory blocks allocated by malloc, along with</p>
-<div class="ulist">
-<ul>
-<li>
-<p>The number of total blocks which are currently in-use</p>
-</li>
-<li>
-<p>The number of total blocks which are currently free</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>The total amount of memory allocated by malloc, along with</p>
-<div class="ulist">
-<ul>
-<li>
-<p>The total amount of memory currently in-use</p>
-</li>
-<li>
-<p>The total amount of memory currently free</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>The amount of underutilised memory as a percentage. This is the percent of memory that has been allocated by <code>sbrk</code> but not being used by the application.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>For example, your function might produce the following output</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>Total blocks: 8 Free blocks: 6 Used blocks: 2
-Total memory allocated: 9665 Free memory: 4427 Used memory: 5238
-Underutilized memory: 0.48</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You are given code to simulate many random allocations and frees. After
-implementing your function, you should get the following output.</p>
+<p>In <code>memstats.c</code>, implement a program that simulates a series of memory
+allocations and then outputs an image that visualizes the memory usage.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -480,7 +434,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-15 21:01:06 -0500
+Last updated 2025-01-17 16:40:41 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">

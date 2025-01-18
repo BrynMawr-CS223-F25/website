@@ -1,6 +1,6 @@
 include::header.adoc[]
 
-:title: Assignment 9: Mandelthreads
+:title: Assignment 9: Marching threads
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
@@ -18,15 +18,25 @@ The goals for this assignment are:
 [discrete]
 == Update your repository
 
-NOTE: Do a *SYNC FORK* to obtain the basecode for this assignment. 
-This is a button on your Github repository. 
+Do a *fetch upstream* to obtain the basecode for this assignment. 
+
+Using the command line
+
+* Open terminal and change your current directory to your assignment repository.
+* Run the command `git fetch upstream`
+* Run the command `git merge upstream/master`
+
+Your repository should now contain a new folder named `{ASST}`.
+
+The `fetch` and `merge` commands update your repository with any changes from the original.
+
 
 :sectnums:
 
-= Mandelbrot
+= Threaded Renderer 
 
-In the file, `single_mandelbrot.c`, compute a program that outputs a PPM image of the mandelbrot 
-set. You have been given basecode that initializes the following values from command line arguments. This code uses the link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt function].
+In the file, `render.c`, compute a program that outputs a PPM image using a procedural 
+algorithm. You have been given basecode that initializes the following values from command line arguments. This code uses the link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt function].
 
 Arguments:
 
@@ -36,19 +46,17 @@ Arguments:
 * `-t <ymin>` the topmost coordinate, e.g. minimum y value
 * `-b <ymax>` the bottommost coordinate, e.g. maximum y value
 
-image::A09.png[height=400]
-
 When you run your program, you should get the output such as the following
 
 [source,subs="quotes"]
 ----
-$ **make single_mandelbrot**
-$ **./single_mandelbrot**
+$ **make render**
+$ **./render**
 Generating mandelbrot with size 480x480
   X range = [-2.0000,0.4700]
   Y range = [-1.1200,1.1200]
 Computed mandelbrot set (480x480) in 0.323261 seconds
-Writing file: mandelbrot-480-1649001071.ppm
+Writing file: render-480-1649001071.ppm
 ----
 
 Requirements and hints:
@@ -56,28 +64,12 @@ Requirements and hints:
 * You should re-use your PPM functions from previous assignments. 
 * Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
 * You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. 
-* Your output filename should have the format `mandelbrot-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
-* Set a random seed to ensure that the color palette is different each time, e.g. `srand(time(0))` 
-* (Optional) Experiment with visualizing other regions of the mandelbrot set. For example, if you run with `./single_mandelbrot -s 480 -l -0.02524993 -r 0.00975 -b -0.8172 -t -0.79725`, you get the following image
+* Your output filename should have the format `render-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
+* (Optional) Set a random seed to ensure that colors are randomized (if you randomize colors)
 
-image::mandelbrot-480-subregion.png[]
+//image::mandelbrot-480-subregion.png[]
 
-== Background: Mandelbrot Set
-
-The link:https://en.wikipedia.org/wiki/Mandelbrot_set[mandelbrot set] is fractal popularized by 
-Benoit Mandelbrot in 1980. 
-
-The mandelbrot set consists of the set of complex numbers z for which stem:[z^2 + c] does not diverge to infinity when z starts at 0. To visualize this set, recall that a link:https://en.wikipedia.org/wiki/Complex_number[complex number], stem:[z = x + yi], can be visualized as a 2D point stem:[(x,y)]. Although the set derives from complex 
-numbers, we can compute the set by thinking about 2D coordinates, stem:[(x,y)].
-
-To see whether the complex number stem:[(x,y)] diverges, we simply need a loop that repeatedly computes stem:[z^2 + c]. If we expand the 
-complex number multiplication of stem:[z = x + y*i], z will change each iteration based on the following algorith. To test for divergence, we check whether z goes 
-out of the bounds of 4*4. If z does go out of bounds, we assign it a color based on how quickly it "escaped" the distance 4*4. If after MAX iterations, z is still 
-smaller than 4*4, it belongs to the set and we color it black.
-
-The last thing we need to draw the set is the region of values for x and y that bound the set. 
-X should vary from -2.0 to 0.47. Y should vary from -1.12 to 1.12. Here is the full algorithm.
-Assume that the image width and height are the same, e.g. square images.
+== Background: Ray Marching
 
 [source]
 ----
@@ -88,61 +80,15 @@ for each row in the image
       x0 = xmin + xfrac * (xmax - xmin)
       y0 = ymin + yfrac * (ymax - ymin)
 
-      x = 0
-      y = 0
-      iter = 0
-      while (iter < MAX && x*x + y*y < 2*2) 
-        xtmp = x*x - y*y + x0
-        y = 2*x*y + y0
-        x = xtmp
-        iter++
-
-      if (iter < MAX) // escaped
-        color = palette[iter]
-      else
-        color = black
-
       write color to image at location (row,col)    
 ----
 
-[discrete]
-== Palette
+= Threaded Render
 
-The palette should contain the same number of colors as MAX iterations. 
-Use `ppm_pixel` to represent colors in the pallet. You can either generate 
-random colors or compute a base color and jitter it e.g. 
+Implement a multi-threaded version of the image you computed for the previous question.
 
-[cols="1a,1a"]
-!===
-|image::mandelbrot-random.gif[]
-|[source]
-----
-// Compute a random color palette
-for each palette color
-  red = rand() % 255
-  green = rand() % 255
-  blue = rand() % 255
-----
-|image::mandelbrot-jitter.gif[]
-|[source]
-----
-// Compute a jittered color palette
-basered = rand() % 255
-basegreen = rand() % 255
-baseblue = rand() % 255
-for each palette color
-  red = basered + rand() % 100 - 50
-  green = basegreen + rand() % 100 - 50
-  blue = baseblue + rand() % 100 - 50
-----
-!===
-
-= Threaded Mandelbrot
-
-Implement a multi-threaded version of the mandelbrot set that you implemented for link:asst09.html[Assignment 09].
-
-In the file, `thread_mandelbrot.c`, compute a program that outputs a PPM image of the mandelbrot 
-set. You have been given basecode that initializes the following values from command line arguments. This code uses the link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt function].
+In the file, `thread_render.c`, compute a program that outputs a PPM image using the same 
+algorithm as before.  You have been given basecode that initializes the following values from command line arguments. This code uses the link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt function].
 
 Arguments:
 
@@ -156,9 +102,9 @@ When you run your program, you should get the output such as the following
 
 [source,subs="quotes"]
 ----
-$ **make thread_mandelbrot**
-$ **./thread_mandelbrot**
-Generating mandelbrot with size 480x480
+$ **make thread_render**
+$ **./thread_render**
+Generating render with size 480x480
   X range = [-2.0000,0.4700]
   Y range = [-1.1200,1.1200]
 Thread 140392055985920) sub-image block: cols (0, 240) to rows (0,240)
@@ -169,8 +115,8 @@ Thread 140392055985920) finished
 Thread 140392047593216) finished
 Thread 140392039200512) finished
 Thread 140392030807808) finished
-Computed mandelbrot set (480x480) in 0.143906 seconds
-Writing file: mandelbrot-480-1650116924.ppm
+Computed render (480x480) in 0.143906 seconds
+Writing file: render-480-1650116924.ppm
 ----
 
 Requirements and hints:
@@ -181,12 +127,11 @@ Requirements and hints:
 * Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
 * Do not declare global variables! Use parameters to send data to each thread's start_routine.
 * You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. The performance should be comparable to your multi_mandelbrot version from A09.
-* Your output filename should have the format `mandelbrot-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
-* Set a random seed to ensure that the color palette is different each time, e.g. `srand(time(0))` 
+* Your output filename should have the format `render-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
 
 = Performance comparison
 
-Compare the performance between the single and threaded mandelbrot versions. Fill in `Readme.adoc` 
+Compare the performance between the single and threaded rendered versions. Fill in `Readme.adoc` 
 with your hardware specifications and runtime statistics. 
 
 = Submit your work
@@ -213,21 +158,21 @@ $ git status
 
 Grades are out of 4 points.
 
-* (1 points) Mandelbrot
+* (1 points) Render
 ** (0.1 points) style and header comment
 ** (0.1 points) Supports given command line arguments
 ** (0.1 points) Generates image with correct filename
 ** (0.1 points) Allocate an array of pixels using malloc
-** (0.1 points) Correct output (including orientation); Outputs duration; Random colors
+** (0.1 points) Correct output 
 ** (0.5 points) no memory errors
-* (2 points) Threaded Mandelbrot
+* (2 points) Threaded Render
 ** (0.1 points) style and header comment
 ** (0.1 points) Supports given command line arguments
 ** (0.1 points) Generates image with correct filename
 ** (0.1 points) Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.
 ** (0.1 points) Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
 ** (0.1 points) Do not declare global variables! Use parameters to send data to each thread's start_routine.
-** (0.4 points) Correct output (including orientation); Outputs duration; Random colors
+** (0.2 points) Correct output 
 ** (1 points) no memory errors
 * (1 points) Comparison of runtime between the single and threaded versions
 

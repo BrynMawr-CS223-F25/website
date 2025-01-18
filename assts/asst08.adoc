@@ -15,7 +15,7 @@ The goals for this assignment are:
 
 * Gain experience working with `fork()`.
 * Use OS system calls in your C program. 
-* Implement your own simple shell program.
+* Implement a multi-process program
 
 [discrete]
 == Update your repository
@@ -61,22 +61,9 @@ Requirements:
 * Your program should use fork() to spawn processes.
 * Call `getpid()` to show the process ids for each print message.
 
-= Personal Shell
+= Grep
 
-In the file, `shell.c`, implement a program that implements a simple shell. 
-
-image::RainbowShell.png[width=640px]
-
-Requirements:
-
-* Your program should print a prompt. At minimum, your prompt should show the current working directory and look distinct from the lab machine prompts. In other words, it should be easy to tell what shell if running from the terminal.
-* Use the `readline()` function to get user input. This function supports backspace, tab completion, and more. link:https://www.man7.org/linux/man-pages/man3/readline.3.html[Documentation for readline can be found here].
-* Use the `add_history()` function to save user history. This will allow arrow keys to work. link:https://www.man7.org/linux/man-pages/man3/readline.3.html[Documentation for readline can be found here].
-* Your program should quit if the users types `exit`.
-* When the user gives a command, split it into a command and arguments and then fork a command to execute it. 
-* Your terminal should wait for the command to finish. If the command terminates with an error, report the error.
-
-NOTE: `readline` is a package that is installed on goldengate and in our labs. However, you may need to install it on your own machine. On Unix systems, this can be done by running `sudo apt install libreadline-dev`  
+In the file, `grep.c`, implement a program that implements grep using multiple processes.
 
 NOTE: You can print with colors to the console using ANSI escape sequences (see below). 
 For example, `printf(ANSI_COLOR_GREEN "Green Text" ANSI_COLOR_RESET);` will print green text. link:https://azrael.digipen.edu/~mmead/www/mg/ansicolors/index.html[Here is a good guide!]
@@ -92,10 +79,6 @@ For example, `printf(ANSI_COLOR_GREEN "Green Text" ANSI_COLOR_RESET);` will prin
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 ----
-
-NOTE: Most prompts print helpful information. Above, we use the 
-system commands `gethostname`, `getcwd`, and `getpwuid(geteuid())` to get the 
-machine name, the current working directory, and current user respectively. 
 
 = Submit your work
 
@@ -122,14 +105,8 @@ Grades are out of 4 points.
 ** (0.1 points) style and header comment
 ** (0.4 points) prints correct messages, uses `fork()` and `getpid()`
 ** (0.5 points) no memory errors
-* (3 points) Simple shell 
-** (0.1 points) style and header comment
-** (0.7 points) Displays unique prompt with current working directory
-** (0.3 points) Uses `readline()` and `add_history()`
-** (0.1 points) Quits when the user types `exit`.
-** (0.1 points) Forks a process to run the user's command. 
-** (0.1 points) Reports the return status of the command when the child process completes.
-** (1.5 points) no memory errors. 
+* (1 points) Grep
+* (2 points) Spellchecker
 
 NOTE: When using `readline()`, valgrind will report that some of your memory is
 _still reachable_. This memory is not leaked. It hasn't been cleaned up yet from 

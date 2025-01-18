@@ -35,114 +35,71 @@ Your repository should now contain a new folder named `{ASST}`.
 The `fetch` and `merge` commands update your repository with any changes from the original.
 
 
-= Most danceable
+Implement a program, `magic_square.c`, that tests whether a given matrix is a magic square. 
+A link:https://en.wikipedia.org/wiki/Magic_square[magic square] is an N by N matrix where each 
+row, column, and diagonal has the same sum, called the _magic constant_. 
 
-Implement a program, `danceable.c`, that allows users to easily access the most 
-danceable songs in `songlist.csv`. 
-
-NOTE: Unlike last week, `songlist.csv` *does not* contain the number of songs in the file!
-The format of the CSV file is as follows, containing a line for the header followed by all songs.
-[source]
-----
-Title, Artist, Duration (ms), Danceability, Energy, Tempo, Valence
-Canned Heat,Jamiroquai,331760,0.7,0.865,128.04,0.78
-....
-----
-
-Your program should re-use the code to load songs from a CSV file *except* instead of 
-storing the songs in an array, your program should store the songs in a linked list.
-
-When the user asks for the most danceable song, your program should find the song with 
-the highest danceability, show the user its information, and then delete it from the 
-linked list.
+image::https://mathworld.wolfram.com/images/gifs/melencol.jpg[height=200]
 
 [source,subs="quotes"]
 ----
-$ **make danceable**
-gcc -g -Wall -Wvla -Werror danceable.c -o danceable
-$ **./danceable**
-0) Eye of the Tiger             Survivor        (4:05s) D: 0.817 E: 0.599 T: 108.873 V: 0.548
-1) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
-2) Canned Heat                  Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
-3) The Veldt                    deadmau5        (2:50s) D: 0.736 E: 0.759 T: 128.039 V: 0.485
-4) Lose Yourself to Dance       Daft Punk       (5:53s) D: 0.832 E: 0.659 T: 100.163 V: 0.674
-
-Dataset contains 5 songs
-
-=======================
-Press 'd' to show the most danceable song (any other key to quit): **d**
-
----------------------------------------- Most danceable ------------------------------------
-Lose Yourself to Dance          Daft Punk       (5:53s) D: 0.832 E: 0.659 T: 100.163 V: 0.674
---------------------------------------------------------------------------------------------
-
-0) Eye of the Tiger             Survivor        (4:05s) D: 0.817 E: 0.599 T: 108.873 V: 0.548
-1) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
-2) Canned Heat                  Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
-3) The Veldt                    deadmau5        (2:50s) D: 0.736 E: 0.759 T: 128.039 V: 0.485
-
-Dataset contains 4 songs
-
-=======================
-Press 'd' to show the most danceable song (any other key to quit): **d**
-
----------------------------------------- Most danceable ------------------------------------
-Eye of the Tiger                Survivor        (4:05s) D: 0.817 E: 0.599 T: 108.873 V: 0.548
---------------------------------------------------------------------------------------------
-
-0) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
-1) Canned Heat                  Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
-2) The Veldt                    deadmau5        (2:50s) D: 0.736 E: 0.759 T: 128.039 V: 0.485
-
-Dataset contains 3 songs
-
-=======================
-Press 'd' to show the most danceable song (any other key to quit): **d**
-
----------------------------------------- Most danceable ------------------------------------
-The Veldt                       deadmau5        (2:50s) D: 0.736 E: 0.759 T: 128.039 V: 0.485
---------------------------------------------------------------------------------------------
-
-0) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
-1) Canned Heat                  Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
-
-Dataset contains 2 songs
-
-=======================
-Press 'd' to show the most danceable song (any other key to quit): **d**
-
----------------------------------------- Most danceable ------------------------------------
-Canned Heat                     Jamiroquai      (5:31s) D: 0.700 E: 0.865 T: 128.040 V: 0.780
---------------------------------------------------------------------------------------------
-
-0) Thunderstruck                AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
-
-Dataset contains 1 songs
-
-=======================
-Press 'd' to show the most danceable song (any other key to quit): **d**
-
----------------------------------------- Most danceable ------------------------------------
-Thunderstruck                   AC/DC           (4:52s) D: 0.502 E: 0.890 T: 133.520 V: 0.259
---------------------------------------------------------------------------------------------
-
-Dataset contains 0 songs
-
-=======================
-Press 'd' to show the most danceable song (any other key to quit): **d**
-
-Dataset contains 0 songs
-
-=======================
-Press 'd' to show the most danceable song (any other key to quit): **q**
+$ **make magic_square**
+gcc -g magic_square.c -o magic_square
+$ **./magic_square < magic1.txt**
+8 1 6
+3 5 7
+4 9 2
+M is a magic square (magic constant = 15)
+$ **./magic_square < magic2.txt**
+9 1 6
+3 5 7
+4 8 2
+M is NOT a magic square!
+$ **./magic_square < magic3.txt**
+1
+M is a magic square (magic constant = 1)
 ----
 
 Requirements/Hints:
 
-* Implement helper functions for printing, removing nodes, clearing the list, and inserting to the list.
-* Make sure your program runs without memory leaks (check with valgrind!)
-* Make sure to handle the case where the list is empty.
-* Make sure to clean up your memory if the list is non-empty when the user quits!
+* Read in the matrix from stdin using `scanf(" %d", &val);`. The first two values are the dimensions of the matrix. All subsequent integers are the values of the matrix. 
+* Use malloc and free to allocate a 2D array to store the inputs.
+
+= Sorted Snacks
+
+Implement a program, `sorted_snackbar.c`, that allows users to add snacks to the snackbar and displays 
+them in alphabetical order. Your program should have the same features as last week's snackbar, but should 
+use a _linked list_ to store the snacks, rather than an array. 
+
+[source,subs="quotes"]
+----
+$ **make sorted_snackbar**
+gcc sorted_snackbar.c -o sorted_snackbar
+$ **./sorted_snackbar**
+Enter a number of snacks: **3**
+Enter a name: **Slurm**
+Enter a cost: **1.50**
+Enter a quantity: **3**
+Enter a name: **Beans**
+Enter a cost: **5**
+Enter a quantity: **1**
+Enter a name: **Carrots**
+Enter a cost: **2**
+Enter a quantity: **10**
+
+Welcome to Sorted Sally's Snack Bar.
+
+0) Beans                cost: $5.00     quantity: 1
+1) Carrots              cost: $2.00     quantity: 10
+2) Slurm                cost: $1.50     quantity: 3
+----
+
+Requirements/Hints:
+
+* Implement the function `insert_first`. This function should create a new snack struct and insert it at the beginning of the list. 
+* Implement the function `clear`. This function should clear and free all items in the list.
+* Implement the function `printList`. This function should print the contents of the list.
+* Implement three sort functions: `sortCost` and `sortName` and `sortQuantity`. These functions should sort by the given attribute. 
 
 = Submit your Work
 

@@ -16,7 +16,7 @@
 <ul class="sectlevel1">
 <li><a href="#_assignment_8_trust_the_process">Assignment 8: Trust the Process</a></li>
 <li><a href="#_warm_up">1. Warm-up</a></li>
-<li><a href="#_personal_shell">2. Personal Shell</a></li>
+<li><a href="#_grep">2. Grep</a></li>
 <li><a href="#_submit_your_work">3. Submit your work</a></li>
 <li><a href="#_grading_rubric">4. Grading Rubric</a></li>
 </ul>
@@ -41,7 +41,7 @@
 <p>Use OS system calls in your C program.</p>
 </li>
 <li>
-<p>Implement your own simple shell program.</p>
+<p>Implement a multi-process program</p>
 </li>
 </ul>
 </div>
@@ -118,52 +118,10 @@ $ <strong>./warmup</strong>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_personal_shell">2. Personal Shell</h2>
+<h2 id="_grep">2. Grep</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the file, <code>shell.c</code>, implement a program that implements a simple shell.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/RainbowShell.png" alt="RainbowShell" width="640px">
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Your program should print a prompt. At minimum, your prompt should show the current working directory and look distinct from the lab machine prompts. In other words, it should be easy to tell what shell if running from the terminal.</p>
-</li>
-<li>
-<p>Use the <code>readline()</code> function to get user input. This function supports backspace, tab completion, and more. <a href="https://www.man7.org/linux/man-pages/man3/readline.3.html">Documentation for readline can be found here</a>.</p>
-</li>
-<li>
-<p>Use the <code>add_history()</code> function to save user history. This will allow arrow keys to work. <a href="https://www.man7.org/linux/man-pages/man3/readline.3.html">Documentation for readline can be found here</a>.</p>
-</li>
-<li>
-<p>Your program should quit if the users types <code>exit</code>.</p>
-</li>
-<li>
-<p>When the user gives a command, split it into a command and arguments and then fork a command to execute it.</p>
-</li>
-<li>
-<p>Your terminal should wait for the command to finish. If the command terminates with an error, report the error.</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<code>readline</code> is a package that is installed on goldengate and in our labs. However, you may need to install it on your own machine. On Unix systems, this can be done by running <code>sudo apt install libreadline-dev</code>
-</td>
-</tr>
-</table>
+<p>In the file, <code>grep.c</code>, implement a program that implements grep using multiple processes.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -189,20 +147,6 @@ For example, <code>printf(ANSI_COLOR_GREEN "Green Text" ANSI_COLOR_RESET);</code
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"</pre>
 </div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Most prompts print helpful information. Above, we use the
-system commands <code>gethostname</code>, <code>getcwd</code>, and <code>getpwuid(geteuid())</code> to get the
-machine name, the current working directory, and current user respectively.
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
@@ -253,32 +197,10 @@ $ git status</code></pre>
 </div>
 </li>
 <li>
-<p>(3 points) Simple shell</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(0.1 points) style and header comment</p>
+<p>(1 points) Grep</p>
 </li>
 <li>
-<p>(0.7 points) Displays unique prompt with current working directory</p>
-</li>
-<li>
-<p>(0.3 points) Uses <code>readline()</code> and <code>add_history()</code></p>
-</li>
-<li>
-<p>(0.1 points) Quits when the user types <code>exit</code>.</p>
-</li>
-<li>
-<p>(0.1 points) Forks a process to run the user&#8217;s command.</p>
-</li>
-<li>
-<p>(0.1 points) Reports the return status of the command when the child process completes.</p>
-</li>
-<li>
-<p>(1.5 points) no memory errors.</p>
-</li>
-</ul>
-</div>
+<p>(2 points) Spellchecker</p>
 </li>
 </ul>
 </div>
@@ -341,7 +263,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-15 20:35:30 -0500
+Last updated 2025-01-18 15:44:00 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">

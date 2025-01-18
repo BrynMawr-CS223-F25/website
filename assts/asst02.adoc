@@ -36,163 +36,123 @@ Your repository should now contain a new folder named `{ASST}`.
 
 The `fetch` and `merge` commands update your repository with any changes from the original.
 
-= Exclaim!
+= Bad password
 
-Sometimes life can be very frustrating and we just need to shout. 
-Write a program, `exclaim.c` that turns a word into an exclamation. 
-Your program should loop through each character. If the character 
-is a lowercase letter, replace it with a randomly chosen character 
-from the set `{'@', '!', '#', '*'}`.
-
-Two examples of the running program are shown below. User input is shown in *bold*.
+Write a program, `password.c`, that asks the user for a word and creates a bad password from it.
+You can assume that all characters are lowercase.
 
 [source,subs="quotes"]
 ----
-$ **make exclaim**
-gcc -g -Wall -Wvla -Werror exclaim.c -o exclaim
-$ **./exclaim**
-Enter a word: **apple**
-OMG! \*\#!*!
-$ **./exclaim**
-Enter a word: **YOLO!**
-OMG! YOLO!
-$ **./exclaim**
-Enter a word: **Tada!**
-OMG! T*#!!
+$ **make password**
+gcc password.c -o password
+$ **./password**
+Enter a word: **elephant**
+Your bad password is 313ph@nt
+$ **./password**
+Enter a word: **hello**
+Your bad password is h311o
+$ **./password**
+Enter a word: **rhythm**
+Your bad password is rhythm
 ----
 
-Requirements and Hints:
+Your bad password algorithm should
 
-* You can assume that the user will enter a string that fits into a 32 character buffer, e.g. store the user's input with a variable defined as `char buff[32];`
-* Use the fact that ascii characters correspond to integers to check for a lowercase letter. link:https://www.cs.cmu.edu/~pattis/15-1XX/common/handouts/ascii.html[ASCII Table]
-* Use `rand()` to choose a random character.
+* Replace 'e's with '3's
+* Replace 'l's with '1's
+* Replace 'a's with '@'s
 
-= Acronym 
+= Snackbar
 
-Write a program, `acronym.c`, that computes an acronym from a given phrase.
-Your program should create a string consisting of all capital letters from 
-the given phrase.
+Write a program, `snackbar.c`, that maintains a list of snacks available for purchase.
 
 [source,subs="quotes"]
 ----
-$ **make acroynm**
-gcc -g -Wall -Wvla -Werror acronym.c -o acronym
-$ **./acronym**
-Enter a phrase: **What Does The Fox Say?**
-Your acronym is WDTFS
-$ **./acronym**
-Enter a phrase: **The Truth Is Out There**
-Your acronym is TTIOT
-$ **./acronym**
-Enter a phrase: **You Only Live Once**
-Your acronym is YOLO
+$ **make snackbar**
+gcc snackbar.c -o snackbar
+
+$ **./snackbar**
+Welcome to Steven Struct's Snack Bar.
+
+How much money do you have? **5**
+
+0) Coco Puffs           cost: $1.50     quantity: 4
+1) Manchego cheese      cost: $15.50    quantity: 6
+2) Magic beans          cost: $0.50     quantity: 0
+
+What snack would you like to buy? [0,1,2] **1**
+You can't afford it!
+
+$ **./snackbar**
+Welcome to Steven Struct's Snack Bar.
+
+How much money do you have? **5**
+
+0) Coco Puffs           cost: $1.50     quantity: 4
+1) Manchego cheese      cost: $15.50    quantity: 6
+2) Magic beans          cost: $0.50     quantity: 0
+
+What snack would you like to buy? [0,1,2] **2**
+Sorry, we are out of Magic beans
+
+$ **./snackbar**
+Welcome to Steven Struct's Snack Bar.
+
+How much money do you have? **5**
+
+0) Coco Puffs           cost: $1.50     quantity: 4
+1) Manchego cheese      cost: $15.50    quantity: 6
+2) Magic beans          cost: $0.50     quantity: 0
+
+What snack would you like to buy? [0,1,2] **0**
+You bought Coco Puffs
+You have $3.50 left
 ----
 
-Requirements and Hints:
+Requirements:
 
-* You do not need to handle the case where a capital letter occurs in the middle of a word.
-* Watch out that any string you create ends with a terminating null character, e.g. `'\0'`
-* You can assume that all input fits within 1024 characters.
+* Your program should define a `struct snack` that stores a name, cost, and quantity 
+* Your program should define at least three snacks and store them in an array
+* Your program should be similar to the given output but feel free to customize it!
 
-NOTE: To read in a string containing phrases, use the following format string with scanf: `scanf("%[^\n]%*c", phrase);` 
-The `%[^\n]` will read until the newline is reached. The `%*c` reads the newline and ignores it.
+= Shift Cypher
 
-= Songs
-
-Implement a program, `songs.c`, that fills an array with three or more songs and 
-then allows the user to edit the data in the array. 
+Write a program, `cypher.c`, that asks the user for a word and then encodes it
+using a shift cypher. A shift cypher replaces each letter with a letter that is
+X positions from it in the alphabet. For example, is the letter is 'a' and the
+shift is 2, we replace 'a' with a 'c'. You can assume that all inputs are
+lowercase and do not contain special characters.  
 
 [source,subs="quotes"]
 ----
-$ **make songs**
-gcc -g -Wall -Wvla -Werror songs.c -o songs
-$ **./songs**
-Welcome to Steven Struct's Song List.
-
-0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
-1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
-2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
-
-=======================
-
-Enter a song id to edit [0,1,2]: **1**
-Which attribute do you wish to edit? [artist, title, duration, danceability]: **duration**
-Enter a duration (minutes): **2**
-Enter a duration (seconds): **40**
-
-0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
-1) As it was            artist: Harry Styles            duration: 2:40  danceability: 0.70
-2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
-
-=======================
-$ **./songs**
-Welcome to Steven Struct's Song List.
-
-0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
-1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
-2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
-
-=======================
-
-Enter a song id to edit [0,1,2]: **2**
-Which attribute do you wish to edit? [artist, title, duration, danceability]: **artist**
-Enter a artist: **The Who**
-
-0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
-1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
-2) Wish you were here   artist: The Who                 duration: 5:34  danceability: 0.30
-
-=======================
-
-$ **./songs**
-Welcome to Steven Struct's Song List.
-
-0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
-1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
-2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
-
-=======================
-
-Enter a song id to edit [0,1,2]: **5**
-Invalid choice!
-
-$ **./songs**
-Welcome to Steven Struct's Song List.
-
-0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.50
-1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
-2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
-
-=======================
-
-Enter a song id to edit [0,1,2]: **0**
-Which attribute do you wish to edit? [artist, title, duration, danceability]: **danceability**
-Enter danceability: **0.9**
-
-0) Shout                artist: Tears for Fears         duration: 4:11  danceability: 0.90
-1) As it was            artist: Harry Styles            duration: 2:47  danceability: 0.70
-2) Wish you were here   artist: Pink Floyd              duration: 5:34  danceability: 0.30
-
-=======================
+$ **make cypher**
+gcc cypher.c -o cypher
+$ **./cypher**
+Enter a word: **elephant**
+Enter a shift: **2**
+Your cypher is gngrjcpv
+$ **./cypher **
+Enter a word: **gngrjcpv**
+Enter a shift: **-2**
+Your cypher is **elephant
+$ **./cypher **
+Enter a word: **hello**
+Enter a shift: **7**
+Your cypher is olssv
+$ **./cypher **
+Enter a word: **a**
+Enter a shift: **-2**
+Your cypher is y
+$ **./cypher **
+Enter a word: **z**
+Enter a shift: **2**
+Your cypher is b
 ----
 
-Requirements and Hints:
+Hints:
 
-* Your program should define a `struct song` to hold the song information. Duration should be stored in integers, danceability should be a float, and artist and title should be strings.
-* Your program should check for a valid song id and print an error message id the user enters an invalid id. 
-* Your program should initialize at least 3 songs and store them in an array.
-* Your program should loop through the array of songs to print them in a table. Implementing this feature in a function is a good idea.
-* Your program should support spaces in the song names and titles.
-* Use `strcmp` to test which attribute the user wants to update.
-* Use `strcpy` to update the artist or title in the array.
-* Your program should print the songs in an attractive table, although the formatting does not need to match the sample output exactly.
-* You can assume that all song artists and titles fit into a 32 character buffer.
-* Use `%-20s` to format left-justified strings with 20 spaces of padding.
+* Recall that characters as represented as digits in ASCII. A straight-forward implementation can add offsets to each character of the word. 
 
-NOTE: Because the song artists and titles can have spaces in them, using scanf requires additional syntax. 
-Instead of `scanf(" %d", &val);`, use `scanf(" %d%*c", &val);`. The trailing `%*c` tells scanf 
-to read and ignore the newline character at the end of the line. Furthermore, to read the name, 
-call `scanf(" %[^\n]%*c", artist);` instead of `scanf(" %s", artist);`.
 
 = Submit your Work
 
@@ -212,17 +172,17 @@ $ git push
 
 Grades are out of 4 points.
 
-* (1 point) exclaim
+* (1 point) password
 ** (0.1 points) style and header comment
 ** (0.4 points) correct behavior: asks the user for input and creates the new string
 ** (0.5 points) no memory errors
-* (1 point) acronym 
+* (1 point) cypher 
 ** (0.1 points) style and header comment
 ** (0.4 points) correct behavior: asks the user for input and creates the new string
 ** (0.5 points) no memory errors
-* (2 points) songs
+* (2 points) snackbar
 ** (0.2 points) style and header comment
-** (0.8 points) correct behavior: reads file, prints output with columns and supports editing
+** (0.8 points) correct behavior
 ** (1.0 points) no memory errors
 
 *Code rubrics*
