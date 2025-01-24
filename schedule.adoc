@@ -20,11 +20,11 @@
 | January 28, 30 anchor:week02[]
 | *More C, Introduction to Pointers* 
 
-* Topics: Function stacks, scope 
+* Topics: Function stacks, strings, arrays, introductory pointers
 * Read: link:https://diveintosystems.org/singlepage/#_a_deeper_dive_into_c_programming[Sections 2.1-2.8, 2.9 (Command line arguments only)] 
 * link:https://pythontutor.com/c.html#mode=edit[C Tutor]
 * Lab Jan 28: Quiz 01 practice, link:studyguide1.html[Study Guide: Quiz 01]
-* link:assts/asst02.[Assignment 02]: Due Jan 31
+* link:assts/asst02.html[Assignment 02]: Due Jan 31
 
 //-----------------------------
 |3

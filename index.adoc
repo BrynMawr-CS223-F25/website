@@ -17,7 +17,8 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 * Welcome to systems programming!
 * Assignment 01 is Posted! link:assts/asst01.html[Assignment 01]: Due January 24
-* Our first lab will be on January 21st about using github
+* Assignment 02 is due Jan 31: link:assts/asst02.html[Assignment 02]: Learn to C 
+* Lab Jan 28: link:studyguide01.html[Worksheet: Study Guide 1]
 
 == Course Info
 
@@ -48,7 +49,7 @@ will be introduced at the end of the course.
 | Lecture | Park 337 | Tuesday and Thursday 10:10 AM - 11:30 AM 
 | Lab | Park 231 | Tuesdays 2:40 PM - 4:00 PM 
 | Office Hours - Prof. Aline Normoyle | Park 200B | Tuesdays, 4-5 PM 
-| Office Hours - Tianyun Song | Park 231 | TBD
+| Office Hours - Tianyun Song | Park 231/Zoom | TBD
 
 |===
 

@@ -12,9 +12,9 @@ Quizzes will be closed book. You can bring one written cheat sheet. 30 minutes i
 
 Topics:
 
+* UNIX commands
 * Programming in C
 * Data types and sizes
-* UNIX commands
 * Function stacks
 * Basic arrays
 
@@ -185,3 +185,38 @@ from `str`. Your function should modify the contents of str. (To check your work
 
 12) Write code that implements a function `isPalindrome` that returns 1 if a given string is a palindrome and 0 otherwise. 
 Your function can be iterative or recursive. Test your function from `main`. 
+
+13) Draw the directory hierarchy that corresponds to the following commands
+
+[source]
+----
+$ pwd
+/home/alinen
+$ mkdir A
+$ cd A
+$ mkdir Z
+$ touch talk.c
+$ cd ..
+$ touch listen.c
+$ cd
+$ touch sing.c
+----
+
+14) Consider the following directory structure
+
+[source]
+----
+root
+> home
+>> ren
+>>> A    
+>> stimpy
+>>> B
+>>> C
+>>>> hello.txt   
+----
+
+* Draw the directory hierarchy above as a tree.
+* What is the absolute path of hello.txt?
+* If we are in the directory A, what is the relative path of hello.txt?
+* If we are in the directory B, what is the relative path of hello.txt?
