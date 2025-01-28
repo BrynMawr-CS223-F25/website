@@ -18,7 +18,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 * Welcome to systems programming!
 * Assignment 01 is Posted! link:assts/asst01.html[Assignment 01]: Due January 24
 * Assignment 02 is due Jan 31: link:assts/asst02.html[Assignment 02]: Learn to C 
-* Lab Jan 28: link:studyguide01.html[Worksheet: Study Guide 1]
+* Lab Jan 28: link:studyguide1.html[Worksheet: Study Guide 1]
 
 == Course Info
 
