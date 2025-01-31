@@ -183,17 +183,68 @@ You do not need to type in the attributes every time. You can put the inputs in 
 </tr>
 </table>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code></code></pre>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_wampus">4. Wampus</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>In the file, <code>wampus.c</code>, implement a program that randomly places a Wampus within a NxM grid.
+Then, fill in the remaining cells with their distance from the Wampus (using the Manhattan distance).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./wampus</strong>
+Number of rows: 2
+Number of columns: 3
+3 2 1
+2 1 W
+$ <strong>./wampus</strong>
+Number of rows: 1
+Number of columns: 1
+W
+$ <strong>./wampus</strong>
+Number of rows: 3
+Number of columns: 4
+1 W 1 2
+2 1 2 3
+3 2 3 4
+$ <strong>./wampus</strong>
+Number of rows: 6
+Number of columns: 3
+1 W 1
+2 1 2
+3 2 3
+4 3 4
+5 4 5
+6 5 6</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements/Hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use rand() to generate a cell (i,j) for the Wampus.</p>
+</li>
+<li>
+<p>Set a seed so that rand() produces different boards each time.</p>
+</li>
+<li>
+<p>Your program should ask the user for a width and height for the grid</p>
+</li>
+<li>
+<p>Your program should print the grid with its values</p>
+</li>
+<li>
+<p>Your program should use malloc/free to create the grid</p>
+</li>
+<li>
+<p>You can assume that the user will only enter positive values for rows and columns</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -291,7 +342,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-18 14:31:05 -0500
+Last updated 2025-01-31 10:52:04 -0500
 </div>
 </div>
 </body>

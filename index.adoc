@@ -16,8 +16,9 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 [.anns]
 
 * Assignment 02 is due Jan 31: link:assts/asst02.html[Assignment 02]: Learn to C 
-* Lab Jan 28: link:studyguide1.html[Worksheet: Study Guide 1]
-* **Next Week** Jam01 (Lab) and Quiz 01 (Thursday in class)
+* Assignment 03 is due Feb 7: link:assts/asst03.html[Assignment 03]: If you malloc something, set it free
+* Quiz Feb 6: link:studyguide1.html[Worksheet: Study Guide 1]
+* Lab Feb 4: Jam01 
 
 == Course Info
 

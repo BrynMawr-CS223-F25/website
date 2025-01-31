@@ -105,13 +105,47 @@ Requirements/Hints:
 
 NOTE: You do not need to type in the attributes every time. You can put the inputs in a file and then use redirection to load it. 
 
-[source]
-----
-
-----
-
-
 = Wampus
+
+In the file, `wampus.c`, implement a program that randomly places a Wampus within a NxM grid. 
+Then, fill in the remaining cells with their distance from the Wampus (using the Manhattan distance).   
+
+[source, subs="quotes"]
+----
+$ **./wampus**
+Number of rows: 2
+Number of columns: 3
+3 2 1
+2 1 W
+$ **./wampus**
+Number of rows: 1
+Number of columns: 1
+W
+$ **./wampus**
+Number of rows: 3
+Number of columns: 4
+1 W 1 2
+2 1 2 3
+3 2 3 4
+$ **./wampus**
+Number of rows: 6
+Number of columns: 3
+1 W 1
+2 1 2
+3 2 3
+4 3 4
+5 4 5
+6 5 6
+----
+
+Requirements/Hints:
+
+* Use rand() to generate a cell (i,j) for the Wampus.
+* Set a seed so that rand() produces different boards each time.
+* Your program should ask the user for a width and height for the grid
+* Your program should print the grid with its values
+* Your program should use malloc/free to create the grid 
+* You can assume that the user will only enter positive values for rows and columns
 
 = Grading Rubric
 

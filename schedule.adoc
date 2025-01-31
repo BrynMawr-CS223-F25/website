@@ -29,7 +29,7 @@
 //-----------------------------
 |3
 |February 4, 6 anchor:week03[]
-|*Pointers, malloc/free* 
+|*More pointers, malloc/free* 
 
 * Topics: Heap, dynamically-allocated memory (malloc, free), More arrays
 * Read: link:https://diveintosystems.org/singlepage/#_a_deeper_dive_into_c_programming[Sections 2.1-2.8, 2.9 (Command line arguments only)] 
