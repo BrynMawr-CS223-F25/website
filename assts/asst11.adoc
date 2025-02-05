@@ -26,7 +26,7 @@ Using the command line, make sure that you have the correct upstream repository 
 
 * Open terminal and change your current directory to your assignment repository.
 * Run the command `git fetch upstream`
-* Run the command `git merge upstream/master`
+* Run the command `git merge upstream/main`
 
 Your repository should now contain a new folder named `{ASST}`.
 
