@@ -38,7 +38,7 @@ The `fetch` and `merge` commands update your repository with any changes from th
 
 In the file, `warmup.c`, implement a program that spawns processes according to the following diagram.
 
-image::processes.png[]]
+image::processes.png[]
 
 [source, subs="quotes"]
 ----

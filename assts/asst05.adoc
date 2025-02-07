@@ -200,7 +200,7 @@ Reading feep-raw.ppm with width 4 and height 4
 @;@@
 @@%@
 :@@
-$ **./ascii_image smile.ppm**
+$ **./ascii_image smile-raw.ppm**
 Reading smile.ppm with width 14 and height 19
 @@@@@@@@@@@@@@
 @@@@@@@@@@@@@@

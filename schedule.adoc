@@ -31,10 +31,10 @@
 |February 4, 6 anchor:week03[]
 |*More pointers, malloc/free* 
 
+** Class CANCELED Feb 6**
 * Topics: Heap, dynamically-allocated memory (malloc, free), More arrays
 * Read: link:https://diveintosystems.org/singlepage/#_a_deeper_dive_into_c_programming[Sections 2.1-2.8, 2.9 (Command line arguments only)] 
 * Lab Feb 4: **Code Jam 01**
-* Class Feb 6: **Quiz 01** 
 * link:assts/asst03.[Assignment 03]: Due Feb 7
 
 //-----------------------------
@@ -42,6 +42,7 @@
 |February 11, 13 anchor:week04[]
 |*Pointer-based data structures. Debugging.* 
 
+* Class Feb 11: **Quiz 01** 
 * Topics: Linked lists in C. GDB, Valgrind
 * Read: link:https://diveintosystems.org/singlepage/#_c_debugging_tools[Sections 3.1-3.3] 
 * Read: link:http://svslibrary.pbworks.com/f/Data+Structures+and+Algorithm+Analysis+in+C+-+Mark+Allen+Weiss.pdf[Data Structures in C, Mark Allen Weiss, Chpt 3]
@@ -54,7 +55,7 @@
 |*Binary and Data Representation* 
 
 * Read: link:https://diveintosystems.org/singlepage/#_binary_and_data_representation[Chapter 4.1-4.9] 
-* link:assts/asst05.[Assignment 05]: Due Feb 21
+* link:assts/asst05.html[Assignment 05]: Due Feb 21
 * Lab Feb 18: **Code Jam 02** 
 * Class Feb 20: **Quiz 02**
 
