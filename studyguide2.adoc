@@ -13,10 +13,10 @@ Topics:
 
 Everything from link:studyguide1.html[Study Guide 1], plus
 
-* valgrind/gdb
-* Common memory errors
-* malloc/free
 * 2D arrays
+* malloc/free
+* Common memory errors
+* valgrind/gdb
 * Reading and writing text files
 
 Write C programs to check your answers. Or you can ask a TA or instructor 
@@ -233,14 +233,18 @@ void print(struct node* list) {
 }
 
 int main() {
-  struct node* n3 = insert_front(2, NULL);
-  // draw stack here
-  struct node* n2 = insert_front(1, n3);
-  struct node* n1 = insert_front(0, n2);
+  struct node* list = NULL;
+  list = insert_front(2, NULL);
+  list = insert_front(1, list);
+  list = insert_front(0, list);
 
-  free(n1);
-  free(n2);
-  free(n3);
+  struct node* n = list;
+  while (n != NULL) {
+    struct node* next = n->next;
+    free(n);
+    n = next;
+  }
+  // draw function stack here
 }
 ----
 
@@ -255,23 +259,23 @@ struct node {
   struct node* next;
 };
 
-void insert_front(int val, struct node** head) {
+void insert_front(int val, struct node* head) {
   struct node* n = malloc(sizeof(struct node));
   if (n == NULL) {
     printf("ERROR: Out of space!\n");
     exit(1);
   }
   n->val = val;
-  n->next = *head;
-  *head = n;
+  n->next = head;
+  return head;
 }
 
 int main() {
   struct node *head = NULL;
-  insert_front(0, &head);
+  head = insert_front(0, head);
   // draw stack here
-  insert_front(1, &head);
-  insert_front(2, &head);
+  head = insert_front(1, head);
+  head = insert_front(2, head);
 }
 
 ----
@@ -280,3 +284,4 @@ int main() {
 
 9) Write a program that swaps the first and last element of a linked list.
 
+10) Write a program that inserts nodes at the end of the list.

@@ -35,16 +35,16 @@
 <div class="ulist">
 <ul>
 <li>
-<p>valgrind/gdb</p>
-</li>
-<li>
-<p>Common memory errors</p>
+<p>2D arrays</p>
 </li>
 <li>
 <p>malloc/free</p>
 </li>
 <li>
-<p>2D arrays</p>
+<p>Common memory errors</p>
+</li>
+<li>
+<p>valgrind/gdb</p>
 </li>
 <li>
 <p>Reading and writing text files</p>
@@ -302,14 +302,18 @@ void print(struct node* list) {
 }
 
 int main() {
-  struct node* n3 = insert_front(2, NULL);
-  // draw stack here
-  struct node* n2 = insert_front(1, n3);
-  struct node* n1 = insert_front(0, n2);
+  struct node* list = NULL;
+  list = insert_front(2, NULL);
+  list = insert_front(1, list);
+  list = insert_front(0, list);
 
-  free(n1);
-  free(n2);
-  free(n3);
+  struct node* n = list;
+  while (n != NULL) {
+    struct node* next = n-&gt;next;
+    free(n);
+    n = next;
+  }
+  // draw function stack here
 }</code></pre>
 </div>
 </div>
@@ -323,23 +327,23 @@ int main() {
   struct node* next;
 };
 
-void insert_front(int val, struct node** head) {
+void insert_front(int val, struct node* head) {
   struct node* n = malloc(sizeof(struct node));
   if (n == NULL) {
     printf("ERROR: Out of space!\n");
     exit(1);
   }
   n-&gt;val = val;
-  n-&gt;next = *head;
-  *head = n;
+  n-&gt;next = head;
+  return head;
 }
 
 int main() {
   struct node *head = NULL;
-  insert_front(0, &amp;head);
+  head = insert_front(0, head);
   // draw stack here
-  insert_front(1, &amp;head);
-  insert_front(2, &amp;head);
+  head = insert_front(1, head);
+  head = insert_front(2, head);
 }</code></pre>
 </div>
 </div>
@@ -349,12 +353,15 @@ int main() {
 <div class="paragraph">
 <p>9) Write a program that swaps the first and last element of a linked list.</p>
 </div>
+<div class="paragraph">
+<p>10) Write a program that inserts nodes at the end of the list.</p>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-15 20:22:16 -0500
+Last updated 2025-02-11 11:48:06 -0500
 </div>
 </div>
 </body>
