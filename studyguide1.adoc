@@ -23,15 +23,28 @@ to give feedback on your responses.
 
 = Practice questions
 
-1) What is the minimum size of the following structures?
+1) What is the minimum size of the following structures and variables? If the variable is a pointer, give the size of the memory that the pointer points to.
 
 [source]
 ----
+A)
 struct Snack {
   char name[32];
   int quantity;
   float cost;
 };
+
+B)
+struct Snack snacks[2];
+
+C) 
+struct Snack* snacks = malloc(sizeof(struct Snack) * 10);  
+
+D)
+char message[16];
+
+E)
+int values[2];
 ----
 
 Hint: To check your answers, use the `sizeof()` function.

@@ -15,10 +15,9 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* Assignment 03 is due Feb 7: link:assts/asst03.html[Assignment 03]: If you malloc something, set it free
-* Assignment 04 is due Feb 14: link:assts/asst04.html[Assignment 04]: Watch where you point!
-* Quiz Feb 11: link:studyguide1.html[Worksheet: Study Guide 1]
-* Lab Feb 11: link:studyguide2.html[Worksheet: Study Guide 2]
+* Assignment 05 is due Feb 21: link:assts/asst05.html[Assignment 05]: Image conscious
+* Quiz Feb 20: link:studyguide2.html[Worksheet: Study Guide 2]
+* Coding Lab Feb 18: link:studyguide2.html[Worksheet: Study Guide 2]
 
 == Course Info
 

@@ -58,15 +58,28 @@ to give feedback on your responses.</p>
 <h2 id="_practice_questions">Practice questions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>1) What is the minimum size of the following structures?</p>
+<p>1) What is the minimum size of the following structures and variables? If the variable is a pointer, give the size of the memory that the pointer points to.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>struct Snack {
+<pre class="highlight"><code>A)
+struct Snack {
   char name[32];
   int quantity;
   float cost;
-};</code></pre>
+};
+
+B)
+struct Snack snacks[2];
+
+C)
+struct Snack* snacks = malloc(sizeof(struct Snack) * 10);
+
+D)
+char message[16];
+
+E)
+int values[2];</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -313,7 +326,7 @@ $ touch sing.c</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-24 07:54:25 -0500
+Last updated 2025-02-16 14:07:19 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">
