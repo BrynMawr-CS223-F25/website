@@ -34,6 +34,7 @@ Your repository should now contain a new folder named `{ASST}`.
 
 The `fetch` and `merge` commands update your repository with any changes from the original.
 
+= Magic Square
 
 Implement a program, `magic_square.c`, that tests whether a given matrix is a magic square. 
 A link:https://en.wikipedia.org/wiki/Magic_square[magic square] is an N by N matrix where each 
@@ -128,11 +129,16 @@ $ git status
 
 Grades are out of 4 points.
 
-* (4 points) Most danceable
+* (2 points) Magic Square
 ** (0.1 points) style and header comment
-** (0.4 points) defines a struct, reads and parses songlist.csv correctly, and has correct user input
-** (1.5 points) correctly handles deletion and insertion to a linked list
-** (2.0 points) handles file and linked list nodes correctly (no memory errors!)
+** (0.4 points) reads in matrix from stdin
+** (0.5 points) creates/deletes 2D matrix using malloc/free
+** (1.0 points) No memory errors
+* (2 points) Sorted Snacks
+** (0.1 points) style and header comment
+** (0.4 points) defines a struct correctly handles deletion and insertion to a linked list
+** (0.5 points) correctly sorts and displays snacks based on name, cost, or quantity
+** (1.0 points) handles file and linked list nodes correctly (no memory errors!)
 
 *Code rubrics*
 
