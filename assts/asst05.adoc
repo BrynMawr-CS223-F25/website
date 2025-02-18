@@ -171,7 +171,7 @@ Requirements/Hints:
 == Write PPM
 
 Implement a new function, `write_ppm`, defined in `write_ppm.c`. 
-Similarly to link:asst04.html[Assignment 04], you should choose one definition of `write_ppm` to 
+Similarly to `read_ppm`, you should choose one definition of `write_ppm` to 
 implement, depending on whether you use either a "flat array" or an "array of arrays" to store your pixels. 
 
 In the file, `test_write.c`, write a short test that reads in `feep_raw.ppm` and then writes it to 
