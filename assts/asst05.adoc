@@ -136,9 +136,27 @@ in it's own file, `read_ppm.c`, and use a header file, `read_ppm.h`, to include 
 
 You may implement your 2D array of pixels as either a flat array or an array or
 arrays. For example, if you return a flat array, your function should be defined
-as `struct ppm_pixel* read_ppm(const char* filename, int* width, int* height)`.
-If you return an array or arrays, your function should be defined as  `struct
-ppm_pixel** read_ppm(const char* filename, int* width, int* height)`. In both cases, 
+as follows.
+
+[source]
+----
+// filename is the image PPM to open and read
+// width should point to a variable for storing the width
+// height should point to a variable for storing the height
+struct ppm_pixel* read_ppm(const char* filename, int* width, int* height)
+----
+
+If you return an array or arrays, your function should be defined as follows
+
+[source]
+----
+// filename is the image PPM to open and read
+// width should point to a variable for storing the width
+// height should point to a variable for storing the height
+struct ppm_pixel** read_ppm(const char* filename, int* width, int* height)
+----
+
+In both cases, 
 use the parameters `width` and `height` to return the width and height of the image.
 
 In the file, `test_read.c`, write a short test that calls your function and prints the

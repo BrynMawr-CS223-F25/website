@@ -244,9 +244,29 @@ in it&#8217;s own file, <code>read_ppm.c</code>, and use a header file, <code>re
 <div class="paragraph">
 <p>You may implement your 2D array of pixels as either a flat array or an array or
 arrays. For example, if you return a flat array, your function should be defined
-as <code>struct ppm_pixel* read_ppm(const char* filename, int* width, int* height)</code>.
-If you return an array or arrays, your function should be defined as  <code>struct
-ppm_pixel** read_ppm(const char* filename, int* width, int* height)</code>. In both cases,
+as follows.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>// filename is the image PPM to open and read
+// width should point to a variable for storing the width
+// height should point to a variable for storing the height
+struct ppm_pixel* read_ppm(const char* filename, int* width, int* height)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you return an array or arrays, your function should be defined as follows</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>// filename is the image PPM to open and read
+// width should point to a variable for storing the width
+// height should point to a variable for storing the height
+struct ppm_pixel** read_ppm(const char* filename, int* width, int* height)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In both cases,
 use the parameters <code>width</code> and <code>height</code> to return the width and height of the image.</p>
 </div>
 <div class="paragraph">
@@ -687,7 +707,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-02-18 11:51:02 -0500
+Last updated 2025-02-18 17:01:16 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">
