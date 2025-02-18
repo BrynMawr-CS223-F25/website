@@ -10,3 +10,4 @@
 :csweb: https://www.cs.brynmawr.edu/~alinen
 :repo: https://github.com/BrynMawr-CS223-S25
 :semester: s25
+:stem: mathjax
