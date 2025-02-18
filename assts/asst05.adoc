@@ -267,7 +267,7 @@ Step 2: Then, assign an ASCII character based on the intensity
 
 = Glitch
 
-link:https://en.wikipedia.org/wiki/Glitch_art[Glitch Art] is the practice of leveraging technological errors for artistic purposes. Some cool examples can be found here by link:https://mobile.twitter.com/glitchartbot[glitchartbot].
+link:https://en.wikipedia.org/wiki/Glitch_art[Glitch Art] is the practice of leveraging technological errors for artistic purposes. 
 
 image::https://www.joelatimer.com/wp-content/uploads/2019/09/JoeLatimer.com-Blog-Featured-Image-Landscape-08-31-19.jpg[height=300px]
 
