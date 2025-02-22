@@ -15,9 +15,8 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* Assignment 05 is due Feb 21: link:assts/asst05.html[Assignment 05]: Image conscious
-* Quiz Feb 20: link:studyguide2.html[Worksheet: Study Guide 2]
-* Coding Lab Feb 18: link:studyguide2.html[Worksheet: Study Guide 2]
+* Assignment 06 is due Feb 28: link:assts/asst06.html[Assignment 06]: Watch where you point II
+* Lab Feb 25: link:studyguide3.html[Worksheet: Study Guide 3]
 
 == Course Info
 
