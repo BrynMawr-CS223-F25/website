@@ -30,6 +30,8 @@ Your repository should now contain a new folder named `{ASST}`.
 
 The `fetch` and `merge` commands update your repository with any changes from the original.
 
+:secnums:
+
 = Matching braces 
 
 Implement a program, `match_braces.c`, that takes a C file as a command line
@@ -68,7 +70,7 @@ Requirements/Hints:
 NOTE: Unlike last week, you need to open the files as text data. See link:https://diveintosystems.org/book/C2-C_depth/IO.html#_file_inputoutput[File Input/Output] for examples.
 
 
-== Tree
+= Tree
 
 In the file, `tree.c`, implement a binary search tree. Do not change the header
 `tree.h`, nor the function declarations in `tree.c`. But you can add functions to `tree.c`! 
@@ -107,7 +109,7 @@ Requirements:
 * You must not modify the basecode for `tree.h` or `tree.c`. You may add functions to `tree.c`
 * Your output should match the above and pass all tests
 
-== Dependencies
+= Dependencies
 
 A _dependency_ is a general software term for any software required by another. In this question, 
 we will store files in a binary search tree so we can list their file dependencies, 
