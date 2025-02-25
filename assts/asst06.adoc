@@ -123,12 +123,8 @@ giving the filename.
 
 [code, subs="quotes"]
 ----
-$ **./dependency `` ` ``find code -name "*.h" -o -name "*.cpp"`` ` ``**
+$ **./dependency `` ` ``find code -name "\*.h" -o -name "*.cpp"`` ` ``**
 Processing 11 files
-Thread 0 processing 4 files (arguments 2 to 6)
-Thread 1 processing 4 files (arguments 6 to 10)
-Thread 2 processing 3 files (arguments 10 to 13)
-Elapsed time is 0.000496
 $ list
 code/Animal.h
 code/Bird.h
