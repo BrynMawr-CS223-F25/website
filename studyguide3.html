@@ -393,6 +393,56 @@ What would you like to do? (d = deposit,w = withdraw)
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>11) Consider the following file permissions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>-rw-r--r-- 1 alinen alinen   191 Sep 10 12:07 greeting.c
+-rwxr-xr-x 1 alinen alinen 15960 Sep  3 12:33 hello
+-rw-r--r-- 1 alinen alinen    73 Sep  3 12:26 hello.c</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>What octal number corresponds to the file permissions for <code>hello.c</code>?</p>
+</li>
+<li>
+<p>What octal number corresponds to the file permissions for <code>hello</code>?</p>
+</li>
+<li>
+<p>Suppose we want to change the permissions for <code>hello</code> so that groups have read/write access. What octal number would correspond to the new permission?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>12) Suppose we have a 4-bit bit field that stores whether an animal can fly, swim, or walk, defined with the following masks</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#define NONE 0x0
+#define FLY 0x1
+#define SWIM 0x2
+#define WALK 0x4</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Suppose an animal&#8217;s bitfield contains the value 0x3. What capabilities does it have?</p>
+</li>
+<li>
+<p>What value would the bitfield have for an otter, which can swim and walk?</p>
+</li>
+<li>
+<p>What value would the bitfield have for a duck, which can fly, swim and walk?</p>
+</li>
+<li>
+<p>What value would the bitfield have for a cow, which can only walk?</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_programming">Programming</h3>
@@ -421,7 +471,7 @@ Your new number: 0x6d (109)</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-02-25 16:20:41 -0500
+Last updated 2025-02-28 10:47:06 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">

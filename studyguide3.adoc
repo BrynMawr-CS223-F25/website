@@ -281,6 +281,34 @@ What would you like to do? (d = deposit,w = withdraw)
 * What is the value of `a` in binary?
 * What is the value of `flipped`? Show your work to give a rationale for your answer. 
 
+11) Consider the following file permissions.
+
+[source]
+----
+-rw-r--r-- 1 alinen alinen   191 Sep 10 12:07 greeting.c
+-rwxr-xr-x 1 alinen alinen 15960 Sep  3 12:33 hello
+-rw-r--r-- 1 alinen alinen    73 Sep  3 12:26 hello.c
+----
+
+* What octal number corresponds to the file permissions for `hello.c`?
+* What octal number corresponds to the file permissions for `hello`?
+* Suppose we want to change the permissions for `hello` so that groups have read/write access. What octal number would correspond to the new permission?
+
+12) Suppose we have a 4-bit bit field that stores whether an animal can fly, swim, or walk, defined with the following masks
+
+[source]
+----
+#define NONE 0x0
+#define FLY 0x1
+#define SWIM 0x2
+#define WALK 0x4
+----
+
+* Suppose an animal's bitfield contains the value 0x3. What capabilities does it have?
+* What value would the bitfield have for an otter, which can swim and walk?
+* What value would the bitfield have for a duck, which can fly, swim and walk?
+* What value would the bitfield have for a cow, which can only walk?
+ 
 == Programming
 
 1) Write a program, `lswizzle.c` that shifts all the bits in an unsigned integer to the left, wrapping the most significant bit into the least significant bit. For example, if the integer has binary representation `0b 1010 0110 0000 0000`, the result should be `0b 0100 1100 000 0001`.
