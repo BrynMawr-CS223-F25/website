@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Assignment 11: Where others fear to thread</title>
+<title>Assignment 11: Mutually Exclusive</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,25 +14,19 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_11_where_others_fear_to_thread">Assignment 11: Where others fear to thread</a></li>
-<li><a href="#_grep">1. Grep</a></li>
-<li><a href="#_code_analysis">2. Code Analysis</a>
-<ul class="sectlevel2">
-<li><a href="#_tree">2.1. Tree</a></li>
-<li><a href="#_dependencies">2.2. Dependencies</a></li>
-</ul>
-</li>
-<li><a href="#_submit_your_work">3. Submit your work</a></li>
-<li><a href="#_grading_rubric">4. Grading Rubric</a></li>
+<li><a href="#_assignment_11_mutually_exclusive">Assignment 11: Mutually Exclusive</a></li>
+<li><a href="#_fractal_flame">1. Fractal Flame</a></li>
+<li><a href="#_submit_your_work">2. Submit your work</a></li>
+<li><a href="#_grading_rubric">3. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_11_where_others_fear_to_thread">Assignment 11: Where others fear to thread</h2>
+<h2 id="_assignment_11_mutually_exclusive">Assignment 11: Mutually Exclusive</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, April 18 before midnight (No late submissions accepted)</strong></p>
+<p><strong>Due Friday, April 4th, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -40,13 +34,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Implement multi-threaded algorithms using the pthread library</p>
+<p>Implement multi-thread algorithms using the pthread library</p>
 </li>
 <li>
-<p>Implement a tree data structure</p>
-</li>
-<li>
-<p>Work with OS system calls</p>
+<p>Use mutex and barrier to coordinate between different threads</p>
 </li>
 </ul>
 </div>
@@ -55,7 +46,7 @@
 <p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
 </div>
 <div class="paragraph">
-<p>Using the command line, make sure that you have the correct upstream repository and do a fetch upstream to get the basecode for this assignment.</p>
+<p>Using the command line</p>
 </div>
 <div class="ulist">
 <ul>
@@ -79,226 +70,144 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grep">1. Grep</h2>
+<h2 id="_fractal_flame">1. Fractal Flame</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This question implements a simplified version of the bash command <code>grep</code>. Grep searches a list of files
-for a given keyword or expression. For example, the following command searches for the keyword <code>public</code>
-in a list of source files. We use the <code>find</code> command to generate the list of source files to search.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/grep.png" alt="grep" width="500px">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Make sure you include the backticks, e.g. <code> ` </code>. This adds the filenames found by <code>find</code> as command line arguments to <code>grep</code>.
-</td>
-</tr>
-</table>
+<p>In the file, <code>fractal.c</code>, compute a program that outputs a PPM image of a fractal computed
+with the algorithm below.</p>
 </div>
 <div class="paragraph">
-<p>In the file, <code>grep.c</code>, implement a program that uses N threads to search for a keyword
-in a set of files.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make grep</strong>
-gcc -g -Wall -Wvla -Werror grep.c -o grep -lpthreads
-$ <strong>./grep</strong>
-usage: ./grep <code><</code>NumThreads<code>></code> <code><</code>Keyword<code>></code> <code><</code>Files<code>></code></code></pre>
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/thread-grep.png" alt="thread grep" width="500px">
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements:</p>
+<p>Computing the fractal requires three steps:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Your program should take the number of threads, keyword, and a list of files as command line arguments</p>
+<p>First, determine counts for the number of times each point visits a pixel, using the given formula</p>
 </li>
 <li>
-<p>Subdivide the files among the N threads. Note that the number of files may not divide evenly between threads.</p>
+<p>Second, you must turn the counts from step 2 into a color. The final colors should be written to a 2D array of ppm_pixel (either flat or an array of arrays) and then written.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each of the above steps can be parallelized using threads. The second step will require a mutex to ensure that the counts are set correctly. Below are suggested algorithms for
+computing each step.</p>
+</div>
+<div class="paragraph">
+<p><strong>Step 1: Compute visited counts</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>for each row in the image
+   for each col in the image
+      if (row,col) belongs to the mandelbrot set, continue
+
+      xfrac = row / image_size
+      yfrac = col / image_size
+      x0 = xmin + xfrac * (xmax - xmin)
+      y0 = ymin + yfrac * (ymax - ymin)
+
+      x = 0
+      y = 0
+      while (x*x + y*y &lt; 2*2)
+
+        yrow = round(size * (y - ymin)/(ymax - ymin))
+        xcol = round(size * (x - xmin)/(xmax - xmin))
+        if (yrow &lt; 0 || yrow &gt;= size) continue; // out of range
+        if (xcol &lt; 0 || xcol &gt;= size) continue; // out of range
+
+        increment count at (yrow, xcol)
+        update max count</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Step 3: Compute colors</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>gamma = 0.681
+factor = 1.0/gamma
+for each row in the image
+   for each col in the image
+      value = 0
+
+      if counts at (row,col) are greater than zero
+        value = log(counts[row][col]) / log(max_count)
+        value = pow(value, factor)
+
+      color.red = value * 255
+      color.green = value * 255
+      color.blue = value * 255
+
+      write color to image at location (row,col)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each thread should compute the three steps on a quadrant of the image. Below
+is a suggested outline for your thread&#8217;s start routine.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>void * start(void* data) {
+
+  // perform step 1
+
+  // use a thread barrier to wait for all threads to finish steps 1 and 2
+  // perform step 2
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./fractal</strong>
+Generating fractal with size 480x480
+  Num processes = 4
+  X range = [-2.5000,1.0000]
+  Y range = [-1.1200,1.1200]
+  X range = [-2.0000,1.0000]
+  Y range = [-1.1200,1.1200]
+Thread 140583141971712) sub-image block: cols (0, 240) to rows (0,240)
+Thread 140583133579008) sub-image block: cols (240, 480) to rows (0,240)
+Thread 140583125186304) sub-image block: cols (0, 240) to rows (240,480)
+Thread 140583116793600) sub-image block: cols (240, 480) to rows (240,480)
+Thread 140583141971712) finished
+Thread 140583133579008) finished
+Thread 140583125186304) finished
+Thread 140583116793600) finished
+Computed fractal set (480x480) in 0.123721 seconds
+Writing file: fractal-480-1650141479.ppm</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements and hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Each thread should run all steps on a quadrant of the image.</p>
 </li>
 <li>
-<p>Use a mutex to ensure that threads do not interrupt each others printing</p>
+<p>You will need a <code>pthread_barrier_t</code> to wait for all counts to be computed before computing the colors</p>
 </li>
 <li>
-<p>Print the totals and sub-division of files similarly to the output above</p>
+<p>Use mutex to compute the counts</p>
 </li>
 <li>
-<p>Use the <code>fgets</code> to process the lines in each file</p>
+<p>You should output the number of seconds needed to compute the image. Use this <a href="https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c">class example, matrix.c</a> for an example.</p>
 </li>
 <li>
-<p>Use the function <code>strstr</code> defined in <code>string.h</code> to search lines of text for the keyword. <a href="https://en.cppreference.com/w/c/string/byte/strstr">Documentation is here</a></p>
+<p>Your output filename should have the format <code>fractal-&lt;size&gt;-&lt;timestamp&gt;.ppm</code>. The timestamp can be obtained by calling <code>time(0)</code>.</p>
+</li>
+<li>
+<p>You may use global variables for this program.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_code_analysis">2. Code Analysis</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This question has two parts. In the first part, you will implement a search tree with string keys.
-In the second part, you will use the tree to store the source files from a directory, along with their
-dependency information. Similarly to your <code>grep</code> implementation, you will build the tree using multiple
-threads.</p>
-</div>
-<div class="sect2">
-<h3 id="_tree">2.1. Tree</h3>
-<div class="paragraph">
-<p>In the file, <code>tree.c</code>, implement a binary search tree. Do not change the header
-<code>tree.h</code>, nor the function declarations in <code>tree.c</code>. But you can add functions to <code>tree.c</code>!
-We recommend using the book
-"Data Structures and Algorithm Analysis in C" by Mark Allen Weiss. See the
-<a href="../index.html">course webpage for a link</a>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ <strong>make ./tree_tests</strong>
-gcc -g -Wall -Wvla -Werror -Wno-unused-variable -Wno-unused-but-set-variable tree_tests.c tree.c -o tree_tests -lpthread
-$ <strong>./tree_tests</strong>
-Running tests...
-test 1: insert for empty tree: PASSED
-test 2: name set correctly: PASSED
-test 3: left is null: PASSED
-test 4: right is null: PASSED
-test 5: name set correctly: PASSED
-test 6: right is null: PASSED
-test 7: name set correctly: PASSED
-test 8: item not in tree: PASSED
-test 9: item in tree: PASSED
-test 10: found correct object: PASSED
-M
- l:A
- r:X
-  l:P
-A
-M
-P
-X</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>You must not modify the basecode for <code>tree.h</code> or <code>tree.c</code>, except to add functions to <code>tree.c</code></p>
-</li>
-<li>
-<p>Your output should match the above and pass all tests</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_dependencies">2.2. Dependencies</h3>
-<div class="paragraph">
-<p>A <em>dependency</em> is a general software term for any software required by another. In this question,
-we will store files in a binary search tree so we can list their file dependencies,
-as determined by <code>#include</code> statements. For example,
-the file "Animal.h" depends on "Locomotion.h".</p>
-</div>
-<div class="paragraph">
-<p>In the file, <code>dependency.c</code>, implement a program that uses N threads to build a binary search tree of a
-given set of files. After building the tree, the program should give the user a prompt where they
-can list the processed files in alphabetical order and then query the dependencies of the file by
-giving the filename.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ <strong>./dependency 3 <code> ` </code>find code -name "<strong>.h" -o -name "</strong>.cpp"<code> ` </code></strong>
-Processing 11 files
-Thread 0 processing 4 files (arguments 2 to 6)
-Thread 1 processing 4 files (arguments 6 to 10)
-Thread 2 processing 3 files (arguments 10 to 13)
-Elapsed time is 0.000496
-$ list
-code/Animal.h
-code/Bird.h
-code/Duck.h
-code/Fish.h
-code/Fly.h
-code/Locomotion.h
-code/Seal.h
-code/Swim.h
-code/Walk.h
-code/Whale.h
-code/Zoo.cpp
-$ code/Animal.cpp
-code/Animal.cpp not found
-$ code/Animal.h
-code/Animal.h has the following dependencies
-  string
-  vector
-  Locomotion.h
-$ code/Zoo.cpp
-code/Zoo.cpp has the following dependencies
-  Animal.h
-  Bird.h
-  Duck.h
-  Fish.h
-  Seal.h
-  Whale.h
-  Locomotion.h
-  Walk.h
-  Fly.h
-  Swim.h
-$ apple
-apple not found
-$ quit</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Check that a file is valid before adding it to the tree</p>
-</li>
-<li>
-<p>Support the commands: quit, list, &lt;filename&gt;</p>
-</li>
-<li>
-<p>Use a mutex to avoid race conditions when setting up the tree</p>
-</li>
-<li>
-<p>Your program should take the number of threads and a list of files as command line arguments</p>
-</li>
-<li>
-<p>Subdivide the files among the N threads. Note that the number of files may not divide evenly between threads.</p>
-</li>
-<li>
-<p>Use a mutex to ensure that threads do not have a race conditions when constructing the tree</p>
-</li>
-<li>
-<p>Use <code>strstr</code> and <code>fgets</code> to parse the source file and find lines containing <code>#include</code></p>
-</li>
-<li>
-<p>Strip the filenames from the <code>#include</code> lines when printing dependencies.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_submit_your_work">3. Submit your work</h2>
+<h2 id="_submit_your_work">2. Submit your work</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Submit both your code and images.</p>
@@ -320,7 +229,7 @@ $ git status</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">4. Grading Rubric</h2>
+<h2 id="_grading_rubric">3. Grading Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
@@ -331,61 +240,23 @@ $ git status</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(1.5 points) Grep</p>
+<p>(4 points) Threaded Fractal</p>
 <div class="ulist">
 <ul>
 <li>
-<p>(0.15 points) style and header comment</p>
+<p>(0.4 points) style and header comment</p>
 </li>
 <li>
-<p>(0.1 points) Correct command line arguments: number of threads, keyword, and a list of files</p>
+<p>(0.4 points) Generated image with correct filename</p>
 </li>
 <li>
-<p>(0.2 points) Subdivide the files among the N threads</p>
+<p>(0.2 points) Supports given command line arguments</p>
 </li>
 <li>
-<p>(0.3 points) Correct output, uses mutex</p>
+<p>(1.0 points) Correct output, thread coordination, and output performance statistics</p>
 </li>
 <li>
-<p>(0.75 points) no memory errors</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>(1.5 points) Tree</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(0.15 points) style and header comment</p>
-</li>
-<li>
-<p>(0.6 points) implements all functions, passes all tests and does not modify basecode</p>
-</li>
-<li>
-<p>(0.75 points) no memory errors</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>(1 points) Dependency</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(0.1 points) style and header comment</p>
-</li>
-<li>
-<p>(0.1 points) Correct command line arguments: number of threads, keyword, and a list of files</p>
-</li>
-<li>
-<p>(0.1 points) Subdivide the files among the N threads, builds tree using multiple threads using mutex</p>
-</li>
-<li>
-<p>(0.2 points) Correct behavior</p>
-</li>
-<li>
-<p>(0.5 points) no memory errors</p>
+<p>(2.0 points) no memory errors</p>
 </li>
 </ul>
 </div>
@@ -423,7 +294,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-02-05 09:55:16 -0500
+Last updated 2025-02-28 10:35:39 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">

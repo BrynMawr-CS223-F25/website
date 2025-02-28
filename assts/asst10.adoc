@@ -1,6 +1,6 @@
 include::header.adoc[]
 
-:title: Assignment 10: Mutually Exclusive
+:title: Assignment 10: Marching threads
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
@@ -9,12 +9,11 @@ include::header.adoc[]
 
 = {title}
 
-*Due Friday, April 4th, before midnight*
+*Due Friday, March 28th, before midnight*
 
 The goals for this assignment are:
 
 * Implement multi-thread algorithms using the pthread library
-* Use mutex and barrier to coordinate between different threads
 
 [discrete]
 == Update your repository
@@ -31,121 +30,113 @@ Your repository should now contain a new folder named `{ASST}`.
 
 The `fetch` and `merge` commands update your repository with any changes from the original.
 
+
 :sectnums:
 
-= Fractal Flame
+= Threaded Renderer 
 
-In the file, `fractal.c`, compute a program that outputs a PPM image of a fractal computed 
-with the algorithm below. 
+In the file, `render.c`, compute a program that outputs a PPM image using a procedural 
+algorithm. You have been given basecode that initializes the following values from command line arguments. This code uses the link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt function].
 
-Computing the fractal requires three steps:
+Arguments:
 
-* First, determine counts for the number of times each point visits a pixel, using the given formula
-* Second, you must turn the counts from step 2 into a color. The final colors should be written to a 2D array of ppm_pixel (either flat or an array of arrays) and then written. 
+* `-s <size>` the image width and height
+* `-l <xmin>` the leftmost coordinate, e.g. minimum x value
+* `-r <xmax>` the rightmost coordinate, e.g. maximum x value
+* `-t <ymin>` the topmost coordinate, e.g. minimum y value
+* `-b <ymax>` the bottommost coordinate, e.g. maximum y value
 
-Each of the above steps can be parallelized using threads. The second step will require a mutex to ensure that the counts are set correctly. Below are suggested algorithms for 
-computing each step. 
+When you run your program, you should get the output such as the following
 
-**Step 1: Compute visited counts**
+[source,subs="quotes"]
+----
+$ **make render**
+$ **./render**
+Generating mandelbrot with size 480x480
+  X range = [-2.0000,0.4700]
+  Y range = [-1.1200,1.1200]
+Computed mandelbrot set (480x480) in 0.323261 seconds
+Writing file: render-480-1649001071.ppm
+----
+
+Requirements and hints:
+
+* You should re-use your PPM functions from previous assignments. 
+* Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
+* You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. 
+* Your output filename should have the format `render-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
+* (Optional) Set a random seed to ensure that colors are randomized (if you randomize colors)
+
+//image::mandelbrot-480-subregion.png[]
+
+== Background: Ray Marching
+
 [source]
 ----
 for each row in the image
    for each col in the image
-      if (row,col) belongs to the mandelbrot set, continue
-
       xfrac = row / image_size
       yfrac = col / image_size
       x0 = xmin + xfrac * (xmax - xmin)
       y0 = ymin + yfrac * (ymax - ymin)
 
-      x = 0
-      y = 0
-      while (x*x + y*y < 2*2)
-
-        yrow = round(size * (y - ymin)/(ymax - ymin))
-        xcol = round(size * (x - xmin)/(xmax - xmin))
-        if (yrow < 0 || yrow >= size) continue; // out of range
-        if (xcol < 0 || xcol >= size) continue; // out of range
-
-        increment count at (yrow, xcol) 
-        update max count
-----
-
-**Step 3: Compute colors**
-[source]
-----
-gamma = 0.681
-factor = 1.0/gamma
-for each row in the image
-   for each col in the image
-      value = 0
-
-      if counts at (row,col) are greater than zero
-        value = log(counts[row][col]) / log(max_count)
-        value = pow(value, factor)
-
-      color.red = value * 255
-      color.green = value * 255
-      color.blue = value * 255
-
       write color to image at location (row,col)    
 ----
 
-Each thread should compute the three steps on a quadrant of the image. Below 
-is a suggested outline for your thread's start routine.
+= Threaded Render
 
-[source]
-----
-void * start(void* data) {
+Implement a multi-threaded version of the image you computed for the previous question.
 
-  // perform step 1
+In the file, `thread_render.c`, compute a program that outputs a PPM image using the same 
+algorithm as before.  You have been given basecode that initializes the following values from command line arguments. This code uses the link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt function].
 
-  // use a thread barrier to wait for all threads to finish steps 1 and 2
-  // perform step 2
+Arguments:
 
-}
-----
+* `-s <size>` the image width and height
+* `-l <xmin>` the leftmost coordinate, e.g. minimum x value
+* `-r <xmax>` the rightmost coordinate, e.g. maximum x value
+* `-t <ymin>` the topmost coordinate, e.g. minimum y value
+* `-b <ymax>` the bottommost coordinate, e.g. maximum y value
 
-
+When you run your program, you should get the output such as the following
 
 [source,subs="quotes"]
 ----
-$ **./fractal**
-Generating fractal with size 480x480
-  Num processes = 4
-  X range = [-2.5000,1.0000]
+$ **make thread_render**
+$ **./thread_render**
+Generating render with size 480x480
+  X range = [-2.0000,0.4700]
   Y range = [-1.1200,1.1200]
-  X range = [-2.0000,1.0000]
-  Y range = [-1.1200,1.1200]
-Thread 140583141971712) sub-image block: cols (0, 240) to rows (0,240)
-Thread 140583133579008) sub-image block: cols (240, 480) to rows (0,240)
-Thread 140583125186304) sub-image block: cols (0, 240) to rows (240,480)
-Thread 140583116793600) sub-image block: cols (240, 480) to rows (240,480)
-Thread 140583141971712) finished
-Thread 140583133579008) finished
-Thread 140583125186304) finished
-Thread 140583116793600) finished
-Computed fractal set (480x480) in 0.123721 seconds
-Writing file: fractal-480-1650141479.ppm
+Thread 140392055985920) sub-image block: cols (0, 240) to rows (0,240)
+Thread 140392047593216) sub-image block: cols (240, 480) to rows (0,240)
+Thread 140392039200512) sub-image block: cols (0, 240) to rows (240,480)
+Thread 140392030807808) sub-image block: cols (240, 480) to rows (240,480)
+Thread 140392055985920) finished
+Thread 140392047593216) finished
+Thread 140392039200512) finished
+Thread 140392030807808) finished
+Computed render (480x480) in 0.143906 seconds
+Writing file: render-480-1650116924.ppm
 ----
-
-//image:buddhabrot-2000-1650142988.png[height=400]
 
 Requirements and hints:
 
-* Each thread should run all steps on a quadrant of the image. 
-* You will need a `pthread_barrier_t` to wait for all counts to be computed before computing the colors
-* Use mutex to compute the counts
-* You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. 
-* Your output filename should have the format `fractal-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
-* You may use global variables for this program. 
+* You should re-use your PPM functions from previous assignments. 
+* Create four threads. Each thread should process a quadrant of the image.
+* Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.
+* Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
+* Do not declare global variables! Use parameters to send data to each thread's start_routine.
+* You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. The performance should be comparable to your multi_mandelbrot version from A09.
+* Your output filename should have the format `render-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
 
-//image::buddhabrot-Small.png[height=400]
-//NOTE: Other chaotic sets can be visualized in the same way as the Buddhabrot. To see more, read about link:https://flam3.com/flame_draves.pdf[Fractal Frames].
+= Performance comparison
+
+Compare the performance between the single and threaded rendered versions. Fill in `Readme.adoc` 
+with your hardware specifications and runtime statistics. 
 
 = Submit your work
 
-Submit both your code and images.
+Submit both your code and *images*.
 
 1) Push your code work to github
 
@@ -160,18 +151,30 @@ $ git push
 $ git status
 ----
 
+
 = Grading Rubric
 
 *Assignment rubrics*
 
 Grades are out of 4 points.
 
-* (4 points) Threaded Fractal
-** (0.4 points) style and header comment
-** (0.4 points) Generated image with correct filename
-** (0.2 points) Supports given command line arguments
-** (1.0 points) Correct output, thread coordination, and output performance statistics
-** (2.0 points) no memory errors
+* (1 points) Render
+** (0.1 points) style and header comment
+** (0.1 points) Supports given command line arguments
+** (0.1 points) Generates image with correct filename
+** (0.1 points) Allocate an array of pixels using malloc
+** (0.1 points) Correct output 
+** (0.5 points) no memory errors
+* (2 points) Threaded Render
+** (0.1 points) style and header comment
+** (0.1 points) Supports given command line arguments
+** (0.1 points) Generates image with correct filename
+** (0.1 points) Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.
+** (0.1 points) Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
+** (0.1 points) Do not declare global variables! Use parameters to send data to each thread's start_routine.
+** (0.2 points) Correct output 
+** (1 points) no memory errors
+* (1 points) Comparison of runtime between the single and threaded versions
 
 *Code rubrics*
 

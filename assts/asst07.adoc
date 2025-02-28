@@ -1,573 +1,310 @@
 include::header.adoc[]
 
-:title: Assignment 7: Some Assembly Required
+:title: Assignment 6: Secret messages
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
-:ASST: A07
+:ASST: A06
 
 = {title}
 
-**Due (Hardcopy) Thursday, March 6th**
-
-**This is a written assignment, not a coding assignment!**
+**Due Friday, February 28, before midnight**
 
 The goals for this assignment are:
 
-* Understand basic x86_64 assembly instructions, especially memory addressing
-* Visualize the execution of x86_64 assembly instructions
+* Understand binary representations of data types
+* Directly manipulate basic types at the bit level
+* Work with bitwise operators: |, &, ~, ^
 
+[discrete]
+== Update your repository
+
+Do a *fetch upstream* to obtain the basecode for this assignment. 
+
+Using the command line
+
+* Open terminal and change your current directory to your assignment repository.
+* Run the command `git fetch upstream`
+* Run the command `git merge upstream/main`
+
+Your repository should now contain a new folder named `{ASST}`.
+
+The `fetch` and `merge` commands update your repository with any changes from the original.
+
+
+= Tiny Bitmaps
+
+A link:https://sneslab.net/wiki/Graphics_Format[1bpp], or 1-bit-per-pixel, 
+sprite stores a grid of black and white pixels using a single bit. 0 denotes 
+white and 1 denotes black. 
+
+image::https://sneslab.net/mw/images/c/c6/saa03_1bpp.png[width=400px] 
+
+In the program, `bitmap.c`, implement a program that reads in a single 64-bit 
+unsigned integer (e.g. `unsigned long`) and outputs it as an 8x8 1bpp sprite. 
+
+[source,subs="quotes"]
+$ **./bitmap < bitmap1.txt**
+Image (unsigned long): ff818181818181ff
+@ @ @ @ @ @ @ @
+@             @
+@             @
+@             @
+@             @
+@             @
+@             @
+@ @ @ @ @ @ @ @
+----
+
+Requirements/Hints:
+
+* Your program should *must* use a bitmask! For example, to generate a 64-bit mask that obtains the left-most bit, do `0x1ul << 63`. The `ul` indicates an `unsigned long` value. `0x1` is the number one in hexadecimal.
+* The bitmap files store the values as hexadecimal values. To read them in, do `unsigned long img; scanf(" %lx", &img);`. Use `%lx` for printf also. You are given basecode that reads in the long integer from stdin.
+
+= Steganography
+
+link:https://en.wikipedia.org/wiki/Steganography[Steganography] is the practice of hiding messages in plain sight. In this question, we will hide text messages using the least significant bits of an image. 
+
+[discrete]
+== Background
+
+_Credit: Chris Trailie (link:https://ursinus-cs174-s2022.github.io/CoursePage/Assignments/HW2_Steganography/#lsb[Original])_
+
+To understand how we will hide messages in the least significant bits of an image, let's look at the following write-up by 
+Chris Trailie, starting with the two pictures below. 
+++++
+<table style="width:650px;">
+    <tr>
+        <td><h4>Ordinary image</h4></td>
+        <td><h4>Hidden message</h4></td>
+    </tr>
+    <tr>
+        <td>
+            <img src = "https://ursinus-cs174-s2022.github.io/CoursePage/Assignments/HW2_Steganography/HW2_Steganography/images/birthday.png" width=300>
+        </td>
+        <td>
+            <img src = "https://ursinus-cs174-s2022.github.io/CoursePage/Assignments/HW2_Steganography/HW2_Steganography/images/birthday_encoded.png" width=300>
+        </td>
+    </tr>
+</table>
+
+<p>
+    The picture on the right contains 12 paragraphs of text on the Ursinus 150 strategic plan.  Can you see the difference?  No?  Well great, that's the point!  
+</p>
+<p>
+    So how do we do this?  The idea is beautifully simple, and is best understood with an example.  Consider the following 3-pixel image
+</p>
+
+<table style="width:250px;">
+    <tr>
+        <td style="background-color: #fe7732; width:50px; height:50px;"><span style="color:white">[254, 119, 50]</span></td>
+        <td style="background-color: #028dfe; width:50px; height:50px;"><span style="color:white">[2, 141, 254]</span></td>
+        <td style="background-color: #5b9f40; width:50px; height:50px;"><span style="color:white">[91, 159, 64]</span></td>
+    </tr>
+</table>
+
+<p>
+    We're going to extract a binary signal by looking at the <b>least significant bit</b> (the 1's place in binary) of each color channel in each pixel from left to right from red, to green, to blue, and put them together into one binary string.  In other words, for a particular pixel and a particular color channel, we'll extract a 0 if it's an even number and a 1 if it's an odd number.  Let's look at the first 8 bits in the above image.  We have 
+</p>
+<table style="width:50px;">
+    <tr>
+        <td>254</td><td>0</td>
+    </tr>
+    <tr>
+        <td>119</td><td>1</td>
+    </tr>
+    <tr>
+        <td>50</td><td>0</td>
+    </tr>
+    <tr>
+        <td>2</td><td>0</td>
+    </tr>
+    <tr>
+        <td>141</td><td>1</td>
+    </tr>
+    <tr>
+        <td>254</td><td>0</td>
+    </tr>
+    <tr>
+        <td>91</td><td>1</td>
+    </tr>
+    <tr>
+        <td>159</td><td>1</td>
+    </tr>
+</table>
+
+<p>
+    All together, this is the binary string <b>01001011</b>, which is the character <b>'K'</b> in <a href = "https://www.asciitable.com/">ASCII</a>.  What if we wanted to change it to some other character though?  Perhaps the character <b>'z'</b>, which is <b>0x7A</b> hex, or <b>01111010</b> in binary.  Then we can just tweak the 1's place of the pixel values as follows, where I've bolded the ones that have changed:
+</p>
+
+<table style="width:50px;">
+    <tr>
+        <td>254</td><td>0</td>
+    </tr>
+    <tr>
+        <td>119</td><td>1</td>
+    </tr>
+    <tr>
+        <td><b>51</b></td><td><b>1</b></td>
+    </tr>
+    <tr>
+        <td><b>3</b></td><td><b>1</b></td>
+    </tr>
+    <tr>
+        <td>141</td><td>1</td>
+    </tr>
+    <tr>
+        <td>254</td><td>0</td>
+    </tr>
+    <tr>
+        <td>91</td><td>1</td>
+    </tr>
+    <tr>
+        <td><b>158</b></td><td><b>0</b></td>
+    </tr>
+</table>
+
+<p>
+    Here's what these updated values look like 
+</p>
+
+<table style="width:250px;">
+    <tr>
+        <td style="background-color: #fe7733; width:50px; height:50px;"><span style="color:white">[254, 119, 51]</span></td>
+        <td style="background-color: #038dfe; width:50px; height:50px;"><span style="color:white">[3, 141, 254]</span></td>
+        <td style="background-color: #5b9e40; width:50px; height:50px;"><span style="color:white">[91, 158, 64]</span></td>
+    </tr>
+</table>
+
+<p>
+    If you were just looking at it and comparing it to what we started with, you would never notice the difference!  So we have freedom to tweak the least significant bit of every color channel of every pixel at will to encode text, and this is exactly what you will be doing in this assignment!.  In a 500x500 image, for example, this means we can store 250,000 bits.  Since each ASCII character is 8 bits, this is 31,250 characters total, or roughly about 6000 words.
+</p>
+++++
 
 :sectnums:
 
-= Operand practice
+= Decode
 
-[cols="1a,1a"]
-|===
-|Suppose memory has the following values:
-[cols="1,1"]
-!===
-!Address ! Value
-!0xf08 ! 0x10
-!0xf0a ! 0x3c
-!0xf0c ! 0x14
-!0xf0e ! 0x04
-!0xf10 ! 0x34
-!0xf12 ! 0xe4
-!===
+In the file, `decode.c`, write a program that reads in a PPM file (raw, or binary, format) and then outputs any message that might be stored in 
+the least significant bits of each color. Your program should read bits from each of the red, green, and blue colors -- top to bottom, left to right. 
+You should keep decoding until you reach the empty character `\0`.
 
-|And suppose our registers have the following values:
-[cols="1,1"]
-!===
-!Register ! Value
-!%rax ! 0xf08
-!%rbx ! 0x44
-!%rsi ! 0x08
-!%r8  ! 0x01
-!===
-|===
+For example, consider the example file `tiny_encoded.ppm`. Decoding should give you the bits `001100010011011100110100001000010000101000000000`. 
 
-Fill in the following table with the corresponding form, translation, and 
-value for each of the given operands.
+If we group them up into ASCII char variables, we see this is the character string `174!\n`.
 
-[cols="1,1,4,1"]
-|===
-|Operand
-|Form
-|Translation
-|Value
+++++
+<table style="width:100px;">
+<tr>
+    <td>00110001</td><td><code>'1'</code></td>
+</tr>
+<tr>
+    <td>00110111</td><td><code>'7'</code></td>
+</tr>
+<tr>
+    <td>00110100</td><td><code>'4'</code></td>
+</tr>
+<tr>
+    <td>00100001</td><td><code>'!'</code></td>
+</tr>
+<tr>
+    <td>00001010</td><td><code>'\n'</code></td>
+</tr>
+<tr>
+    <td>00000000</td><td><code>'\0'</code></td>
+</tr>
+</table>
+++++
 
-|%rax
-|
-|{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-|
+Your program should perform as follows.
 
-|0x4(%rax)
-|
-|{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-|
-
-|0x4(%rax, %r8, 4)
-|
-|{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-|
-
-|0xf00(,%rsi,2)
-|
-|{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-|
-|===
-
-= Hackers
-
-In class, we looked at how we can cheat at a guessing game by overriding the
-return address of a function to jump to the `endGame` function.  In this question, we 
-will analyze the binary executable using GDB to extract the secret codes explicitly. 
-
-* link:https://diveintosystems.org/book/C7-x86_64/_attachments/secretx86-64.tar.gz[Download the binary]
-* link:https://diveintosystems.org/book/C3-C_debug/gdb_assembly.html#_debugging_assembly_code[Debugging assembly code]
-
-1) What GDB command can we use to set a breakpoint right after the function `getSecretCode` returns?
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-
-2) What register contains the return value from `getSecretCode`?
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-
-3) What GDB command can you use to inspect the value stored in the register containing the return value?
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-
-4) What is the secret number?
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-
-5) Place a breakpoint in `calculateValue`. How many times is `calculateValue` called by the program?
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-
-6) What is `calculateValue` doing? From the given source, we can see it takes a string. What is the return value?  
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-
-7) What is the secret string?
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-
-= The answer is 42
-
-Recall the following example from class and
-link:https://diveintosystems.org/book/C7-x86_64/functions.html[_Dive into
-Systems_]. This mysterious program reliably produces the output `42`. In this
-question, you will trace the assembly to understand why.
-
-[source]
+[source,subs="quotes"]
 ----
-#include <stdio.h>
-
-int assign(void) {
-    int y = 40;
-    return y;
-}
-
-int adder(void) {
-    int a;
-    return a + 2;
-}
-
-int main(void) {
-    int x;
-    assign();
-    x = adder();
-    printf("x is: %d\n", x);
-    return 0;
-}
----- 
-
-Suppose that compiling the above program results in the following assembly 
-instructions (x86_64)
-
-[source]
-----
-0000000000001149 <assign>:
-    114d: 55                    push   %rbp
-    114e: 48 89 e5              mov    %rsp,%rbp
-    1151: c7 45 fc 28 00 00 00  movl   $0x28,-0x4(%rbp)
-    1158: 8b 45 fc              mov    -0x4(%rbp),%eax
-    115b: 5d                    pop    %rbp
-    115c: c3                    retq
-
-000000000000115d <adder>:
-    1161: 55                    push   %rbp
-    1162: 48 89 e5              mov    %rsp,%rbp
-    1165: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1168: 83 c0 02              add    $0x2,%eax
-    116b: 5d                    pop    %rbp
-    116c: c3                    retq
-
-000000000000116d <main>:
-    1171: 55                    push   %rbp
-    1172: 48 89 e5              mov    %rsp,%rbp
-    1175: 48 83 ec 10           sub    $0x10,%rsp
-    1179: e8 cb ff ff ff        callq  1149 <assign>
-    117e: e8 da ff ff ff        callq  115d <adder>
-    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
-    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1189: 89 c6                 mov    %eax,%esi
-    118b: 48 8d 3d 72 0e 00 00  lea    0xe72(%rip),%rdi     
-    1192: b8 00 00 00 00        mov    $0x0,%eax
-    1197: e8 b4 fe ff ff        callq  1050 <printf@plt>
-    119c: b8 00 00 00 00        mov    $0x0,%eax
-    11a1: c9                    leaveq
-    11a2: c3                    retq
+$ **./decode tiny_encoded.ppm**
+Reading tiny_encoded.ppm with width 4 and height 4
+Max number of characters in the image: 6
+174!
 ----
 
-NOTE: In _The Hitchhiker's Guide to the Galaxy_ by Douglas Adams, the "Answer to the
-Ultimate Question of Life, the Universe, and Everything," calculated by an
-enormous supercomputer named Deep Thought over a period of 7.5 million years.
+Requirements/Hints:
 
-1) Suppose this is the state of the stack immediately prior to executing `main`
-Please show the before and after state (cross out old values).
+* You should read the PPM filename as a command line argument
+* You should report the usage if no file is given to the program
+* You should report an error if the file cannot be read
+* Re-use your implementation of `read_ppm` and `write_ppm` from link:asst05.html[Assignment 05].
+* Output the size of the image along with the maximum number of characters it can store
+* For debugging, try printing out values in hex format, e.g. `printf("%02X", c);`
+* This question is a little easier if you use a 1D array because you can cast the `struct ppm_pixel*` array to an `unsigned char*` array.
 
-[source]
+= Encode
+
+In the file, `encode.c`, write a program that reads in a PPM file (raw, or binary, format) and 
+asks the user for a message to embed within it. 
+
+[source,subs="quotes"]
 ----
-000000000000116d <main>:
---> 1171: 55                    push   %rbp
-    1172: 48 89 e5              mov    %rsp,%rbp
-    1175: 48 83 ec 10           sub    $0x10,%rsp
-    1179: e8 cb ff ff ff        callq  1149 <assign>
-    117e: e8 da ff ff ff        callq  115d <adder>
-    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
-    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1189: 89 c6                 mov    %eax,%esi
-----
-
-[cols="1a,4a"]
-|===
-|
-[cols="1,1"]
-!===
-!Register ! Value
-!%eax ! 379
-!%edi ! 1
-!%rsp ! 0xe68
-!%rbp  ! 0x1578
-!%rip  ! 0x1171
-!===
-| 
-"Stack top"
-[cols="1,4"]
-!===
-!Address ! Stack value
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} +  ! 
-!0xe68  ! 
-!===
-|===
-
-2) What are the contents of registers and the stack after executing `mov %rsp, %rbp`?
-Please show the before and after state (cross out old values).
-
-[source]
-----
-000000000000116d <main>:
-    1171: 55                    push   %rbp
---> 1172: 48 89 e5              mov    %rsp,%rbp
-    1175: 48 83 ec 10           sub    $0x10,%rsp
-    1179: e8 cb ff ff ff        callq  1149 <assign>
-    117e: e8 da ff ff ff        callq  115d <adder>
-    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
-    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1189: 89 c6                 mov    %eax,%esi
+$ **make encode**
+gcc -g -Wall -Wvla -Werror encode.c read_ppm.c -o encode
+$ **./encode feep-raw.ppm**
+Reading feep-raw.ppm with width 4 and height 4
+Max number of characters in the image: 5
+Enter a phrase: **lol**
+Writing file feep-raw-encoded.ppm
 ----
 
-[cols="1a,4a"]
-|===
-|
-[cols="1,1"]
-!===
-!Register ! Value
-!%eax ! 
-!%edi ! 
-!%rsp ! 
-!%rbp  ! 
-!%rip  ! 
-!===
-| 
-"Stack top"
-[cols="1,4"]
-!===
-!Address ! Stack value
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} +  ! 
-!0xe68  ! 
-!===
-|===
+Requirements/Hints:
 
-3) What is the state of registers and the stack after executing `sub $0x10, %rsp`?
-Please show the before and after state (cross out old values).
-
-[source]
-----
-000000000000116d <main>:
-    1171: 55                    push   %rbp
-    1172: 48 89 e5              mov    %rsp,%rbp
---> 1175: 48 83 ec 10           sub    $0x10,%rsp
-    1179: e8 cb ff ff ff        callq  1149 <assign>
-    117e: e8 da ff ff ff        callq  115d <adder>
-    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
-    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1189: 89 c6                 mov    %eax,%esi
-----
-
-[cols="1a,4a"]
-|===
-|
-[cols="1,1"]
-!===
-!Register ! Value
-!%eax ! 
-!%edi ! 
-!%rsp ! 
-!%rbp  ! 
-!%rip  ! 
-!===
-| 
-"Stack top"
-[cols="1,4"]
-!===
-!Address ! Stack value
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} +  ! 
-!0xe68  ! 
-!===
-|===
-
-4) What is the state of registers and the stack after executing `callq 0x1149 <assign>`?
-Please show the before and after state (cross out old values).
-
-[source]
-----
-000000000000116d <main>:
-    1171: 55                    push   %rbp
-    1172: 48 89 e5              mov    %rsp,%rbp
-    1175: 48 83 ec 10           sub    $0x10,%rsp
---> 1179: e8 cb ff ff ff        callq  1149 <assign>
-    117e: e8 da ff ff ff        callq  115d <adder>
-    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
-    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1189: 89 c6                 mov    %eax,%esi
-----
-
-[cols="1a,4a"]
-|===
-|
-[cols="1,1"]
-!===
-!Register ! Value
-!%eax ! 
-!%edi ! 
-!%rsp ! 
-!%rbp  ! 
-!%rip  ! 
-!===
-| 
-"Stack top"
-[cols="1,4"]
-!===
-!Address ! Stack value
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} +  ! 
-!0xe68  ! 
-!===
-|===
-
-5) Skipping ahead, what is the state of registers and the stack when the program executes `pop %rbp`?
-What two changes occur during `pop`?
-Please show the before and after state (cross out old values).
-
-[source]
-----
-0000000000001149 <assign>:
-    114d: 55                    push   %rbp
-    114e: 48 89 e5              mov    %rsp,%rbp
-    1151: c7 45 fc 28 00 00 00  movl   $0x28,-0x4(%rbp)
-    1158: 8b 45 fc              mov    -0x4(%rbp),%eax
---> 115b: 5d                    pop    %rbp
-    115c: c3                    retq
-----
-
-[cols="1a,4a"]
-|===
-|
-[cols="1,1"]
-!===
-!Register ! Value
-!%eax ! 
-!%edi ! 
-!%rsp ! 
-!%rbp  ! 
-!%rip  ! 
-!===
-| 
-"Stack top"
-[cols="1,4"]
-!===
-!Address ! Stack value
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} +  ! 
-!0xe68  ! 
-!===
-|===
-
-6) What is the state of registers and the stack after executing `retq`?
-Please show the before and after state (cross out old values).
-
-[source]
-----
-0000000000001149 <assign>:
-    114d: 55                    push   %rbp
-    114e: 48 89 e5              mov    %rsp,%rbp
-    1151: c7 45 fc 28 00 00 00  movl   $0x28,-0x4(%rbp)
-    1158: 8b 45 fc              mov    -0x4(%rbp),%eax
-    115b: 5d                    pop    %rbp
---> 115c: c3                    retq
-----
-
-[cols="1a,4a"]
-|===
-|
-[cols="1,1"]
-!===
-!Register ! Value
-!%eax ! 
-!%edi ! 
-!%rsp ! 
-!%rbp  ! 
-!%rip  ! 
-!===
-| 
-"Stack top"
-[cols="1,4"]
-!===
-!Address ! Stack value
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} +  ! 
-!0xe68  ! 
-!===
-|===
-
-7) Skipping ahead, what are the state of registers and the stack when executing `retq` in adder?
-Please show the before and after state (cross out old values).
-
-[source]
-----
-000000000000115d <adder>:
-    1161: 55                    push   %rbp
-    1162: 48 89 e5              mov    %rsp,%rbp
-    1165: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1168: 83 c0 02              add    $0x2,%eax
-    116b: 5d                    pop    %rbp
---> 116c: c3                    retq
-----
-
-[cols="1a,4a"]
-|===
-|
-[cols="1,1"]
-!===
-!Register ! Value
-!%eax ! 
-!%edi ! 
-!%rsp ! 
-!%rbp  ! 
-!%rip  ! 
-!===
-| 
-"Stack top"
-[cols="1,4"]
-!===
-!Address ! Stack value
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} + ! 
-!{nbsp} +  ! 
-!0xe68  ! 
-!===
-|===
-
-8) Consider the call the printf, `callq 1050 <printf@plt>`. The previous lines place the first 
-argument to printf into `%rdi`. Assume this contains "x is %d\n". The second argument will be 
-placed in `%esi`. What value will %esi containin?
-
-[source]
-----
-000000000000116d <main>:
-    1171: 55                    push   %rbp
-    1172: 48 89 e5              mov    %rsp,%rbp
-    1175: 48 83 ec 10           sub    $0x10,%rsp
-    1179: e8 cb ff ff ff        callq  1149 <assign>
-    117e: e8 da ff ff ff        callq  115d <adder>
-    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
-    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1189: 89 c6                 mov    %eax,%esi
-    118b: 48 8d 3d 72 0e 00 00  lea    0xe72(%rip),%rdi
-    1192: b8 00 00 00 00        mov    $0x0,%eax
-    1197: e8 b4 fe ff ff        callq  1050 <printf@plt>
-    119c: b8 00 00 00 00        mov    $0x0,%eax
-    11a1: c9                    leaveq
-    11a2: c3                    retq
-----
+* You should read the PPM filename as a command line argument
+* You should report the usage if no file is given to the program
+* You should report an error if the file cannot be read
+* You should output a new file based on the input name. For example, if the input is `feep-raw.ppm`, the new file with the encoded message should be `feep-raw-encoded.ppm`.
+* Re-use your implementation of `read_ppm` from link:asst05.html[Assignment 05].
+* Output the size of the image along with the maximum number of characters it can store
+* For debugging, try printing out values in hex format, e.g. `printf("%02X", c);`
 
 = Submit your work
 
-This is a written assignment. Please submit a hard-copy in either Lecture or
-Lab, or submit to either Nina Fichera's office (Park 348) or Aline Normoyle's
-office (Park 200B). 
+Push you work to github to submit your work.
 
+[source]
+----
+$ cd A01
+$ git status
+$ git add *.c 
+$ git status
+$ git commit -m "assignment complete"
+$ git status
+$ git push
+$ git status
+----
+
+
+= Grading Rubric
+
+*Assignment rubrics*
+
+Grades are out of 4 points.
+
+* (1 points) bitmap
+** (0.1 points) style and header comment
+** (0.4 points) uses bitwise operators to display the image in ASCII
+** (0.5 points) no memory errors
+* (1 points) Decode
+** (0.1 points) style and header comment
+** (0.65 points) correct behavior
+** (0.75 points) no memory errors
+* (1.5 points) Encode
+** (0.1 points) style and header comment
+** (0.65 points) correct behavior
+** (0.75 points) no memory errors
+
+*Code rubrics*
+
+For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
+have good style.
+
+* Some credit lost for missing features or bugs, depending on severity of error
+* -5% for style errors. See the link:../codingstandard.html[class coding style] here.
+* -50% for memory errors
+* -100% for failure to checkin work to Github
+* -100% for failure to compile on linux using make

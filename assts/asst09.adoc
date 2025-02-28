@@ -1,19 +1,21 @@
 include::header.adoc[]
 
-:title: Assignment 9: Marching threads
+:title: Assignment 8: Trust the Process
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
 :stem: latexmath
-:ASST: A09
+:ASST: A08
 
 = {title}
 
-*Due Friday, March 28th, before midnight*
+**Due Friday, March 21, at midnight**
 
 The goals for this assignment are:
 
-* Implement multi-thread algorithms using the pthread library
+* Gain experience working with `fork()`.
+* Use OS system calls in your C program. 
+* Implement a multi-process program
 
 [discrete]
 == Update your repository
@@ -30,115 +32,57 @@ Your repository should now contain a new folder named `{ASST}`.
 
 The `fetch` and `merge` commands update your repository with any changes from the original.
 
-
 :sectnums:
 
-= Threaded Renderer 
+= Warm-up
 
-In the file, `render.c`, compute a program that outputs a PPM image using a procedural 
-algorithm. You have been given basecode that initializes the following values from command line arguments. This code uses the link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt function].
+In the file, `warmup.c`, implement a program that spawns processes according to the following diagram.
 
-Arguments:
+image::processes.png[]
 
-* `-s <size>` the image width and height
-* `-l <xmin>` the leftmost coordinate, e.g. minimum x value
-* `-r <xmax>` the rightmost coordinate, e.g. maximum x value
-* `-t <ymin>` the topmost coordinate, e.g. minimum y value
-* `-b <ymax>` the bottommost coordinate, e.g. maximum y value
-
-When you run your program, you should get the output such as the following
-
-[source,subs="quotes"]
+[source, subs="quotes"]
 ----
-$ **make render**
-$ **./render**
-Generating mandelbrot with size 480x480
-  X range = [-2.0000,0.4700]
-  Y range = [-1.1200,1.1200]
-Computed mandelbrot set (480x480) in 0.323261 seconds
-Writing file: render-480-1649001071.ppm
+$ **make warmup**
+gcc -g -Wall -Wvla -Werror warmup.c -o warmup
+$ **./warmup**
+17300] A0
+17300] B0
+17301] B1
+17301] Bye
+17300] C0
+17300] Bye
+17302] C1
+17302] Bye
 ----
 
-Requirements and hints:
+Requirements:
 
-* You should re-use your PPM functions from previous assignments. 
-* Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
-* You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. 
-* Your output filename should have the format `render-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
-* (Optional) Set a random seed to ensure that colors are randomized (if you randomize colors)
+* Your program should print the messages as shown above.
+* Your program should use fork() to spawn processes.
+* Call `getpid()` to show the process ids for each print message.
 
-//image::mandelbrot-480-subregion.png[]
+= Grep
 
-== Background: Ray Marching
+In the file, `grep.c`, implement a program that implements grep using multiple processes.
 
-[source]
+NOTE: You can print with colors to the console using ANSI escape sequences (see below). 
+For example, `printf(ANSI_COLOR_GREEN "Green Text" ANSI_COLOR_RESET);` will print green text. link:https://azrael.digipen.edu/~mmead/www/mg/ansicolors/index.html[Here is a good guide!]
+
+[code]
 ----
-for each row in the image
-   for each col in the image
-      xfrac = row / image_size
-      yfrac = col / image_size
-      x0 = xmin + xfrac * (xmax - xmin)
-      y0 = ymin + yfrac * (ymax - ymin)
-
-      write color to image at location (row,col)    
+// Helpful macros for working with color
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
 ----
-
-= Threaded Render
-
-Implement a multi-threaded version of the image you computed for the previous question.
-
-In the file, `thread_render.c`, compute a program that outputs a PPM image using the same 
-algorithm as before.  You have been given basecode that initializes the following values from command line arguments. This code uses the link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt function].
-
-Arguments:
-
-* `-s <size>` the image width and height
-* `-l <xmin>` the leftmost coordinate, e.g. minimum x value
-* `-r <xmax>` the rightmost coordinate, e.g. maximum x value
-* `-t <ymin>` the topmost coordinate, e.g. minimum y value
-* `-b <ymax>` the bottommost coordinate, e.g. maximum y value
-
-When you run your program, you should get the output such as the following
-
-[source,subs="quotes"]
-----
-$ **make thread_render**
-$ **./thread_render**
-Generating render with size 480x480
-  X range = [-2.0000,0.4700]
-  Y range = [-1.1200,1.1200]
-Thread 140392055985920) sub-image block: cols (0, 240) to rows (0,240)
-Thread 140392047593216) sub-image block: cols (240, 480) to rows (0,240)
-Thread 140392039200512) sub-image block: cols (0, 240) to rows (240,480)
-Thread 140392030807808) sub-image block: cols (240, 480) to rows (240,480)
-Thread 140392055985920) finished
-Thread 140392047593216) finished
-Thread 140392039200512) finished
-Thread 140392030807808) finished
-Computed render (480x480) in 0.143906 seconds
-Writing file: render-480-1650116924.ppm
-----
-
-Requirements and hints:
-
-* You should re-use your PPM functions from previous assignments. 
-* Create four threads. Each thread should process a quadrant of the image.
-* Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.
-* Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
-* Do not declare global variables! Use parameters to send data to each thread's start_routine.
-* You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. The performance should be comparable to your multi_mandelbrot version from A09.
-* Your output filename should have the format `render-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
-
-= Performance comparison
-
-Compare the performance between the single and threaded rendered versions. Fill in `Readme.adoc` 
-with your hardware specifications and runtime statistics. 
 
 = Submit your work
 
-Submit both your code and *images*.
-
-1) Push your code work to github
+Push your code to github to submit your work
 
 [source]
 ----
@@ -151,30 +95,35 @@ $ git push
 $ git status
 ----
 
-
 = Grading Rubric
 
 *Assignment rubrics*
 
 Grades are out of 4 points.
 
-* (1 points) Render
+* (1 points) Warmup
 ** (0.1 points) style and header comment
-** (0.1 points) Supports given command line arguments
-** (0.1 points) Generates image with correct filename
-** (0.1 points) Allocate an array of pixels using malloc
-** (0.1 points) Correct output 
+** (0.4 points) prints correct messages, uses `fork()` and `getpid()`
 ** (0.5 points) no memory errors
-* (2 points) Threaded Render
-** (0.1 points) style and header comment
-** (0.1 points) Supports given command line arguments
-** (0.1 points) Generates image with correct filename
-** (0.1 points) Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.
-** (0.1 points) Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
-** (0.1 points) Do not declare global variables! Use parameters to send data to each thread's start_routine.
-** (0.2 points) Correct output 
-** (1 points) no memory errors
-* (1 points) Comparison of runtime between the single and threaded versions
+* (1 points) Grep
+* (2 points) Spellchecker
+
+NOTE: When using `readline()`, valgrind will report that some of your memory is
+_still reachable_. This memory is not leaked. It hasn't been cleaned up yet from 
+`readline()`'s internal memory. For example, output such as the following is ok
+[code]
+----
+==3504== HEAP SUMMARY:
+==3504==     in use at exit: 204,143 bytes in 221 blocks
+==3504==   total heap usage: 453 allocs, 232 frees, 244,790 bytes allocated
+==3504==
+==3504== LEAK SUMMARY:
+==3504==    definitely lost: 0 bytes in 0 blocks
+==3504==    indirectly lost: 0 bytes in 0 blocks
+==3504==      possibly lost: 0 bytes in 0 blocks
+==3504==    still reachable: 204,143 bytes in 221 blocks
+==3504==         suppressed: 0 bytes in 0 blocks
+---- 
 
 *Code rubrics*
 

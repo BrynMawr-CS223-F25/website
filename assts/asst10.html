@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Assignment 10: Mutually Exclusive</title>
+<title>Assignment 10: Marching threads</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,19 +14,25 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_10_mutually_exclusive">Assignment 10: Mutually Exclusive</a></li>
-<li><a href="#_fractal_flame">1. Fractal Flame</a></li>
-<li><a href="#_submit_your_work">2. Submit your work</a></li>
-<li><a href="#_grading_rubric">3. Grading Rubric</a></li>
+<li><a href="#_assignment_10_marching_threads">Assignment 10: Marching threads</a></li>
+<li><a href="#_threaded_renderer">1. Threaded Renderer</a>
+<ul class="sectlevel2">
+<li><a href="#_background_ray_marching">1.1. Background: Ray Marching</a></li>
+</ul>
+</li>
+<li><a href="#_threaded_render">2. Threaded Render</a></li>
+<li><a href="#_performance_comparison">3. Performance comparison</a></li>
+<li><a href="#_submit_your_work">4. Submit your work</a></li>
+<li><a href="#_grading_rubric">5. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_10_mutually_exclusive">Assignment 10: Mutually Exclusive</h2>
+<h2 id="_assignment_10_marching_threads">Assignment 10: Marching threads</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, April 4th, before midnight</strong></p>
+<p><strong>Due Friday, March 28th, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -35,9 +41,6 @@
 <ul>
 <li>
 <p>Implement multi-thread algorithms using the pthread library</p>
-</li>
-<li>
-<p>Use mutex and barrier to coordinate between different threads</p>
 </li>
 </ul>
 </div>
@@ -70,113 +73,46 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_fractal_flame">1. Fractal Flame</h2>
+<h2 id="_threaded_renderer">1. Threaded Renderer</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the file, <code>fractal.c</code>, compute a program that outputs a PPM image of a fractal computed
-with the algorithm below.</p>
+<p>In the file, <code>render.c</code>, compute a program that outputs a PPM image using a procedural
+algorithm. You have been given basecode that initializes the following values from command line arguments. This code uses the <a href="https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/">getopt function</a>.</p>
 </div>
 <div class="paragraph">
-<p>Computing the fractal requires three steps:</p>
+<p>Arguments:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>First, determine counts for the number of times each point visits a pixel, using the given formula</p>
+<p><code>-s &lt;size&gt;</code> the image width and height</p>
 </li>
 <li>
-<p>Second, you must turn the counts from step 2 into a color. The final colors should be written to a 2D array of ppm_pixel (either flat or an array of arrays) and then written.</p>
+<p><code>-l &lt;xmin&gt;</code> the leftmost coordinate, e.g. minimum x value</p>
+</li>
+<li>
+<p><code>-r &lt;xmax&gt;</code> the rightmost coordinate, e.g. maximum x value</p>
+</li>
+<li>
+<p><code>-t &lt;ymin&gt;</code> the topmost coordinate, e.g. minimum y value</p>
+</li>
+<li>
+<p><code>-b &lt;ymax&gt;</code> the bottommost coordinate, e.g. maximum y value</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Each of the above steps can be parallelized using threads. The second step will require a mutex to ensure that the counts are set correctly. Below are suggested algorithms for
-computing each step.</p>
-</div>
-<div class="paragraph">
-<p><strong>Step 1: Compute visited counts</strong></p>
+<p>When you run your program, you should get the output such as the following</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>for each row in the image
-   for each col in the image
-      if (row,col) belongs to the mandelbrot set, continue
-
-      xfrac = row / image_size
-      yfrac = col / image_size
-      x0 = xmin + xfrac * (xmax - xmin)
-      y0 = ymin + yfrac * (ymax - ymin)
-
-      x = 0
-      y = 0
-      while (x*x + y*y &lt; 2*2)
-
-        yrow = round(size * (y - ymin)/(ymax - ymin))
-        xcol = round(size * (x - xmin)/(xmax - xmin))
-        if (yrow &lt; 0 || yrow &gt;= size) continue; // out of range
-        if (xcol &lt; 0 || xcol &gt;= size) continue; // out of range
-
-        increment count at (yrow, xcol)
-        update max count</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Step 3: Compute colors</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>gamma = 0.681
-factor = 1.0/gamma
-for each row in the image
-   for each col in the image
-      value = 0
-
-      if counts at (row,col) are greater than zero
-        value = log(counts[row][col]) / log(max_count)
-        value = pow(value, factor)
-
-      color.red = value * 255
-      color.green = value * 255
-      color.blue = value * 255
-
-      write color to image at location (row,col)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Each thread should compute the three steps on a quadrant of the image. Below
-is a suggested outline for your thread&#8217;s start routine.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>void * start(void* data) {
-
-  // perform step 1
-
-  // use a thread barrier to wait for all threads to finish steps 1 and 2
-  // perform step 2
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>./fractal</strong>
-Generating fractal with size 480x480
-  Num processes = 4
-  X range = [-2.5000,1.0000]
+<pre class="highlight"><code>$ <strong>make render</strong>
+$ <strong>./render</strong>
+Generating mandelbrot with size 480x480
+  X range = [-2.0000,0.4700]
   Y range = [-1.1200,1.1200]
-  X range = [-2.0000,1.0000]
-  Y range = [-1.1200,1.1200]
-Thread 140583141971712) sub-image block: cols (0, 240) to rows (0,240)
-Thread 140583133579008) sub-image block: cols (240, 480) to rows (0,240)
-Thread 140583125186304) sub-image block: cols (0, 240) to rows (240,480)
-Thread 140583116793600) sub-image block: cols (240, 480) to rows (240,480)
-Thread 140583141971712) finished
-Thread 140583133579008) finished
-Thread 140583125186304) finished
-Thread 140583116793600) finished
-Computed fractal set (480x480) in 0.123721 seconds
-Writing file: fractal-480-1650141479.ppm</code></pre>
+Computed mandelbrot set (480x480) in 0.323261 seconds
+Writing file: render-480-1649001071.ppm</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -185,32 +121,137 @@ Writing file: fractal-480-1650141479.ppm</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Each thread should run all steps on a quadrant of the image.</p>
+<p>You should re-use your PPM functions from previous assignments.</p>
 </li>
 <li>
-<p>You will need a <code>pthread_barrier_t</code> to wait for all counts to be computed before computing the colors</p>
-</li>
-<li>
-<p>Use mutex to compute the counts</p>
+<p>Allocate an array of pixels using malloc and then save the final image using <code>write_ppm</code>.</p>
 </li>
 <li>
 <p>You should output the number of seconds needed to compute the image. Use this <a href="https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c">class example, matrix.c</a> for an example.</p>
 </li>
 <li>
-<p>Your output filename should have the format <code>fractal-&lt;size&gt;-&lt;timestamp&gt;.ppm</code>. The timestamp can be obtained by calling <code>time(0)</code>.</p>
+<p>Your output filename should have the format <code>render-&lt;size&gt;-&lt;timestamp&gt;.ppm</code>. The timestamp can be obtained by calling <code>time(0)</code>.</p>
 </li>
 <li>
-<p>You may use global variables for this program.</p>
+<p>(Optional) Set a random seed to ensure that colors are randomized (if you randomize colors)</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_background_ray_marching">1.1. Background: Ray Marching</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>for each row in the image
+   for each col in the image
+      xfrac = row / image_size
+      yfrac = col / image_size
+      x0 = xmin + xfrac * (xmax - xmin)
+      y0 = ymin + yfrac * (ymax - ymin)
+
+      write color to image at location (row,col)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_threaded_render">2. Threaded Render</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Implement a multi-threaded version of the image you computed for the previous question.</p>
+</div>
+<div class="paragraph">
+<p>In the file, <code>thread_render.c</code>, compute a program that outputs a PPM image using the same
+algorithm as before.  You have been given basecode that initializes the following values from command line arguments. This code uses the <a href="https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/">getopt function</a>.</p>
+</div>
+<div class="paragraph">
+<p>Arguments:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>-s &lt;size&gt;</code> the image width and height</p>
+</li>
+<li>
+<p><code>-l &lt;xmin&gt;</code> the leftmost coordinate, e.g. minimum x value</p>
+</li>
+<li>
+<p><code>-r &lt;xmax&gt;</code> the rightmost coordinate, e.g. maximum x value</p>
+</li>
+<li>
+<p><code>-t &lt;ymin&gt;</code> the topmost coordinate, e.g. minimum y value</p>
+</li>
+<li>
+<p><code>-b &lt;ymax&gt;</code> the bottommost coordinate, e.g. maximum y value</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When you run your program, you should get the output such as the following</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make thread_render</strong>
+$ <strong>./thread_render</strong>
+Generating render with size 480x480
+  X range = [-2.0000,0.4700]
+  Y range = [-1.1200,1.1200]
+Thread 140392055985920) sub-image block: cols (0, 240) to rows (0,240)
+Thread 140392047593216) sub-image block: cols (240, 480) to rows (0,240)
+Thread 140392039200512) sub-image block: cols (0, 240) to rows (240,480)
+Thread 140392030807808) sub-image block: cols (240, 480) to rows (240,480)
+Thread 140392055985920) finished
+Thread 140392047593216) finished
+Thread 140392039200512) finished
+Thread 140392030807808) finished
+Computed render (480x480) in 0.143906 seconds
+Writing file: render-480-1650116924.ppm</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements and hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You should re-use your PPM functions from previous assignments.</p>
+</li>
+<li>
+<p>Create four threads. Each thread should process a quadrant of the image.</p>
+</li>
+<li>
+<p>Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.</p>
+</li>
+<li>
+<p>Allocate an array of pixels using malloc and then save the final image using <code>write_ppm</code>.</p>
+</li>
+<li>
+<p>Do not declare global variables! Use parameters to send data to each thread&#8217;s start_routine.</p>
+</li>
+<li>
+<p>You should output the number of seconds needed to compute the image. Use this <a href="https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c">class example, matrix.c</a> for an example. The performance should be comparable to your multi_mandelbrot version from A09.</p>
+</li>
+<li>
+<p>Your output filename should have the format <code>render-&lt;size&gt;-&lt;timestamp&gt;.ppm</code>. The timestamp can be obtained by calling <code>time(0)</code>.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_submit_your_work">2. Submit your work</h2>
+<h2 id="_performance_comparison">3. Performance comparison</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Submit both your code and images.</p>
+<p>Compare the performance between the single and threaded rendered versions. Fill in <code>Readme.adoc</code>
+with your hardware specifications and runtime statistics.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_submit_your_work">4. Submit your work</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Submit both your code and <strong>images</strong>.</p>
 </div>
 <div class="paragraph">
 <p>1) Push your code work to github</p>
@@ -229,7 +270,7 @@ $ git status</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">3. Grading Rubric</h2>
+<h2 id="_grading_rubric">5. Grading Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
@@ -240,26 +281,63 @@ $ git status</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(4 points) Threaded Fractal</p>
+<p>(1 points) Render</p>
 <div class="ulist">
 <ul>
 <li>
-<p>(0.4 points) style and header comment</p>
+<p>(0.1 points) style and header comment</p>
 </li>
 <li>
-<p>(0.4 points) Generated image with correct filename</p>
+<p>(0.1 points) Supports given command line arguments</p>
 </li>
 <li>
-<p>(0.2 points) Supports given command line arguments</p>
+<p>(0.1 points) Generates image with correct filename</p>
 </li>
 <li>
-<p>(1.0 points) Correct output, thread coordination, and output performance statistics</p>
+<p>(0.1 points) Allocate an array of pixels using malloc</p>
 </li>
 <li>
-<p>(2.0 points) no memory errors</p>
+<p>(0.1 points) Correct output</p>
+</li>
+<li>
+<p>(0.5 points) no memory errors</p>
 </li>
 </ul>
 </div>
+</li>
+<li>
+<p>(2 points) Threaded Render</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.1 points) style and header comment</p>
+</li>
+<li>
+<p>(0.1 points) Supports given command line arguments</p>
+</li>
+<li>
+<p>(0.1 points) Generates image with correct filename</p>
+</li>
+<li>
+<p>(0.1 points) Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.</p>
+</li>
+<li>
+<p>(0.1 points) Allocate an array of pixels using malloc and then save the final image using <code>write_ppm</code>.</p>
+</li>
+<li>
+<p>(0.1 points) Do not declare global variables! Use parameters to send data to each thread&#8217;s start_routine.</p>
+</li>
+<li>
+<p>(0.2 points) Correct output</p>
+</li>
+<li>
+<p>(1 points) no memory errors</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>(1 points) Comparison of runtime between the single and threaded versions</p>
 </li>
 </ul>
 </div>
@@ -294,7 +372,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-02-05 09:55:14 -0500
+Last updated 2025-02-28 10:35:31 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">

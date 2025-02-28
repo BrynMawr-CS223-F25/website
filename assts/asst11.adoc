@@ -1,6 +1,6 @@
 include::header.adoc[]
 
-:title: Assignment 11: Where others fear to thread
+:title: Assignment 11: Mutually Exclusive
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
@@ -9,20 +9,19 @@ include::header.adoc[]
 
 = {title}
 
-*Due Friday, April 18 before midnight (No late submissions accepted)*
+*Due Friday, April 4th, before midnight*
 
 The goals for this assignment are:
 
-* Implement multi-threaded algorithms using the pthread library
-* Implement a tree data structure
-* Work with OS system calls
+* Implement multi-thread algorithms using the pthread library
+* Use mutex and barrier to coordinate between different threads
 
 [discrete]
 == Update your repository
 
 Do a *fetch upstream* to obtain the basecode for this assignment. 
 
-Using the command line, make sure that you have the correct upstream repository and do a fetch upstream to get the basecode for this assignment.
+Using the command line
 
 * Open terminal and change your current directory to your assignment repository.
 * Run the command `git fetch upstream`
@@ -34,159 +33,115 @@ The `fetch` and `merge` commands update your repository with any changes from th
 
 :sectnums:
 
-= Grep
+= Fractal Flame
 
-This question implements a simplified version of the bash command `grep`. Grep searches a list of files 
-for a given keyword or expression. For example, the following command searches for the keyword `public` 
-in a list of source files. We use the `find` command to generate the list of source files to search.
+In the file, `fractal.c`, compute a program that outputs a PPM image of a fractal computed 
+with the algorithm below. 
 
-image::grep.png[width=500px]
+Computing the fractal requires three steps:
 
-NOTE: Make sure you include the backticks, e.g. `` ` ``. This adds the filenames found by `find` as command line arguments to `grep`.
+* First, determine counts for the number of times each point visits a pixel, using the given formula
+* Second, you must turn the counts from step 2 into a color. The final colors should be written to a 2D array of ppm_pixel (either flat or an array of arrays) and then written. 
 
-In the file, `grep.c`, implement a program that uses N threads to search for a keyword 
-in a set of files. 
+Each of the above steps can be parallelized using threads. The second step will require a mutex to ensure that the counts are set correctly. Below are suggested algorithms for 
+computing each step. 
 
-[source, subs="quotes"]
+**Step 1: Compute visited counts**
+[source]
 ----
-$ **make grep**
-gcc -g -Wall -Wvla -Werror grep.c -o grep -lpthreads
-$ **./grep**
-usage: ./grep ``<``NumThreads``>`` ``<``Keyword``>`` ``<``Files``>``
-----
+for each row in the image
+   for each col in the image
+      if (row,col) belongs to the mandelbrot set, continue
 
-// Backticks can be written with `` ` ``
-image::thread-grep.png[width=500px]
+      xfrac = row / image_size
+      yfrac = col / image_size
+      x0 = xmin + xfrac * (xmax - xmin)
+      y0 = ymin + yfrac * (ymax - ymin)
 
-Requirements:
+      x = 0
+      y = 0
+      while (x*x + y*y < 2*2)
 
-* Your program should take the number of threads, keyword, and a list of files as command line arguments
-* Subdivide the files among the N threads. Note that the number of files may not divide evenly between threads.
-* Use a mutex to ensure that threads do not interrupt each others printing
-* Print the totals and sub-division of files similarly to the output above
-* Use the `fgets` to process the lines in each file
-* Use the function `strstr` defined in `string.h` to search lines of text for the keyword. link:https://en.cppreference.com/w/c/string/byte/strstr[Documentation is here]
+        yrow = round(size * (y - ymin)/(ymax - ymin))
+        xcol = round(size * (x - xmin)/(xmax - xmin))
+        if (yrow < 0 || yrow >= size) continue; // out of range
+        if (xcol < 0 || xcol >= size) continue; // out of range
 
-= Code Analysis
-
-This question has two parts. In the first part, you will implement a search tree with string keys. 
-In the second part, you will use the tree to store the source files from a directory, along with their 
-dependency information. Similarly to your `grep` implementation, you will build the tree using multiple 
-threads.
-
-== Tree
-
-In the file, `tree.c`, implement a binary search tree. Do not change the header
-`tree.h`, nor the function declarations in `tree.c`. But you can add functions to `tree.c`! 
-We recommend using the book
-"Data Structures and Algorithm Analysis in C" by Mark Allen Weiss. See the
-link:../index.html[course webpage for a link].
-
-[code,subs="quotes"]
-----
-$ **make ./tree_tests**
-gcc -g -Wall -Wvla -Werror -Wno-unused-variable -Wno-unused-but-set-variable tree_tests.c tree.c -o tree_tests -lpthread
-$ **./tree_tests** 
-Running tests...
-test 1: insert for empty tree: PASSED
-test 2: name set correctly: PASSED
-test 3: left is null: PASSED
-test 4: right is null: PASSED
-test 5: name set correctly: PASSED
-test 6: right is null: PASSED
-test 7: name set correctly: PASSED
-test 8: item not in tree: PASSED
-test 9: item in tree: PASSED
-test 10: found correct object: PASSED
-M
- l:A
- r:X
-  l:P
-A
-M
-P
-X
+        increment count at (yrow, xcol) 
+        update max count
 ----
 
-Requirements:
-
-* You must not modify the basecode for `tree.h` or `tree.c`, except to add functions to `tree.c`
-* Your output should match the above and pass all tests
-
-== Dependencies
-
-A _dependency_ is a general software term for any software required by another. In this question, 
-we will store files in a binary search tree so we can list their file dependencies, 
-as determined by `#include` statements. For example, 
-the file "Animal.h" depends on "Locomotion.h". 
-
-//We can represent such dependencies using a graph, where 
-//nodes represent files and directed edges represent dependencies. With this representation, a node 
-//with no outgoing edges has no dependencies.  
-
-In the file, `dependency.c`, implement a program that uses N threads to build a binary search tree of a 
-given set of files. After building the tree, the program should give the user a prompt where they 
-can list the processed files in alphabetical order and then query the dependencies of the file by 
-giving the filename.  
-
-//The nodes of the binary search tree should also contain a list of dependencies that 
-//point to other nodes in the tree. This data structure should make it easy to look up a file by name and 
-//then trace through the dependencies between files.
-
-[code, subs="quotes"]
+**Step 3: Compute colors**
+[source]
 ----
-$ **./dependency 3 `` ` ``find code -name "*.h" -o -name "*.cpp"`` ` ``**
-Processing 11 files
-Thread 0 processing 4 files (arguments 2 to 6)
-Thread 1 processing 4 files (arguments 6 to 10)
-Thread 2 processing 3 files (arguments 10 to 13)
-Elapsed time is 0.000496
-$ list
-code/Animal.h
-code/Bird.h
-code/Duck.h
-code/Fish.h
-code/Fly.h
-code/Locomotion.h
-code/Seal.h
-code/Swim.h
-code/Walk.h
-code/Whale.h
-code/Zoo.cpp
-$ code/Animal.cpp
-code/Animal.cpp not found
-$ code/Animal.h
-code/Animal.h has the following dependencies
-  string
-  vector
-  Locomotion.h
-$ code/Zoo.cpp
-code/Zoo.cpp has the following dependencies
-  Animal.h
-  Bird.h
-  Duck.h
-  Fish.h
-  Seal.h
-  Whale.h
-  Locomotion.h
-  Walk.h
-  Fly.h
-  Swim.h
-$ apple
-apple not found
-$ quit
+gamma = 0.681
+factor = 1.0/gamma
+for each row in the image
+   for each col in the image
+      value = 0
+
+      if counts at (row,col) are greater than zero
+        value = log(counts[row][col]) / log(max_count)
+        value = pow(value, factor)
+
+      color.red = value * 255
+      color.green = value * 255
+      color.blue = value * 255
+
+      write color to image at location (row,col)    
 ----
 
-Requirements:
+Each thread should compute the three steps on a quadrant of the image. Below 
+is a suggested outline for your thread's start routine.
 
-* Check that a file is valid before adding it to the tree
-* Support the commands: quit, list, <filename>
-* Use a mutex to avoid race conditions when setting up the tree
-* Your program should take the number of threads and a list of files as command line arguments
-* Subdivide the files among the N threads. Note that the number of files may not divide evenly between threads.
-* Use a mutex to ensure that threads do not have a race conditions when constructing the tree
-* Use `strstr` and `fgets` to parse the source file and find lines containing `#include`
-* Strip the filenames from the `#include` lines when printing dependencies.
+[source]
+----
+void * start(void* data) {
+
+  // perform step 1
+
+  // use a thread barrier to wait for all threads to finish steps 1 and 2
+  // perform step 2
+
+}
+----
+
+
+
+[source,subs="quotes"]
+----
+$ **./fractal**
+Generating fractal with size 480x480
+  Num processes = 4
+  X range = [-2.5000,1.0000]
+  Y range = [-1.1200,1.1200]
+  X range = [-2.0000,1.0000]
+  Y range = [-1.1200,1.1200]
+Thread 140583141971712) sub-image block: cols (0, 240) to rows (0,240)
+Thread 140583133579008) sub-image block: cols (240, 480) to rows (0,240)
+Thread 140583125186304) sub-image block: cols (0, 240) to rows (240,480)
+Thread 140583116793600) sub-image block: cols (240, 480) to rows (240,480)
+Thread 140583141971712) finished
+Thread 140583133579008) finished
+Thread 140583125186304) finished
+Thread 140583116793600) finished
+Computed fractal set (480x480) in 0.123721 seconds
+Writing file: fractal-480-1650141479.ppm
+----
+
+//image:buddhabrot-2000-1650142988.png[height=400]
+
+Requirements and hints:
+
+* Each thread should run all steps on a quadrant of the image. 
+* You will need a `pthread_barrier_t` to wait for all counts to be computed before computing the colors
+* Use mutex to compute the counts
+* You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. 
+* Your output filename should have the format `fractal-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
+* You may use global variables for this program. 
+
+//image::buddhabrot-Small.png[height=400]
+//NOTE: Other chaotic sets can be visualized in the same way as the Buddhabrot. To see more, read about link:https://flam3.com/flame_draves.pdf[Fractal Frames].
 
 = Submit your work
 
@@ -205,29 +160,18 @@ $ git push
 $ git status
 ----
 
-
 = Grading Rubric
 
 *Assignment rubrics*
 
 Grades are out of 4 points.
 
-* (1.5 points) Grep
-** (0.15 points) style and header comment
-** (0.1 points) Correct command line arguments: number of threads, keyword, and a list of files
-** (0.2 points) Subdivide the files among the N threads
-** (0.3 points) Correct output, uses mutex
-** (0.75 points) no memory errors
-* (1.5 points) Tree
-** (0.15 points) style and header comment
-** (0.6 points) implements all functions, passes all tests and does not modify basecode
-** (0.75 points) no memory errors
-* (1 points) Dependency
-** (0.1 points) style and header comment
-** (0.1 points) Correct command line arguments: number of threads, keyword, and a list of files
-** (0.1 points) Subdivide the files among the N threads, builds tree using multiple threads using mutex
-** (0.2 points) Correct behavior
-** (0.5 points) no memory errors
+* (4 points) Threaded Fractal
+** (0.4 points) style and header comment
+** (0.4 points) Generated image with correct filename
+** (0.2 points) Supports given command line arguments
+** (1.0 points) Correct output, thread coordination, and output performance statistics
+** (2.0 points) no memory errors
 
 *Code rubrics*
 
