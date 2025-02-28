@@ -18,7 +18,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 * Assignment 06 is due Feb 28: link:assts/asst06.html[Assignment 06]: Watch where you point II
 * Assignment 07 is due March 6: link:assts/asst07.html[Assignment 07]: Secret Messages
 * Lab March 2: Code Jam 03
-* Quiz March 4: link:studyguide3.html[Study Guide]
+* Quiz March 6: link:studyguide3.html[Study Guide]
 
 == Course Info
 

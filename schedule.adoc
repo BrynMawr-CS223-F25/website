@@ -78,7 +78,7 @@
 * Read: link:https://diveintosystems.org/singlepage/#_x64_assembly_chapter[Chapter 7 (7.1-7.3,7.5,7.10), 10] 
 * link:assts/asst07.html[Assignment 07]: Due Friday March 7 
 * Lab March 4: **Code Jam 03*
-* Class **Quiz 03**
+* Class March 6 **Quiz 03**
 
 //-----------------------------
 |8
