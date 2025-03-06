@@ -536,7 +536,7 @@ you can use the same techniques to
 {nbsp} +
 {nbsp} +
 
-3) Give the buffer contents that can be used to overwrite the stack and jump to the funtion, `winGame`. 
+3) Give the buffer contents that can be used to overwrite the stack and jump to the funtion, `endGame`. 
 {nbsp} +
 {nbsp} +
 {nbsp} +
