@@ -16,9 +16,9 @@
 <ul class="sectlevel1">
 <li><a href="#_assignment_8_some_assembly_required">Assignment 8: Some Assembly Required</a></li>
 <li><a href="#_operand_practice">1. Operand practice</a></li>
-<li><a href="#_hackers">2. Hackers</a></li>
-<li><a href="#_the_answer_is_42">3. The answer is 42</a></li>
-<li><a href="#_submit_your_work">4. Submit your work</a></li>
+<li><a href="#_the_answer_is_42">2. The answer is 42</a></li>
+<li><a href="#_submit_your_work">3. Submit your work</a></li>
+<li><a href="#_extra_credit_0_3_hackers">4. Extra Credit (0.3): Hackers</a></li>
 </ul>
 </div>
 </div>
@@ -27,7 +27,7 @@
 <h2 id="_assignment_8_some_assembly_required">Assignment 8: Some Assembly Required</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due (Hardcopy) Thursday, March 6th</strong></p>
+<p><strong>Due (Hardcopy) Thursday, March 20th</strong></p>
 </div>
 <div class="paragraph">
 <p><strong>This is a written assignment, not a coding assignment!</strong></p>
@@ -201,90 +201,7 @@ value for each of the given operands.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_hackers">2. Hackers</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In class, we looked at how we can cheat at a guessing game by overriding the
-return address of a function to jump to the <code>endGame</code> function.  In this question, we
-will analyze the binary executable using GDB to extract the secret codes explicitly.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://diveintosystems.org/book/C7-x86_64/_attachments/secretx86-64.tar.gz">Download the binary</a></p>
-</li>
-<li>
-<p><a href="https://diveintosystems.org/book/C3-C_debug/gdb_assembly.html#_debugging_assembly_code">Debugging assembly code</a></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>1) What GDB command can we use to set a breakpoint right after the function <code>getSecretCode</code> returns?
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br></p>
-</div>
-<div class="paragraph">
-<p>2) What register contains the return value from <code>getSecretCode</code>?
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br></p>
-</div>
-<div class="paragraph">
-<p>3) What GDB command can you use to inspect the value stored in the register containing the return value?
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br></p>
-</div>
-<div class="paragraph">
-<p>4) What is the secret number?
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br></p>
-</div>
-<div class="paragraph">
-<p>5) Place a breakpoint in <code>calculateValue</code>. How many times is <code>calculateValue</code> called by the program?
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br></p>
-</div>
-<div class="paragraph">
-<p>6) What is <code>calculateValue</code> doing? From the given source, we can see it takes a string. What is the return value?
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br></p>
-</div>
-<div class="paragraph">
-<p>7) What is the secret string?
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_the_answer_is_42">3. The answer is 42</h2>
+<h2 id="_the_answer_is_42">2. The answer is 42</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Recall the following example from class and
@@ -1132,7 +1049,7 @@ placed in <code>%esi</code>. What value will %esi containin?</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_submit_your_work">4. Submit your work</h2>
+<h2 id="_submit_your_work">3. Submit your work</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This is a written assignment. Please submit a hard-copy in either Lecture or
@@ -1141,10 +1058,66 @@ office (Park 200B).</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_extra_credit_0_3_hackers">4. Extra Credit (0.3): Hackers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In class, we looked at how we can cheat at a guessing game by overriding the
+return address of a function to jump to the <code>endGame</code> function.  In this question,
+you can use the same techniques to</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Determine the secret codes of a program from the binary executable and partial source code.</p>
+</li>
+<li>
+<p>Develop a buffer overrun exploit to call a function directly, without using the secret codes.</p>
+</li>
+<li>
+<p><a href="secret-s25-x86-64.tar.gz">Download the binary</a></p>
+</li>
+<li>
+<p><a href="https://diveintosystems.org/book/C3-C_debug/gdb_assembly.html#_debugging_assembly_code">Dive into systems: Debugging assembly code</a></p>
+</li>
+<li>
+<p><a href="https://diveintosystems.org/singlepage/#_real_world_buffer_overflow">Dive into systems: Buffer overflow</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>1) What is the secret number?
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br></p>
+</div>
+<div class="paragraph">
+<p>2) What is the secret string?
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br></p>
+</div>
+<div class="paragraph">
+<p>3) Give the buffer contents that can be used to overwrite the stack and jump to the funtion, <code>winGame</code>.
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br></p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-02-28 10:37:31 -0500
+Last updated 2025-03-06 11:45:35 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">

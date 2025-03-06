@@ -8,7 +8,7 @@ include::header.adoc[]
 
 = {title}
 
-**Due (Hardcopy) Thursday, March 6th**
+**Due (Hardcopy) Thursday, March 20th**
 
 **This is a written assignment, not a coding assignment!**
 
@@ -101,71 +101,6 @@ value for each of the given operands.
 {nbsp} +
 |
 |===
-
-= Hackers
-
-In class, we looked at how we can cheat at a guessing game by overriding the
-return address of a function to jump to the `endGame` function.  In this question, we 
-will analyze the binary executable using GDB to extract the secret codes explicitly. 
-
-* link:https://diveintosystems.org/book/C7-x86_64/_attachments/secretx86-64.tar.gz[Download the binary]
-* link:https://diveintosystems.org/book/C3-C_debug/gdb_assembly.html#_debugging_assembly_code[Debugging assembly code]
-
-1) What GDB command can we use to set a breakpoint right after the function `getSecretCode` returns?
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-
-2) What register contains the return value from `getSecretCode`?
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-
-3) What GDB command can you use to inspect the value stored in the register containing the return value?
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-
-4) What is the secret number?
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-
-5) Place a breakpoint in `calculateValue`. How many times is `calculateValue` called by the program?
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-
-6) What is `calculateValue` doing? From the given source, we can see it takes a string. What is the return value?  
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-
-7) What is the secret string?
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
 
 = The answer is 42
 
@@ -570,4 +505,42 @@ placed in `%esi`. What value will %esi containin?
 This is a written assignment. Please submit a hard-copy in either Lecture or
 Lab, or submit to either Nina Fichera's office (Park 348) or Aline Normoyle's
 office (Park 200B). 
+
+= Extra Credit (0.3): Hackers
+
+In class, we looked at how we can cheat at a guessing game by overriding the
+return address of a function to jump to the `endGame` function.  In this question, 
+you can use the same techniques to 
+
+* Determine the secret codes of a program from the binary executable and partial source code.
+* Develop a buffer overrun exploit to call a function directly, without using the secret codes.
+
+
+* link:secret-s25-x86-64.tar.gz[Download the binary]
+* link:https://diveintosystems.org/book/C3-C_debug/gdb_assembly.html#_debugging_assembly_code[Dive into systems: Debugging assembly code]
+* link:https://diveintosystems.org/singlepage/#_real_world_buffer_overflow[Dive into systems: Buffer overflow]
+
+1) What is the secret number? 
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+
+2) What is the secret string? 
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+
+3) Give the buffer contents that can be used to overwrite the stack and jump to the funtion, `winGame`. 
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
 
