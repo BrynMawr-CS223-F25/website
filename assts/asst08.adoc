@@ -516,7 +516,7 @@ you can use the same techniques to
 * Develop a buffer overrun exploit to call a function directly, without using the secret codes.
 
 
-* link:secret-s25-x86-64.tar.gz[Download the binary]
+* link:secretGame-x86-64.tar.gz[Download the binary]
 * link:https://diveintosystems.org/book/C3-C_debug/gdb_assembly.html#_debugging_assembly_code[Dive into systems: Debugging assembly code]
 * link:https://diveintosystems.org/singlepage/#_real_world_buffer_overflow[Dive into systems: Buffer overflow]
 
