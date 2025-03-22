@@ -121,7 +121,78 @@ $ <strong>./warmup</strong>
 <h2 id="_grep">2. Grep</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the file, <code>grep.c</code>, implement a program that implements grep using multiple processes.</p>
+<p>In the file, <code>grep.c</code>, implement a program that uses N processes to search for a keyword
+in a set of files.</p>
+</div>
+<div class="paragraph">
+<p>Your program implements a simplified version of the bash command <code>grep</code>. Grep searches a list of files
+for a given keyword or expression. For example, the following command searches for the keyword <code>public</code>
+in a list of source files. We use the <code>find</code> command to generate the list of source files to search.
+For example:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/grep.png" alt="grep" width="500px">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Make sure you include the backticks, e.g. <code> ` </code>. This adds the filenames found by <code>find</code> as command line arguments to <code>grep</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make grep</strong>
+gcc -g -Wall -Wvla -Werror grep.c -o grep
+$ <strong>./grep</strong>
+usage: ./grep <code><</code>NumProcesses<code>></code> <code><</code>Keyword<code>></code> <code><</code>Files<code>></code>
+$ <strong>./grep 1 class missing.txt</strong>
+Searching 1 files for keyword: class
+Process [613] searching 1 files (3 to 4)
+Process [613] Error: Cannot open file
+Total occurances: 0
+Elapsed time is 0.000608</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/grep_fork.png" alt="grep fork" width="500px">
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Your program should take the number of processes, keyword, and a list of files as command line arguments</p>
+</li>
+<li>
+<p>Subdivide the files among the N processes. Note that the number of files may not divide evenly between processes.</p>
+</li>
+<li>
+<p>Print the totals and sub-division of files similarly to the output above</p>
+</li>
+<li>
+<p>Use the <code>fgets</code> function to process the lines in each file</p>
+</li>
+<li>
+<p>Use the function <code>strstr</code> defined in <code>string.h</code> to search lines of text for the keyword. <a href="https://en.cppreference.com/w/c/string/byte/strstr">Documentation is here</a></p>
+</li>
+<li>
+<p>To compute the total count, each child process can return the number matching lines using its exitcode. Recall that the parent can use the status reported by <code>waitpid</code> to get the children&#8217;s exit code.</p>
+</li>
+<li>
+<p>Your program should report the amount of time needed to search using <code>gettimeofday</code></p>
+</li>
+</ul>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -197,40 +268,9 @@ $ git status</code></pre>
 </div>
 </li>
 <li>
-<p>(1 points) Grep</p>
-</li>
-<li>
-<p>(2 points) Spellchecker</p>
+<p>(3 points) Grep</p>
 </li>
 </ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-When using <code>readline()</code>, valgrind will report that some of your memory is
-<em>still reachable</em>. This memory is not leaked. It hasn&#8217;t been cleaned up yet from
-`readline()&#8217;s internal memory. For example, output such as the following is ok
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>==3504== HEAP SUMMARY:
-==3504==     in use at exit: 204,143 bytes in 221 blocks
-==3504==   total heap usage: 453 allocs, 232 frees, 244,790 bytes allocated
-==3504==
-==3504== LEAK SUMMARY:
-==3504==    definitely lost: 0 bytes in 0 blocks
-==3504==    indirectly lost: 0 bytes in 0 blocks
-==3504==      possibly lost: 0 bytes in 0 blocks
-==3504==    still reachable: 204,143 bytes in 221 blocks
-==3504==         suppressed: 0 bytes in 0 blocks</pre>
-</div>
 </div>
 <div class="paragraph">
 <p><strong>Code rubrics</strong></p>
@@ -263,7 +303,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-02-28 10:37:31 -0500
+Last updated 2025-03-22 09:55:10 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

@@ -15,8 +15,9 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* Assignment 07 is due March 6: link:assts/asst07.html[Assignment 07]: Secret Messages
-* Assignment 08 is due March 20 (**Thursday, hard-copy**): link:assts/asst08.html[Assignment 08]: Some Assembly Required
+* Lab March 25th: Code Jam 04
+* Class March 27th: Quiz 04 link:studyguide4.html[Study Guide 04]
+* Assignment 09 is due March 28 link:assts/asst09.html[Assignment 09]: Trust the process
 
 == Course Info
 

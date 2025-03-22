@@ -63,7 +63,45 @@ Requirements:
 
 = Grep
 
-In the file, `grep.c`, implement a program that implements grep using multiple processes.
+In the file, `grep.c`, implement a program that uses N processes to search for a keyword 
+in a set of files. 
+
+Your program implements a simplified version of the bash command `grep`. Grep searches a list of files 
+for a given keyword or expression. For example, the following command searches for the keyword `public` 
+in a list of source files. We use the `find` command to generate the list of source files to search.
+For example:
+
+image::grep.png[width=500px]
+
+NOTE: Make sure you include the backticks, e.g. `` ` ``. This adds the filenames found by `find` as command line arguments to `grep`.
+
+
+[source, subs="quotes"]
+----
+$ **make grep**
+gcc -g -Wall -Wvla -Werror grep.c -o grep 
+$ **./grep**
+usage: ./grep ``<``NumProcesses``>`` ``<``Keyword``>`` ``<``Files``>``
+$ **./grep 1 class missing.txt**
+Searching 1 files for keyword: class
+Process [613] searching 1 files (3 to 4)
+Process [613] Error: Cannot open file
+Total occurances: 0
+Elapsed time is 0.000608
+----
+
+// Backticks can be written with `` ` ``
+image::grep_fork.png[width=500px]
+
+Requirements:
+
+* Your program should take the number of processes, keyword, and a list of files as command line arguments
+* Subdivide the files among the N processes. Note that the number of files may not divide evenly between processes.
+* Print the totals and sub-division of files similarly to the output above
+* Use the `fgets` function to process the lines in each file
+* Use the function `strstr` defined in `string.h` to search lines of text for the keyword. link:https://en.cppreference.com/w/c/string/byte/strstr[Documentation is here]
+* To compute the total count, each child process can return the number matching lines using its exitcode. Recall that the parent can use the status reported by `waitpid` to get the children's exit code. 
+* Your program should report the amount of time needed to search using `gettimeofday`
 
 NOTE: You can print with colors to the console using ANSI escape sequences (see below). 
 For example, `printf(ANSI_COLOR_GREEN "Green Text" ANSI_COLOR_RESET);` will print green text. link:https://azrael.digipen.edu/~mmead/www/mg/ansicolors/index.html[Here is a good guide!]
@@ -105,25 +143,7 @@ Grades are out of 4 points.
 ** (0.1 points) style and header comment
 ** (0.4 points) prints correct messages, uses `fork()` and `getpid()`
 ** (0.5 points) no memory errors
-* (1 points) Grep
-* (2 points) Spellchecker
-
-NOTE: When using `readline()`, valgrind will report that some of your memory is
-_still reachable_. This memory is not leaked. It hasn't been cleaned up yet from 
-`readline()`'s internal memory. For example, output such as the following is ok
-[code]
-----
-==3504== HEAP SUMMARY:
-==3504==     in use at exit: 204,143 bytes in 221 blocks
-==3504==   total heap usage: 453 allocs, 232 frees, 244,790 bytes allocated
-==3504==
-==3504== LEAK SUMMARY:
-==3504==    definitely lost: 0 bytes in 0 blocks
-==3504==    indirectly lost: 0 bytes in 0 blocks
-==3504==      possibly lost: 0 bytes in 0 blocks
-==3504==    still reachable: 204,143 bytes in 221 blocks
-==3504==         suppressed: 0 bytes in 0 blocks
----- 
+* (3 points) Grep
 
 *Code rubrics*
 
