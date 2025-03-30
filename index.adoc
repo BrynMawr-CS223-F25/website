@@ -15,9 +15,8 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* Lab March 25th: Code Jam 04
-* Class March 27th: Quiz 04 link:studyguide4.html[Study Guide 04]
-* Assignment 09 is due March 28 link:assts/asst09.html[Assignment 09]: Trust the process
+* Lab April 1: Quiz 05 Practice, link:studyguide5.html[Study Guide 5]
+* Assignment 10 is due April 4 link:assts/asst10.html[Assignment 10]: Sending mixed signals
 
 == Course Info
 

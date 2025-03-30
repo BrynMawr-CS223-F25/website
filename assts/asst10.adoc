@@ -1,6 +1,6 @@
 include::header.adoc[]
 
-:title: Assignment 10: Marching threads
+:title: Assignment 10: Sending mixed signals
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
@@ -9,11 +9,13 @@ include::header.adoc[]
 
 = {title}
 
-*Due Friday, March 28th, before midnight*
+*Due Friday, April 4th, before midnight*
 
 The goals for this assignment are:
 
-* Implement multi-thread algorithms using the pthread library
+* Implement a program that uses signals to coordinate between two processes
+* Implement an embarrassingly parallel multi-threades algorithms using the pthread library
+
 
 [discrete]
 == Update your repository
@@ -30,113 +32,83 @@ Your repository should now contain a new folder named `{ASST}`.
 
 The `fetch` and `merge` commands update your repository with any changes from the original.
 
-
 :sectnums:
 
-= Threaded Renderer 
+= Marco Polo
 
-In the file, `render.c`, compute a program that outputs a PPM image using a procedural 
-algorithm. You have been given basecode that initializes the following values from command line arguments. This code uses the link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt function].
+In the file, `marco_polo.c`, implement a program that uses signals to coordinate between two processes, like so. 
 
-Arguments:
+. When the user presses the 'm' key, the parents sends SIGALRM. 
+. When the child receives SIGALRM, the child prints "Marco" and sends SIGALRM to the parent.
+. When the parent receives SIGALRM, the parent prints "Polo".
 
-* `-s <size>` the image width and height
-* `-l <xmin>` the leftmost coordinate, e.g. minimum x value
-* `-r <xmax>` the rightmost coordinate, e.g. maximum x value
-* `-t <ymin>` the topmost coordinate, e.g. minimum y value
-* `-b <ymax>` the bottommost coordinate, e.g. maximum y value
+You can use strace to track the signals sent between the the parent and the child.
 
-When you run your program, you should get the output such as the following
-
-[source,subs="quotes"]
+[source, subs="quotes"]
 ----
-$ **make render**
-$ **./render**
-Generating mandelbrot with size 480x480
-  X range = [-2.0000,0.4700]
-  Y range = [-1.1200,1.1200]
-Computed mandelbrot set (480x480) in 0.323261 seconds
-Writing file: render-480-1649001071.ppm
-----
-
-Requirements and hints:
-
-* You should re-use your PPM functions from previous assignments. 
-* Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
-* You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. 
-* Your output filename should have the format `render-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
-* (Optional) Set a random seed to ensure that colors are randomized (if you randomize colors)
-
-//image::mandelbrot-480-subregion.png[]
-
-== Background: Ray Marching
-
-[source]
-----
-for each row in the image
-   for each col in the image
-      xfrac = row / image_size
-      yfrac = col / image_size
-      x0 = xmin + xfrac * (xmax - xmin)
-      y0 = ymin + yfrac * (ymax - ymin)
-
-      write color to image at location (row,col)    
+$ **strace -e 'trace=!all' -f ./marco_polo**
+Parent is 738
+strace: Process 739 attached
+**m**
+[pid   739] --- SIGALRM {si_signo=SIGALRM, si_code=SI_USER, si_pid=738, si_uid=1000} ---
+Marco [739]
+[pid   738] --- SIGALRM {si_signo=SIGALRM, si_code=SI_USER, si_pid=739, si_uid=1000} ---
+Polo [738]
+**m**
+[pid   739] --- SIGALRM {si_signo=SIGALRM, si_code=SI_USER, si_pid=738, si_uid=1000} ---
+Marco [739]
+[pid   738] --- SIGALRM {si_signo=SIGALRM, si_code=SI_USER, si_pid=739, si_uid=1000} ---
+Polo [738]
+**q**
+[pid   739] --- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=738, si_uid=1000} ---
+[pid   739] +++ killed by SIGTERM +++
+--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=739, si_uid=1000, si_status=SIGTERM, si_utime=0, si_stime=0} ---
++++ exited with 0 +++
 ----
 
-= Threaded Render
+Requirements/Hints:
 
-Implement a multi-threaded version of the image you computed for the previous question.
+* Use `fork` to create a parent and child process.
+* Use `kill` to send signals between the parent and the child.
+* Register two signal handlers, one for the parent and one for the child. Configure the signal handler to trigger when it receives SIGALRM.
+* The child process should say "Marco". The parent process should respond with "Polo".
+* In the parent, implement a loop that responds to commands from the user, specifically
+** 'm' should send the initial signal that triggers the child to say "Marco"
+** 'q' should send quit the application. This command should also send SIGTERM to the child, so the child also exits.
 
-In the file, `thread_render.c`, compute a program that outputs a PPM image using the same 
-algorithm as before.  You have been given basecode that initializes the following values from command line arguments. This code uses the link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt function].
+= Grep
 
-Arguments:
+This question implements a simplified version of the bash command `grep`. Grep searches a list of files 
+for a given keyword or expression. For example, the following command searches for the keyword `public` 
+in a list of source files. We use the `find` command to generate the list of source files to search.
 
-* `-s <size>` the image width and height
-* `-l <xmin>` the leftmost coordinate, e.g. minimum x value
-* `-r <xmax>` the rightmost coordinate, e.g. maximum x value
-* `-t <ymin>` the topmost coordinate, e.g. minimum y value
-* `-b <ymax>` the bottommost coordinate, e.g. maximum y value
+image::grep.png[width=500px]
 
-When you run your program, you should get the output such as the following
+NOTE: Make sure you include the backticks, e.g. `` ` ``. This adds the filenames found by `find` as command line arguments to `grep`.
 
-[source,subs="quotes"]
+In the file, `grep.c`, implement a program that uses N threads to search for a keyword 
+in a set of files. 
+
+[source, subs="quotes"]
 ----
-$ **make thread_render**
-$ **./thread_render**
-Generating render with size 480x480
-  X range = [-2.0000,0.4700]
-  Y range = [-1.1200,1.1200]
-Thread 140392055985920) sub-image block: cols (0, 240) to rows (0,240)
-Thread 140392047593216) sub-image block: cols (240, 480) to rows (0,240)
-Thread 140392039200512) sub-image block: cols (0, 240) to rows (240,480)
-Thread 140392030807808) sub-image block: cols (240, 480) to rows (240,480)
-Thread 140392055985920) finished
-Thread 140392047593216) finished
-Thread 140392039200512) finished
-Thread 140392030807808) finished
-Computed render (480x480) in 0.143906 seconds
-Writing file: render-480-1650116924.ppm
+$ **make grep**
+gcc -g -Wall -Wvla -Werror grep.c -o grep -lpthreads
+$ **./grep**
+usage: ./grep ``<``NumThreads``>`` ``<``Keyword``>`` ``<``Files``>``
 ----
 
-Requirements and hints:
+// Backticks can be written with `` ` ``
+image::thread-grep.png[width=500px]
 
-* You should re-use your PPM functions from previous assignments. 
-* Create four threads. Each thread should process a quadrant of the image.
-* Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.
-* Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
-* Do not declare global variables! Use parameters to send data to each thread's start_routine.
-* You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. The performance should be comparable to your multi_mandelbrot version from A09.
-* Your output filename should have the format `render-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
+Requirements:
 
-= Performance comparison
-
-Compare the performance between the single and threaded rendered versions. Fill in `Readme.adoc` 
-with your hardware specifications and runtime statistics. 
+* Your program should take the number of threads, keyword, and a list of files as command line arguments
+* Subdivide the files among the N threads. Note that the number of files may not divide evenly between threads.
+* Print the totals and sub-division of files similarly to the output above
+* Use the `fgets` to process the lines in each file
+* Use the function `strstr` defined in `string.h` to search lines of text for the keyword. link:https://en.cppreference.com/w/c/string/byte/strstr[Documentation is here]
 
 = Submit your work
-
-Submit both your code and *images*.
 
 1) Push your code work to github
 
@@ -158,23 +130,16 @@ $ git status
 
 Grades are out of 4 points.
 
-* (1 points) Render
+* (2 points) Marco Polo
 ** (0.1 points) style and header comment
-** (0.1 points) Supports given command line arguments
-** (0.1 points) Generates image with correct filename
-** (0.1 points) Allocate an array of pixels using malloc
-** (0.1 points) Correct output 
-** (0.5 points) no memory errors
-* (2 points) Threaded Render
-** (0.1 points) style and header comment
-** (0.1 points) Supports given command line arguments
-** (0.1 points) Generates image with correct filename
-** (0.1 points) Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.
-** (0.1 points) Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
-** (0.1 points) Do not declare global variables! Use parameters to send data to each thread's start_routine.
-** (0.2 points) Correct output 
-** (1 points) no memory errors
-* (1 points) Comparison of runtime between the single and threaded versions
+** (0.9 points) Implementation satisfies requirements and works correctly.
+** (1.0 points) no memory errors
+* (2 points) Grep
+** (0.15 points) style and header comment
+** (0.1 points) Correct command line arguments: number of threads, keyword, and a list of files
+** (0.2 points) Subdivide the files among the N threads
+** (0.3 points) Correct output
+** (0.75 points) no memory errors
 
 *Code rubrics*
 
