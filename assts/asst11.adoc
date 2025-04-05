@@ -30,9 +30,8 @@ Your repository should now contain a new folder named `{ASST}`.
 
 The `fetch` and `merge` commands update your repository with any changes from the original.
 
-:sectnums:
 
-= Glow
+= Background
 
 In this assignment, you will implement a glow filter for images. You will implement the filter both single- and 
 multi-threaded. 
@@ -45,10 +44,10 @@ After:
 
 image::glow.png[]
 
-Apply glow to an image requires three steps:
+This filter requires three steps:
 
 * Extracting bright areas into a separate image
-* Blurring the bright image
+* Blurring the bright pixels
 * Adding the blurred image to the original
 
 NOTE: We will work with PPM files for this assignment.
@@ -64,7 +63,7 @@ brightness = (red + green + blue)/3
 
 We can compare this brightness to a threshold, say 200, to determine if we should apply the glow to this area. 
 For the image below, we iterated through every pixel in the original image, computed its brightness, and 
-then saved a white pixel to a new image if the pixel exceeded the threshold.
+then saved its brightness to a new image if the pixel exceeded the threshold.
 
 image::white.png[]
 
@@ -77,32 +76,34 @@ only at the immediate neighbors of the pixel (i,j), the new color would be as fo
 
 [stem]
 ++++
-newPixel_{i,j} = (p_{i-1,j-1} + p_{i,j-1} + p_{i+1,j-1} 
-                 p_{i-1,j}   + p_{i,j}   + p_{i+1,j} 
-                 p_{i-1,j+1} + p_{i,j+1} + p_{i+1,j+1} )/9
+new_{i,j} = (p_{i-1,j-1} + p_{i,j-1} + p_{i+1,j-1} +
+             p_{i-1,j}   + p_{i,j}   + p_{i+1,j} +
+             p_{i-1,j+1} + p_{i,j+1} + p_{i+1,j+1} )/9
 ++++
 
 The above calculation would correspond to a box size of 3 because the region around the pixel has 
 width 3 and height 3. 
 
 We compute the blur separately for each color channel (read, blue, green). In the image below, we used a 
-box size of 49. In other words, we used the 24 neighbors that were left, right, above, and below of the current 
+box size of 25. In other words, we used the 24 neighbors that were left, right, above, and below of the current 
 pixel. If a pixel is near the edge of the image, we can clamp the blur indices so they stay in the image.
 
 image::blur.png[]
 
-NOTE: The glow will look better with a gaussian blur. Feel free to implement one instead!
+NOTE: The glow will look better with a gaussian blur. Feel free to implement one instead
 
 == Glow
 
-The glow effect is achieved by adding the blurred image with the original image.
+The glow effect is achieved by adding the blurred image (bij) with the original image (oij).
 
 [stem]
 ++++
-newPixel_{i,j} = originalPixel_{i,j} + blurPixel_{i,j}
+new_{i,j} = o_{i,j} + b_{i,j}
 ++++
 
-image::blur.png[]
+image::glow.png[]
+
+:sectnums:
 
 = Single-threaded
 
