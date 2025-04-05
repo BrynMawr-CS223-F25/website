@@ -1,6 +1,6 @@
 include::header.adoc[]
 
-:title: Assignment 11: Mutually Exclusive
+:title: Assignment 11: Glow
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
@@ -9,12 +9,11 @@ include::header.adoc[]
 
 = {title}
 
-*Due Friday, April 4th, before midnight*
+*Due Friday, April 11th, before midnight*
 
 The goals for this assignment are:
 
 * Implement multi-thread algorithms using the pthread library
-* Use mutex and barrier to coordinate between different threads
 
 [discrete]
 == Update your repository
@@ -33,115 +32,125 @@ The `fetch` and `merge` commands update your repository with any changes from th
 
 :sectnums:
 
-= Fractal Flame
+= Glow
 
-In the file, `fractal.c`, compute a program that outputs a PPM image of a fractal computed 
-with the algorithm below. 
+In this assignment, you will implement a glow filter for images. You will implement the filter both single- and 
+multi-threaded. 
 
-Computing the fractal requires three steps:
+Before:
 
-* First, determine counts for the number of times each point visits a pixel, using the given formula
-* Second, you must turn the counts from step 2 into a color. The final colors should be written to a 2D array of ppm_pixel (either flat or an array of arrays) and then written. 
+image::earth-small.png[]
 
-Each of the above steps can be parallelized using threads. The second step will require a mutex to ensure that the counts are set correctly. Below are suggested algorithms for 
-computing each step. 
+After:
 
-**Step 1: Compute visited counts**
-[source]
-----
-for each row in the image
-   for each col in the image
-      if (row,col) belongs to the mandelbrot set, continue
+image::glow.png[]
 
-      xfrac = row / image_size
-      yfrac = col / image_size
-      x0 = xmin + xfrac * (xmax - xmin)
-      y0 = ymin + yfrac * (ymax - ymin)
+Apply glow to an image requires three steps:
 
-      x = 0
-      y = 0
-      while (x*x + y*y < 2*2)
+* Extracting bright areas into a separate image
+* Blurring the bright image
+* Adding the blurred image to the original
 
-        yrow = round(size * (y - ymin)/(ymax - ymin))
-        xcol = round(size * (x - xmin)/(xmax - xmin))
-        if (yrow < 0 || yrow >= size) continue; // out of range
-        if (xcol < 0 || xcol >= size) continue; // out of range
+NOTE: We will work with PPM files for this assignment.
 
-        increment count at (yrow, xcol) 
-        update max count
-----
+== Extract bright areas
 
-**Step 3: Compute colors**
-[source]
-----
-gamma = 0.681
-factor = 1.0/gamma
-for each row in the image
-   for each col in the image
-      value = 0
+For each pixel, you can compute its brightness as the average of its red, green, and blue values. E.g. 
 
-      if counts at (row,col) are greater than zero
-        value = log(counts[row][col]) / log(max_count)
-        value = pow(value, factor)
+[stem]
+++++
+brightness = (red + green + blue)/3
+++++
 
-      color.red = value * 255
-      color.green = value * 255
-      color.blue = value * 255
+We can compare this brightness to a threshold, say 200, to determine if we should apply the glow to this area. 
+For the image below, we iterated through every pixel in the original image, computed its brightness, and 
+then saved a white pixel to a new image if the pixel exceeded the threshold.
 
-      write color to image at location (row,col)    
-----
+image::white.png[]
 
-Each thread should compute the three steps on a quadrant of the image. Below 
-is a suggested outline for your thread's start routine.
+== Blur
 
-[source]
-----
-void * start(void* data) {
+For this assignment, we will apply a box blur to each pixel in the image computed in the previous step. 
 
-  // perform step 1
+In a box blur, the color of each pixel is set to the average of its neighbors. For example, if we look 
+only at the immediate neighbors of the pixel (i,j), the new color would be as follows:
 
-  // use a thread barrier to wait for all threads to finish steps 1 and 2
-  // perform step 2
+[stem]
+++++
+newPixel_{i,j} = (p_{i-1,j-1} + p_{i,j-1} + p_{i+1,j-1} 
+                 p_{i-1,j}   + p_{i,j}   + p_{i+1,j} 
+                 p_{i-1,j+1} + p_{i,j+1} + p_{i+1,j+1} )/9
+++++
 
-}
-----
+The above calculation would correspond to a box size of 3 because the region around the pixel has 
+width 3 and height 3. 
 
+We compute the blur separately for each color channel (read, blue, green). In the image below, we used a 
+box size of 49. In other words, we used the 24 neighbors that were left, right, above, and below of the current 
+pixel. If a pixel is near the edge of the image, we can clamp the blur indices so they stay in the image.
 
+image::blur.png[]
+
+NOTE: The glow will look better with a gaussian blur. Feel free to implement one instead!
+
+== Glow
+
+The glow effect is achieved by adding the blurred image with the original image.
+
+[stem]
+++++
+newPixel_{i,j} = originalPixel_{i,j} + blurPixel_{i,j}
+++++
+
+image::blur.png[]
+
+= Single-threaded
+
+In the file, `glow.c`, implement a single-threaded program that applies a glow effect to the image "earth-small.ppm". 
+In this question, you will get the core algorithm working, before re-implementing it to be multithreaded in 
+the next question.
 
 [source,subs="quotes"]
 ----
-$ **./fractal**
-Generating fractal with size 480x480
-  Num processes = 4
-  X range = [-2.5000,1.0000]
-  Y range = [-1.1200,1.1200]
-  X range = [-2.0000,1.0000]
-  Y range = [-1.1200,1.1200]
-Thread 140583141971712) sub-image block: cols (0, 240) to rows (0,240)
-Thread 140583133579008) sub-image block: cols (240, 480) to rows (0,240)
-Thread 140583125186304) sub-image block: cols (0, 240) to rows (240,480)
-Thread 140583116793600) sub-image block: cols (240, 480) to rows (240,480)
-Thread 140583141971712) finished
-Thread 140583133579008) finished
-Thread 140583125186304) finished
-Thread 140583116793600) finished
-Computed fractal set (480x480) in 0.123721 seconds
-Writing file: fractal-480-1650141479.ppm
+$ **time ./glow**
+real    0m0.518s
+user    0m0.513s
+sys     0m0.001s
 ----
 
-//image:buddhabrot-2000-1650142988.png[height=400]
+Requirements/Hints:
 
-Requirements and hints:
+* This program can be simple. You may hard-coded the input file (earth-small.ppm), the threshold (200), and the blur box size (25).
+* Your program must output a PPM file named `glow.ppm`
+* Use software that can view PPM files to check your work, either via VS Code, eog (Eye of Gnome), Gimp, Photoshop, etc
 
-* Each thread should run all steps on a quadrant of the image. 
-* You will need a `pthread_barrier_t` to wait for all counts to be computed before computing the colors
-* Use mutex to compute the counts
-* You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. 
-* Your output filename should have the format `fractal-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
-* You may use global variables for this program. 
+= Multi-threaded
 
-//image::buddhabrot-Small.png[height=400]
-//NOTE: Other chaotic sets can be visualized in the same way as the Buddhabrot. To see more, read about link:https://flam3.com/flame_draves.pdf[Fractal Frames].
+In the file, `glow_multithreaded.c`, implement a program that applies a glow effect using multiple threads. 
+It should run much faster than your single threaded version.
+
+[source,subs="quotes"]
+----
+$ **./glow_multithreaded -h**
+usage: ./glow_multithreaded -N <NumThreads> -t <brightness threshold> -b <box blur size> -f <ppmfile>
+$ **time ./glow_multithreaded**
+Thread sub-image block: cols (0, 150) to rows (0,150)
+Thread sub-image block: cols (150, 300) to rows (0,150)
+Thread sub-image block: cols (0, 150) to rows (150,300)
+Thread sub-image block: cols (150, 300) to rows (150,300)
+
+real    0m0.249s
+user    0m0.717s
+sys     0m0.000s
+----
+
+Requirements and recommendations:
+
+* Each thread should run all steps on a portion of the image. I recommend you divide the image into horizontal slices (not square blocks) 
+* You can assume that N will divide the images evenly. `earth.ppm` has resolution 3000x3000. `earth-small.ppm` has resolution 300x300.
+* Your program should output a file named `glow.ppm`
+* Your program must support the command line arguments.
+* Your program may not use global variables.
 
 = Submit your work
 

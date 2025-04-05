@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Assignment 12: Hold on to your memories</title>
+<title>Assignment 12: Mutually Exclusive</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,26 +14,19 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_12_hold_on_to_your_memories">Assignment 12: Hold on to your memories</a></li>
-<li><a href="#_description">1. Description</a></li>
-<li><a href="#_code_setup">2. Code setup</a></li>
-<li><a href="#_mylloc_list">3. mylloc_list</a></li>
-<li><a href="#_memory_statistics">4. Memory statistics</a>
-<ul class="sectlevel2">
-<li><a href="#_readme_due_in_class_as_a_hardcopy">4.1. README (<strong>Due in class as a hardcopy</strong>)</a></li>
-</ul>
-</li>
-<li><a href="#_submit_your_work">5. Submit your work</a></li>
-<li><a href="#_grading_rubric">6. Grading Rubric</a></li>
+<li><a href="#_assignment_12_mutually_exclusive">Assignment 12: Mutually Exclusive</a></li>
+<li><a href="#_glow">1. Glow</a></li>
+<li><a href="#_submit_your_work">2. Submit your work</a></li>
+<li><a href="#_grading_rubric">3. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_12_hold_on_to_your_memories">Assignment 12: Hold on to your memories</h2>
+<h2 id="_assignment_12_mutually_exclusive">Assignment 12: Mutually Exclusive</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Due Friday, April 25th, before midnight. <strong>Written portion is due April 24th - no late work accepted</strong></p>
+<p><strong>Due Friday, April 18th, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -41,13 +34,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Understand void* types and pointer arithmetic</p>
-</li>
-<li>
-<p>More linked list practice</p>
-</li>
-<li>
-<p>Better understand malloc and free, particularly the use of the free list</p>
+<p>Implement multi-thread algorithms using the pthread library</p>
 </li>
 </ul>
 </div>
@@ -80,261 +67,147 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_description">1. Description</h2>
+<h2 id="_glow">1. Glow</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this assignment, we will implement our own version of malloc and free based on
-"first-fit" strategy and analyze its behavior.</p>
+<p>In the file, <code>fractal.c</code>, compute a program that outputs a PPM image of a fractal computed
+with the algorithm below.</p>
 </div>
 <div class="paragraph">
-<p>For this assignment, you should submit both</p>
+<p>Computing the fractal requires three steps:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>your code, and</p>
+<p>First, determine counts for the number of times each point visits a pixel, using the given formula</p>
 </li>
 <li>
-<p>a written report, <strong>due in class</strong></p>
+<p>Second, you must turn the counts from step 2 into a color. The final colors should be written to a 2D array of ppm_pixel (either flat or an array of arrays) and then written.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each of the above steps can be parallelized using threads. The second step will require a mutex to ensure that the counts are set correctly. Below are suggested algorithms for
+computing each step.</p>
+</div>
+<div class="paragraph">
+<p><strong>Step 1: Compute visited counts</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>for each row in the image
+   for each col in the image
+      if (row,col) belongs to the mandelbrot set, continue
+
+      xfrac = row / image_size
+      yfrac = col / image_size
+      x0 = xmin + xfrac * (xmax - xmin)
+      y0 = ymin + yfrac * (ymax - ymin)
+
+      x = 0
+      y = 0
+      while (x*x + y*y &lt; 2*2)
+
+        yrow = round(size * (y - ymin)/(ymax - ymin))
+        xcol = round(size * (x - xmin)/(xmax - xmin))
+        if (yrow &lt; 0 || yrow &gt;= size) continue; // out of range
+        if (xcol &lt; 0 || xcol &gt;= size) continue; // out of range
+
+        increment count at (yrow, xcol)
+        update max count</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Step 3: Compute colors</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>gamma = 0.681
+factor = 1.0/gamma
+for each row in the image
+   for each col in the image
+      value = 0
+
+      if counts at (row,col) are greater than zero
+        value = log(counts[row][col]) / log(max_count)
+        value = pow(value, factor)
+
+      color.red = value * 255
+      color.green = value * 255
+      color.blue = value * 255
+
+      write color to image at location (row,col)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each thread should compute the three steps on a quadrant of the image. Below
+is a suggested outline for your thread&#8217;s start routine.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>void * start(void* data) {
+
+  // perform step 1
+
+  // use a thread barrier to wait for all threads to finish steps 1 and 2
+  // perform step 2
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./fractal</strong>
+Generating fractal with size 480x480
+  Num processes = 4
+  X range = [-2.5000,1.0000]
+  Y range = [-1.1200,1.1200]
+  X range = [-2.0000,1.0000]
+  Y range = [-1.1200,1.1200]
+Thread 140583141971712) sub-image block: cols (0, 240) to rows (0,240)
+Thread 140583133579008) sub-image block: cols (240, 480) to rows (0,240)
+Thread 140583125186304) sub-image block: cols (0, 240) to rows (240,480)
+Thread 140583116793600) sub-image block: cols (240, 480) to rows (240,480)
+Thread 140583141971712) finished
+Thread 140583133579008) finished
+Thread 140583125186304) finished
+Thread 140583116793600) finished
+Computed fractal set (480x480) in 0.123721 seconds
+Writing file: fractal-480-1650141479.ppm</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements and hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Each thread should run all steps on a quadrant of the image.</p>
+</li>
+<li>
+<p>You will need a <code>pthread_barrier_t</code> to wait for all counts to be computed before computing the colors</p>
+</li>
+<li>
+<p>Use mutex to compute the counts</p>
+</li>
+<li>
+<p>You should output the number of seconds needed to compute the image. Use this <a href="https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c">class example, matrix.c</a> for an example.</p>
+</li>
+<li>
+<p>Your output filename should have the format <code>fractal-&lt;size&gt;-&lt;timestamp&gt;.ppm</code>. The timestamp can be obtained by calling <code>time(0)</code>.</p>
+</li>
+<li>
+<p>You may use global variables for this program.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_code_setup">2. Code setup</h2>
+<h2 id="_submit_your_work">2. Submit your work</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Your basecode includes the following source files</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>mylloc_list.c</code> - Malloc/free implementation that implements a free list with first-fit strategy (corresponds to <code>mhysa.c</code> in reading)</p>
-</li>
-<li>
-<p><code>rand.c</code> - Utilities for generating random sizes of memory</p>
-</li>
-<li>
-<p><code>sbrk.c</code> - Utilities for extending the amount of memory allocated to a program</p>
-</li>
-<li>
-<p><code>memstats.c</code> - A benchmark program</p>
-</li>
-<li>
-<p><code>unit_tests.c</code> - Unit tests for your malloc/free implementation</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This assignment is based on the reading: "My malloc: mylloc and mhysa" by
-Johan Montelius, posted to Slack. You should complete the reading and finish the
-implementation of <code>mylloc_list.c</code> <em>before</em> starting the assignment.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_mylloc_list">3. mylloc_list</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In <code>mylloc_list.c</code>, implement malloc and free based on the reading.</p>
-</div>
-<div class="paragraph">
-<p>Recall that the reading steps you through implementing your own malloc/free
-based on a free list and a <em>first-fit</em> strategy.  This implementation uses a
-header to keep track of the memory requested from <code>sbrk</code>.  When we re-use memory
-that is freed, we typically will not re-use the entire block of memory. Modify
-the implementation from the reading to</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Extend this header to keep track of both the requested size and the amount of memory
-currently used in the chunk.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>struct chunk {
-  int size; // size of memory allocated from sbrk
-  int used; // *NEW*: amount currently in use
-  struct chunk *next;
-};</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Use the unit tests included with your assignment to test that your implementation is correct</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make all</strong>
-gcc -g -Wall -Wvla -Werror memstats.c mylloc_list.c sbrk.c rand.c -o memstats -lm
-gcc -g -Wall -Wvla -Werror unit_tests.c mylloc_list.c sbrk.c rand.c -o unit_tests -lm
-$ <strong>./unit_tests</strong>
-Running tests...
-test 1: size 0 returns NULL: PASSED
-test 2: flist is NULL to start: PASSED
-test 3: flist is empty after first malloc: PASSED
-test 4: correct amount allocated: PASSED
-test 5: header size correct: PASSED
-test 6: header used correct: PASSED
-test 7: flist is non-empty after free: PASSED
-test 8: flist is empty: PASSED
-test9: correct amount allocated: PASSED
-test 10: header size correct: PASSED
-test 11: header used correct: PASSED
-test 12: flist is not empty: PASSED
-test 13: current-init correct size: PASSED
-test 14: header size correct: PASSED
-test 15: header used correct: PASSED
-test 16: flist's first node has correct size: PASSED
-test 17: flist is non-empty: PASSED
-test 18: flist's second node has correct size: PASSED</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_memory_statistics">4. Memory statistics</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In <code>memstats.c</code>, implement a program that simulates a series of memory
-allocations and then outputs an image that visualizes the memory usage.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>./memstats</strong>
-Starting test..
-The initial top of the heap is 0x7feffe84d010.
----------------
-0
-Allocating 452 bytes at index 0
-Allocating 1042 bytes at index 4
-Allocating 45 bytes at index 1
-Freeing index 0
-Allocating 68 bytes at index 0
-Freeing index 1
-Freeing index 0
-Allocating 127 bytes at index 3
-Allocating 1141 bytes at index 2
-Allocating 89 bytes at index 1
-The new top of the heap is 0x7feffe84db31.
-Increased by 2849 (0xb21) bytes
-Total blocks: 5 Free blocks: 1 Used blocks: 4
-Total memory allocated: 2769 Free memory: 45 Used memory: 2724
-Underutilized memory: 0.12
----------------
-1
-Freeing index 3
-Allocating 47 bytes at index 0
-Freeing index 4
-Freeing index 1
-Freeing index 2
-Freeing index 0
-Allocating 3426 bytes at index 1
-Freeing index 1
-Allocating 39 bytes at index 2
-Allocating 163 bytes at index 4
-The new top of the heap is 0x7feffe84e8a3.
-Increased by 3442 (0xd72) bytes
-Total blocks: 6 Free blocks: 4 Used blocks: 2
-Total memory allocated: 6195 Free memory: 2317 Used memory: 3878
-Underutilized memory: 0.95
----------------
-2
-Allocating 1658 bytes at index 3
-Allocating 1812 bytes at index 0
-Freeing index 3
-Allocating 39 bytes at index 3
-Allocating 156 bytes at index 1
-Freeing index 3
-Freeing index 1
-Freeing index 4
-Freeing index 2
-Allocating 921 bytes at index 1
-The new top of the heap is 0x7feffe84f651.
-Increased by 3502 (0xdae) bytes
-Total blocks: 8 Free blocks: 6 Used blocks: 2
-Total memory allocated: 9665 Free memory: 4427 Used memory: 5238
-Underutilized memory: 0.48
-Time is 4.1e-05</code></pre>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_readme_due_in_class_as_a_hardcopy">4.1. README (<strong>Due in class as a hardcopy</strong>)</h3>
-<div class="paragraph">
-<p>Read this section and answer the corresponding questions. We will visualize the execution of <code>memstats.c</code> for Round 1.
-When the program starts, we have no buffers allocated and the free list is empty.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="img/memstats0.png" alt="memstats0"></span></p>
-</div>
-<div class="paragraph">
-<p>After the first 3 allocations, the buffers and free list look as follows:</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="img/memstats1.png" alt="memstats1"></span></p>
-</div>
-<div class="paragraph">
-<p>After the next iteration, we have</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="img/memstats2.png" alt="memstats2"></span></p>
-</div>
-<div class="paragraph">
-<p>After the next iteration, we have
-<span class="image"><img src="img/memstats3.png" alt="memstats3"></span></p>
-</div>
-<div class="paragraph">
-<p>After the next iteration, we have
-<span class="image"><img src="img/memstats4.png" alt="memstats4"></span></p>
-</div>
-<div class="paragraph">
-<p>At the end of round 1, the buffers and free list look as follows</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="img/memstats5.png" alt="memstats5"></span></p>
-</div>
-<div class="paragraph">
-<p>Answer the following questions:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Why is the total memory allocated equal to 2769 bytes?</p>
-</li>
-<li>
-<p>If the total memory is equal to 2769 bytes, why did the heap increase by 2849 bytes?</p>
-</li>
-<li>
-<p>Why is the underutilized memory 12%?</p>
-</li>
-<li>
-<p>Draw the buffers and free list after round 1</p>
-</li>
-<li>
-<p>Draw the buffers and free list after round 2</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_submit_your_work">5. Submit your work</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Submit both your code (by midnight) <strong>and</strong> your written questions (due in class Wednesday).</p>
+<p>Submit both your code and images.</p>
 </div>
 <div class="paragraph">
 <p>1) Push your code work to github</p>
@@ -353,7 +226,7 @@ $ git status</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">6. Grading Rubric</h2>
+<h2 id="_grading_rubric">3. Grading Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
@@ -364,47 +237,28 @@ $ git status</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(2 points) mylloc_list</p>
+<p>(4 points) Threaded Fractal</p>
 <div class="ulist">
 <ul>
 <li>
-<p>(0.1 points) style and header comment</p>
+<p>(0.4 points) style and header comment</p>
 </li>
 <li>
-<p>(1.9 points) passes all tests</p>
+<p>(0.4 points) Generated image with correct filename</p>
+</li>
+<li>
+<p>(0.2 points) Supports given command line arguments</p>
+</li>
+<li>
+<p>(1.0 points) Correct output, thread coordination, and output performance statistics</p>
+</li>
+<li>
+<p>(2.0 points) no memory errors</p>
 </li>
 </ul>
 </div>
 </li>
-<li>
-<p>(1 points) memstats</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(0.1 points) style and header comment</p>
-</li>
-<li>
-<p>(0.9 points) correct output</p>
-</li>
 </ul>
-</div>
-</li>
-<li>
-<p>(1 points) Readme</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-valgrind won&#8217;t work for this assignment. You do not need to check for memory errors on this assignment.
-</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
 <p><strong>Code rubrics</strong></p>
@@ -422,6 +276,9 @@ have good style.</p>
 <p>-5% for style errors. See the <a href="../codingstandard.html">class coding style</a> here.</p>
 </li>
 <li>
+<p>-50% for memory errors</p>
+</li>
+<li>
 <p>-100% for failure to checkin work to Github</p>
 </li>
 <li>
@@ -434,7 +291,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-02-05 09:55:20 -0500
+Last updated 2025-04-05 12:14:17 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

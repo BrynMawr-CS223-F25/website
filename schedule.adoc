@@ -122,7 +122,7 @@
 |*Threads III* 
 
 * Read: link:https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era[Chapter 14] 
-* link:assts/asst11.[Assignment 11]: Due April 4th
+* link:assts/asst11.html[Assignment 11]: Due April 11th
 * Class April 10: **Quiz 05**
 * Lab April 8: **Code Jam 05**
 

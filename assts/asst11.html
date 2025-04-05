@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Assignment 11: Mutually Exclusive</title>
+<title>Assignment 11: Glow</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,19 +14,27 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_11_mutually_exclusive">Assignment 11: Mutually Exclusive</a></li>
-<li><a href="#_fractal_flame">1. Fractal Flame</a></li>
-<li><a href="#_submit_your_work">2. Submit your work</a></li>
-<li><a href="#_grading_rubric">3. Grading Rubric</a></li>
+<li><a href="#_assignment_11_glow">Assignment 11: Glow</a></li>
+<li><a href="#_glow">1. Glow</a>
+<ul class="sectlevel2">
+<li><a href="#_extract_bright_areas">1.1. Extract bright areas</a></li>
+<li><a href="#_blur">1.2. Blur</a></li>
+<li><a href="#_glow_2">1.3. Glow</a></li>
+</ul>
+</li>
+<li><a href="#_single_threaded">2. Single-threaded</a></li>
+<li><a href="#_multi_threaded">3. Multi-threaded</a></li>
+<li><a href="#_submit_your_work">4. Submit your work</a></li>
+<li><a href="#_grading_rubric">5. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_11_mutually_exclusive">Assignment 11: Mutually Exclusive</h2>
+<h2 id="_assignment_11_glow">Assignment 11: Glow</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, April 4th, before midnight</strong></p>
+<p><strong>Due Friday, April 11th, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -35,9 +43,6 @@
 <ul>
 <li>
 <p>Implement multi-thread algorithms using the pthread library</p>
-</li>
-<li>
-<p>Use mutex and barrier to coordinate between different threads</p>
 </li>
 </ul>
 </div>
@@ -70,144 +75,220 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_fractal_flame">1. Fractal Flame</h2>
+<h2 id="_glow">1. Glow</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the file, <code>fractal.c</code>, compute a program that outputs a PPM image of a fractal computed
-with the algorithm below.</p>
+<p>In this assignment, you will implement a glow filter for images. You will implement the filter both single- and
+multi-threaded.</p>
 </div>
 <div class="paragraph">
-<p>Computing the fractal requires three steps:</p>
+<p>Before:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/earth-small.png" alt="earth small">
+</div>
+</div>
+<div class="paragraph">
+<p>After:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/glow.png" alt="glow">
+</div>
+</div>
+<div class="paragraph">
+<p>Apply glow to an image requires three steps:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>First, determine counts for the number of times each point visits a pixel, using the given formula</p>
+<p>Extracting bright areas into a separate image</p>
 </li>
 <li>
-<p>Second, you must turn the counts from step 2 into a color. The final colors should be written to a 2D array of ppm_pixel (either flat or an array of arrays) and then written.</p>
+<p>Blurring the bright image</p>
+</li>
+<li>
+<p>Adding the blurred image to the original</p>
 </li>
 </ul>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We will work with PPM files for this assignment.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_extract_bright_areas">1.1. Extract bright areas</h3>
 <div class="paragraph">
-<p>Each of the above steps can be parallelized using threads. The second step will require a mutex to ensure that the counts are set correctly. Below are suggested algorithms for
-computing each step.</p>
+<p>For each pixel, you can compute its brightness as the average of its red, green, and blue values. E.g.</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[brightness = (red + green + blue)/3\]
+</div>
 </div>
 <div class="paragraph">
-<p><strong>Step 1: Compute visited counts</strong></p>
+<p>We can compare this brightness to a threshold, say 200, to determine if we should apply the glow to this area.
+For the image below, we iterated through every pixel in the original image, computed its brightness, and
+then saved a white pixel to a new image if the pixel exceeded the threshold.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/white.png" alt="white">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_blur">1.2. Blur</h3>
+<div class="paragraph">
+<p>For this assignment, we will apply a box blur to each pixel in the image computed in the previous step.</p>
+</div>
+<div class="paragraph">
+<p>In a box blur, the color of each pixel is set to the average of its neighbors. For example, if we look
+only at the immediate neighbors of the pixel (i,j), the new color would be as follows:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[newPixel_{i,j} = (p_{i-1,j-1} + p_{i,j-1} + p_{i+1,j-1}
+                 p_{i-1,j}   + p_{i,j}   + p_{i+1,j}
+                 p_{i-1,j+1} + p_{i,j+1} + p_{i+1,j+1} )/9\]
+</div>
+</div>
+<div class="paragraph">
+<p>The above calculation would correspond to a box size of 3 because the region around the pixel has
+width 3 and height 3.</p>
+</div>
+<div class="paragraph">
+<p>We compute the blur separately for each color channel (read, blue, green). In the image below, we used a
+box size of 49. In other words, we used the 24 neighbors that were left, right, above, and below of the current
+pixel. If a pixel is near the edge of the image, we can clamp the blur indices so they stay in the image.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/blur.png" alt="blur">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The glow will look better with a gaussian blur. Feel free to implement one instead!
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_glow_2">1.3. Glow</h3>
+<div class="paragraph">
+<p>The glow effect is achieved by adding the blurred image with the original image.</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[newPixel_{i,j} = originalPixel_{i,j} + blurPixel_{i,j}\]
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/blur.png" alt="blur">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_single_threaded">2. Single-threaded</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the file, <code>glow.c</code>, implement a single-threaded program that applies a glow effect to the image "earth-small.ppm".
+In this question, you will get the core algorithm working, before re-implementing it to be multithreaded in
+the next question.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>for each row in the image
-   for each col in the image
-      if (row,col) belongs to the mandelbrot set, continue
-
-      xfrac = row / image_size
-      yfrac = col / image_size
-      x0 = xmin + xfrac * (xmax - xmin)
-      y0 = ymin + yfrac * (ymax - ymin)
-
-      x = 0
-      y = 0
-      while (x*x + y*y &lt; 2*2)
-
-        yrow = round(size * (y - ymin)/(ymax - ymin))
-        xcol = round(size * (x - xmin)/(xmax - xmin))
-        if (yrow &lt; 0 || yrow &gt;= size) continue; // out of range
-        if (xcol &lt; 0 || xcol &gt;= size) continue; // out of range
-
-        increment count at (yrow, xcol)
-        update max count</code></pre>
+<pre class="highlight"><code>$ <strong>time ./glow</strong>
+real    0m0.518s
+user    0m0.513s
+sys     0m0.001s</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><strong>Step 3: Compute colors</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>gamma = 0.681
-factor = 1.0/gamma
-for each row in the image
-   for each col in the image
-      value = 0
-
-      if counts at (row,col) are greater than zero
-        value = log(counts[row][col]) / log(max_count)
-        value = pow(value, factor)
-
-      color.red = value * 255
-      color.green = value * 255
-      color.blue = value * 255
-
-      write color to image at location (row,col)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Each thread should compute the three steps on a quadrant of the image. Below
-is a suggested outline for your thread&#8217;s start routine.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>void * start(void* data) {
-
-  // perform step 1
-
-  // use a thread barrier to wait for all threads to finish steps 1 and 2
-  // perform step 2
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>./fractal</strong>
-Generating fractal with size 480x480
-  Num processes = 4
-  X range = [-2.5000,1.0000]
-  Y range = [-1.1200,1.1200]
-  X range = [-2.0000,1.0000]
-  Y range = [-1.1200,1.1200]
-Thread 140583141971712) sub-image block: cols (0, 240) to rows (0,240)
-Thread 140583133579008) sub-image block: cols (240, 480) to rows (0,240)
-Thread 140583125186304) sub-image block: cols (0, 240) to rows (240,480)
-Thread 140583116793600) sub-image block: cols (240, 480) to rows (240,480)
-Thread 140583141971712) finished
-Thread 140583133579008) finished
-Thread 140583125186304) finished
-Thread 140583116793600) finished
-Computed fractal set (480x480) in 0.123721 seconds
-Writing file: fractal-480-1650141479.ppm</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements and hints:</p>
+<p>Requirements/Hints:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Each thread should run all steps on a quadrant of the image.</p>
+<p>This program can be simple. You may hard-coded the input file (earth-small.ppm), the threshold (200), and the blur box size (25).</p>
 </li>
 <li>
-<p>You will need a <code>pthread_barrier_t</code> to wait for all counts to be computed before computing the colors</p>
+<p>Your program must output a PPM file named <code>glow.ppm</code></p>
 </li>
 <li>
-<p>Use mutex to compute the counts</p>
-</li>
-<li>
-<p>You should output the number of seconds needed to compute the image. Use this <a href="https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c">class example, matrix.c</a> for an example.</p>
-</li>
-<li>
-<p>Your output filename should have the format <code>fractal-&lt;size&gt;-&lt;timestamp&gt;.ppm</code>. The timestamp can be obtained by calling <code>time(0)</code>.</p>
-</li>
-<li>
-<p>You may use global variables for this program.</p>
+<p>Use software that can view PPM files to check your work, either via VS Code, eog (Eye of Gnome), Gimp, Photoshop, etc</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_submit_your_work">2. Submit your work</h2>
+<h2 id="_multi_threaded">3. Multi-threaded</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the file, <code>glow_multithreaded.c</code>, implement a program that applies a glow effect using multiple threads.
+It should run much faster than your single threaded version.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./glow_multithreaded -h</strong>
+usage: ./glow_multithreaded -N <NumThreads> -t <brightness threshold> -b <box blur size> -f <ppmfile>
+$ <strong>time ./glow_multithreaded</strong>
+Thread sub-image block: cols (0, 150) to rows (0,150)
+Thread sub-image block: cols (150, 300) to rows (0,150)
+Thread sub-image block: cols (0, 150) to rows (150,300)
+Thread sub-image block: cols (150, 300) to rows (150,300)
+
+real    0m0.249s
+user    0m0.717s
+sys     0m0.000s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements and recommendations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Each thread should run all steps on a portion of the image. I recommend you divide the image into horizontal slices (not square blocks)</p>
+</li>
+<li>
+<p>You can assume that N will divide the images evenly. <code>earth.ppm</code> has resolution 3000x3000. <code>earth-small.ppm</code> has resolution 300x300.</p>
+</li>
+<li>
+<p>Your program should output a file named <code>glow.ppm</code></p>
+</li>
+<li>
+<p>Your program must support the command line arguments.</p>
+</li>
+<li>
+<p>Your program may not use global variables.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_submit_your_work">4. Submit your work</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Submit both your code and images.</p>
@@ -229,7 +310,7 @@ $ git status</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">3. Grading Rubric</h2>
+<h2 id="_grading_rubric">5. Grading Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
@@ -294,7 +375,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-02-28 10:35:39 -0500
+Last updated 2025-04-05 12:47:06 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

@@ -1,6 +1,6 @@
 include::header.adoc[]
 
-:title: Assignment 12: Hold on to your memories
+:title: Assignment 12: Mutually Exclusive
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
@@ -9,13 +9,11 @@ include::header.adoc[]
 
 = {title}
 
-Due Friday, April 25th, before midnight. **Written portion is due April 24th - no late work accepted**
+*Due Friday, April 18th, before midnight*
 
 The goals for this assignment are:
 
-* Understand void* types and pointer arithmetic
-* More linked list practice
-* Better understand malloc and free, particularly the use of the free list
+* Implement multi-thread algorithms using the pthread library
 
 [discrete]
 == Update your repository
@@ -32,184 +30,121 @@ Your repository should now contain a new folder named `{ASST}`.
 
 The `fetch` and `merge` commands update your repository with any changes from the original.
 
-
 :sectnums:
 
-= Description
+= Glow
 
-In this assignment, we will implement our own version of malloc and free based on 
-"first-fit" strategy and analyze its behavior. 
+In the file, `fractal.c`, compute a program that outputs a PPM image of a fractal computed 
+with the algorithm below. 
 
-For this assignment, you should submit both 
+Computing the fractal requires three steps:
 
-* your code, and
-* a written report, *due in class*
+* First, determine counts for the number of times each point visits a pixel, using the given formula
+* Second, you must turn the counts from step 2 into a color. The final colors should be written to a 2D array of ppm_pixel (either flat or an array of arrays) and then written. 
 
-= Code setup
+Each of the above steps can be parallelized using threads. The second step will require a mutex to ensure that the counts are set correctly. Below are suggested algorithms for 
+computing each step. 
 
-Your basecode includes the following source files
+**Step 1: Compute visited counts**
+[source]
+----
+for each row in the image
+   for each col in the image
+      if (row,col) belongs to the mandelbrot set, continue
 
-* `mylloc_list.c` - Malloc/free implementation that implements a free list with first-fit strategy (corresponds to `mhysa.c` in reading)
-* `rand.c` - Utilities for generating random sizes of memory
-* `sbrk.c` - Utilities for extending the amount of memory allocated to a program
-* `memstats.c` - A benchmark program
-* `unit_tests.c` - Unit tests for your malloc/free implementation 
+      xfrac = row / image_size
+      yfrac = col / image_size
+      x0 = xmin + xfrac * (xmax - xmin)
+      y0 = ymin + yfrac * (ymax - ymin)
 
-NOTE: This assignment is based on the reading: "My malloc: mylloc and mhysa" by
-Johan Montelius, posted to Slack. You should complete the reading and finish the
-implementation of `mylloc_list.c` _before_ starting the assignment. 
+      x = 0
+      y = 0
+      while (x*x + y*y < 2*2)
 
-= mylloc_list
+        yrow = round(size * (y - ymin)/(ymax - ymin))
+        xcol = round(size * (x - xmin)/(xmax - xmin))
+        if (yrow < 0 || yrow >= size) continue; // out of range
+        if (xcol < 0 || xcol >= size) continue; // out of range
 
-In `mylloc_list.c`, implement malloc and free based on the reading.
+        increment count at (yrow, xcol) 
+        update max count
+----
 
-Recall that the reading steps you through implementing your own malloc/free
-based on a free list and a _first-fit_ strategy.  This implementation uses a
-header to keep track of the memory requested from `sbrk`.  When we re-use memory
-that is freed, we typically will not re-use the entire block of memory. Modify
-the implementation from the reading to 
+**Step 3: Compute colors**
+[source]
+----
+gamma = 0.681
+factor = 1.0/gamma
+for each row in the image
+   for each col in the image
+      value = 0
 
-* Extend this header to keep track of both the requested size and the amount of memory 
-currently used in the chunk.
+      if counts at (row,col) are greater than zero
+        value = log(counts[row][col]) / log(max_count)
+        value = pow(value, factor)
+
+      color.red = value * 255
+      color.green = value * 255
+      color.blue = value * 255
+
+      write color to image at location (row,col)    
+----
+
+Each thread should compute the three steps on a quadrant of the image. Below 
+is a suggested outline for your thread's start routine.
 
 [source]
 ----
-struct chunk {
-  int size; // size of memory allocated from sbrk
-  int used; // *NEW*: amount currently in use
-  struct chunk *next;
-};
+void * start(void* data) {
+
+  // perform step 1
+
+  // use a thread barrier to wait for all threads to finish steps 1 and 2
+  // perform step 2
+
+}
 ----
 
-Use the unit tests included with your assignment to test that your implementation is correct
+
 
 [source,subs="quotes"]
 ----
-$ **make all**
-gcc -g -Wall -Wvla -Werror memstats.c mylloc_list.c sbrk.c rand.c -o memstats -lm
-gcc -g -Wall -Wvla -Werror unit_tests.c mylloc_list.c sbrk.c rand.c -o unit_tests -lm
-$ **./unit_tests**
-Running tests...
-test 1: size 0 returns NULL: PASSED
-test 2: flist is NULL to start: PASSED
-test 3: flist is empty after first malloc: PASSED
-test 4: correct amount allocated: PASSED
-test 5: header size correct: PASSED
-test 6: header used correct: PASSED
-test 7: flist is non-empty after free: PASSED
-test 8: flist is empty: PASSED
-test9: correct amount allocated: PASSED
-test 10: header size correct: PASSED
-test 11: header used correct: PASSED
-test 12: flist is not empty: PASSED
-test 13: current-init correct size: PASSED
-test 14: header size correct: PASSED
-test 15: header used correct: PASSED
-test 16: flist's first node has correct size: PASSED
-test 17: flist is non-empty: PASSED
-test 18: flist's second node has correct size: PASSED
+$ **./fractal**
+Generating fractal with size 480x480
+  Num processes = 4
+  X range = [-2.5000,1.0000]
+  Y range = [-1.1200,1.1200]
+  X range = [-2.0000,1.0000]
+  Y range = [-1.1200,1.1200]
+Thread 140583141971712) sub-image block: cols (0, 240) to rows (0,240)
+Thread 140583133579008) sub-image block: cols (240, 480) to rows (0,240)
+Thread 140583125186304) sub-image block: cols (0, 240) to rows (240,480)
+Thread 140583116793600) sub-image block: cols (240, 480) to rows (240,480)
+Thread 140583141971712) finished
+Thread 140583133579008) finished
+Thread 140583125186304) finished
+Thread 140583116793600) finished
+Computed fractal set (480x480) in 0.123721 seconds
+Writing file: fractal-480-1650141479.ppm
 ----
 
-= Memory statistics
+//image:buddhabrot-2000-1650142988.png[height=400]
 
-In `memstats.c`, implement a program that simulates a series of memory 
-allocations and then outputs an image that visualizes the memory usage. 
+Requirements and hints:
 
-[source,subs="quotes"]
-----
-$ **./memstats**
-Starting test..
-The initial top of the heap is 0x7feffe84d010.
----------------
-0
-Allocating 452 bytes at index 0
-Allocating 1042 bytes at index 4
-Allocating 45 bytes at index 1
-Freeing index 0
-Allocating 68 bytes at index 0
-Freeing index 1
-Freeing index 0
-Allocating 127 bytes at index 3
-Allocating 1141 bytes at index 2
-Allocating 89 bytes at index 1
-The new top of the heap is 0x7feffe84db31.
-Increased by 2849 (0xb21) bytes
-Total blocks: 5 Free blocks: 1 Used blocks: 4
-Total memory allocated: 2769 Free memory: 45 Used memory: 2724
-Underutilized memory: 0.12
----------------
-1
-Freeing index 3
-Allocating 47 bytes at index 0
-Freeing index 4
-Freeing index 1
-Freeing index 2
-Freeing index 0
-Allocating 3426 bytes at index 1
-Freeing index 1
-Allocating 39 bytes at index 2
-Allocating 163 bytes at index 4
-The new top of the heap is 0x7feffe84e8a3.
-Increased by 3442 (0xd72) bytes
-Total blocks: 6 Free blocks: 4 Used blocks: 2
-Total memory allocated: 6195 Free memory: 2317 Used memory: 3878
-Underutilized memory: 0.95
----------------
-2
-Allocating 1658 bytes at index 3
-Allocating 1812 bytes at index 0
-Freeing index 3
-Allocating 39 bytes at index 3
-Allocating 156 bytes at index 1
-Freeing index 3
-Freeing index 1
-Freeing index 4
-Freeing index 2
-Allocating 921 bytes at index 1
-The new top of the heap is 0x7feffe84f651.
-Increased by 3502 (0xdae) bytes
-Total blocks: 8 Free blocks: 6 Used blocks: 2
-Total memory allocated: 9665 Free memory: 4427 Used memory: 5238
-Underutilized memory: 0.48
-Time is 4.1e-05
-----
+* Each thread should run all steps on a quadrant of the image. 
+* You will need a `pthread_barrier_t` to wait for all counts to be computed before computing the colors
+* Use mutex to compute the counts
+* You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. 
+* Your output filename should have the format `fractal-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
+* You may use global variables for this program. 
 
-== README (*Due in class as a hardcopy*)
-
-Read this section and answer the corresponding questions. We will visualize the execution of `memstats.c` for Round 1.
-When the program starts, we have no buffers allocated and the free list is empty. 
-
-image:memstats0.png[]
-
-After the first 3 allocations, the buffers and free list look as follows:
-
-image:memstats1.png[]
-
-After the next iteration, we have
-
-image:memstats2.png[]
-
-After the next iteration, we have
-image:memstats3.png[]
-
-After the next iteration, we have
-image:memstats4.png[]
-
-At the end of round 1, the buffers and free list look as follows
-
-image:memstats5.png[]
-
-Answer the following questions:
-
-. Why is the total memory allocated equal to 2769 bytes?
-. If the total memory is equal to 2769 bytes, why did the heap increase by 2849 bytes?
-. Why is the underutilized memory 12%?
-. Draw the buffers and free list after round 1
-. Draw the buffers and free list after round 2
+//image::buddhabrot-Small.png[height=400]
+//NOTE: Other chaotic sets can be visualized in the same way as the Buddhabrot. To see more, read about link:https://flam3.com/flame_draves.pdf[Fractal Frames].
 
 = Submit your work
 
-Submit both your code (by midnight) *and* your written questions (due in class Wednesday).
+Submit both your code and images.
 
 1) Push your code work to github
 
@@ -224,24 +159,18 @@ $ git push
 $ git status
 ----
 
-
 = Grading Rubric
 
 *Assignment rubrics*
 
 Grades are out of 4 points.
 
-* (2 points) mylloc_list
-** (0.1 points) style and header comment
-** (1.9 points) passes all tests
-* (1 points) memstats
-** (0.1 points) style and header comment
-** (0.9 points) correct output 
-* (1 points) Readme
-
-NOTE: valgrind won't work for this assignment. You do not need to check for memory errors on this assignment.
-
-// TODO: Next smemester: get students to use valgrind header!!!`
+* (4 points) Threaded Fractal
+** (0.4 points) style and header comment
+** (0.4 points) Generated image with correct filename
+** (0.2 points) Supports given command line arguments
+** (1.0 points) Correct output, thread coordination, and output performance statistics
+** (2.0 points) no memory errors
 
 *Code rubrics*
 
@@ -250,6 +179,7 @@ have good style.
 
 * Some credit lost for missing features or bugs, depending on severity of error
 * -5% for style errors. See the link:../codingstandard.html[class coding style] here.
+* -50% for memory errors
 * -100% for failure to checkin work to Github
 * -100% for failure to compile on linux using make
 
