@@ -130,15 +130,15 @@ Requirements/Hints:
 In the file, `glow_multithreaded.c`, implement a program that applies a glow effect using multiple threads. 
 It should run much faster than your single threaded version.
 
-[source,subs="quotes"]
+[source]
 ----
-$ **./glow_multithreaded -h**
+$ ./glow_multithreaded -h
 usage: ./glow_multithreaded -N <NumThreads> -t <brightness threshold> -b <box blur size> -f <ppmfile>
-$ **time ./glow_multithreaded**
-Thread sub-image block: cols (0, 150) to rows (0,150)
-Thread sub-image block: cols (150, 300) to rows (0,150)
-Thread sub-image block: cols (0, 150) to rows (150,300)
-Thread sub-image block: cols (150, 300) to rows (150,300)
+$ time ./glow_multithreaded
+Thread sub-image slice: rows (0,75)
+Thread sub-image slice: rows (75,150)
+Thread sub-image slice: rows (150,225)
+Thread sub-image slice: rows (225,300)
 
 real    0m0.249s
 user    0m0.717s

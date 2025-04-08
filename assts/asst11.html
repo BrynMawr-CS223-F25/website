@@ -250,13 +250,13 @@ It should run much faster than your single threaded version.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>./glow_multithreaded -h</strong>
-usage: ./glow_multithreaded -N <NumThreads> -t <brightness threshold> -b <box blur size> -f <ppmfile>
-$ <strong>time ./glow_multithreaded</strong>
-Thread sub-image block: cols (0, 150) to rows (0,150)
-Thread sub-image block: cols (150, 300) to rows (0,150)
-Thread sub-image block: cols (0, 150) to rows (150,300)
-Thread sub-image block: cols (150, 300) to rows (150,300)
+<pre class="highlight"><code>$ ./glow_multithreaded -h
+usage: ./glow_multithreaded -N &lt;NumThreads&gt; -t &lt;brightness threshold&gt; -b &lt;box blur size&gt; -f &lt;ppmfile&gt;
+$ time ./glow_multithreaded
+Thread sub-image slice: rows (0,75)
+Thread sub-image slice: rows (75,150)
+Thread sub-image slice: rows (150,225)
+Thread sub-image slice: rows (225,300)
 
 real    0m0.249s
 user    0m0.717s
@@ -375,7 +375,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-04-05 12:59:03 -0400
+Last updated 2025-04-08 18:44:36 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">
