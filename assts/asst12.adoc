@@ -13,7 +13,8 @@ include::header.adoc[]
 
 The goals for this assignment are:
 
-* Implement multi-thread algorithms using the pthread library
+* Synchronize the behavior of multiple threads
+* Work with mutex and condition variables
 
 [discrete]
 == Update your repository
@@ -32,115 +33,119 @@ The `fetch` and `merge` commands update your repository with any changes from th
 
 :sectnums:
 
-= Glow
+= Consumer/Producer 
 
-In the file, `fractal.c`, compute a program that outputs a PPM image of a fractal computed 
-with the algorithm below. 
+In the file, `cp.c`, implement the producer/consumer demo from class. Your producer 
+function should generate an integer between 0 and 9. Your consumer function should print 
+the value. The size of your circular queue should be 10 elements. 
 
-Computing the fractal requires three steps:
-
-* First, determine counts for the number of times each point visits a pixel, using the given formula
-* Second, you must turn the counts from step 2 into a color. The final colors should be written to a 2D array of ppm_pixel (either flat or an array of arrays) and then written. 
-
-Each of the above steps can be parallelized using threads. The second step will require a mutex to ensure that the counts are set correctly. Below are suggested algorithms for 
-computing each step. 
-
-**Step 1: Compute visited counts**
-[source]
+[source, subs="quotes"]
 ----
-for each row in the image
-   for each col in the image
-      if (row,col) belongs to the mandelbrot set, continue
-
-      xfrac = row / image_size
-      yfrac = col / image_size
-      x0 = xmin + xfrac * (xmax - xmin)
-      y0 = ymin + yfrac * (ymax - ymin)
-
-      x = 0
-      y = 0
-      while (x*x + y*y < 2*2)
-
-        yrow = round(size * (y - ymin)/(ymax - ymin))
-        xcol = round(size * (x - xmin)/(xmax - xmin))
-        if (yrow < 0 || yrow >= size) continue; // out of range
-        if (xcol < 0 || xcol >= size) continue; // out of range
-
-        increment count at (yrow, xcol) 
-        update max count
+$ **./cp**
+Received item: 3
+Received item: 6
+Received item: 7
+Received item: 5
+Received item: 3
+Received item: 5
+^C
 ----
 
-**Step 3: Compute colors**
-[source]
+Requirements:
+
+* Use sleep(1.0) to slow the production of values and make the output of your program easier to read.
+* Place the behavior of both threads in an infinite loop. Use Control-C to exit your demo.
+
+= Banking
+
+Edit the file, `banking.c`, so it correctly handles a series of transfers between two accounts. 
+Specifically, you should ensure
+
+* The program does not subtract funds if there aren't sufficient funds in the account.
+* The program does not hang due to deadlock
+
+When you run the basecode, you will see the following behavior. 
+
+[source, subs="quotes"]
 ----
-gamma = 0.681
-factor = 1.0/gamma
-for each row in the image
-   for each col in the image
-      value = 0
-
-      if counts at (row,col) are greater than zero
-        value = log(counts[row][col]) / log(max_count)
-        value = pow(value, factor)
-
-      color.red = value * 255
-      color.green = value * 255
-      color.blue = value * 255
-
-      write color to image at location (row,col)    
-----
-
-Each thread should compute the three steps on a quadrant of the image. Below 
-is a suggested outline for your thread's start routine.
-
-[source]
-----
-void * start(void* data) {
-
-  // perform step 1
-
-  // use a thread barrier to wait for all threads to finish steps 1 and 2
-  // perform step 2
-
-}
+$ **./banking**
+Starting balance A: 5000.00
+Starting balance B: 5000.00
+banking: banking.c:29: Transfer: Assertion `fromAcct->balance >= 0' failed.
+Aborted (core dumped)
 ----
 
+Add a mutex and condition variable to each account. This variable can be used to 
+ensure that we do not subtract funds unless there is enough money in the account. 
+Use the consumer/producer demo in the previous question as an example. Also make 
+sure that your mutexes avoid deadlock as well. A working program should look at follows.
 
-
-[source,subs="quotes"]
+[source, subs="quotes"]
 ----
-$ **./fractal**
-Generating fractal with size 480x480
-  Num processes = 4
-  X range = [-2.5000,1.0000]
-  Y range = [-1.1200,1.1200]
-  X range = [-2.0000,1.0000]
-  Y range = [-1.1200,1.1200]
-Thread 140583141971712) sub-image block: cols (0, 240) to rows (0,240)
-Thread 140583133579008) sub-image block: cols (240, 480) to rows (0,240)
-Thread 140583125186304) sub-image block: cols (0, 240) to rows (240,480)
-Thread 140583116793600) sub-image block: cols (240, 480) to rows (240,480)
-Thread 140583141971712) finished
-Thread 140583133579008) finished
-Thread 140583125186304) finished
-Thread 140583116793600) finished
-Computed fractal set (480x480) in 0.123721 seconds
-Writing file: fractal-480-1650141479.ppm
+$ **./banking**
+Starting balance A: 5000.00
+Starting balance B: 5000.00
+Ending balance A: 5000.00
+Ending balance B: 5000.00
 ----
 
-//image:buddhabrot-2000-1650142988.png[height=400]
+Requirements:
 
-Requirements and hints:
+* Do not remove the `assert` in your code. A working program will not trigger the assert.
+* Use a condition variable to enforce whether an account has sufficient funds
 
-* Each thread should run all steps on a quadrant of the image. 
-* You will need a `pthread_barrier_t` to wait for all counts to be computed before computing the colors
-* Use mutex to compute the counts
-* You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. 
-* Your output filename should have the format `fractal-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
-* You may use global variables for this program. 
+= Bridge
 
-//image::buddhabrot-Small.png[height=400]
-//NOTE: Other chaotic sets can be visualized in the same way as the Buddhabrot. To see more, read about link:https://flam3.com/flame_draves.pdf[Fractal Frames].
+In the remote town of Mountainview Village, there is a single lane bridge that connects 
+a popular overlook with a quaint town center with shops and cafes. During peak season, 
+tourists spend the day driving back and forth across the bridge, alternating between 
+fresh air and inspiring views at the outlook platform and coffee, ice cream, and snacks 
+at the town center. 
+
+In the file, `bridge.c`, your will find a simulation of summer tourists. 
+Each tourist is simulated with a thread. The bridge is modeled as a shared, global 
+resource. If two cars simultaneously try to drive in opposite directions on the bridge, 
+we have a terrible accident. The bridge explodes and any cars on the bridge plummet 
+to the rapids below. 
+
+Edit the file, `bridge.c`, to safely simulate N tourists spending the day in Mountainview Village.
+
+* prevent deadlocks where no one takes the bridge
+* prevent accidents where cars travel in both directions at once
+
+For example, here is a single tourist.
+
+[source, subs="quotes"]
+----
+$ **./bridge 1 10**
+Tourist 0 takes their 0/10 trip towards Outlook
+Tourist 0 takes their 1/10 trip towards Town
+Tourist 0 takes their 2/10 trip towards Outlook
+Tourist 0 takes their 3/10 trip towards Town
+Tourist 0 takes their 4/10 trip towards Outlook
+Tourist 0 takes their 5/10 trip towards Town
+Tourist 0 takes their 6/10 trip towards Outlook
+Tourist 0 takes their 7/10 trip towards Town
+Tourist 0 takes their 8/10 trip towards Outlook
+Tourist 0 takes their 9/10 trip towards Town
+----
+
+But running with multiple tourists, we quickly see a problem.
+
+[source, subs="quotes"]
+----
+$ **./bridge 2 10**
+Tourist 1 takes their 0/10 trip towards Town
+Tourist 0 takes their 0/10 trip towards Outlook
+bridge: bridge.c:38: Move: Assertion `bridge.num_on_bridge[(bridge.direction+1)%2] == 0' failed.
+bridge: bridge.c:38: Move: Assertion `bridge.num_on_bridge[(bridge.direction+1)%2] == 0' failed.
+Aborted (core dumped)
+----
+
+Requirements:
+
+* Your program must leave the asserts which verify that the safety constraints are enforced.
+* You should use conditional variables and mutex to synchronize the threads that represent each tourist.
 
 = Submit your work
 
@@ -165,12 +170,9 @@ $ git status
 
 Grades are out of 4 points.
 
-* (4 points) Threaded Fractal
-** (0.4 points) style and header comment
-** (0.4 points) Generated image with correct filename
-** (0.2 points) Supports given command line arguments
-** (1.0 points) Correct output, thread coordination, and output performance statistics
-** (2.0 points) no memory errors
+* (1 points) Consumer/Producer
+* (1 points) Banking
+* (2 points) Bridge
 
 *Code rubrics*
 

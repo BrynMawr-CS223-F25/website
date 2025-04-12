@@ -15,9 +15,11 @@
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_assignment_12_mutually_exclusive">Assignment 12: Mutually Exclusive</a></li>
-<li><a href="#_glow">1. Glow</a></li>
-<li><a href="#_submit_your_work">2. Submit your work</a></li>
-<li><a href="#_grading_rubric">3. Grading Rubric</a></li>
+<li><a href="#_consumerproducer">1. Consumer/Producer</a></li>
+<li><a href="#_banking">2. Banking</a></li>
+<li><a href="#_bridge">3. Bridge</a></li>
+<li><a href="#_submit_your_work">4. Submit your work</a></li>
+<li><a href="#_grading_rubric">5. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
@@ -34,7 +36,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Implement multi-thread algorithms using the pthread library</p>
+<p>Synchronize the behavior of multiple threads</p>
+</li>
+<li>
+<p>Work with mutex and condition variables</p>
 </li>
 </ul>
 </div>
@@ -67,144 +72,177 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_glow">1. Glow</h2>
+<h2 id="_consumerproducer">1. Consumer/Producer</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the file, <code>fractal.c</code>, compute a program that outputs a PPM image of a fractal computed
-with the algorithm below.</p>
+<p>In the file, <code>cp.c</code>, implement the producer/consumer demo from class. Your producer
+function should generate an integer between 0 and 9. Your consumer function should print
+the value. The size of your circular queue should be 10 elements.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./cp</strong>
+Received item: 3
+Received item: 6
+Received item: 7
+Received item: 5
+Received item: 3
+Received item: 5
+^C</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Computing the fractal requires three steps:</p>
+<p>Requirements:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>First, determine counts for the number of times each point visits a pixel, using the given formula</p>
+<p>Use sleep(1.0) to slow the production of values and make the output of your program easier to read.</p>
 </li>
 <li>
-<p>Second, you must turn the counts from step 2 into a color. The final colors should be written to a 2D array of ppm_pixel (either flat or an array of arrays) and then written.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Each of the above steps can be parallelized using threads. The second step will require a mutex to ensure that the counts are set correctly. Below are suggested algorithms for
-computing each step.</p>
-</div>
-<div class="paragraph">
-<p><strong>Step 1: Compute visited counts</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>for each row in the image
-   for each col in the image
-      if (row,col) belongs to the mandelbrot set, continue
-
-      xfrac = row / image_size
-      yfrac = col / image_size
-      x0 = xmin + xfrac * (xmax - xmin)
-      y0 = ymin + yfrac * (ymax - ymin)
-
-      x = 0
-      y = 0
-      while (x*x + y*y &lt; 2*2)
-
-        yrow = round(size * (y - ymin)/(ymax - ymin))
-        xcol = round(size * (x - xmin)/(xmax - xmin))
-        if (yrow &lt; 0 || yrow &gt;= size) continue; // out of range
-        if (xcol &lt; 0 || xcol &gt;= size) continue; // out of range
-
-        increment count at (yrow, xcol)
-        update max count</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Step 3: Compute colors</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>gamma = 0.681
-factor = 1.0/gamma
-for each row in the image
-   for each col in the image
-      value = 0
-
-      if counts at (row,col) are greater than zero
-        value = log(counts[row][col]) / log(max_count)
-        value = pow(value, factor)
-
-      color.red = value * 255
-      color.green = value * 255
-      color.blue = value * 255
-
-      write color to image at location (row,col)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Each thread should compute the three steps on a quadrant of the image. Below
-is a suggested outline for your thread&#8217;s start routine.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>void * start(void* data) {
-
-  // perform step 1
-
-  // use a thread barrier to wait for all threads to finish steps 1 and 2
-  // perform step 2
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>./fractal</strong>
-Generating fractal with size 480x480
-  Num processes = 4
-  X range = [-2.5000,1.0000]
-  Y range = [-1.1200,1.1200]
-  X range = [-2.0000,1.0000]
-  Y range = [-1.1200,1.1200]
-Thread 140583141971712) sub-image block: cols (0, 240) to rows (0,240)
-Thread 140583133579008) sub-image block: cols (240, 480) to rows (0,240)
-Thread 140583125186304) sub-image block: cols (0, 240) to rows (240,480)
-Thread 140583116793600) sub-image block: cols (240, 480) to rows (240,480)
-Thread 140583141971712) finished
-Thread 140583133579008) finished
-Thread 140583125186304) finished
-Thread 140583116793600) finished
-Computed fractal set (480x480) in 0.123721 seconds
-Writing file: fractal-480-1650141479.ppm</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements and hints:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Each thread should run all steps on a quadrant of the image.</p>
-</li>
-<li>
-<p>You will need a <code>pthread_barrier_t</code> to wait for all counts to be computed before computing the colors</p>
-</li>
-<li>
-<p>Use mutex to compute the counts</p>
-</li>
-<li>
-<p>You should output the number of seconds needed to compute the image. Use this <a href="https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c">class example, matrix.c</a> for an example.</p>
-</li>
-<li>
-<p>Your output filename should have the format <code>fractal-&lt;size&gt;-&lt;timestamp&gt;.ppm</code>. The timestamp can be obtained by calling <code>time(0)</code>.</p>
-</li>
-<li>
-<p>You may use global variables for this program.</p>
+<p>Place the behavior of both threads in an infinite loop. Use Control-C to exit your demo.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_submit_your_work">2. Submit your work</h2>
+<h2 id="_banking">2. Banking</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Edit the file, <code>banking.c</code>, so it correctly handles a series of transfers between two accounts.
+Specifically, you should ensure</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The program does not subtract funds if there aren&#8217;t sufficient funds in the account.</p>
+</li>
+<li>
+<p>The program does not hang due to deadlock</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When you run the basecode, you will see the following behavior.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./banking</strong>
+Starting balance A: 5000.00
+Starting balance B: 5000.00
+banking: banking.c:29: Transfer: Assertion `fromAcct->balance >= 0' failed.
+Aborted (core dumped)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add a mutex and condition variable to each account. This variable can be used to
+ensure that we do not subtract funds unless there is enough money in the account.
+Use the consumer/producer demo in the previous question as an example. Also make
+sure that your mutexes avoid deadlock as well. A working program should look at follows.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./banking</strong>
+Starting balance A: 5000.00
+Starting balance B: 5000.00
+Ending balance A: 5000.00
+Ending balance B: 5000.00</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Do not remove the <code>assert</code> in your code. A working program will not trigger the assert.</p>
+</li>
+<li>
+<p>Use a condition variable to enforce whether an account has sufficient funds</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bridge">3. Bridge</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the remote town of Mountainview Village, there is a single lane bridge that connects
+a popular overlook with a quaint town center with shops and cafes. During peak season,
+tourists spend the day driving back and forth across the bridge, alternating between
+fresh air and inspiring views at the outlook platform and coffee, ice cream, and snacks
+at the town center.</p>
+</div>
+<div class="paragraph">
+<p>In the file, <code>bridge.c</code>, your will find a simulation of summer tourists.
+Each tourist is simulated with a thread. The bridge is modeled as a shared, global
+resource. If two cars simultaneously try to drive in opposite directions on the bridge,
+we have a terrible accident. The bridge explodes and any cars on the bridge plummet
+to the rapids below.</p>
+</div>
+<div class="paragraph">
+<p>Edit the file, <code>bridge.c</code>, to safely simulate N tourists spending the day in Mountainview Village.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>prevent deadlocks where no one takes the bridge</p>
+</li>
+<li>
+<p>prevent accidents where cars travel in both directions at once</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example, here is a single tourist.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./bridge 1 10</strong>
+Tourist 0 takes their 0/10 trip towards Outlook
+Tourist 0 takes their 1/10 trip towards Town
+Tourist 0 takes their 2/10 trip towards Outlook
+Tourist 0 takes their 3/10 trip towards Town
+Tourist 0 takes their 4/10 trip towards Outlook
+Tourist 0 takes their 5/10 trip towards Town
+Tourist 0 takes their 6/10 trip towards Outlook
+Tourist 0 takes their 7/10 trip towards Town
+Tourist 0 takes their 8/10 trip towards Outlook
+Tourist 0 takes their 9/10 trip towards Town</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But running with multiple tourists, we quickly see a problem.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./bridge 2 10</strong>
+Tourist 1 takes their 0/10 trip towards Town
+Tourist 0 takes their 0/10 trip towards Outlook
+bridge: bridge.c:38: Move: Assertion `bridge.num_on_bridge[(bridge.direction+1)%2] == 0' failed.
+bridge: bridge.c:38: Move: Assertion `bridge.num_on_bridge[(bridge.direction+1)%2] == 0' failed.
+Aborted (core dumped)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Your program must leave the asserts which verify that the safety constraints are enforced.</p>
+</li>
+<li>
+<p>You should use conditional variables and mutex to synchronize the threads that represent each tourist.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_submit_your_work">4. Submit your work</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Submit both your code and images.</p>
@@ -226,7 +264,7 @@ $ git status</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">3. Grading Rubric</h2>
+<h2 id="_grading_rubric">5. Grading Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
@@ -237,26 +275,13 @@ $ git status</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(4 points) Threaded Fractal</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(0.4 points) style and header comment</p>
+<p>(1 points) Consumer/Producer</p>
 </li>
 <li>
-<p>(0.4 points) Generated image with correct filename</p>
+<p>(1 points) Banking</p>
 </li>
 <li>
-<p>(0.2 points) Supports given command line arguments</p>
-</li>
-<li>
-<p>(1.0 points) Correct output, thread coordination, and output performance statistics</p>
-</li>
-<li>
-<p>(2.0 points) no memory errors</p>
-</li>
-</ul>
-</div>
+<p>(2 points) Bridge</p>
 </li>
 </ul>
 </div>
@@ -291,7 +316,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-04-05 12:14:17 -0400
+Last updated 2025-04-12 14:16:49 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

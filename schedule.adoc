@@ -119,7 +119,7 @@
 //-----------------------------
 |12
 |April 8, 10 anchor:week12[]
-|*Threads III* 
+|*Threads III/ Memory* 
 
 * Read: link:https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era[Chapter 14] 
 * link:assts/asst11.html[Assignment 11]: Due April 11th
@@ -129,29 +129,29 @@
 //-----------------------------
 |13
 |April 15, 17 anchor:week13[]
-|*Malloc* 
+|*Memory* 
 
 * Read:"My malloc: mylloc and mhysa" by Johan Montelius 
-* link:assts/asst11.[Assignment 11]: Due April 18
+* Read: link:https://diveintosystems.org/singlepage/#_storage_and_the_memory_hierarchy[Chapter 11.1-11.3] 
+* link:assts/asst12.html[Assignment 12]: Due April 18
 * Lab April 15: Quiz 06 Practice
 
 //-----------------------------
 |14
 |April 22, 24 anchor:week14[]
-|*Memory* 
+|*Code Optimization, C++* 
 
-* Read: link:https://diveintosystems.org/singlepage/#_storage_and_the_memory_hierarchy[Chapter 11.1-11.3] 
-* Lab April 22: **Code Jam06** 
-* Class April 24: **Quiz 04**
-* link:assts/asst12.[Assignment 12]: Due April 25
+* Read: link:https://diveintosystems.org/singlepage/#_code_optimization[Chapter 12] 
+* link:assts/asst13.html[Assignment 13]: Due May 1, **Hardcopy in class - no late work accepted**
 
 //-----------------------------
 |15
 |April 29, May 1 anchor:week15[]
-|*Code Optimization, C++* 
+|*Review* 
 
-* Read: link:https://diveintosystems.org/singlepage/#_code_optimization[Chapter 12] 
+* **LAB IS CANCELED!**
 * Lab April 29, link:studyguide-final[Final Study Guide], link:studyguide6.html[Study Guide 6]
+* In-Class: Practice Final
 
 |===
 
