@@ -134,7 +134,7 @@
 * Read:"My malloc: mylloc and mhysa" by Johan Montelius 
 * Read: link:https://diveintosystems.org/singlepage/#_storage_and_the_memory_hierarchy[Chapter 11.1-11.3] 
 * link:assts/asst12.html[Assignment 12]: Due April 18
-* Lab April 15: Quiz 06 Practice
+* Lab April 15: Worksheet practice
 
 //-----------------------------
 |14
@@ -142,16 +142,17 @@
 |*Code Optimization, C++* 
 
 * Read: link:https://diveintosystems.org/singlepage/#_code_optimization[Chapter 12] 
-* link:assts/asst13.html[Assignment 13]: Due May 1, **Hardcopy in class - no late work accepted**
+* Lab April 22: Code Jam 06 - Individual programming challenge
+* link:assts/asst13.html[Assignment 13]: Due April 25, **Hardcopy due in class April 24 - no late work accepted**
 
 //-----------------------------
 |15
 |April 29, May 1 anchor:week15[]
 |*Review* 
 
-* **LAB IS CANCELED!**
+* **NO LAB April 29**
 * Lab April 29, link:studyguide-final[Final Study Guide], link:studyguide6.html[Study Guide 6]
-* In-Class: Practice Final
+* In-Class: Practice Final and Review
 
 |===
 

@@ -9,7 +9,9 @@ include::header.adoc[]
 
 = {title}
 
-Due Friday, April 25th, before midnight. **Written portion is due April 24th - no late work accepted**
+Code Due Friday, April 25th, before midnight. 
+
+Written work Due Thursday, April 24th, in class. **Written portion is due April 24th - no late work accepted**
 
 The goals for this assignment are:
 
