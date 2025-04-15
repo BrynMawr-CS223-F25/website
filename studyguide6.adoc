@@ -30,8 +30,10 @@ Everything from link:studyguide5.html[Study Guide 5], plus
 * What is a race condition?
 * What is deadlock?
 * What does it mean for a function to be thread safe?
+* What is the critical path?
+* Describe how a condition variable can be used to handle edge cases for a circular queue shared between two threads.
 
-2) The following multi-threaded program simulates two bank accounts. But it's not working correctly. What is going on and how can we fix it?
+2) The following multi-threaded program simulates two bank accounts. But it's not working correctly. What is going on and how can we fix it? Draw a graph that shows the threads and shared resources (e.g. a resource allocation graph)
 
 [source]
 ----
@@ -106,6 +108,7 @@ int main() {
 * Which data is shared between threads?
 * Which data is only accessed by a single thread?
 * Which data is shared only between main and a single thread?
+* Draw a flow graph for the program and circle the critical path.
 * When the list size is greater than 1000 the program isn't working correctly. What is going on and how can we fix it?
 
 [source]

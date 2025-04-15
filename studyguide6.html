@@ -85,10 +85,16 @@
 <li>
 <p>What does it mean for a function to be thread safe?</p>
 </li>
+<li>
+<p>What is the critical path?</p>
+</li>
+<li>
+<p>Describe how a condition variable can be used to handle edge cases for a circular queue shared between two threads.</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
-<p>2) The following multi-threaded program simulates two bank accounts. But it&#8217;s not working correctly. What is going on and how can we fix it?</p>
+<p>2) The following multi-threaded program simulates two bank accounts. But it&#8217;s not working correctly. What is going on and how can we fix it? Draw a graph that shows the threads and shared resources (e.g. a resource allocation graph)</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -171,6 +177,9 @@ int main() {
 </li>
 <li>
 <p>Which data is shared only between main and a single thread?</p>
+</li>
+<li>
+<p>Draw a flow graph for the program and circle the critical path.</p>
 </li>
 <li>
 <p>When the list size is greater than 1000 the program isn&#8217;t working correctly. What is going on and how can we fix it?</p>
@@ -614,7 +623,7 @@ int doubleSum(int *array, int length){
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-15 20:21:34 -0500
+Last updated 2025-04-15 09:11:49 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">
