@@ -16,9 +16,10 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 [.anns]
 
 * link:assts/asst12.html[Assignment 12]: Due April 18th
-* Lab April 15: link:studyguide6.html[Study Guide 6]
+* link:assts/asst13.html[Assignment 13]: Due April 25th *Written portion dur April 24*
 * Lab April 22: Individual coding challenge (Code Jam 06)
 * **NO QUIZ April 25**
+* **NO LAB/Office Hours April 29**
 * Final Exam: 9:30am - 12:30pm, Tuesday, May 6th, BYC 127
 
 == Course Info
