@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Homeworks and exercises</title>
+<title>Set up a remote development environment with VS Code</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -440,34 +440,178 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="_set_up_a_remote_development_environment_with_vs_code">Set up a remote development environment with VS Code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>VS Code is an integrated development environment.</p>
+</div>
+<div class="paragraph">
+<p>A remote development environment will allow you to run code from
+comet.cs.brynmawr.edu, a remote server, from within VS Code.</p>
+</div>
+<div class="paragraph">
+<p>For this option, your need to use VS Code with the Remote-SSH extension to VS Code.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://code.visualstudio.com/">VS Code</a></p>
+</li>
+<li>
+<p><a href="https://code.visualstudio.com/docs/remote/ssh">Remote SSH Tutorial</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_setting_up_your_own_local_development_environment">Setting up your own local development environment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A local development environment allows you to write code on your own desktop or
+laptop. With a local development environment, you will be able to run your code even
+after you graduate from college.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+All programs must run on the lab&#8217;s Linux environment. Make sure you test
+your work on the lab machines if you work on your laptop!
+</td>
+</tr>
+</table>
+</div>
 <div class="sect2">
-<h3 id="_homeworks_and_exercises">Homeworks and exercises</h3>
-<div class="paragraph">
-<p>This course features weekly lab exercises and assignments which are an important
-component of the class.</p>
+<h3 id="_windows">Windows</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open PowerShell and install wsl2: <code>wsl --install</code>. See <a href="https://docs.microsoft.com/en-us/windows/wsl/install">documentation</a>. Note that you may need to open powershell as an administrator.</p>
+</li>
+<li>
+<p>From the windows store, <a href="https://ubuntu.com/wsl">install <code>Ubuntu</code></a>.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>Lab exercises will be passed out in lab. These exercises are intended to be short and
-will typically ask you to reproduce demos from class or tackle concepts you will need
-for your assignment. Lab exercises should be handed in at the end of lab.</p>
+<p>Once installed, you can setup your development environment from a bash shell.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open PowerShell</p>
+</li>
+<li>
+<p>Type <code>wsl</code> to start the windows subsystem for linux. This will give your a bash prompt</p>
+</li>
+<li>
+<p>Then install your development tools</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>sudo apt-get install cmake</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install git</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install g++</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install vim</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install libc6-dev-i386</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install gcc-multilib</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install hexedit</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install valgrind</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install gdb</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>Class exercises will be passed out in class. These exercises are intended to be
-short and will typically ask you to practice concepts from lecture.</p>
+<p>For example, you get something like the following</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Users\alinen&gt; wsl
+WSL alinen@Balthazar:~$ sudo apt-get install make
+
+etc</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+A quick way to open powershell is to type &lt;WindowsKey&gt;-'Q' and type 'powershell'.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_macos">MacOS</h3>
+<div class="paragraph">
+<p>From terminal, run command <code>xcode-select --install</code></p>
 </div>
 <div class="paragraph">
-<p>Assignments will be posted Saturdays and due Friday before midnight.  You are
-strongly encouraged to start early so that you can ask questions. See the
-syllabus for links to the assignments.</p>
+<p>You can follow the instructions <a href="https://www.ics.uci.edu/~pattis/common/handouts/macclion/clang.html">here</a></p>
 </div>
 <div class="paragraph">
-<p>You will submit your assignments electronically using git.</p>
+<p>Then, to install additional dependencies, execute the following commands form terminal</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ brew install vim
+$ brew install git
+$ brew install cmake</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+A quick way to open terminal is to use spotlight. From the keyboard, type the &lt;cmd&gt; and &lt;spacebar&gt;. Then type terminal at the popup edit field.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Unfortunately, <code>valgrind</code> and <code>gdb</code> cannot be run natively on mac. However, you may try running <code>leaks</code> or <code>lldb</code> which are similar. However, we recommend you still test on goldengate or a lab machine.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-15 17:48:47 -0500
+Last updated 2025-08-30 21:40:38 -0400
 </div>
 </div>
 </body>

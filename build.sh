@@ -2,7 +2,8 @@
 
 /usr/local/bin/asciidoctor assts/*.adoc *.adoc
 if [ $# -ne 1 ]; then 
-  echo "usage: ./build.sh <message>"
+  echo "Run with argument to check in: ./build.sh <message>"
+  exit 0
 fi
 
 git add .

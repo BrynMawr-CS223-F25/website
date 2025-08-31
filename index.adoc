@@ -1,11 +1,12 @@
 include::header.adoc[]
+include::dates.adoc[]
+
 //override default to include table css
 :stylesheet: front.css
 :leveloffset: -1
 
 :course: CMSC 223
 :title: Systems Programming
-:term: Spring 2025
 
 = {course}: {title} 
 
@@ -15,12 +16,8 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* link:assts/asst12.html[Assignment 12]: Due April 18th
-* link:assts/asst13.html[Assignment 13]: Due April 25th *Written portion dur April 24*
-* Lab April 22: Individual coding challenge (Code Jam 06)
-* **NO QUIZ April 25**
-* **NO LAB/Office Hours April 29**
-* Final Exam: 9:30am - 12:30pm, Tuesday, May 6th, BYC 127
+* Welcome to systems programming! 
+* link:assts/asst01.html[Assignment 01] is due {ASST01_DUE}
 
 == Course Info
 
@@ -28,16 +25,17 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 image::matrix_original.jpg[]
 
-Systems programming is the foundation of all software and toolkits that serve as 
-infrastructure for other software, such as compilers,
-operating systems, networking APIs, and graphics engines. Systems programming directly 
-interacts with machine characteristics and low-level data types. Class topics include
-pointers, bit representations of data, x86_64 assembly, memory management,
-processes, and threads.  In this class, students will gain hands-on experience
-implementing low-level algorithms and data structures using C. Additionally,
-students will build technical skills related to makefiles, interactive
-debugging, version control, and command-line shell interaction. C++ and STL
-will be introduced at the end of the course. 
+Systems programming is the foundation for creating software that serves as
+controllers and infrastructure, such as drivers, embedded system
+controllers, compilers, databases, operating systems, networking APIs, and
+graphics engines. Systems programming involves writing code that directly
+interacts with hardware, memory, or the operating system. Class topics
+include pointers, bit representations of data, x86_64 assembly, memory
+management, processes, and threads.  In this class, students will gain hands-on
+experience implementing low-level algorithms and data structures using C.
+Additionally, students will build technical skills related to makefiles,
+interactive debugging, version control, and command-line shell interaction. C++
+and STL will be introduced at the end of the course. 
 
 // http://svslibrary.pbworks.com/f/Data+Structures+and+Algorithm+Analysis+in+C+-+Mark+Allen+Weiss.pdf
 // http://cslabcms.nju.edu.cn/problem_solving/images/c/cc/The_C_Programming_Language_%282nd_Edition_Ritchie_Kernighan%29.pdf
@@ -50,8 +48,8 @@ will be introduced at the end of the course.
 
 | Lecture | Park 337 | Tuesday and Thursday 10:10 AM - 11:30 AM 
 | Lab | Park 231 | Tuesdays 2:40 PM - 4:00 PM 
-| Office Hours - Prof. Aline Normoyle | Park 200B | Tuesdays, 4-5 PM 
-| Office Hours - Tianyun Song | Park 231 | Thursdays, 5-6PM
+| Office Hours - Prof. Aline Normoyle | Park 200B | TBD
+| Office Hours - Rebecca Lassman | TBD | TBD
 
 |===
 
@@ -71,6 +69,7 @@ include::schedule.adoc[]
 
 === Unix, Bash, Makefiles
     
+* link:local-dev-setup.html[Setting up your development environment on your own laptop]
 * link:https://www.tutorialspoint.com/unix/index.htm[Unix Tutorial]
 * link:https://www.gnu.org/software/bash/manual/bash.pdf[Bash Manual]
 * link:https://oit.ua.edu/wp-content/uploads/2020/12/Linux_bash_cheat_sheet-1.pdf[Bash Cheatsheet]
@@ -116,14 +115,11 @@ as a weighted average of all grades according to the following weights:
 
 |===
 |45% | Final Exam
-|15% | Assignments
-|35% | Code jams and quizzes
-| 5% | Lab practice and class participation
+|10% | Assignments
+|20% | Lab code activities
+|20% | Midterms
+| 5% | Attendance and participation
 |===
-
-include::quizzes.adoc[]
-
-include::labPolicy.adoc[]
 
 include::latePolicy.adoc[]
 
@@ -131,13 +127,9 @@ include::integrity.adoc[]
 
 include::accomodations.adoc[]
 
-include::covidpolicy.adoc[]
-
 == Academic support
  
-* link:https://www.brynmawr.edu/academicsupport/academic-and-student-support-services[Academic Support, including help with math and quantitative skills!]
-
-include::legal.adoc[]
+link:https://www.brynmawr.edu/academicsupport/academic-and-student-support-services[Academic Support, including help with math and quantitative skills!]
 
 [unstyled]
  * This site was generated with link:https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[asciidoctor]

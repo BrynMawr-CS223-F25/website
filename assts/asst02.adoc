@@ -1,4 +1,5 @@
 include::header.adoc[]
+include::../dates.adoc[]
 
 :title: Assignment 2: Learn to C
 :Author Initials: ASN
@@ -8,60 +9,31 @@ include::header.adoc[]
 
 = {title}
 
-**Due Friday, January 31, before midnight**
+**Due {ASST02_DUE}, before midnight**
 
 The goals for this assignment are:
 
 * Work with strings
 * Work with structs
 * Work with arrays
+* Work with malloc/free
 
-:sectnums:
-
+[discrete]
 = Update your repository
 
-Do a *fetch upstream* to obtain the basecode for this assignment. 
+We will use the same repository as link:asst01.html[Assignment 1]
 
-The first time you do a `fetch`, you need to set the URL of the upstream repository.
+Pull to get the assignment basecode.
 
-* `git remote add upstream git@github.com:brynmawr-cs223-{semester}/cs223-{semester}-assignments.git`
-
-Using the command line
-
-* Open terminal and change your current directory to your assignment repository.
-* Run the command `git fetch upstream`
-* Run the command `git merge upstream/main`
+[source, subs="attributes,quotes"]
+----
+$ cd {repo}
+$ git pull 
+----
 
 Your repository should now contain a new folder named `{ASST}`.
 
-The `fetch` and `merge` commands update your repository with any changes from the original.
-
-= Bad password
-
-Write a program, `password.c`, that asks the user for a word and creates a bad password from it.
-You can assume that all characters are lowercase.
-
-[source,subs="quotes"]
-----
-$ **make password**
-gcc password.c -o password
-$ **./password**
-Enter a word: **elephant**
-Your bad password is 313ph@nt
-$ **./password**
-Enter a word: **hello**
-Your bad password is h311o
-$ **./password**
-Enter a word: **rhythm**
-Your bad password is rhythm
-----
-
-Your bad password algorithm should
-
-* Replace 'e's with '3's
-* Replace 'l's with '1's
-* Replace 'a's with '@'s
-
+:sectnums:
 = Snackbar
 
 Write a program, `snackbar.c`, that maintains a list of snacks available for purchase.
@@ -115,6 +87,44 @@ Requirements:
 * Your program should define at least three snacks and store them in an array
 * Your program should be similar to the given output but feel free to customize it!
 
+= Dynamic snackbar                                                              
+                                                                                
+Implement a program, `dynamic_snackbar.c`, that allows users to add snacks to the snackbar.
+Unlike last week's snackbar, your program only needs two features:              
+                                                                                
+* The ability to add a new snack to the list of snacks                          
+* The ability to print out the current list of snacks                           
+                                                                                
+[source,subs="quotes"]                                                          
+----                                                                            
+$ **make dynamic_snackbar**                                                     
+gcc dynamic_snackbar.c -o dynamic_snackbar                                      
+$ **./dynamic_snackbar**                                                        
+Enter a number of snacks: **3**                                                 
+Enter a name: **Slurm**                                                         
+Enter a cost: **1.50**                                                          
+Enter a quantity: **3**                                                         
+Enter a name: **Beans**                                                                                                                                                
+Enter a cost: **5**                                                                                                                                                    
+Enter a quantity: **1**                                                                                                                                                
+Enter a name: **Carrots**                                                                                                                                              
+Enter a cost: **2**                                                                                                                                                    
+Enter a quantity: **10**                                                                                                                                               
+                                                                                                                                                                       
+Welcome to Dynamic Donna's Snack Bar.                                                                                                                                  
+                                                                                                                                                                       
+0) Slurm                cost: $1.50     quantity: 3                                                                                                                    
+1) Beans                cost: $5.00     quantity: 1                                                                                                                    
+2) Carrots              cost: $2.00     quantity: 10                                                                                                                   
+----                                                               
+
+Requirements/Hints:                                                                                                                                                    
+                                                                                                                                                                       
+* You must use malloc to create an array large enough to hold all the snacks                                                                                           
+* Use scanf to get the number of snacks and their attributes                                                                                                           
+                                                                                                                                                                       
+NOTE: You do not need to type in the attributes every time. You can put the inputs in a file and then use redirection to load it.   
+
 = Shift Cypher
 
 Write a program, `cypher.c`, that asks the user for a word and then encodes it
@@ -153,7 +163,54 @@ Hints:
 
 * Recall that characters as represented as digits in ASCII. A straight-forward implementation can add offsets to each character of the word. 
 
+= Minesweeper
 
+Implement a program, `minesweeper.c`, that generates a minesweeper board.
+In link:https://minesweeperonline.com/#[Minesweeper], each cell can either 
+contain a bomb or not. Cells without bombs are called safe cells. 
+
+Your program should take three command line arguments -- m, n, and p -- and 
+generate a m x n grid of cells where each cell has probability p of containing a 
+bomb. Then, you program shoul print out the grid using X for bombs and . (period) 
+for safe cells. Finally, your program should output an additional 2D grid with the 
+number of neighboring bombs for each cell (above, below, left, right, NW, NE, SW, SE). 
+
+[source,subs="quotes"]
+----
+$ **make minesweeper**
+gcc -g -Wall -Wvla -Werror minesweeper.c -o minesweeper
+$ **./minesweeper 3 5 0.4**
+X X . . .
+. . . . .
+. X . . .
+
+X X 1 0 0
+3 3 2 0 0
+1 X 1 0 0
+----
+
+Requirements/Hints:
+
+* Use malloc and free to allocate a 2D array to store the grid.
+* Use rand() and srand(time(0)) to create random boards
+* Your program must use command line arguments!
+
+NOTE: To read in link:https://diveintosystems.org/book/C2-C_depth/advanced_cmd_line_args.html#_c_cmd_line_args_[command line arguments], define main with argc and argv parameters 
+as follows. The first command line argument is always the program name. `argc` is 
+the number of arguments. You can use `atoi` and `atof` to convert from strings 
+to numeric types (int and float respectively)
+[source]
+----
+int main(int argc, char** argv) {
+  if (argc != 4) {
+    printf("usage: %s m n p\n", argv[0]);
+  }
+  
+  return 0;
+}
+----
+
+[discrete]
 = Submit your Work
 
 Push you work to Github to submit your work.
@@ -162,28 +219,33 @@ Push you work to Github to submit your work.
 ----
 $ cd {ASST}
 $ git add *.c 
-$ git commit -m "assignment 2 complete"
+$ git commit -m "{ASST} complete"
 $ git push
 ----
 
+[discrete]
 = Grading Rubric
 
 *Assignment rubrics*
 
 Grades are out of 4 points.
 
-* (1 point) password
-** (0.1 points) style and header comment
+* (1 point) minesweeper
+** (0.1 points) style 
 ** (0.4 points) correct behavior: asks the user for input and creates the new string
 ** (0.5 points) no memory errors
 * (1 point) cypher 
-** (0.1 points) style and header comment
+** (0.1 points) style 
 ** (0.4 points) correct behavior: asks the user for input and creates the new string
 ** (0.5 points) no memory errors
-* (2 points) snackbar
-** (0.2 points) style and header comment
-** (0.8 points) correct behavior
-** (1.0 points) no memory errors
+* (1 points) snackbar
+** (0.1 points) style 
+** (0.4 points) correct behavior
+** (0.5 points) no memory errors
+* (1 points) dynamic_snackbar
+** (0.1 points) style 
+** (0.4 points) correct behavior
+** (0.5 points) no memory errors
 
 *Code rubrics*
 

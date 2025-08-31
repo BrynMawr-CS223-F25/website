@@ -15,12 +15,10 @@
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_assignment_2_learn_to_c">Assignment 2: Learn to C</a></li>
-<li><a href="#_update_your_repository">1. Update your repository</a></li>
-<li><a href="#_bad_password">2. Bad password</a></li>
-<li><a href="#_snackbar">3. Snackbar</a></li>
-<li><a href="#_shift_cypher">4. Shift Cypher</a></li>
-<li><a href="#_submit_your_work">5. Submit your Work</a></li>
-<li><a href="#_grading_rubric">6. Grading Rubric</a></li>
+<li><a href="#_snackbar">1. Snackbar</a></li>
+<li><a href="#_dynamic_snackbar">2. Dynamic snackbar</a></li>
+<li><a href="#_shift_cypher">3. Shift Cypher</a></li>
+<li><a href="#_minesweeper">4. Minesweeper</a></li>
 </ul>
 </div>
 </div>
@@ -29,7 +27,7 @@
 <h2 id="_assignment_2_learn_to_c">Assignment 2: Learn to C</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, January 31, before midnight</strong></p>
+<p><strong>Due Friday, September 12th, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -45,92 +43,31 @@
 <li>
 <p>Work with arrays</p>
 </li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_update_your_repository">1. Update your repository</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
-</div>
-<div class="paragraph">
-<p>The first time you do a <code>fetch</code>, you need to set the URL of the upstream repository.</p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p><code>git remote add upstream <a href="mailto:git@github.com">git@github.com</a>:brynmawr-cs223-s25/cs223-s25-assignments.git</code></p>
+<p>Work with malloc/free</p>
 </li>
 </ul>
 </div>
+<h2 id="_update_your_repository" class="discrete">Update your repository</h2>
 <div class="paragraph">
-<p>Using the command line</p>
+<p>We will use the same repository as <a href="asst01.html">Assignment 1</a></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Open terminal and change your current directory to your assignment repository.</p>
-</li>
-<li>
-<p>Run the command <code>git fetch upstream</code></p>
-</li>
-<li>
-<p>Run the command <code>git merge upstream/main</code></p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Pull to get the assignment basecode.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ cd cs223-f25-classwork
+$ git pull</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Your repository should now contain a new folder named <code>A02</code>.</p>
 </div>
-<div class="paragraph">
-<p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_bad_password">2. Bad password</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Write a program, <code>password.c</code>, that asks the user for a word and creates a bad password from it.
-You can assume that all characters are lowercase.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make password</strong>
-gcc password.c -o password
-$ <strong>./password</strong>
-Enter a word: <strong>elephant</strong>
-Your bad password is 313ph@nt
-$ <strong>./password</strong>
-Enter a word: <strong>hello</strong>
-Your bad password is h311o
-$ <strong>./password</strong>
-Enter a word: <strong>rhythm</strong>
-Your bad password is rhythm</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Your bad password algorithm should</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Replace 'e&#8217;s with '3&#8217;s</p>
-</li>
-<li>
-<p>Replace 'l&#8217;s with '1&#8217;s</p>
-</li>
-<li>
-<p>Replace 'a&#8217;s with '@'s</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_snackbar">3. Snackbar</h2>
+<h2 id="_snackbar">1. Snackbar</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Write a program, <code>snackbar.c</code>, that maintains a list of snacks available for purchase.</p>
@@ -197,7 +134,74 @@ You have $3.50 left</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_shift_cypher">4. Shift Cypher</h2>
+<h2 id="_dynamic_snackbar">2. Dynamic snackbar</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Implement a program, <code>dynamic_snackbar.c</code>, that allows users to add snacks to the snackbar.
+Unlike last week&#8217;s snackbar, your program only needs two features:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The ability to add a new snack to the list of snacks</p>
+</li>
+<li>
+<p>The ability to print out the current list of snacks</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make dynamic_snackbar</strong>
+gcc dynamic_snackbar.c -o dynamic_snackbar
+$ <strong>./dynamic_snackbar</strong>
+Enter a number of snacks: <strong>3</strong>
+Enter a name: <strong>Slurm</strong>
+Enter a cost: <strong>1.50</strong>
+Enter a quantity: <strong>3</strong>
+Enter a name: <strong>Beans</strong>
+Enter a cost: <strong>5</strong>
+Enter a quantity: <strong>1</strong>
+Enter a name: <strong>Carrots</strong>
+Enter a cost: <strong>2</strong>
+Enter a quantity: <strong>10</strong>
+
+Welcome to Dynamic Donna's Snack Bar.
+
+0) Slurm                cost: $1.50     quantity: 3
+1) Beans                cost: $5.00     quantity: 1
+2) Carrots              cost: $2.00     quantity: 10</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements/Hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You must use malloc to create an array large enough to hold all the snacks</p>
+</li>
+<li>
+<p>Use scanf to get the number of snacks and their attributes</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You do not need to type in the attributes every time. You can put the inputs in a file and then use redirection to load it.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_shift_cypher">3. Shift Cypher</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Write a program, <code>cypher.c</code>, that asks the user for a word and then encodes it
@@ -245,8 +249,77 @@ Your cypher is b</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_submit_your_work">5. Submit your Work</h2>
+<h2 id="_minesweeper">4. Minesweeper</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Implement a program, <code>minesweeper.c</code>, that generates a minesweeper board.
+In <a href="https://minesweeperonline.com/#">Minesweeper</a>, each cell can either
+contain a bomb or not. Cells without bombs are called safe cells.</p>
+</div>
+<div class="paragraph">
+<p>Your program should take three command line arguments&#8201;&#8212;&#8201;m, n, and p&#8201;&#8212;&#8201;and
+generate a m x n grid of cells where each cell has probability p of containing a
+bomb. Then, you program shoul print out the grid using X for bombs and . (period)
+for safe cells. Finally, your program should output an additional 2D grid with the
+number of neighboring bombs for each cell (above, below, left, right, NW, NE, SW, SE).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make minesweeper</strong>
+gcc -g -Wall -Wvla -Werror minesweeper.c -o minesweeper
+$ <strong>./minesweeper 3 5 0.4</strong>
+X X . . .
+. . . . .
+. X . . .
+
+X X 1 0 0
+3 3 2 0 0
+1 X 1 0 0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements/Hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use malloc and free to allocate a 2D array to store the grid.</p>
+</li>
+<li>
+<p>Use rand() and srand(time(0)) to create random boards</p>
+</li>
+<li>
+<p>Your program must use command line arguments!</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To read in <a href="https://diveintosystems.org/book/C2-C_depth/advanced_cmd_line_args.html#<em>c_cmd_line_args</em>">command line arguments</a>, define main with argc and argv parameters
+as follows. The first command line argument is always the program name. <code>argc</code> is
+the number of arguments. You can use <code>atoi</code> and <code>atof</code> to convert from strings
+to numeric types (int and float respectively)
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>int main(int argc, char** argv) {
+  if (argc != 4) {
+    printf("usage: %s m n p\n", argv[0]);
+  }
+
+  return 0;
+}</code></pre>
+</div>
+</div>
+<h2 id="_submit_your_work" class="discrete">Submit your Work</h2>
 <div class="paragraph">
 <p>Push you work to Github to submit your work.</p>
 </div>
@@ -254,15 +327,11 @@ Your cypher is b</code></pre>
 <div class="content">
 <pre class="highlight"><code>$ cd A02
 $ git add *.c
-$ git commit -m "assignment 2 complete"
+$ git commit -m "A02 complete"
 $ git push</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_grading_rubric">6. Grading Rubric</h2>
-<div class="sectionbody">
+<h2 id="_grading_rubric" class="discrete">Grading Rubric</h2>
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
 </div>
@@ -272,11 +341,11 @@ $ git push</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(1 point) password</p>
+<p>(1 point) minesweeper</p>
 <div class="ulist">
 <ul>
 <li>
-<p>(0.1 points) style and header comment</p>
+<p>(0.1 points) style</p>
 </li>
 <li>
 <p>(0.4 points) correct behavior: asks the user for input and creates the new string</p>
@@ -292,7 +361,7 @@ $ git push</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(0.1 points) style and header comment</p>
+<p>(0.1 points) style</p>
 </li>
 <li>
 <p>(0.4 points) correct behavior: asks the user for input and creates the new string</p>
@@ -304,17 +373,33 @@ $ git push</code></pre>
 </div>
 </li>
 <li>
-<p>(2 points) snackbar</p>
+<p>(1 points) snackbar</p>
 <div class="ulist">
 <ul>
 <li>
-<p>(0.2 points) style and header comment</p>
+<p>(0.1 points) style</p>
 </li>
 <li>
-<p>(0.8 points) correct behavior</p>
+<p>(0.4 points) correct behavior</p>
 </li>
 <li>
-<p>(1.0 points) no memory errors</p>
+<p>(0.5 points) no memory errors</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>(1 points) dynamic_snackbar</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.1 points) style</p>
+</li>
+<li>
+<p>(0.4 points) correct behavior</p>
+</li>
+<li>
+<p>(0.5 points) no memory errors</p>
 </li>
 </ul>
 </div>
@@ -352,7 +437,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-02-05 09:53:57 -0500
+Last updated 2025-08-31 16:23:51 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

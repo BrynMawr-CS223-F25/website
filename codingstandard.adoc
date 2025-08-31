@@ -5,7 +5,7 @@ include::header.adoc[]
 
 :course: CS223
 :title: Code Formatting Standards and Guidelines
-:term: Fall 2024
+:term: Fall 2025
 
 = {course}: {title} -- {term}
 
