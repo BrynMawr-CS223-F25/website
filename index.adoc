@@ -47,7 +47,7 @@ and STL will be introduced at the end of the course.
 | Activity | Location | Time
 
 | Lecture | Park 337 | Tuesday and Thursday 10:10 AM - 11:30 AM 
-| Lab | Park 231 | Tuesdays 2:40 PM - 4:00 PM 
+| Lab | Park 230 | Tuesdays 2:40 PM - 4:00 PM 
 | Office Hours - Prof. Aline Normoyle | Park 200B | TBD
 | Office Hours - Rebecca Lassman | TBD | TBD
 

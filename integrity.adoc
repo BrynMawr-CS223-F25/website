@@ -7,5 +7,5 @@ for information about Bryn Mawr's Honor Code.]. Midterms and the final will be
 closed book. Lab coding challenges will be open-book and closed-internet. 
 Thus, you cannot use VS Code, internet browsers, and other programming aids.  
 However, you can use the text book, _Dive into Systems_, the Linux Programming 
-Manual (available with `man`), and your class notes. You may use any resources 
-you wish for assignments.  
+Manual (available with `man`), and your class notes.  You may work with others and 
+with online materials for assignments, but you will be expected to explain and reproduce your submitted assignment on your own. 
