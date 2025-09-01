@@ -114,8 +114,8 @@ All graded work will receive a grade, 4.0, 3.7, 3.3, 3.0, 2.7, 2.3, 2.0, 1.7,
 as a weighted average of all grades according to the following weights:
 
 |===
-|45% | Final Exam
-|10% | Assignments
+|40% | Final Exam
+|15% | Assignments
 |20% | Lab code activities
 |20% | Midterms
 | 5% | Attendance and participation
