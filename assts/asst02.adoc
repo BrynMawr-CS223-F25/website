@@ -23,7 +23,7 @@ The goals for this assignment are:
 
 We will use the same repository as link:asst01.html[Assignment 1]
 
-Pull to get the assignment basecode.
+Click on the link:https://classroom.github.com/a/j7KZkNhy[link] and accept the pull request. Then, update your local repository. 
 
 [source, subs="attributes,quotes"]
 ----
@@ -32,6 +32,8 @@ $ git pull
 ----
 
 Your repository should now contain a new folder named `{ASST}`.
+
+NOTE: You can also accept the pull request on Github from your repository (link:PullRequest.png[screenshot]). 
 
 :sectnums:
 = Snackbar

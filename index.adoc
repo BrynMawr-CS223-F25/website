@@ -17,7 +17,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 [.anns]
 
 * Welcome to systems programming! 
-* link:assts/asst01.html[Assignment 01] is due {ASST01_DUE}
+* link:assts/asst02.html[Assignment 02] is due {ASST02_DUE}
 
 == Course Info
 
