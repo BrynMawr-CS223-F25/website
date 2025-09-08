@@ -38,6 +38,8 @@ NOTE: You can also accept the pull request on Github from your repository (link:
 :sectnums:
 = Snackbar
 
+** Due at end of lab **
+
 Write a program, `snackbar.c`, that maintains a list of snacks available for purchase.
 
 [source,subs="quotes"]
