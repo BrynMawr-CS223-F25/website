@@ -30,7 +30,7 @@
 * Read: link:https://diveintosystems.org/singlepage/#_a_deeper_dive_into_c_programming[Sections 2.1-2.8, 2.9 (Command line arguments only)] 
 * Read: link:https://diveintosystems.org/singlepage/#_c_debugging_tools[Sections 3.1-3.3] 
 * link:https://pythontutor.com/c.html#mode=edit[C Tutor]
-* Lab: Check-ins
+* Lab: Congrats to team "On a R.O.L" as this week's worksheet champions!
 * link:assts/asst02.html[Assignment 02]: Due {ASST02_DUE}
 
 | TBD
