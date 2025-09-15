@@ -33,18 +33,24 @@
 * Lab: Congrats to team "On a R.O.L" as this week's worksheet champions!
 * link:assts/asst02.html[Assignment 02]: Due {ASST02_DUE}
 
-| TBD
+|
+* link:lectures/Lecture-Week02-Sept9-Pointers.pdf[Lecture - Sept 9]
+* link:lectures/Lecture-Week02-Sept11-Pointers.pdf[Lecture - Sept 11]
+* link:lectures/code/pass_by_val.c[struct_by_pointer.c]
+* link:lectures/code/pass_by_pointer.c[struct_by_value.c]
 
 //-----------------------------
 |3
 |{WEEK03} anchor:week03[]
 |*Data structures in C* 
 
-* Topics: linked lists, graphs, trees, hash tables
+* Topics: linked lists, trees, editor design and implementation
 * Read: link:http://svslibrary.pbworks.com/f/Data+Structures+and+Algorithm+Analysis+in+C+-+Mark+Allen+Weiss.pdf[Data Structures in C, Mark Allen Weiss, Chpt 3]
 * Lab: Coding Challenge 01, link:studyguide1.html#_coding[Coding problems 1]
 
-| TBD
+| 
+* link:lectures/code/bigfish.c[bigfish.c]
+* link:lectures/code/badprog.c[badprog.c]
 
 //-----------------------------
 |4

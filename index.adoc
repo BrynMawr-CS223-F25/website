@@ -17,8 +17,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 [.anns]
 
 * Welcome to systems programming! 
-* link:assts/asst02.html[Assignment 02] is due {ASST02_DUE}
-* Congrats to team "On a R.O.L." as this week's worksheet champions
+* Lab 9/16/2025: Coding Challenge 01, link:studyguide1.html#_coding[Coding problems 1]
 
 == Course Info
 
