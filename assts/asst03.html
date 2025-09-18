@@ -15,15 +15,11 @@
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_assignment_3_myeditor">Assignment 3: MyEditor</a></li>
-<li><a href="#_background">Background</a>
-<ul class="sectlevel2">
-<li><a href="#_ncurses">NCurses</a></li>
-</ul>
-</li>
-<li><a href="#_snackbar">1. Snackbar</a></li>
-<li><a href="#_dynamic_snackbar">2. Dynamic snackbar</a></li>
-<li><a href="#_shift_cypher">3. Shift Cypher</a></li>
-<li><a href="#_minesweeper">4. Minesweeper</a></li>
+<li><a href="#_background_ncurses">Background: NCurses</a></li>
+<li><a href="#_milestone_1">1. Milestone 1</a></li>
+<li><a href="#_milestone_2">2. Milestone 2</a></li>
+<li><a href="#_extra_credit">3. Extra Credit</a></li>
+<li><a href="#_submit_your_work">4. Submit your Work</a></li>
 </ul>
 </div>
 </div>
@@ -32,7 +28,16 @@
 <h2 id="_assignment_3_myeditor">Assignment 3: MyEditor</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, September 29th, before midnight</strong></p>
+<p><strong>Due Friday, Oct 3rd, before midnight</strong></p>
+</div>
+<div class="paragraph">
+<p>In this multi-week assignment, you will build your VIM editor using the ncurses
+library.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/editor.gif" alt="editor" height="300px">
+</div>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -52,7 +57,7 @@
 <p>Work with C: structs, malloc/free, etc</p>
 </li>
 <li>
-<p>Work with C APIs for working with files and the terminal</p>
+<p>Work with the ncurses API for working with files and the terminal</p>
 </li>
 </ul>
 </div>
@@ -71,15 +76,13 @@ $ git pull</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Your repository should now contain a new folder named <code>A02</code>.</p>
+<p>Your repository should now contain a new folder named <code>A03-Editor</code>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_background">Background</h2>
+<h2 id="_background_ncurses">Background: NCurses</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_ncurses">NCurses</h3>
 <div class="paragraph">
 <p>We will the ncurses library to render text to the screen and respond to user
 input.</p>
@@ -111,276 +114,143 @@ int main()
 </div>
 </div>
 </div>
-</div>
 <div class="sect1">
-<h2 id="_snackbar">1. Snackbar</h2>
+<h2 id="_milestone_1">1. Milestone 1</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>Due at end of lab **</p>
+<p>Due Friday, September 26th**</p>
+</li>
+<li>
+<p>Students must check-in during lab and during TA office hours for full credit**</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Write a program, <code>snackbar.c</code>, that maintains a list of snacks available for purchase.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make snackbar</strong>
-gcc snackbar.c -o snackbar
-
-$ <strong>./snackbar</strong>
-Welcome to Steven Struct's Snack Bar.
-
-How much money do you have? <strong>5</strong>
-
-0) Coco Puffs           cost: $1.50     quantity: 4
-1) Manchego cheese      cost: $15.50    quantity: 6
-2) Magic beans          cost: $0.50     quantity: 0
-
-What snack would you like to buy? [0,1,2] <strong>1</strong>
-You can't afford it!
-
-$ <strong>./snackbar</strong>
-Welcome to Steven Struct's Snack Bar.
-
-How much money do you have? <strong>5</strong>
-
-0) Coco Puffs           cost: $1.50     quantity: 4
-1) Manchego cheese      cost: $15.50    quantity: 6
-2) Magic beans          cost: $0.50     quantity: 0
-
-What snack would you like to buy? [0,1,2] <strong>2</strong>
-Sorry, we are out of Magic beans
-
-$ <strong>./snackbar</strong>
-Welcome to Steven Struct's Snack Bar.
-
-How much money do you have? <strong>5</strong>
-
-0) Coco Puffs           cost: $1.50     quantity: 4
-1) Manchego cheese      cost: $15.50    quantity: 6
-2) Magic beans          cost: $0.50     quantity: 0
-
-What snack would you like to buy? [0,1,2] <strong>0</strong>
-You bought Coco Puffs
-You have $3.50 left</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements:</p>
+<p>Features (Due in Lab):</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Your program should define a <code>struct snack</code> that stores a name, cost, and quantity</p>
+<p>Loading files from the command line (Should be finished by Tuesday, September 23)</p>
 </li>
 <li>
-<p>Your program should define at least three snacks and store them in an array</p>
+<p>Quitting with <code>:q</code> (Should be finished by Tuesday, September 23)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Features (Due on Friday, September 26):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Scrolling through the file using the arrow keys</p>
 </li>
 <li>
-<p>Your program should be similar to the given output but feel free to customize it!</p>
+<p>Displaying the current row, column, and filename in a banner on the last row</p>
+</li>
+<li>
+<p>Searching with '/'. Typing '/' will set the current search word. Pressing 'n' will go to the next match and pressing 'p' will go to the previous match. Note: A good data structure can make searching fast.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_dynamic_snackbar">2. Dynamic snackbar</h2>
+<h2 id="_milestone_2">2. Milestone 2</h2>
 <div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Due Friday, Oct 3rd**</p>
+</li>
+<li>
+<p>Students must check-in during lab and during TA office hours for full credit**</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
-<p>Implement a program, <code>dynamic_snackbar.c</code>, that allows users to add snacks to the snackbar.
-Unlike last week&#8217;s snackbar, your program only needs two features:</p>
+<p>Required features:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The ability to add a new snack to the list of snacks</p>
+<p>Pressing 'i' should go into edit mode and allow the user to edit the file.</p>
 </li>
 <li>
-<p>The ability to print out the current list of snacks</p>
+<p>Saving the file with ':w'</p>
 </li>
 </ul>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make dynamic_snackbar</strong>
-gcc dynamic_snackbar.c -o dynamic_snackbar
-$ <strong>./dynamic_snackbar</strong>
-Enter a number of snacks: <strong>3</strong>
-Enter a name: <strong>Slurm</strong>
-Enter a cost: <strong>1.50</strong>
-Enter a quantity: <strong>3</strong>
-Enter a name: <strong>Beans</strong>
-Enter a cost: <strong>5</strong>
-Enter a quantity: <strong>1</strong>
-Enter a name: <strong>Carrots</strong>
-Enter a cost: <strong>2</strong>
-Enter a quantity: <strong>10</strong>
-
-Welcome to Dynamic Donna's Snack Bar.
-
-0) Slurm                cost: $1.50     quantity: 3
-1) Beans                cost: $5.00     quantity: 1
-2) Carrots              cost: $2.00     quantity: 10</code></pre>
-</div>
-</div>
 <div class="paragraph">
-<p>Requirements/Hints:</p>
+<p>Choose your own adventure (Choose at least two additional VIM features to implement):</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>You must use malloc to create an array large enough to hold all the snacks</p>
+<p>Show line numbers</p>
 </li>
 <li>
-<p>Use scanf to get the number of snacks and their attributes</p>
+<p>Goto line with the command ':&lt;linenum&gt;'</p>
+</li>
+<li>
+<p>'Y' to copy a line</p>
+</li>
+<li>
+<p>'dd' to delete a line</p>
+</li>
+<li>
+<p>'x' to delete a character</p>
+</li>
+<li>
+<p>'I' to insert characters at the beginning of the line</p>
+</li>
+<li>
+<p>'A' to append characters at the end of the line</p>
+</li>
+<li>
+<p>'G' to go to the end of the file</p>
+</li>
+<li>
+<p>Show a welcome screen before editing</p>
+</li>
+<li>
+<p>Support creating new files</p>
+</li>
+<li>
+<p>Show the number of lines in the file in the banner bar</p>
+</li>
+<li>
+<p>etc!</p>
 </li>
 </ul>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-You do not need to type in the attributes every time. You can put the inputs in a file and then use redirection to load it.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Be sure to document which features you implement</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_shift_cypher">3. Shift Cypher</h2>
+<h2 id="_extra_credit">3. Extra Credit</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Write a program, <code>cypher.c</code>, that asks the user for a word and then encodes it
-using a shift cypher. A shift cypher replaces each letter with a letter that is
-X positions from it in the alphabet. For example, is the letter is 'a' and the
-shift is 2, we replace 'a' with a 'c'. You can assume that all inputs are
-lowercase and do not contain special characters.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make cypher</strong>
-gcc cypher.c -o cypher
-$ <strong>./cypher</strong>
-Enter a word: <strong>elephant</strong>
-Enter a shift: <strong>2</strong>
-Your cypher is gngrjcpv
-$ <strong>./cypher </strong>
-Enter a word: <strong>gngrjcpv</strong>
-Enter a shift: <strong>-2</strong>
-Your cypher is <strong>elephant
-$ </strong>./cypher <strong>
-Enter a word: </strong>hello<strong>
-Enter a shift: </strong>7<strong>
-Your cypher is olssv
-$ </strong>./cypher <strong>
-Enter a word: </strong>a<strong>
-Enter a shift: </strong>-2<strong>
-Your cypher is y
-$ </strong>./cypher <strong>
-Enter a word: </strong>z<strong>
-Enter a shift: </strong>2**
-Your cypher is b</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Hints:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Recall that characters as represented as digits in ASCII. A straight-forward implementation can add offsets to each character of the word.</p>
-</li>
-</ul>
+<p>Highlight misspelled words. Use binary search to check spellings in the provided dictionary file.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_minesweeper">4. Minesweeper</h2>
+<h2 id="_submit_your_work">4. Submit your Work</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Implement a program, <code>minesweeper.c</code>, that generates a minesweeper board.
-In <a href="https://minesweeperonline.com/#">Minesweeper</a>, each cell can either
-contain a bomb or not. Cells without bombs are called safe cells.</p>
-</div>
-<div class="paragraph">
-<p>Your program should take three command line arguments&#8201;&#8212;&#8201;m, n, and p&#8201;&#8212;&#8201;and
-generate a m x n grid of cells where each cell has probability p of containing a
-bomb. Then, you program shoul print out the grid using X for bombs and . (period)
-for safe cells. Finally, your program should output an additional 2D grid with the
-number of neighboring bombs for each cell (above, below, left, right, NW, NE, SW, SE).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make minesweeper</strong>
-gcc -g -Wall -Wvla -Werror minesweeper.c -o minesweeper
-$ <strong>./minesweeper 3 5 0.4</strong>
-X X . . .
-. . . . .
-. X . . .
-
-X X 1 0 0
-3 3 2 0 0
-1 X 1 0 0</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements/Hints:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Use malloc and free to allocate a 2D array to store the grid.</p>
-</li>
-<li>
-<p>Use rand() and srand(time(0)) to create random boards</p>
-</li>
-<li>
-<p>Your program must use command line arguments!</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-To read in <a href="https://diveintosystems.org/book/C2-C_depth/advanced_cmd_line_args.html#<em>c_cmd_line_args</em>">command line arguments</a>, define main with argc and argv parameters
-as follows. The first command line argument is always the program name. <code>argc</code> is
-the number of arguments. You can use <code>atoi</code> and <code>atof</code> to convert from strings
-to numeric types (int and float respectively)
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>int main(int argc, char** argv) {
-  if (argc != 4) {
-    printf("usage: %s m n p\n", argv[0]);
-  }
-
-  return 0;
-}</code></pre>
-</div>
-</div>
-<h2 id="_submit_your_work" class="discrete">Submit your Work</h2>
 <div class="paragraph">
 <p>Push you work to Github to submit your work.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ cd A02
+<pre class="highlight"><code>$ cd A03-Editor
 $ git add *.c
-$ git commit -m "A02 complete"
+$ git commit -m "A03-Editor milestone complete"
 $ git push</code></pre>
 </div>
 </div>
@@ -391,76 +261,24 @@ $ git push</code></pre>
 <div class="paragraph">
 <p>Grades are out of 4 points.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>(1 point) minesweeper</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(0.1 points) style</p>
-</li>
-<li>
-<p>(0.4 points) correct behavior: asks the user for input and creates the new string</p>
-</li>
-<li>
-<p>(0.5 points) no memory errors</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>(1 point) cypher</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(0.1 points) style</p>
-</li>
-<li>
-<p>(0.4 points) correct behavior: asks the user for input and creates the new string</p>
-</li>
-<li>
-<p>(0.5 points) no memory errors</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>(1 points) snackbar</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(0.1 points) style</p>
-</li>
-<li>
-<p>(0.4 points) correct behavior</p>
-</li>
-<li>
-<p>(0.5 points) no memory errors</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>(1 points) dynamic_snackbar</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(0.1 points) style</p>
-</li>
-<li>
-<p>(0.4 points) correct behavior</p>
-</li>
-<li>
-<p>(0.5 points) no memory errors</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
 <div class="paragraph">
 <p><strong>Code rubrics</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Code checkins</p>
+</li>
+<li>
+<p>View features</p>
+</li>
+<li>
+<p>Search features</p>
+</li>
+<li>
+<p>Edit features</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and
@@ -490,7 +308,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-09-12 12:21:57 -0400
+Last updated 2025-09-18 09:12:30 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

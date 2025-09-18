@@ -49,6 +49,7 @@
 * Lab: Coding Challenge 01, link:studyguide1.html#_coding[Coding problems 1]
 
 | 
+* link:lectures/Lecture-Week03-Sept16-FileIO.pdf[Lecture - Sept 16]
 * link:lectures/code/bigfish.c[bigfish.c]
 * link:lectures/code/badprog.c[badprog.c]
 
