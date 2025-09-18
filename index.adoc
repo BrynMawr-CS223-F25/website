@@ -17,7 +17,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 [.anns]
 
 * Welcome to systems programming! 
-* Lab 9/16/2025: Coding Challenge 01, link:studyguide1.html#_coding[Coding problems 1]
+* link:assts/asst03.html[Assignment 03] has three parts, due on September 23rd, 26th, and October 3rd.
 
 == Course Info
 

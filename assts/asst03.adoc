@@ -71,19 +71,33 @@ int main()
 :sectnums:
 = Milestone 1
 
-** Due Friday, September 26th**
-** Students must check-in during lab and during TA office hours for full credit**
+** Due Tuesday, September 23rd**
 
-Features (Due in Lab): 
+[source]
+----
+$ ./myeditor 
+usage: myeditor <filename>
+$ ./myeditor bee.xt
+bee.xt not found
+$ ./myeditor tolstoy.txt
 
-* Loading files from the command line (Should be finished by Tuesday, September 23)
-* Quitting with `:q` (Should be finished by Tuesday, September 23)
+----
 
-Features (Due on Friday, September 26):
+Features
+
+* Loading a file from the command line 
+* Quitting with `:q` 
+
+= Milestone 2
+
+**Due on Friday, September 26**
+**Students must check-in with the TA during office hours for full credit**
+
+Features:
 
 * Scrolling through the file using the arrow keys
 * Displaying the current row, column, and filename in a banner on the last row
-* Searching with '/'. Typing '/' will set the current search word. Pressing 'n' will go to the next match and pressing 'p' will go to the previous match. Note: A good data structure can make searching fast.
+* Searching with '/'. Typing '/' will set the current search word. Pressing 'n' will go to the next match and pressing 'p' will go to the previous match. 
 
 = Milestone 2
 
