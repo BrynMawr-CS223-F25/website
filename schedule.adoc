@@ -50,6 +50,7 @@
 
 | 
 * link:lectures/Lecture-Week03-Sept16-FileIO.pdf[Lecture - Sept 16]
+* link:lectures/Lecture-Week03-Sept18-DataStructures.pdf[Lecture - Sept 18]
 * link:lectures/code/bigfish.c[bigfish.c]
 * link:lectures/code/badprog.c[badprog.c]
 
