@@ -69,8 +69,11 @@
 * link:lectures/Lecture-Week03-Sept18-DataStructures.pdf[Lecture - Sept 23]
 * link:lectures/Lecture-Week04-Sept23-Binary.pdf[Lecture - Sept 23]
 * link:lectures/code/linkedList/linkedlist.h[linkedlist.h]
+* link:lectures/code/linkedList/linkedlist.c[linkedlist.c]
+* link:lectures/code/linkedList/test_list.c[test_list.c]
 * link:lectures/code/binary_tree/binary_tree.h[binary_tree.h]
-* link:lectures/code/binary_tree/[binary_tree]
+* link:lectures/code/binary_tree/binary_tree.c[binary_tree.c]
+* link:lectures/code/binary_tree/test_tree_main.c[test_tree_main.c]
 * link:lectures/code/string.c[string.c]
 
 //-----------------------------
