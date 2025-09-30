@@ -59,7 +59,7 @@
 |{WEEK04} anchor:week04[]
 |*Binary and Data Representations* 
 
-* Topics: number systems, integer/float/char binary formats, struct layouts, endianess, bit ops
+* Topics: number systems, integer/float/char binary formats, struct layouts, endianess
 * Read: link:https://diveintosystems.org/singlepage/#_binary_and_data_representation[Chapter 4.1-4.9] 
 * link:assts/asst03.html[Assignment 03]: Due {ASST03_DUE}
 * Lab: Check-ins
@@ -69,10 +69,10 @@
 //-----------------------------
 |5
 |{WEEK05} anchor:week05[]
-|*Assembly* 
+|*Bitwise operators, Introduction to Assembly* 
 
-* instruction set architecture, machine code, memory forms, x86_64 instructions
-* Read: link:https://diveintosystems.org/singlepage/#_what_von_neumann_knew_computer_architecture[Section 5, 5.1] 
+* Topics: bitwise operators, shifts, masking, working with bit fields
+* Read: link:https://diveintosystems.org/singlepage/#_what_von_neumann_knew_computer_architecture[Section 5, 5.1]
 * Read: link:https://diveintosystems.org/singlepage/##_assembly_chapter[Chapter 6] 
 * Read: link:https://diveintosystems.org/singlepage/#_x64_assembly_chapter[Chapter 7 (7.1-7.3,7.5,7.10), 10] 
 * Lab: Coding Challenge 02, link:studyguide2.html#_coding[Coding problems 2]
@@ -82,8 +82,9 @@
 //-----------------------------
 |6
 |{WEEK06} anchor:week06[]
-| *Review*
+| *Assembly, Review*
 
+* Topics: instruction set architecture, machine code, memory forms, x86_64 instructions
 * Lab: Check-ins and midterm practice 
 * Midterm 01: In-class {MIDTERM01_WK6} (1.5 hrs)
 * link:assts/asst04.html[Assignment 04]: Due {ASST04_DUE}

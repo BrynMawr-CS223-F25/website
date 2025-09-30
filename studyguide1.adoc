@@ -156,7 +156,6 @@ following questions:
 
 * Where are variables val1 and val2 located on the stack?
 * What value does each parameter get?
-* What variables are in scope of `arg_modifier`?
 
 9) Consider the following code. Find and fix the errors in the associated stack diagram.
 

@@ -18,6 +18,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 * Welcome to systems programming! 
 * link:assts/asst03.html[Assignment 03] has three parts, due on September 23rd, 26th, and October 3rd.
+* Midterm 01 will be on October 9th, in class, 1.5 hours. Closed book (you may bring one hand written cheat sheet)
 
 == Course Info
 
