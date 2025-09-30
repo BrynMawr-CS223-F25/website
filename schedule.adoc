@@ -59,12 +59,15 @@
 |{WEEK04} anchor:week04[]
 |*Binary and Data Representations* 
 
+* Topics: Designing data structures in C
 * Topics: number systems, integer/float/char binary formats, struct layouts, endianess
 * Read: link:https://diveintosystems.org/singlepage/#_binary_and_data_representation[Chapter 4.1-4.9] 
 * link:assts/asst03.html[Assignment 03]: Due {ASST03_DUE}
 * Lab: Check-ins
 
-| TBD
+|
+* link:lectures/Lecture-Week03-Sept18-DataStructures.pdf[Lecture - Sept 23]
+* link:lectures/Lecture-Week04-Sept23-Binary.pdf[Lecture - Sept 23]
 
 //-----------------------------
 |5
@@ -78,6 +81,9 @@
 * Lab: Coding Challenge 02, link:studyguide2.html#_coding[Coding problems 2]
 
 | 
+* link:lectures/Lecture-Week05-Sept30-BitOps.pdf[Lecture - Sept 30]
+* link:lectures/code/bitops.c[bitops.c]
+* link:lectures/code/byte-order.c[byte-order.c]
 
 //-----------------------------
 |6
