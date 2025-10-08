@@ -64,6 +64,7 @@
 * Read: link:https://diveintosystems.org/singlepage/#_binary_and_data_representation[Chapter 4.1-4.9] 
 * link:assts/asst03.html[Assignment 03]: Due {ASST03_DUE}
 * Lab: Check-ins
+* Congrats to this week's worksheet champions: Stackers and Turtles 
 
 |
 * link:lectures/Lecture-Week03-Sept18-DataStructures.pdf[Lecture - Sept 23 (Same notes as Sept 18)]
@@ -100,8 +101,8 @@
 | *Assembly, Review*
 
 * Topics: instruction set architecture, machine code, memory forms, x86_64 instructions
-* Lab: Check-ins and midterm practice 
-* Midterm 01: In-class {MIDTERM01_WK6} (1.5 hrs)
+* Lab: Systems Quizzo
+* Midterm 01: In-class {MIDTERM01_WK6} (80 minutes)
 * link:assts/asst04.html[Assignment 04]: Due {ASST04_DUE}
 
 | 
@@ -126,7 +127,7 @@
 
 * topics: Tracing assembly, buffer exploits, loops, conditionals 
 * Read: link:https://diveintosystems.org/singlepage/#_the_operating_system[Chapter 13, skip section 13.3] 
-* Lab: Checkins and worksheet practice
+* Lab: Check-ins, worksheet practice
 * link:assts/asst04.html[Assignment 04]: Office hour check-ins due 
 
 | 
@@ -136,7 +137,7 @@
 |{WEEK09} anchor:week09[]
 | *The operating system, processes, fork*
 
-* topics: what is an operating system?, system calls, processes
+* topics: what is an operating system?, system calls, processes, fork
 * Lab: Coding Challenge 03, link:studyguide3.html#_coding[Coding problems 3]
 * link:assts/asst04.html[Assignment 04]: Due {ASST04_DUE}
 
@@ -162,7 +163,7 @@
 
 * topics: performance, deadlock, thread safety, producer/consumer pattern
 * Lab: Coding Challenge 04, link:studyguide4.html#_coding[Coding problems 4]
-* link:assts/asst06.html[Assignment 06]: Office hours check-ins due 
+* link:assts/.html[Assignment 06]: Office hours check-ins due 
 
 | 
 
@@ -173,14 +174,14 @@
 
 * Read: link:https://diveintosystems.org/singlepage/#_storage_and_the_memory_hierarchy[Chapter 11.1-11.3] 
 * Lab: Checkins and worksheet
-* link:assts/asst06.html[Assignment 06]: Due {ASST06_DUE}
+* link:assts/.html[Assignment 06]: Due {ASST06_DUE}
 
 | 
 
 //-----------------------------
 |13
 |{WEEK13} anchor:week13[]
-|*Memory, memory allocation* 
+|*Memory, allocation* 
 
 * Lab: Memory allocators 
 * Read:"My malloc: mylloc and mhysa" by Johan Montelius (see slack)
@@ -194,7 +195,7 @@
 |{WEEK14} anchor:week14[]
 | Review and midterm 2
 
-* Midterm 02, In-class {MIDTERM02} (1.5 hrs)
+* Midterm 02, In-class {MIDTERM02} (80 minutes)
 * Lab: Review
 
 | 
@@ -206,7 +207,7 @@
 |*Code Optimization, C++*
 
 * Read: link:https://diveintosystems.org/singlepage/#_code_optimization[Chapter 12] 
-* link:assts/asst07.html[Assignment 07]: Due {ASST07_DUE}
+* link:assts/.html[Assignment 07]: Due {ASST07_DUE}
 * Lab checkins and final practice
 
 |
