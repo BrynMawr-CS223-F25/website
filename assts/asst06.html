@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<title>Assignment 6: Trust the process</title>
+<link rel="stylesheet" href="../style/cs21.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_assignment_6_trust_the_process">Assignment 6: Trust the process</a></li>
+<li><a href="#_personal_shell">1. Personal Shell</a></li>
+<li><a href="#_grep">2. Grep</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_assignment_6_trust_the_process">Assignment 6: Trust the process</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Due Friday, November 21st, before midnight</strong></p>
+</div>
+<div class="paragraph">
+<p>The goals for this assignment are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Gain experience working with <code>fork()</code>.</p>
+</li>
+<li>
+<p>Use OS system calls in your C program.</p>
+</li>
+<li>
+<p>Implement multi-process programs</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_personal_shell">1. Personal Shell</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the file, <code>shell.c</code>, implement a program that implements a simple shell.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/RainbowShell.png" alt="RainbowShell" width="640px">
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Your program should print a prompt. At minimum, your prompt should show the current working directory and look distinct from the lab machine prompts. In other words, it should be easy to tell what shell if running from the terminal.</p>
+</li>
+<li>
+<p>Use the <code>readline()</code> function to get user input. This function supports backspace, tab completion, and more. <a href="https://www.man7.org/linux/man-pages/man3/readline.3.html">Documentation for readline can be found here</a>.</p>
+</li>
+<li>
+<p>Use the <code>add_history()</code> function to save user history. This will allow arrow keys to work. <a href="https://www.man7.org/linux/man-pages/man3/readline.3.html">Documentation for readline can be found here</a>.</p>
+</li>
+<li>
+<p>Your program should quit if the users types <code>exit</code>.</p>
+</li>
+<li>
+<p>When the user gives a command, split it into a command and arguments and then fork a command to execute it.</p>
+</li>
+<li>
+<p>Your terminal should wait for the command to finish. If the command terminates with an error, report the error.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>readline</code> is a package that is installed on goldengate and in our labs. However, you may need to install it on your own machine. On Unix systems, this can be done by running <code>sudo apt install libreadline-dev</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can print with colors to the console using ANSI escape sequences (see below).
+For example, <code>printf(ANSI_COLOR_GREEN "Green Text" ANSI_COLOR_RESET);</code> will print green text. <a href="https://azrael.digipen.edu/~mmead/www/mg/ansicolors/index.html">Here is a good guide!</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// Helpful macros for working with color
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Most prompts print helpful information. Above, we use the
+system commands <code>gethostname</code>, <code>getcwd</code>, and <code>getpwuid(geteuid())</code> to get the
+machine name, the current working directory, and current user respectively.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_grep">2. Grep</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the file, <code>grep.c</code>, implement a program that uses N processes to search for a keyword
+in a set of files.</p>
+</div>
+<div class="paragraph">
+<p>Your program implements a simplified version of the bash command <code>grep</code>. Grep searches a list of files
+for a given keyword or expression. For example, the following command searches for the keyword <code>public</code>
+in a list of source files. We use the <code>find</code> command to generate the list of source files to search.
+For example:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/grep.png" alt="grep" width="500px">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Make sure you include the backticks, e.g. <code> ` </code>. This adds the filenames found by <code>find</code> as command line arguments to <code>grep</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make grep</strong>
+gcc -g -Wall -Wvla -Werror grep.c -o grep
+$ <strong>./grep</strong>
+usage: ./grep <code><</code>NumProcesses<code>></code> <code><</code>Keyword<code>></code> <code><</code>Files<code>></code>
+$ <strong>./grep 1 class missing.txt</strong>
+Searching 1 files for keyword: class
+Process [613] searching 1 files (3 to 4)
+Process [613] Error: Cannot open file
+Total occurances: 0
+Elapsed time is 0.000608</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/grep_fork.png" alt="grep fork" width="500px">
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Your program should take the number of processes, keyword, and a list of files as command line arguments</p>
+</li>
+<li>
+<p>Subdivide the files among the N processes. Note that the number of files may not divide evenly between processes.</p>
+</li>
+<li>
+<p>Print the totals and sub-division of files similarly to the output above</p>
+</li>
+<li>
+<p>Use the <code>fgets</code> function to process the lines in each file</p>
+</li>
+<li>
+<p>Use the function <code>strstr</code> defined in <code>string.h</code> to search lines of text for the keyword. <a href="https://en.cppreference.com/w/c/string/byte/strstr">Documentation is here</a></p>
+</li>
+<li>
+<p>To compute the total count, each child process can return the number matching lines using its exitcode. Recall that the parent can use the status reported by <code>waitpid</code> to get the children&#8217;s exit code.</p>
+</li>
+<li>
+<p>Your program should report the amount of time needed to search using <code>gettimeofday</code></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can print with colors to the console using ANSI escape sequences (see below).
+For example, <code>printf(ANSI_COLOR_GREEN "Green Text" ANSI_COLOR_RESET);</code> will print green text. <a href="https://azrael.digipen.edu/~mmead/www/mg/ansicolors/index.html">Here is a good guide!</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// Helpful macros for working with color
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2025-10-08 15:03:41 -0400
+</div>
+</div>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { equationNumbers: { autoNumber: "none" } }
+})
+MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
+  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
+    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains("stemblock")) {
+      data.math.root.display = "block"
+    }
+    return data
+  })
+})
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+</body>
+</html>

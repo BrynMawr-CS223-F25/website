@@ -1,0 +1,170 @@
+include::header.adoc[]
+include::../dates.adoc[]
+
+:title: Assignment 7: Where others fear to thread
+:Author Initials: ASN
+:Date:    2021-01-29
+:Revision: 0.1
+:ASST: A07-Threads
+
+= {title}
+
+**Due {ASST07_DUE}, before midnight**
+
+The goals for this assignment are:
+
+* Synchronize the behavior of multiple threads
+* Work with mutex and condition variables
+
+:sectnums:
+
+= Dining philosophers
+
+= Consumer/Producer 
+
+In the file, `cp.c`, implement the producer/consumer demo from class. Your producer 
+function should generate an integer between 0 and 9. Your consumer function should print 
+the value. The size of your circular queue should be 10 elements. 
+
+[source, subs="quotes"]
+----
+$ **./cp**
+Received item: 3
+Received item: 6
+Received item: 7
+Received item: 5
+Received item: 3
+Received item: 5
+^C
+----
+
+Requirements:
+
+* Use sleep(1.0) to slow the production of values and make the output of your program easier to read.
+* Place the behavior of both threads in an infinite loop. Use Control-C to exit your demo.
+
+
+= Editor backend
+
+Extend your editor to save drafts of your file every X seconds using a background thread.
+
+= Glow
+== Background
+
+In this assignment, you will implement a glow filter for images. You will implement the filter both single- and 
+multi-threaded. 
+
+Before:
+
+image::earth-small.png[]
+
+After:
+
+image::glow.png[]
+
+This filter requires three steps:
+
+* Extracting bright areas into a separate image
+* Blurring the bright pixels
+* Adding the blurred image to the original
+
+NOTE: We will work with PPM files for this assignment.
+
+=== Extract bright areas
+
+For each pixel, you can compute its brightness as the average of its red, green, and blue values. E.g. 
+
+[stem]
+++++
+brightness = (red + green + blue)/3
+++++
+
+We can compare this brightness to a threshold, say 200, to determine if we should apply the glow to this area. 
+For the image below, we iterated through every pixel in the original image, computed its brightness, and 
+then saved its brightness to a new image if the pixel exceeded the threshold.
+
+image::white.png[]
+
+=== Blur
+
+For this assignment, we will apply a box blur to each pixel in the image computed in the previous step. 
+
+In a box blur, the color of each pixel is set to the average of its neighbors. For example, if we look 
+only at the immediate neighbors of the pixel (i,j), the new color would be as follows:
+
+[stem]
+++++
+new_{i,j} = (p_{i-1,j-1} + p_{i,j-1} + p_{i+1,j-1} +
+             p_{i-1,j}   + p_{i,j}   + p_{i+1,j} +
+             p_{i-1,j+1} + p_{i,j+1} + p_{i+1,j+1} )/9
+++++
+
+The above calculation would correspond to a box size of 3 because the region around the pixel has 
+width 3 and height 3. 
+
+We compute the blur separately for each color channel (read, blue, green). In the image below, we used a 
+box size of 25. In other words, we used the 24 neighbors that were left, right, above, and below of the current 
+pixel. If a pixel is near the edge of the image, we can clamp the blur indices so they stay in the image.
+
+image::blur.png[]
+
+NOTE: The glow will look better with a gaussian blur. Feel free to implement one instead
+
+=== Putting it together
+
+The glow effect is achieved by adding the blurred image (bij) with the original image (oij).
+
+[stem]
+++++
+new_{i,j} = o_{i,j} + b_{i,j}
+++++
+
+image::glow.png[]
+
+=== Single-threaded
+
+In the file, `glow.c`, implement a single-threaded program that applies a glow effect to the image "earth-small.ppm". 
+In this question, you will get the core algorithm working, before re-implementing it to be multithreaded in 
+the next question.
+
+[source,subs="quotes"]
+----
+$ **time ./glow**
+real    0m0.518s
+user    0m0.513s
+sys     0m0.001s
+----
+
+Requirements/Hints:
+
+* This program can be simple. You may hard-coded the input file (earth-small.ppm), the threshold (200), and the blur box size (25).
+* Your program must output a PPM file named `glow.ppm`
+* Use software that can view PPM files to check your work, either via VS Code, eog (Eye of Gnome), Gimp, Photoshop, etc
+
+=== Multi-threaded
+
+In the file, `glow_multithreaded.c`, implement a program that applies a glow effect using multiple threads. 
+It should run much faster than your single threaded version.
+
+[source]
+----
+$ ./glow_multithreaded -h
+usage: ./glow_multithreaded -N <NumThreads> -t <brightness threshold> -b <box blur size> -f <ppmfile>
+$ time ./glow_multithreaded
+Thread sub-image slice: rows (0,75)
+Thread sub-image slice: rows (75,150)
+Thread sub-image slice: rows (150,225)
+Thread sub-image slice: rows (225,300)
+
+real    0m0.249s
+user    0m0.717s
+sys     0m0.000s
+----
+
+Requirements and recommendations:
+
+* Each thread should run all steps on a portion of the image. I recommend you divide the image into horizontal slices (not square blocks) 
+* You can assume that N will divide the images evenly. `earth.ppm` has resolution 3000x3000. `earth-small.ppm` has resolution 300x300.
+* Your program should output a file named `glow.ppm`
+* Your program must support the command line arguments.
+* Your program may not use global variables.
