@@ -371,9 +371,7 @@ Chris Trailie, starting with the two pictures below.
 </p>
 ++++
 
-:sectnums:
-
-= Decode
+== Decode
 
 In the file, `decode.c`, write a program that reads in a PPM file (raw, or binary, format) and then outputs any message that might be stored in 
 the least significant bits of each color. Your program should read bits from each of the red, green, and blue colors -- top to bottom, left to right. 
@@ -432,7 +430,7 @@ Requirements/Hints:
 * For debugging, try printing out values in hex format, e.g. `printf("%02X", c);`
 * This program is easier to implement if you use a 1D array because you can cast the `struct ppm_pixel*` array to an `unsigned char*` array.
 
-= Encode
+== Encode
 
 In the file, `encode.c`, write a program that reads in a PPM file (raw, or binary, format) and 
 asks the user for a message to embed within it. 
@@ -468,9 +466,9 @@ Grades are out of 4 points.
 *Code rubrics*
 
 * Code checkins
-* View features
-* Search features
-* Edit features
+* PPM read/write 
+* Decode 
+* Encode 
 
 For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
 have good style.

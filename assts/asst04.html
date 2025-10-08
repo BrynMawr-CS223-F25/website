@@ -21,9 +21,12 @@
 <li><a href="#_write_ppm">Write PPM</a></li>
 </ul>
 </li>
-<li><a href="#_steganography">Steganography</a></li>
-<li><a href="#_decode">1. Decode</a></li>
-<li><a href="#_encode">2. Encode</a></li>
+<li><a href="#_steganography">Steganography</a>
+<ul class="sectlevel2">
+<li><a href="#_decode">Decode</a></li>
+<li><a href="#_encode">Encode</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -533,11 +536,8 @@ Chris Trailie, starting with the two pictures below.</p>
 <p>
     If you were just looking at it and comparing it to what we started with, you would never notice the difference!  So we have freedom to tweak the least significant bit of every color channel of every pixel at will to encode text, and this is exactly what you will be doing in this assignment!.  In a 500x500 image, for example, this means we can store 250,000 bits.  Since each ASCII character is 8 bits, this is 31,250 characters total, or roughly about 6000 words.
 </p>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_decode">1. Decode</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_decode">Decode</h3>
 <div class="paragraph">
 <p>In the file, <code>decode.c</code>, write a program that reads in a PPM file (raw, or binary, format) and then outputs any message that might be stored in
 the least significant bits of each color. Your program should read bits from each of the red, green, and blue colors&#8201;&#8212;&#8201;top to bottom, left to right.
@@ -615,10 +615,8 @@ $ <strong>./decode images/cats_encoded.ppm</strong>
 </ul>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_encode">2. Encode</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_encode">Encode</h3>
 <div class="paragraph">
 <p>In the file, <code>encode.c</code>, write a program that reads in a PPM file (raw, or binary, format) and
 asks the user for a message to embed within it.</p>
@@ -678,13 +676,13 @@ Writing file feep_raw_encoded.ppm</code></pre>
 <p>Code checkins</p>
 </li>
 <li>
-<p>View features</p>
+<p>PPM read/write</p>
 </li>
 <li>
-<p>Search features</p>
+<p>Decode</p>
 </li>
 <li>
-<p>Edit features</p>
+<p>Encode</p>
 </li>
 </ul>
 </div>
@@ -714,9 +712,10 @@ have good style.</p>
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-10-08 12:24:53 -0400
+Last updated 2025-10-08 14:50:55 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">
