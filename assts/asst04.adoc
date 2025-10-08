@@ -1,0 +1,482 @@
+include::header.adoc[]
+include::../dates.adoc[]
+
+:title: Assignment 4: Image conscious
+:Author Initials: ASN
+:Date:    2021-01-29
+:Revision: 0.1
+:ASST: A03-Editor
+
+= {title}
+
+**Due {ASST04_DUE}, before midnight**
+
+The goals for this assignment are:
+
+* Work with ascii and binary files
+* Understand binary representations of data types
+* Directly manipulate basic types at the bit level
+* Work with bitwise operators: |, &, ~, ^
+
+
+This is a two-week assignment with two parts:
+
+* Part 1 (PPM): You will implement methods for reading and writing images in PPM format
+* Part 2 (Steganography): You will hide secret messages inside PPM images, a process called Steganography, in which information is hidden inside another message or object.
+
+[discrete]
+= Update your repository
+
+We will use the same repository as link:asst01.html[Assignment 1]
+
+First, you must accept the pull request on your repository on link:{gitrepo}[Github] 
+(link:PullRequest.png[screenshot]). 
+
+[source, subs="attributes,quotes"]
+----
+$ cd {repo}
+$ git pull 
+----
+
+Your repository should now contain a new folder named `{ASST}`.
+
+= PPM
+
+** You must check-in during office hours to show you have started this assignment on either Thursday October 23rd or Friday October 24th**
+
+Implement two functions, `read_ppm` and `write_ppm`, that read and write both ASCII and binary PPM files. 
+This functions are implemented in the file `ppm.c` and tested using code in `test_read.c` and `test_write.c`.
+
+Images are 2D arrays of pixels. In the following section, we give details on how PPM stores images 
+as a 2D array. 
+
+NOTE: You can choose whether you load the array as either a single block of memory or as an array or arrays. 
+Your basecode has function signatures for each. Choose one of the function signatures to implement. DO NOT remove the 
+other function signatures! Don't change the headers in anyway.
+
+[discrete]
+== Background
+
+link:http://netpbm.sourceforge.net/doc/ppm.html[PPM (Portable Pix Map)]
+ is an image file format that stores the colors of an image as a 2D array of 
+colors. Each color is represented as a RGB triplet, representing red, green and blue respectively. 
+The properties of the image, such as its size and color format, are specified at the start of the 
+file (called its "header information"). PPM supports both ASCII (plain text) and binary data (raw). 
+
+NOTE: We will write a function that *reads PPM files in binary format*!
+
+For example, consider the following image
+
+image::https://www.cs.swarthmore.edu/~soni/cs35/f13/Labs/images/01/example5000.png[]
+
+//In ASCII format, the above image is stored as follows. To see for yourself, do `cat feep-ascii.ppm`.
+//[source]
+//----
+//P3
+//# This is a comment
+//4 4
+//255
+//0  0  0   100 0  0       0  0  0    255   0 255
+//0  0  0    0 255 175     0  0  0     0    0  0
+//0  0  0    0  0  0       0 15 175    0    0  0
+//255 0 255  0  0  0       0  0  0    255  255 255
+//----
+
+The above image contains a 4x4 grid of colored pixels. Each pixel is a triplet of red-blue-green (RGB) color 
+values, each stored as an `unsigned char`. Unsigned chars have values which range from 0 to 255, where 
+smaller values correspond to darker colors. The triplet (0,0,0) corresponds to black. The triplet 
+(255,255,255) corresponds to white. The triplet (255,0,0) corresponds to red. This system of colors is called 
+the link:https://en.wikipedia.org/wiki/RGB_color_model[RGB Color Model] and it is a common standard for 
+representing colors on a computer. 
+
+The RGB colors for the pixels in the above image are as follows
+
+[source]
+----
+(0,0,0)      (100,0,0)    (0,0,0)     (255,0,255)
+(0,0,0)      (0,255,175)  (0,0,0)     (0,0,0)
+(0,0,0)      (0,0,0)      (0,15,175)  (0,0,0)
+(255,0,255)  (0,0,0)      (0,0,0)     (255,255,255)
+----
+
+In binary format (also called _raw_ format), the image is stored as follows. 
+To see for yourself, do `hexedit feep-raw.ppm`.
+
+[source]
+----
+00000000   50 36 0A 23  20 43 72 65  61 74 65 64  20 62 79 20  47 49 4D 50  20 76 65 72  P6.# Created by GIMP ver 
+00000018   73 69 6F 6E  20 32 2E 31  30 2E 32 34  20 50 4E 4D  20 70 6C 75  67 2D 69 6E  sion 2.10.24 PNM plug-in
+00000030   0A 34 20 34  0A 32 35 35  0A 00 00 00  64 00 00 00  00 00 FF 00  FF 00 00 00  .4 4.255....d...........
+00000048   00 FF AF 00  00 00 00 00  00 00 00 00  00 00 00 00  0F AF 00 00  00 FF 00 FF  ........................
+00000060   00 00 00 00  00 00 FF FF  FF                                                  .........
+----
+
+The leftmost column is byte number in hexadecimal. For example, 0x18 is 24 in decimal. There are 24 bytes
+on the first row on output. The rightmost column displays the raw data in ASCII, using `.` for non-visible 
+ASCII codes, such as '\0' and 'Escape'.
+
+Regardless of format, every PPM file contains the following information. 
+
+* A "magic number" indicating the type of PPM. Binary files start with "P6". ASCII files start with P3. 
+* Whitespace  (blanks, tabs, \n, \r, etc)
+* An optional comment. Comments must be on their own line and start with the symbol `#`.
+* Width and height as ASCII decimal integers (separated by whitespace)
+* Maximum color value as an ASCII decimal integer. *You can assume the Maxval is less than 256, meaning each RGB value is 1 byte.*
+* A single whitespace character
+* A raster (e.g. the array of pixels) of Height number of rows and Width number of columns, in order from top to bottom. 
+
+NOTE: The header information is always in plain text -- regardless of whether the raster data is in ASCII or binary format. It is only the pixel data that differs between ASCII and raw formats. 
+
+NOTE: PPM files can be viewed using tools such as eog (UNIX image viewer called Eye of Gnome) and Gimp.
+
+===
+
+== Read PPM
+
+For this question, you will implement a function, `read_ppm()`, that can read
+PPM files stored in _binary_ format. This function should take a filename as input
+and return a 2D array of `struct pixel`. A `struct pixel` has the following definition
+
+[source]
+----
+struct ppm_pixel {
+    unsigned char red;
+    unsigned char green;
+    unsigned char blue;
+};
+----
+
+The caller of the function `read_ppm` is responsible for freeing the memory allocated by this function.
+
+You will re-use this function throughout the semester. For this reason, we place its implementation
+in it's own file, `read_ppm.c`, and use a header file, `read_ppm.h`, to include it in our main application.
+
+You may implement your 2D array of pixels as either a flat array or an array of
+arrays. For example, if you return a flat array, you should implement the following function.
+
+[source]
+----
+// filename is the image PPM to open and read
+// width (passed by pointer): container for the width of the image
+// height (passed by pointer): container for the height of the image
+// returns an array of ppm_pixel with size = width * height
+struct ppm_pixel* read_ppm(const char* filename, int* width, int* height)
+----
+
+If you return an array or arrays, you should implement the following function.
+
+[source]
+----
+// filename is the image PPM to open and read
+// width (passed by pointer): container for the width of the image
+// height (passed by pointer): container for the height of the image
+// returns an array of arrays of ppm_pixel with dimensions = (width, height)
+struct ppm_pixel** read_ppm_2d(const char* filename, int* width, int* height)
+----
+
+NOTE: The parameters `width` and `height` will contain the width and height of the image, after the image is loaded.
+
+Run the file, `test_ppm.c`, to test your functions. 
+
+[source,subs="quotes"]
+----
+$ **make test_read**
+gcc -g -Wall -Wvla -Werror test_read.c read_ppm.c -o test_read
+$ **./test_read images/feep-raw.ppm**
+Testing file images/feep-raw.ppm: 4 4
+(0,0,0) (100,0,0) (0,0,0) (255,0,255)
+(0,0,0) (0,255,175) (0,0,0) (0,0,0)
+(0,0,0) (0,0,0) (0,15,175) (0,0,0)
+(255,0,255) (0,0,0) (0,0,0) (255,255,255)
+----
+
+Requirements/Hints:
+
+* Your function should return NULL if the filename is invalid
+* Your function should return NULL if memory cannot be allocated for the image data
+* You can assume that it is safe to read the header line by line (e.g. using `fgets`).
+* Do not modify `read_ppm.h` or `write_ppm.h`. And do not remove the stubs for the functions you do not implement!
+* Make sure your program compiles using the Makefile
+* Make sure you can load files with and without comments.
+* Make sure you can load either ASCII or binary PPM files.
+
+== Write PPM
+
+Now implement a function to write PPM files in binary format. 
+Similarly to reading, you should choose one definition of `write_ppm` to 
+implement, depending on whether you use either a "flat array" or an "array of arrays" to store your pixels. 
+
+For example, if you use a flat array, you should implement the following function.
+
+[source]
+----
+// filename is the image PPM to open and write
+// data (passed by pointer): array of pixels
+// width (passed by value): the width of the image
+// height (passed by value): the height of the image
+void write_ppm(const char* filename, struct ppm_pixel* data, int width, int height)
+----
+
+If you use an array or arrays, you should implement the following function.
+
+[source]
+----
+// filename is the image PPM to open and write
+// data (passed by pointer): array of pixels
+// width (passed by value): the width of the image
+// height (passed by value): the height of the image
+void write_ppm_2d(const char* filename, struct ppm_pixel** data, int width, int height)
+----
+
+Use the file, `test_write.c`, to test your functions. For example, 
+
+[source,subs="quotes"]
+----
+$ **make test_write**
+gcc -g -Wall -Wvla -Werror test_write.c write_ppm.c read_ppm.c -o test_write
+$ **./test_write**
+Writing files test.ppm and test_2d.ppm with dimensions: 4 3
+$ **xxd test.ppm**
+00000000: 5036 0a33 2034 0a32 3535 0a00 0000 3232  P6.3 4.255....22
+00000010: 3264 6464 0000 0032 3232 6464 6400 0000  2ddd...222ddd...
+00000020: 3232 3264 6464 0000 0032 3232 6464 64    222ddd...222ddd
+----
+
+Requirements/Hints:
+
+* You can use `fwrite` to write text for the header. Simply create a string and call `fwrite(mystring, strlen(mystring), sizeof(char), fp);`
+* The header information should include the correct format ID (P6), the image width, the image height, and 255 for the maximum color value.
+* Do not modify write_ppm.h. And do not remove the versions of the function you do not implement!
+* Make sure your program compiles using the Makefile.
+* Test for memory leaks with valgrind!
+
+= Steganography
+
+link:https://en.wikipedia.org/wiki/Steganography[Steganography] is the process of hiding messages within another message.
+With this question, you will hide text inside images.
+
+[discrete]
+== Background
+
+_Credit: Chris Trailie (link:https://ursinus-cs174-s2022.github.io/CoursePage/Assignments/HW2_Steganography/#lsb[Original])_
+
+To understand how we will hide messages in the least significant bits of an image, let's look at the following write-up by 
+Chris Trailie, starting with the two pictures below. 
+++++
+<table style="width:650px;">
+    <tr>
+        <td><h4>Ordinary image</h4></td>
+        <td><h4>Hidden message</h4></td>
+    </tr>
+    <tr>
+        <td>
+            <img src = "https://ursinus-cs174-s2022.github.io/CoursePage/Assignments/HW2_Steganography/HW2_Steganography/images/birthday.png" width=300>
+        </td>
+        <td>
+            <img src = "https://ursinus-cs174-s2022.github.io/CoursePage/Assignments/HW2_Steganography/HW2_Steganography/images/birthday_encoded.png" width=300>
+        </td>
+    </tr>
+</table>
+
+<p>
+    The picture on the right contains 12 paragraphs of text on the Ursinus 150 strategic plan.  Can you see the difference?  No?  Well great, that's the point!  
+</p>
+<p>
+    So how do we do this?  The idea is beautifully simple, and is best understood with an example.  Consider the following 3-pixel image
+</p>
+
+<table style="width:250px;">
+    <tr>
+        <td style="background-color: #fe7732; width:50px; height:50px;"><span style="color:white">[254, 119, 50]</span></td>
+        <td style="background-color: #028dfe; width:50px; height:50px;"><span style="color:white">[2, 141, 254]</span></td>
+        <td style="background-color: #5b9f40; width:50px; height:50px;"><span style="color:white">[91, 159, 64]</span></td>
+    </tr>
+</table>
+
+<p>
+    We're going to extract a binary signal by looking at the <b>least significant bit</b> (the 1's place in binary) of each color channel in each pixel from left to right from red, to green, to blue, and put them together into one binary string.  In other words, for a particular pixel and a particular color channel, we'll extract a 0 if it's an even number and a 1 if it's an odd number.  Let's look at the first 8 bits in the above image.  We have 
+</p>
+<table style="width:50px;">
+    <tr>
+        <td>254</td><td>0</td>
+    </tr>
+    <tr>
+        <td>119</td><td>1</td>
+    </tr>
+    <tr>
+        <td>50</td><td>0</td>
+    </tr>
+    <tr>
+        <td>2</td><td>0</td>
+    </tr>
+    <tr>
+        <td>141</td><td>1</td>
+    </tr>
+    <tr>
+        <td>254</td><td>0</td>
+    </tr>
+    <tr>
+        <td>91</td><td>1</td>
+    </tr>
+    <tr>
+        <td>159</td><td>1</td>
+    </tr>
+</table>
+
+<p>
+    All together, this is the binary string <b>01001011</b>, which is the character <b>'K'</b> in <a href = "https://www.asciitable.com/">ASCII</a>.  What if we wanted to change it to some other character though?  Perhaps the character <b>'z'</b>, which is <b>0x7A</b> hex, or <b>01111010</b> in binary.  Then we can just tweak the 1's place of the pixel values as follows, where I've bolded the ones that have changed:
+</p>
+
+<table style="width:50px;">
+    <tr>
+        <td>254</td><td>0</td>
+    </tr>
+    <tr>
+        <td>119</td><td>1</td>
+    </tr>
+    <tr>
+        <td><b>51</b></td><td><b>1</b></td>
+    </tr>
+    <tr>
+        <td><b>3</b></td><td><b>1</b></td>
+    </tr>
+    <tr>
+        <td>141</td><td>1</td>
+    </tr>
+    <tr>
+        <td>254</td><td>0</td>
+    </tr>
+    <tr>
+        <td>91</td><td>1</td>
+    </tr>
+    <tr>
+        <td><b>158</b></td><td><b>0</b></td>
+    </tr>
+</table>
+
+<p>
+    Here's what these updated values look like 
+</p>
+
+<table style="width:250px;">
+    <tr>
+        <td style="background-color: #fe7733; width:50px; height:50px;"><span style="color:white">[254, 119, 51]</span></td>
+        <td style="background-color: #038dfe; width:50px; height:50px;"><span style="color:white">[3, 141, 254]</span></td>
+        <td style="background-color: #5b9e40; width:50px; height:50px;"><span style="color:white">[91, 158, 64]</span></td>
+    </tr>
+</table>
+
+<p>
+    If you were just looking at it and comparing it to what we started with, you would never notice the difference!  So we have freedom to tweak the least significant bit of every color channel of every pixel at will to encode text, and this is exactly what you will be doing in this assignment!.  In a 500x500 image, for example, this means we can store 250,000 bits.  Since each ASCII character is 8 bits, this is 31,250 characters total, or roughly about 6000 words.
+</p>
+++++
+
+:sectnums:
+
+= Decode
+
+In the file, `decode.c`, write a program that reads in a PPM file (raw, or binary, format) and then outputs any message that might be stored in 
+the least significant bits of each color. Your program should read bits from each of the red, green, and blue colors -- top to bottom, left to right. 
+You should keep decoding until you reach the empty character `\0`.
+
+For example, consider the example file `tiny_encoded.ppm`. Decoding should give you the bits `001100010011011100110100001000010000101000000000`. 
+
+If we group them up into ASCII char variables, we see this is the character string `174!\n`.
+
+++++
+<table style="width:100px;">
+<tr>
+    <td>00110001</td><td><code>'1'</code></td>
+</tr>
+<tr>
+    <td>00110111</td><td><code>'7'</code></td>
+</tr>
+<tr>
+    <td>00110100</td><td><code>'4'</code></td>
+</tr>
+<tr>
+    <td>00100001</td><td><code>'!'</code></td>
+</tr>
+<tr>
+    <td>00001010</td><td><code>'\n'</code></td>
+</tr>
+<tr>
+    <td>00000000</td><td><code>'\0'</code></td>
+</tr>
+</table>
+++++
+
+Your program should perform as follows.
+
+[source,subs="quotes"]
+----
+$ **./decode images/tiny_encoded.ppm**
+Reading tiny_encoded.ppm with width 4 and height 4
+Max number of characters in the image: 6
+174!
+$ **./decode images/monalisa_encoded.ppm**
+Reading images/monalisa_encoded.ppm with width 606 and height 771
+Max number of characters in the image: 175209
+...secret message..
+$ **./decode images/cats_encoded.ppm**
+...etc...
+----
+
+Requirements/Hints:
+
+* You should read the PPM filename as a command line argument
+* You should report the usage if no file is given to the program
+* You should report an error if the file cannot be read
+* Re-use your implementation of `read_ppm` and `write_ppm` 
+* Output the size of the image along with the maximum number of characters it can store
+* For debugging, try printing out values in hex format, e.g. `printf("%02X", c);`
+* This program is easier to implement if you use a 1D array because you can cast the `struct ppm_pixel*` array to an `unsigned char*` array.
+
+= Encode
+
+In the file, `encode.c`, write a program that reads in a PPM file (raw, or binary, format) and 
+asks the user for a message to embed within it. 
+
+[source,subs="quotes"]
+----
+$ **make encode**
+gcc -g -Wall -Wvla -Werror encode.c read_ppm.c -o encode
+$ **./encode images/feep_raw.ppm**
+Reading feep_raw.ppm with width 4 and height 4
+Max number of characters in the image: 5
+Enter a phrase: **lol**
+Writing file feep_raw_encoded.ppm
+----
+
+Requirements/Hints:
+
+* You should read the PPM filename as a command line argument
+* You should report the usage if no file is given to the program
+* You should report an error if the file cannot be read
+* You should output a new file based on the input name. For example, if the input is `feep_raw.ppm`, the new file with the encoded message should be `feep_raw_encoded.ppm`.
+* Re-use your implementation of `read_ppm`. 
+* Output the size of the image along with the maximum number of characters it can store
+* For debugging, remember you can print values in hex format, e.g. `printf("%02X", c);`
+
+[discrete]
+= Grading Rubric
+
+*Assignment rubrics*
+
+Grades are out of 4 points.
+
+*Code rubrics*
+
+* Code checkins
+* View features
+* Search features
+* Edit features
+
+For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
+have good style.
+
+* Some credit lost for missing features or bugs, depending on severity of error
+* -12.5% for style errors. See the link:../codingstandard.html[class coding style] here.
+* -50% for memory errors
+* -100% for failure to checkin work to Github
+* -100% for failure to compile on linux using make

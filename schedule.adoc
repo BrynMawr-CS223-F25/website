@@ -66,8 +66,8 @@
 * Lab: Check-ins
 
 |
-* link:lectures/Lecture-Week03-Sept18-DataStructures.pdf[Lecture - Sept 23]
-* link:lectures/Lecture-Week04-Sept23-Binary.pdf[Lecture - Sept 23]
+* link:lectures/Lecture-Week03-Sept18-DataStructures.pdf[Lecture - Sept 23 (Same notes as Sept 18)]
+* link:lectures/Lecture-Week04-Sept23-Binary.pdf[Lecture - Sept 25]
 * link:lectures/code/linkedList/linkedlist.h[linkedlist.h]
 * link:lectures/code/linkedList/linkedlist.c[linkedlist.c]
 * link:lectures/code/linkedList/test_list.c[test_list.c]
@@ -89,8 +89,10 @@
 
 | 
 * link:lectures/Lecture-Week05-Sept30-BitOps.pdf[Lecture - Sept 30]
+* link:lectures/Lecture-Week05-Oct2-IntroAssembly.pdf[Lecture - Oct 2]
 * link:lectures/code/bitops.c[bitops.c]
 * link:lectures/code/byte-order.c[byte-order.c]
+* link:lectures/code/shift.c[shift.c]
 
 //-----------------------------
 |6
@@ -103,6 +105,7 @@
 * link:assts/asst04.html[Assignment 04]: Due {ASST04_DUE}
 
 | 
+* link:lectures/Lecture-Week06-Oct7-Assembly.pdf[Lecture - Oct 7]
 * link:studyguide1.html[Study Guide 1]
 * link:studyguide2.html[Study Guide 2]
 * link:studyGuide3.html[Study Guide 3]
@@ -119,66 +122,69 @@
 //-----------------------------
 |8
 |{WEEK08} anchor:week08[]
-|*The operating system, Processes* 
+|*Assembly* 
 
-* topics: processes, fork 
+* topics: Tracing assembly, buffer exploits, loops, conditionals 
 * Read: link:https://diveintosystems.org/singlepage/#_the_operating_system[Chapter 13, skip section 13.3] 
-* link:assts/asst05.html[Assignment 05]: Due {ASST05_DUE}
+* Lab: Checkins and worksheet practice
+* link:assts/asst04.html[Assignment 04]: Office hour check-ins due 
 
-| TBD
+| 
 
 //-----------------------------
 |9
 |{WEEK09} anchor:week09[]
-| *Threads I*
+| *The operating system, processes, fork*
 
-* topics: threads vs. processes, designing concurrent algorithms, pthreads
-* Read: link:https://diveintosystems.org/singlepage/#_some_advanced_c_features[Section 2.9.3, 2.9.4 (void* andpointer arithmetic)] 
-* Read: link:https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era[Chapter 14] 
+* topics: what is an operating system?, system calls, processes
 * Lab: Coding Challenge 03, link:studyguide3.html#_coding[Coding problems 3]
+* link:assts/asst04.html[Assignment 04]: Due {ASST04_DUE}
 
 | TBD
 
 //-----------------------------
 |10
 |{WEEK10} anchor:week10[]
-|*Threads II* 
+|*Threads I* 
 
-* topics: performance, deadlock, thread safety
+* topics: threads vs. processes, designing concurrent algorithms, pthreads
+* Read: link:https://diveintosystems.org/singlepage/#_some_advanced_c_features[Section 2.9.3, 2.9.4 (void* andpointer arithmetic)] 
 * Read: link:https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era[Chapter 14] 
-* link:assts/asst06.html[Assignment 06]: Due {ASST06_DUE}
+* link:assts/asst05.html[Assignment 05]: Due {ASST05_DUE}
+* Lab checkins and worksheet
 
 | TBD
 
 //-----------------------------
 |11
 |{WEEK11} anchor:week11[]
-|*Threads III* 
+|*Threads II* 
 
-* topics: deadlock, producer/consumer
-* link:assts/asst10.html[Assignment 10]: Due April 4th
+* topics: performance, deadlock, thread safety, producer/consumer pattern
 * Lab: Coding Challenge 04, link:studyguide4.html#_coding[Coding problems 4]
+* link:assts/asst06.html[Assignment 06]: Office hours check-ins due 
 
-| TBD
+| 
 
 //-----------------------------
 |12
 |{WEEK12} anchor:week12[]
-|*Memory, allocators* 
+|*Threads III, Memory, memory allocation* 
 
-* Read:"My malloc: mylloc and mhysa" by Johan Montelius 
 * Read: link:https://diveintosystems.org/singlepage/#_storage_and_the_memory_hierarchy[Chapter 11.1-11.3] 
-* Lab: Checkins
-* link:assts/asst07.html[Assignment 07]: Due {ASST07_DUE}
+* Lab: Checkins and worksheet
+* link:assts/asst06.html[Assignment 06]: Due {ASST06_DUE}
 
 | 
 
 //-----------------------------
 |13
 |{WEEK13} anchor:week13[]
-|*Thanksgiving, Midterm 02* 
+|*Memory, memory allocation* 
 
-* Midterm 02, In-class {MIDTERM02} (1.5 hrs)
+* Lab: Memory allocators 
+* Read:"My malloc: mylloc and mhysa" by Johan Montelius (see slack)
+* Read: link:https://diveintosystems.org/singlepage/#_storage_and_the_memory_hierarchy[Chapter 11.1-11.3] 
 * **Thanksgiving: No Class Thursday**
 
 | 
@@ -186,11 +192,10 @@
 //-----------------------------
 |14
 |{WEEK14} anchor:week14[]
-| *Code Optimization, C++*
+| Review and midterm 2
 
-* Read: link:https://diveintosystems.org/singlepage/#_code_optimization[Chapter 12] 
-* link:assts/asst08.html[Assignment 08]: Due {ASST08_DUE}
-* Lab: Checkins
+* Midterm 02, In-class {MIDTERM02} (1.5 hrs)
+* Lab: Review
 
 | 
 
@@ -198,10 +203,11 @@
 //-----------------------------
 |15
 |{WEEK15} anchor:week15[]
-|*Review* 
+|*Code Optimization, C++*
 
-* Lab: Coding Challenge 05, link:study-guide5.html#Coding[Coding problems 5]
-* In-Class: Practice Final and Review
+* Read: link:https://diveintosystems.org/singlepage/#_code_optimization[Chapter 12] 
+* link:assts/asst07.html[Assignment 07]: Due {ASST07_DUE}
+* Lab checkins and final practice
 
 |
 * link:studyguide-final.html[Final Study Guide]
