@@ -44,7 +44,7 @@ Your repository should now contain a new folder named `{ASST}`.
 
 ** You must check-in during office hours to show you have started this assignment on either Thursday October 23rd or Friday October 24th**
 
-Implement two functions, `read_ppm` and `write_ppm`, that read and write both ASCII and binary PPM files. 
+Implement two functions, `read_ppm` and `write_ppm`, that read and write binary PPM files. 
 This functions are implemented in the file `ppm.c` and tested using code in `test_read.c` and `test_write.c`.
 
 Images are 2D arrays of pixels. In the following section, we give details on how PPM stores images 

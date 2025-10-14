@@ -19,6 +19,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 * Welcome to systems programming! 
 * Midterm 01 will be on October 9th, in class, 80 minutes. Closed book (you may bring one hand written cheat sheet)
 * link:assts/asst04.html[Assignment 04] is due on October 24th. Assignment checkins are due during office hours on October 23rd and 24th. 
+* The final exam will be on Tuesday, December 16th at 9:30 AM	(3 hours, closed book, 1 written cheat sheet)
 
 == Course Info
 
