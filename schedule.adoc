@@ -109,7 +109,7 @@
 * link:lectures/Lecture-Week06-Oct7-Assembly.pdf[Lecture - Oct 7]
 * link:studyguide1.html[Study Guide 1]
 * link:studyguide2.html[Study Guide 2]
-* link:studyGuide3.html[Study Guide 3]
+* link:studyguide3.html[Study Guide 3]
 
 //-----------------------------
 |7

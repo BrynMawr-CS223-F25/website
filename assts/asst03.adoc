@@ -9,7 +9,7 @@ include::../dates.adoc[]
 
 = {title}
 
-**Due {ASST03_DUE}, before midnight**
+*Due {ASST03_DUE}, before midnight*
 
 In this multi-week assignment, you will build your VIM editor using the ncurses 
 library. 
@@ -71,7 +71,7 @@ int main()
 :sectnums:
 = Milestone 1
 
-** Due Tuesday, September 23rd**
+* Due Tuesday, September 23rd*
 
 [source]
 ----
@@ -90,8 +90,8 @@ Features
 
 = Milestone 2
 
-**Due on Friday, September 26**
-**Students must check-in with the TA during office hours for full credit**
+*Due on Friday, September 26*
+*Students must check-in with the TA during office hours for full credit*
 
 Features:
 
@@ -99,10 +99,10 @@ Features:
 * Displaying the current row, column, and filename in a banner on the last row
 * Searching with '/'. Typing '/' will set the current search word. Pressing 'n' will go to the next match and pressing 'p' will go to the previous match. 
 
-= Milestone 2
+= Milestone 3
 
-** Due Friday, Oct 3rd**
-** Students must check-in during lab and during TA office hours for full credit**
+* Due Friday, Oct 3rd*
+* Students must check-in during lab and during TA office hours for full credit*
 
 Required features: 
 
