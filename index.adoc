@@ -16,6 +16,8 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
+* Office hours on Friday evening October 31 is cancelled for Halloween.
+* Prof. Normoyle's Office Hours on Friday Oct 24 and Oct 31 will be online. Reach out on slack to make a meeting. 
 * Welcome to systems programming! 
 * Congratulations to last week's worksheet champions: JE2, U.G., and NY.
 * Coding challenge 03 will be in Lab, October 28. 
