@@ -127,17 +127,19 @@
 
 * topics: Tracing assembly, buffer exploits, loops, conditionals 
 * Read: link:https://diveintosystems.org/singlepage/#_the_operating_system[Chapter 13, skip section 13.3] 
-* Lab: Check-ins, worksheet practice
+* Lab: Check-ins, worksheet practice. Congratulations to last week's worksheet champions: JE^2^, U.G., and NY.
 * link:assts/asst04.html[Assignment 04]: Office hour check-ins due 
 
 | 
+* link:lectures/Lecture-Week08-Oct21-AssemblyPractice.pdf[Lecture - Oct 21]
+* link:lectures/Lecture-Week08-Oct23-AssemblyBranch.pdf[Lecture - Oct 23]
 
 //-----------------------------
 |9
 |{WEEK09} anchor:week09[]
 | *The operating system, processes, fork*
 
-* topics: what is an operating system?, system calls, processes, fork
+* Topics: what is an operating system?, system calls, processes, fork
 * Lab: Coding Challenge 03, link:studyguide3.html#_coding[Coding problems 3]
 * link:assts/asst04.html[Assignment 04]: Due {ASST04_DUE}
 

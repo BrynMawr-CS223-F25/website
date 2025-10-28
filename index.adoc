@@ -17,8 +17,9 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 [.anns]
 
 * Welcome to systems programming! 
+* Congratulations to last week's worksheet champions: JE2, U.G., and NY.
 * Coding challenge 03 will be in Lab, October 28. 
-* link:assts/asst04.html[Assignment 04] is due on October 24th. Assignment checkins are due during office hours on October 23rd and 24th. 
+* link:assts/asst04.html[Assignment 04] is due on October 31st. Assignment checkins are due during office hours on October 23rd and 24th. 
 * The final exam will be on Tuesday, December 16th at 9:30 AM	(3 hours, closed book, 1 written cheat sheet)
 
 == Course Info
