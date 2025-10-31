@@ -7,20 +7,28 @@ include::../dates.adoc[]
 :Revision: 0.1
 :ASST: A05
 
+[discrete]
 = {title}
 
 **Due {ASST05_DUE}, before midnight**
-
 **This is a written assignment, not a coding assignment!**
 
-The goals for this assignment are:
+Please submit a hard-copy in either Lecture or Lab, or submit to either Nina
+Fichera's office (Park 348) or Aline Normoyle's office (Park 200B). 
 
-* Understand basic x86_64 assembly instructions, especially memory addressing
-* Visualize the execution of x86_64 assembly instructions
+Name: 
 
+{nbsp} + 
+{nbsp} + 
+{nbsp} + 
+
+//The goals for this assignment are:
+//* Understand basic x86_64 assembly instructions, especially memory addressing
+//* Visualize the execution of x86_64 assembly instructions
 
 :sectnums:
 
+[discrete]
 = Operand practice
 
 [cols="1a,1a"]
@@ -62,21 +70,11 @@ value for each of the given operands.
 |
 |{nbsp} +
 {nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
 |
 
 |0x4(%rax)
 |
 |{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
 {nbsp} +
 |
 
@@ -84,25 +82,73 @@ value for each of the given operands.
 |
 |{nbsp} +
 {nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
 |
 
 |0xf00(,%rsi,2)
 |
 |{nbsp} +
 {nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
 |
 |===
 
+++++
+<div class="pagebreak"></div>
+++++
+
+[discrete]
+= Jump around
+
+Consider the following program containing a loop.
+
+[source]
+----
+void loop(int a, int b)
+{
+  for (int i = 0; i < b; i++)
+  {
+    printf("%c", a);
+  }
+  printf("\n");
+}
+----
+
+Re-write the above code using a while loop. Then re-write it again to use goto commands.
+
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+
+The following table has x86_64 assembly code that corresponds to the above loop. For each instruction, 
+explain its meaning, and a description of how it corresponds to the original code. The first instruction has been 
+done for you, as an example.
+
+//{nbsp} + | {nbsp} + | {nbsp} +
+
+[cols="1,3,3,3"]
+|===
+| Addr | Instruction | Meaning | Description
+| 1155 | mov %edi,-0x14(%rbp) | M[%rbp-0x14] = %edi | Saves the first argument (a) to the stack
+| 1158 | mov %esi,-0x18(%rbp) | | 
+| 115b | movl $0x0,-0x4(%rbp) | | 
+| 1162 | jmp 1172 | | 
+| 1164 | mov -0x14(%rbp),%eax | | 
+| 1167 | mov %eax,%edi | | 
+| 1169 | call 1050 <putchar@plt> | | 
+| 116e | addl $0x1,-0x4(%rbp) | | 
+| 1172 | mov -0x4(%rbp),%eax | | 
+| 1175 | cmp -0x18(%rbp),%eax | | 
+| 1178 | jl 1164  | | 
+| 117a | mov $0xa,%edi | | 
+| 117f | call 1050 <putchar@plt> | | 
+|===
+
+++++
+<div class="pagebreak"></div>
+++++
+[discrete]
 = The answer is 42
 
 Recall the following example from class and
@@ -110,6 +156,10 @@ link:https://diveintosystems.org/book/C7-x86_64/functions.html[_Dive into
 Systems_]. This mysterious program reliably produces the output `42`. In this
 question, you will trace the assembly to understand why.
 
+[cols="1a,2a"]
+|===
+| 
+Original Program
 [source]
 ----
 #include <stdio.h>
@@ -132,10 +182,8 @@ int main(void) {
     return 0;
 }
 ---- 
-
-Suppose that compiling the above program results in the following assembly 
-instructions (x86_64)
-
+|
+Assembly (x86_64)
 [source]
 ----
 0000000000001149 <assign>:
@@ -170,11 +218,15 @@ instructions (x86_64)
     11a1: c9                    leaveq
     11a2: c3                    retq
 ----
+|===
 
 NOTE: In _The Hitchhiker's Guide to the Galaxy_ by Douglas Adams, the "Answer to the
 Ultimate Question of Life, the Universe, and Everything," calculated by an
 enormous supercomputer named Deep Thought over a period of 7.5 million years.
 
+++++
+<div class="pagebreak"></div>
+++++
 1) Suppose this is the state of the stack immediately prior to executing `main`
 Please show the before and after state (cross out old values).
 
@@ -219,6 +271,9 @@ Please show the before and after state (cross out old values).
 !===
 |===
 
+++++
+<div class="pagebreak"></div>
+++++
 2) What are the contents of registers and the stack after executing `mov %rsp, %rbp`?
 Please show the before and after state (cross out old values).
 
@@ -263,6 +318,9 @@ Please show the before and after state (cross out old values).
 !===
 |===
 
+++++
+<div class="pagebreak"></div>
+++++
 3) What is the state of registers and the stack after executing `sub $0x10, %rsp`?
 Please show the before and after state (cross out old values).
 
@@ -307,6 +365,9 @@ Please show the before and after state (cross out old values).
 !===
 |===
 
+++++
+<div class="pagebreak"></div>
+++++
 4) What is the state of registers and the stack after executing `callq 0x1149 <assign>`?
 Please show the before and after state (cross out old values).
 
@@ -351,6 +412,9 @@ Please show the before and after state (cross out old values).
 !===
 |===
 
+++++
+<div class="pagebreak"></div>
+++++
 5) Skipping ahead, what is the state of registers and the stack when the program executes `pop %rbp`?
 What two changes occur during `pop`?
 Please show the before and after state (cross out old values).
@@ -394,6 +458,9 @@ Please show the before and after state (cross out old values).
 !===
 |===
 
+++++
+<div class="pagebreak"></div>
+++++
 6) What is the state of registers and the stack after executing `retq`?
 Please show the before and after state (cross out old values).
 
@@ -436,6 +503,9 @@ Please show the before and after state (cross out old values).
 !===
 |===
 
+++++
+<div class="pagebreak"></div>
+++++
 7) Skipping ahead, what are the state of registers and the stack when executing `retq` in adder?
 Please show the before and after state (cross out old values).
 
@@ -500,9 +570,3 @@ placed in `%esi`. What value will %esi containin?
     11a1: c9                    leaveq
     11a2: c3                    retq
 ----
-
-= Submit your work
-
-This is a written assignment. Please submit a hard-copy in either Lecture or
-Lab, or submit to either Nina Fichera's office (Park 348) or Aline Normoyle's
-office (Park 200B). 

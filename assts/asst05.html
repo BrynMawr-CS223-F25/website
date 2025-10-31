@@ -9,46 +9,28 @@
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_assignment_5_some_assembly_required">Assignment 5: Some assembly required</a></li>
-<li><a href="#_operand_practice">1. Operand practice</a></li>
-<li><a href="#_the_answer_is_42">2. The answer is 42</a></li>
-<li><a href="#_submit_your_work">3. Submit your work</a></li>
-</ul>
-</div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_assignment_5_some_assembly_required">Assignment 5: Some assembly required</h2>
-<div class="sectionbody">
+<h2 id="_assignment_5_some_assembly_required" class="discrete">Assignment 5: Some assembly required</h2>
 <div class="paragraph">
-<p><strong>Due Friday, November 7th, before midnight</strong></p>
-</div>
-<div class="paragraph">
-<p><strong>This is a written assignment, not a coding assignment!</strong></p>
+<p><strong>Due Friday, November 7th, before midnight</strong>
+<strong>This is a written assignment, not a coding assignment!</strong></p>
 </div>
 <div class="paragraph">
-<p>The goals for this assignment are:</p>
+<p>Please submit a hard-copy in either Lecture or Lab, or submit to either Nina
+Fichera&#8217;s office (Park 348) or Aline Normoyle&#8217;s office (Park 200B).</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Understand basic x86_64 assembly instructions, especially memory addressing</p>
-</li>
-<li>
-<p>Visualize the execution of x86_64 assembly instructions</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Name:</p>
 </div>
+<div class="paragraph">
+<p>&#160;<br>
+&#160;<br>
+&#160;<br></p>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_operand_practice">1. Operand practice</h2>
-<div class="sectionbody">
+<h2 id="_operand_practice" class="discrete">Operand practice</h2>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -151,11 +133,6 @@ value for each of the given operands.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">%rax</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
 &#160;<br></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -163,11 +140,6 @@ value for each of the given operands.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">0x4(%rax)</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
 &#160;<br></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -175,11 +147,6 @@ value for each of the given operands.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">0x4(%rax, %r8, 4)</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
 &#160;<br></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -187,26 +154,155 @@ value for each of the given operands.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">0xf00(,%rsi,2)</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
 &#160;<br></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
+<div class="pagebreak"></div>
+<h2 id="_jump_around" class="discrete">Jump around</h2>
+<div class="paragraph">
+<p>Consider the following program containing a loop.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>void loop(int a, int b)
+{
+  for (int i = 0; i &lt; b; i++)
+  {
+    printf("%c", a);
+  }
+  printf("\n");
+}</code></pre>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_the_answer_is_42">2. The answer is 42</h2>
-<div class="sectionbody">
+<div class="paragraph">
+<p>Re-write the above code using a while loop. Then re-write it again to use goto commands.</p>
+</div>
+<div class="paragraph">
+<p>&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br>
+&#160;<br></p>
+</div>
+<div class="paragraph">
+<p>The following table has x86_64 assembly code that corresponds to the above loop. For each instruction,
+explain its meaning, and a description of how it corresponds to the original code. The first instruction has been
+done for you, as an example.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 30%;">
+<col style="width: 30%;">
+<col style="width: 30%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Addr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instruction</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Meaning</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1155</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov %edi,-0x14(%rbp)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M[%rbp-0x14] = %edi</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Saves the first argument (a) to the stack</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1158</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov %esi,-0x18(%rbp)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">115b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">movl $0x0,-0x4(%rbp)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1162</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jmp 1172</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1164</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov -0x14(%rbp),%eax</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1167</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov %eax,%edi</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1169</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">call 1050 &lt;putchar@plt&gt;</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">116e</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">addl $0x1,-0x4(%rbp)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1172</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov -0x4(%rbp),%eax</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1175</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cmp -0x18(%rbp),%eax</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1178</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jl 1164</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">117a</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov $0xa,%edi</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">117f</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">call 1050 &lt;putchar@plt&gt;</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="pagebreak"></div>
+<h2 id="_the_answer_is_42" class="discrete">The answer is 42</h2>
 <div class="paragraph">
 <p>Recall the following example from class and
 <a href="https://diveintosystems.org/book/C7-x86_64/functions.html"><em>Dive into
 Systems</em></a>. This mysterious program reliably produces the output <code>42</code>. In this
 question, you will trace the assembly to understand why.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Original Program</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -230,10 +326,9 @@ int main(void) {
     return 0;
 }</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>Suppose that compiling the above program results in the following assembly
-instructions (x86_64)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Assembly (x86_64)</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -269,7 +364,10 @@ instructions (x86_64)</p>
     11a1: c9                    leaveq
     11a2: c3                    retq</code></pre>
 </div>
-</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -284,6 +382,7 @@ enormous supercomputer named Deep Thought over a period of 7.5 million years.
 </tr>
 </table>
 </div>
+<div class="pagebreak"></div>
 <div class="paragraph">
 <p>1) Suppose this is the state of the stack immediately prior to executing <code>main</code>
 Please show the before and after state (cross out old values).</p>
@@ -390,6 +489,7 @@ Please show the before and after state (cross out old values).</p>
 </tr>
 </tbody>
 </table>
+<div class="pagebreak"></div>
 <div class="paragraph">
 <p>2) What are the contents of registers and the stack after executing <code>mov %rsp, %rbp</code>?
 Please show the before and after state (cross out old values).</p>
@@ -496,6 +596,7 @@ Please show the before and after state (cross out old values).</p>
 </tr>
 </tbody>
 </table>
+<div class="pagebreak"></div>
 <div class="paragraph">
 <p>3) What is the state of registers and the stack after executing <code>sub $0x10, %rsp</code>?
 Please show the before and after state (cross out old values).</p>
@@ -602,6 +703,7 @@ Please show the before and after state (cross out old values).</p>
 </tr>
 </tbody>
 </table>
+<div class="pagebreak"></div>
 <div class="paragraph">
 <p>4) What is the state of registers and the stack after executing <code>callq 0x1149 &lt;assign&gt;</code>?
 Please show the before and after state (cross out old values).</p>
@@ -708,6 +810,7 @@ Please show the before and after state (cross out old values).</p>
 </tr>
 </tbody>
 </table>
+<div class="pagebreak"></div>
 <div class="paragraph">
 <p>5) Skipping ahead, what is the state of registers and the stack when the program executes <code>pop %rbp</code>?
 What two changes occur during <code>pop</code>?
@@ -813,6 +916,7 @@ Please show the before and after state (cross out old values).</p>
 </tr>
 </tbody>
 </table>
+<div class="pagebreak"></div>
 <div class="paragraph">
 <p>6) What is the state of registers and the stack after executing <code>retq</code>?
 Please show the before and after state (cross out old values).</p>
@@ -917,6 +1021,7 @@ Please show the before and after state (cross out old values).</p>
 </tr>
 </tbody>
 </table>
+<div class="pagebreak"></div>
 <div class="paragraph">
 <p>7) Skipping ahead, what are the state of registers and the stack when executing <code>retq</code> in adder?
 Please show the before and after state (cross out old values).</p>
@@ -1046,21 +1151,9 @@ placed in <code>%esi</code>. What value will %esi containin?</p>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_submit_your_work">3. Submit your work</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This is a written assignment. Please submit a hard-copy in either Lecture or
-Lab, or submit to either Nina Fichera&#8217;s office (Park 348) or Aline Normoyle&#8217;s
-office (Park 200B).</p>
-</div>
-</div>
-</div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-10-08 14:54:16 -0400
+Last updated 2025-10-31 17:30:31 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">
