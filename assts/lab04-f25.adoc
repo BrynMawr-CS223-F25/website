@@ -1,0 +1,108 @@
+include::header.adoc[]
+
+:title: Lab - Assembly Programming
+:Author Initials: ASN
+:Date:    2020-08-15
+:Revision: 0.1
+:stem: latexmath
+
+[discrete]
+= {title}
+
+[discrete]
+= Question 1: Shift
+
+Consider the following programs. Use `gcc -S shift.c -o shift.S` to generate the
+assembly code for this program. Then try modifying the assembly code to
+shift by 4 instead of 2.  Edit the file `shift.S` and use the command `gcc shift.S`
+to build `a.out`.
+
+[source]
+----
+#include <stdio.h>
+int main() {
+  int a = 40;
+  int value = a << 2;
+  printf("values = %d", value); 
+}
+----
+
+[discrete]
+= Question 2: Secrets 
+
+Merge and update your repository. You should have a new directory LAB-Assembly. 
+The executable, `secret`, asks the user for a secret code. It's main function 
+looks as follows.
+
+[source]
+----
+int main(){
+  int secret, guess;
+  char buf[128];
+  printf("Enter secret number:\n");
+  scanf("%128s", buf);
+  guess = atoi(buf);
+  secret = getSecretCode();
+  if (guess == secret)
+    printf("You got it right!\n");
+  else{
+    printf("You are so wrong!\n");
+    return 1;
+  }
+  return 0;
+}
+----
+ 
+Using gdb, discover the secret number.
+
+Some helpful gdb commands:
+
+* disass <function_name>: show the assembly for an instruction
+* ni: next instruction
+* b *<instruction_num>: break at the given instruction
+* p $rax: print the contents of a register
+* r: runs the program
+* c: continues the program
+
+[discrete]
+= Question 3: Fibonacci 
+
+In the file, `fib.S`, write an x86_64 assembly program that computes the 
+largest value in the Fibonacci sequence that is less than 100. Your program 
+should then return this value from main. Write the program yourself using 
+only 4-byte registers, such as ebc, edx, r8d, etc. 
+
+[source,subs="quotes"]
+----
+$ *gcc fib.S*
+$ *./a.out* 
+$ *echo $?*
+89
+----
+
+Below is an implementation in C (with prints that show intermediate values).
+
+[source]
+----
+// Outputs: 1 1 2 3 5 8 13 21 34 55 89
+int main(int argc, char** argv)
+{
+  int n = 100;
+  int b = 1;
+  int i = 0;
+  while (b+i < n)
+  {
+    printf("%d ", b);
+    int tmp = b;
+    b = b + i;
+    i = tmp;
+  }
+  printf("%d \n", b);
+  return b;
+}
+----
+
+Some helpful gdb commands:
+
+* `print $eflags` shows the state of flags such as ZF and SF
+* `info registers` shows the contents of all registers

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<title>Lab - Assembly Programming</title>
+<link rel="stylesheet" href="../style/cs21.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<h2 id="_lab_assembly_programming" class="discrete">Lab - Assembly Programming</h2>
+<h2 id="_question_1_shift" class="discrete">Question 1: Shift</h2>
+<div class="paragraph">
+<p>Consider the following programs. Use <code>gcc -S shift.c -o shift.S</code> to generate the
+assembly code for this program. Then try modifying the assembly code to
+shift by 4 instead of 2.  Edit the file <code>shift.S</code> and use the command <code>gcc shift.S</code>
+to build <code>a.out</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#include &lt;stdio.h&gt;
+int main() {
+  int a = 40;
+  int value = a &lt;&lt; 2;
+  printf("values = %d", value);
+}</code></pre>
+</div>
+</div>
+<h2 id="_question_2_secrets" class="discrete">Question 2: Secrets</h2>
+<div class="paragraph">
+<p>Merge and update your repository. You should have a new directory LAB-Assembly.
+The executable, <code>secret</code>, asks the user for a secret code. It&#8217;s main function
+looks as follows.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>int main(){
+  int secret, guess;
+  char buf[128];
+  printf("Enter secret number:\n");
+  scanf("%128s", buf);
+  guess = atoi(buf);
+  secret = getSecretCode();
+  if (guess == secret)
+    printf("You got it right!\n");
+  else{
+    printf("You are so wrong!\n");
+    return 1;
+  }
+  return 0;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using gdb, discover the secret number.</p>
+</div>
+<div class="paragraph">
+<p>Some helpful gdb commands:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>disass &lt;function_name&gt;: show the assembly for an instruction</p>
+</li>
+<li>
+<p>ni: next instruction</p>
+</li>
+<li>
+<p>b *&lt;instruction_num&gt;: break at the given instruction</p>
+</li>
+<li>
+<p>p $rax: print the contents of a register</p>
+</li>
+<li>
+<p>r: runs the program</p>
+</li>
+<li>
+<p>c: continues the program</p>
+</li>
+</ul>
+</div>
+<h2 id="_question_3_fibonacci" class="discrete">Question 3: Fibonacci</h2>
+<div class="paragraph">
+<p>In the file, <code>fib.S</code>, write an x86_64 assembly program that computes the
+largest value in the Fibonacci sequence that is less than 100. Your program
+should then return this value from main. Write the program yourself using
+only 4-byte registers, such as ebc, edx, r8d, etc.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>gcc fib.S</strong>
+$ <strong>./a.out</strong>
+$ <strong>echo $?</strong>
+89</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Below is an implementation in C (with prints that show intermediate values).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>// Outputs: 1 1 2 3 5 8 13 21 34 55 89
+int main(int argc, char** argv)
+{
+  int n = 100;
+  int b = 1;
+  int i = 0;
+  while (b+i &lt; n)
+  {
+    printf("%d ", b);
+    int tmp = b;
+    b = b + i;
+    i = tmp;
+  }
+  printf("%d \n", b);
+  return b;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some helpful gdb commands:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>print $eflags</code> shows the state of flags such as ZF and SF</p>
+</li>
+<li>
+<p><code>info registers</code> shows the contents of all registers</p>
+</li>
+</ul>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2025-10-31 20:26:10 -0400
+</div>
+</div>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { equationNumbers: { autoNumber: "none" } }
+})
+MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
+  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
+    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains("stemblock")) {
+      data.math.root.display = "block"
+    }
+    return data
+  })
+})
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+</body>
+</html>
