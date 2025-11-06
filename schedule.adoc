@@ -158,7 +158,9 @@
 * link:assts/asst05.html[Assignment 05]: Due {ASST05_DUE}
 * Lab Activity: Assembly programming
 
-| TBD
+| 
+* link:lectures/Lecture-Week10-Nov4-Threads.pdf[Lecture - Nov 6]
+* link:lectures/code/threads-find-min.c[threads-find-min.c]
 
 //-----------------------------
 |11
