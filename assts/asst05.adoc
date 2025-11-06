@@ -11,6 +11,7 @@ include::../dates.adoc[]
 = {title}
 
 **Due {ASST05_DUE}, before midnight**
+**EXTENDED to be Due Monday, Nov 10, before midnight**
 **This is a written assignment, not a coding assignment!**
 
 Please submit a hard-copy in either Lecture or Lab, or submit to either Nina

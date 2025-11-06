@@ -9,10 +9,12 @@ include::header.adoc[]
 [discrete]
 = {title}
 
+Merge and update your repository. You should have a new directory LAB-Assembly. 
+
 [discrete]
 = Question 1: Shift
 
-Consider the following programs. Use `gcc -S shift.c -o shift.S` to generate the
+Consider the following program. Use `gcc -S shift.c -o shift.S` to generate the
 assembly code for this program. Then try modifying the assembly code to
 shift by 4 instead of 2.  Edit the file `shift.S` and use the command `gcc shift.S`
 to build `a.out`.
@@ -30,7 +32,6 @@ int main() {
 [discrete]
 = Question 2: Secrets 
 
-Merge and update your repository. You should have a new directory LAB-Assembly. 
 The executable, `secret`, asks the user for a secret code. It's main function 
 looks as follows.
 
@@ -70,7 +71,7 @@ Some helpful gdb commands:
 In the file, `fib.S`, write an x86_64 assembly program that computes the 
 largest value in the Fibonacci sequence that is less than 100. Your program 
 should then return this value from main. Write the program yourself using 
-only 4-byte registers, such as ebc, edx, r8d, etc. 
+only 4-byte registers, such as ebx, edx, r8d, etc. 
 
 [source,subs="quotes"]
 ----
