@@ -11,12 +11,13 @@ include::../dates.adoc[]
 
 **Due {ASST06_DUE}, before midnight**
 
+**This assignment has a check-in requirement with the TAs or instructor during office hours on Nov 13th or 14th**
+
 The goals for this assignment are:
 
 * Gain experience working with `fork()`.
 * Use OS system calls in your C program. 
 * Implement multi-process programs
-
 
 :sectnums:
 = Personal Shell
@@ -70,19 +71,38 @@ image::grep.png[width=500px]
 
 NOTE: Make sure you include the backticks, e.g. `` ` ``. This adds the filenames found by `find` as command line arguments to `grep`.
 
-
 [source, subs="quotes"]
 ----
 $ **make grep**
 gcc -g -Wall -Wvla -Werror grep.c -o grep 
 $ **./grep**
 usage: ./grep ``<``NumProcesses``>`` ``<``Keyword``>`` ``<``Files``>``
-$ **./grep 1 class missing.txt**
-Searching 1 files for keyword: class
-Process [613] searching 1 files (3 to 4)
-Process [613] Error: Cannot open file
-Total occurances: 0
-Elapsed time is 0.000608
+$ **./grep 4 class `` ` ``find code -type f `` ` ``**
+Searching 12 files for keyword: class
+Process [20208] searching 3 files (3 to 6)
+20208) code/Seal.h:class Seal : public Animal
+20208) code/Walk.h:class Walk : public Locomotion
+20208) code/Animal.h:class Animal
+Process [20208] found 3 lines containing keyword: class
+Process [20209] searching 3 files (6 to 9)
+20209) code/Duck.h:class Duck : public Bird
+20209) code/Locomotion.h:class Locomotion
+Process [20209] found 2 lines containing keyword: class
+Process [20210] searching 3 files (9 to 12)
+20210) code/Fly.h:class Fly : public Locomotion
+20210) code/Bird.h:class Bird : public Animal
+20210) code/Swim.h:class Swim : public Locomotion
+Process [20210] found 3 lines containing keyword: class
+Process [20208] found 3 lines containing of keyword: class
+Process [20209] found 2 lines containing of keyword: class
+Process [20210] found 3 lines containing of keyword: class
+Process [20211] searching 3 files (12 to 15)
+20211) code/Fish.h:class Fish : public Animal
+20211) code/Whale.h:class Whale : public Fish
+Process [20211] found 2 lines containing keyword: class
+Process [20211] found 2 lines containing of keyword: class
+Total occurances: 10
+Elapsed time is 0.001403
 ----
 
 // Backticks can be written with `` ` ``

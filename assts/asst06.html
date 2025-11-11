@@ -28,6 +28,9 @@
 <p><strong>Due Friday, November 21st, before midnight</strong></p>
 </div>
 <div class="paragraph">
+<p><strong>This assignment has a check-in requirement with the TAs or instructor during office hours on Nov 13th or 14th</strong></p>
+</div>
+<div class="paragraph">
 <p>The goals for this assignment are:</p>
 </div>
 <div class="ulist">
@@ -170,12 +173,32 @@ Make sure you include the backticks, e.g. <code> ` </code>. This adds the filena
 gcc -g -Wall -Wvla -Werror grep.c -o grep
 $ <strong>./grep</strong>
 usage: ./grep <code><</code>NumProcesses<code>></code> <code><</code>Keyword<code>></code> <code><</code>Files<code>></code>
-$ <strong>./grep 1 class missing.txt</strong>
-Searching 1 files for keyword: class
-Process [613] searching 1 files (3 to 4)
-Process [613] Error: Cannot open file
-Total occurances: 0
-Elapsed time is 0.000608</code></pre>
+$ <strong>./grep 4 class <code> ` </code>find code -type f <code> ` </code></strong>
+Searching 12 files for keyword: class
+Process [20208] searching 3 files (3 to 6)
+20208) code/Seal.h:class Seal : public Animal
+20208) code/Walk.h:class Walk : public Locomotion
+20208) code/Animal.h:class Animal
+Process [20208] found 3 lines containing keyword: class
+Process [20209] searching 3 files (6 to 9)
+20209) code/Duck.h:class Duck : public Bird
+20209) code/Locomotion.h:class Locomotion
+Process [20209] found 2 lines containing keyword: class
+Process [20210] searching 3 files (9 to 12)
+20210) code/Fly.h:class Fly : public Locomotion
+20210) code/Bird.h:class Bird : public Animal
+20210) code/Swim.h:class Swim : public Locomotion
+Process [20210] found 3 lines containing keyword: class
+Process [20208] found 3 lines containing of keyword: class
+Process [20209] found 2 lines containing of keyword: class
+Process [20210] found 3 lines containing of keyword: class
+Process [20211] searching 3 files (12 to 15)
+20211) code/Fish.h:class Fish : public Animal
+20211) code/Whale.h:class Whale : public Fish
+Process [20211] found 2 lines containing keyword: class
+Process [20211] found 2 lines containing of keyword: class
+Total occurances: 10
+Elapsed time is 0.001403</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -241,7 +264,7 @@ For example, <code>printf(ANSI_COLOR_GREEN "Green Text" ANSI_COLOR_RESET);</code
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-10-08 15:03:41 -0400
+Last updated 2025-11-11 14:05:02 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">

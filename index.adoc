@@ -17,8 +17,9 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 [.anns]
 
 * Welcome to systems programming! 
-* link:assts/asst05.html[Assignment 05] is extended to be due Monday, Nov 10, no extensions!
-* Prof. Normoyle's Office Hours on Friday Nov 6 will be online. Reach out on slack to make a meeting. 
+* Lab Nov 11: Coding challenge 4
+* link:assts/asst06.html[Assignment 06] is due Nov 21st.
+* Prof. Normoyle's Office Hours on Friday Nov 14 will be on campus. 
 * The final exam will be on Tuesday, December 16th at 9:30 AM (3 hours, closed book, 1 written cheat sheet)
 
 == Course Info
