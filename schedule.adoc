@@ -172,6 +172,10 @@
 * link:assts/asst06.html[Assignment 06]: Office hours check-ins due 
 
 | 
+* link:lectures/Lecture-Week11-Nov11-ThreadsConcurrency.pdf[Lecture - Nov 11]
+* link:lectures/Lecture-Week11-Nov13-ThreadPerformance.pdf[Lecture - Nov 13]
+* link:lectures/code/threads-badid.c[threads-badid.c]
+* link:lectures/code/threads-count.c[threads-count.c]
 
 //-----------------------------
 |12
