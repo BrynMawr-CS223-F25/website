@@ -18,7 +18,7 @@ The goals for this assignment are:
 
 :sectnums:
 
-= Editor backend
+= Backups
 
 Write a program that periodically backs up text that the user types on the screen. 
 
@@ -45,7 +45,7 @@ Requirements/Hints:
 * Allow the user to write up to 4 KB of text, or 4096, characters.
 * The user can press Ctrl-C to quit
 
-= Comic filter
+= Comics
 
 == Background
 
@@ -74,31 +74,31 @@ Edges correspond to pixels with large changes in intensity between neighbors. We
 to estimate edges. 
 
 First, we need to compute the intensity of each pixel and save it to either a new image or 2D matrix (your choice)
-The intensity is given by the following formula.
+The intensity I is given by the following formula.
 
 [stem]
 ++++
-intensity = (red + green + blue)/3
+I = (red + green + blue)/3
 ++++
 
 If we save the intensity to the red, green, and blue channels of each pixel, we will get a grayscale image.
 
-image::gray.ppm[200px]
+image::gray.png[200px]
 
-From the intensity, we can compute edges using the following formula.
+From the intensity, we can compute edges for each pixel Eij using the following formula.
 
 [stem]
 ++++
-Gx_{i,j} = (-p_{i-1,j-1}   + 0 + p_{i+1,j-1} +
-            -2 * p_{i-1,j} + 0 + 2 * p_{i+1,j} +
-            -p_{i-1,j+1}   + 0 + p_{i+1,j+1} )
+GX_{i,j} = -p_{i-1,j-1}   + p_{i+1,j-1} +
+            -2 * p_{i-1,j} + 2 * p_{i+1,j} +
+            -p_{i-1,j+1}   + p_{i+1,j+1} 
 
-Gy_{i,j} = (-p_{i-1,j-1} - 2*p_{i,j-1} - p_{i+1,j-1} +
-             0           +  0          + 0           +
-             p_{i-1,j+1} + 2*p_{i,j+1} + p_{i+1,j+1} )
+GY_{i,j} = -p_{i-1,j-1} - 2*p_{i,j-1} - p_{i+1,j-1} +
+             p_{i-1,j+1} + 2*p_{i,j+1} + p_{i+1,j+1} 
 
-value = \sqrt{Gx_{i,j} *  Gx_{i,j}  + Gy_{i,j} * Gy_{i,j}  }
-edge = value > 128? 0 : 255
+value = \sqrt{GX_{i,j} *  GX_{i,j}  + GY_{i,j} * GY_{i,j}  }
+
+E_{i,j} = value > 128? 0 : 255
 ++++
 
 image::edge.png[200px]
@@ -106,20 +106,21 @@ image::edge.png[200px]
 === Reduce colors
 
 We reduce colors by quantizing the colors of the image into B buckets. Each color channel 
-is handled individually using the same formula.
+is handled individually using the same formula. For example, for red 
 
 [stem]
 ++++
-newRed = bucketsize * floor(0.5 + pix.red / bucketsize);
+R = \text{bucketsize} * floor(0.5 + \text{red} / \text{bucketsize});
 ++++
 
-where `bucketsize` is 255 divided by the desired number of buckets N.
+where `bucketsize` is 255 divided by the desired number of buckets N. In the image below, noticed the changes in color at the poles.
 
-image::reduce.png[200px]
+image::reduced.png[200px]
 
 === Putting it together
 
 The final effect is achieved by multiplying the edge image (Eij) with the reduced image (Rij).
+Each color channel is handled independently.
 
 [stem]
 ++++
@@ -128,7 +129,7 @@ new_{i,j} = E_{i,j}/255 * R_{i,j}
 
 image::earth-small-comic.png[]
 
-=== Single-threaded
+== Single-threaded
 
 In the file, `filter.c`, implement a single-threaded program that applies a comic effect to the image "earth-small.ppm". 
 In this question, you will get the core algorithm working, before re-implementing it to be multithreaded in 
@@ -148,7 +149,7 @@ Requirements/Hints:
 * Your program must output a PPM file named `earth-small-comic.ppm`
 * Use software that can view PPM files to check your work, either via VS Code, eog (Eye of Gnome), Gimp, Photoshop, etc
 
-=== Multi-threaded
+== Multi-threaded
 
 In the file, `filter_multithreaded.c`, implement a program that applies a comic effect using multiple threads. 
 It should run much faster than your single threaded version.
