@@ -187,13 +187,16 @@
 * link:assts/asst06.html[Assignment 06] Due Friday Nov 21
 
 | 
+* link:lectures/Lecture-Week12-Nov18-MemoryHierarchy.pdf[Lecture - Nov 18]
+* link:lectures/Lecture-Week12-Nov20-Malloc.pdf[Lecture - Nov 20]
+* link:lectures/code/dining-philosophers.c[dining-philosophers.c]
 
 //-----------------------------
 |13
 |{WEEK13} anchor:week13[]
-|*Memory, allocation* 
+|*Memory allocation* 
 
-* Lab: Memory allocators 
+* Lab: Threads 
 * Read:"My malloc: mylloc and mhysa" by Johan Montelius (see slack)
 * Read: link:https://diveintosystems.org/singlepage/#_storage_and_the_memory_hierarchy[Chapter 11.1-11.3] 
 * **Thanksgiving: No Class Thursday**
@@ -206,10 +209,8 @@
 | Review and midterm 2
 
 * Midterm 02, In-class {MIDTERM02} (80 minutes)
-* Lab: Review
 
 | 
-
 
 //-----------------------------
 |15
@@ -222,7 +223,6 @@
 
 |
 * link:studyguide-final.html[Final Study Guide]
-* link:studyguide6.html[Study Guide 6]
 
 |===
 

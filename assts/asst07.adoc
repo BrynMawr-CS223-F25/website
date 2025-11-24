@@ -13,45 +13,43 @@ include::../dates.adoc[]
 
 The goals for this assignment are:
 
-* Synchronize the behavior of multiple threads
-* Work with mutex and condition variables
+* Program several threaded applications 
+* Use thread synchronization features
 
 :sectnums:
 
-= Dining philosophers
+= Editor backend
 
-= Consumer/Producer 
-
-In the file, `cp.c`, implement the producer/consumer demo from class. Your producer 
-function should generate an integer between 0 and 9. Your consumer function should print 
-the value. The size of your circular queue should be 10 elements. 
+Write a program that periodically backs up text that the user types on the screen. 
 
 [source, subs="quotes"]
 ----
-$ **./cp**
-Received item: 3
-Received item: 6
-Received item: 7
-Received item: 5
-Received item: 3
-Received item: 5
+$ **./backup**
+usage: ./backup <num_seconds>
+$ **./backup 3**
+Hello, friends. Let's always keep backups!
 ^C
+$ **ls -a**
+.
+..
+.log-1764027171.txt
+.log-1764027174.txt  
+Makefile
+backup.c
 ----
 
-Requirements:
+Requirements/Hints:
 
-* Use sleep(1.0) to slow the production of values and make the output of your program easier to read.
-* Place the behavior of both threads in an infinite loop. Use Control-C to exit your demo.
+* Create a background thread to periodically save logs.
+* Save logs to a file with the name .log-<time>.txt. Notice that the name starts with a dot. This is a hidden file. To see hidden files, do `ls -a` or `ls -al`. You can use `time()` for the filename.
+* Allow the user to write up to 4 KB of text, or 4096, characters.
+* The user can press Ctrl-C to quit
 
+= Comic filter
 
-= Editor backend
-
-Extend your editor to save drafts of your file every X seconds using a background thread.
-
-= Glow
 == Background
 
-In this assignment, you will implement a glow filter for images. You will implement the filter both single- and 
+In this assignment, you will implement a comic filter for images. You will implement the filter both single- and 
 multi-threaded. 
 
 Before:
@@ -60,76 +58,85 @@ image::earth-small.png[]
 
 After:
 
-image::glow.png[]
+image::earth-small-comic.png[]
 
 This filter requires three steps:
 
-* Extracting bright areas into a separate image
-* Blurring the bright pixels
-* Adding the blurred image to the original
+* Extracting edges and saving them in a new image 
+* Reducing colors 
+* Combining the edges with the reduced color image
 
-NOTE: We will work with PPM files for this assignment.
+NOTE: We will work with PPM files for this assignment. Reuse your PPM implementation from your previous assignments.
 
-=== Extract bright areas
+=== Extract edges
 
-For each pixel, you can compute its brightness as the average of its red, green, and blue values. E.g. 
+Edges correspond to pixels with large changes in intensity between neighbors. We use a link:https://en.wikipedia.org/wiki/Sobel_operator[Sobel operator]
+to estimate edges. 
 
-[stem]
-++++
-brightness = (red + green + blue)/3
-++++
-
-We can compare this brightness to a threshold, say 200, to determine if we should apply the glow to this area. 
-For the image below, we iterated through every pixel in the original image, computed its brightness, and 
-then saved its brightness to a new image if the pixel exceeded the threshold.
-
-image::white.png[]
-
-=== Blur
-
-For this assignment, we will apply a box blur to each pixel in the image computed in the previous step. 
-
-In a box blur, the color of each pixel is set to the average of its neighbors. For example, if we look 
-only at the immediate neighbors of the pixel (i,j), the new color would be as follows:
+First, we need to compute the intensity of each pixel and save it to either a new image or 2D matrix (your choice)
+The intensity is given by the following formula.
 
 [stem]
 ++++
-new_{i,j} = (p_{i-1,j-1} + p_{i,j-1} + p_{i+1,j-1} +
-             p_{i-1,j}   + p_{i,j}   + p_{i+1,j} +
-             p_{i-1,j+1} + p_{i,j+1} + p_{i+1,j+1} )/9
+intensity = (red + green + blue)/3
 ++++
 
-The above calculation would correspond to a box size of 3 because the region around the pixel has 
-width 3 and height 3. 
+If we save the intensity to the red, green, and blue channels of each pixel, we will get a grayscale image.
 
-We compute the blur separately for each color channel (read, blue, green). In the image below, we used a 
-box size of 25. In other words, we used the 24 neighbors that were left, right, above, and below of the current 
-pixel. If a pixel is near the edge of the image, we can clamp the blur indices so they stay in the image.
+image::gray.ppm[200px]
 
-image::blur.png[]
+From the intensity, we can compute edges using the following formula.
 
-NOTE: The glow will look better with a gaussian blur. Feel free to implement one instead
+[stem]
+++++
+Gx_{i,j} = (-p_{i-1,j-1}   + 0 + p_{i+1,j-1} +
+            -2 * p_{i-1,j} + 0 + 2 * p_{i+1,j} +
+            -p_{i-1,j+1}   + 0 + p_{i+1,j+1} )
+
+Gy_{i,j} = (-p_{i-1,j-1} - 2*p_{i,j-1} - p_{i+1,j-1} +
+             0           +  0          + 0           +
+             p_{i-1,j+1} + 2*p_{i,j+1} + p_{i+1,j+1} )
+
+value = \sqrt{Gx_{i,j} *  Gx_{i,j}  + Gy_{i,j} * Gy_{i,j}  }
+edge = value > 128? 0 : 255
+++++
+
+image::edge.png[200px]
+
+=== Reduce colors
+
+We reduce colors by quantizing the colors of the image into B buckets. Each color channel 
+is handled individually using the same formula.
+
+[stem]
+++++
+newRed = bucketsize * floor(0.5 + pix.red / bucketsize);
+++++
+
+where `bucketsize` is 255 divided by the desired number of buckets N.
+
+image::reduce.png[200px]
 
 === Putting it together
 
-The glow effect is achieved by adding the blurred image (bij) with the original image (oij).
+The final effect is achieved by multiplying the edge image (Eij) with the reduced image (Rij).
 
 [stem]
 ++++
-new_{i,j} = o_{i,j} + b_{i,j}
+new_{i,j} = E_{i,j}/255 * R_{i,j}
 ++++
 
-image::glow.png[]
+image::earth-small-comic.png[]
 
 === Single-threaded
 
-In the file, `glow.c`, implement a single-threaded program that applies a glow effect to the image "earth-small.ppm". 
+In the file, `filter.c`, implement a single-threaded program that applies a comic effect to the image "earth-small.ppm". 
 In this question, you will get the core algorithm working, before re-implementing it to be multithreaded in 
 the next question.
 
 [source,subs="quotes"]
 ----
-$ **time ./glow**
+$ **time ./filter**
 real    0m0.518s
 user    0m0.513s
 sys     0m0.001s
@@ -137,20 +144,20 @@ sys     0m0.001s
 
 Requirements/Hints:
 
-* This program can be simple. You may hard-coded the input file (earth-small.ppm), the threshold (200), and the blur box size (25).
-* Your program must output a PPM file named `glow.ppm`
+* This program can be simple. You may hard-coded the input file (earth-small.ppm).
+* Your program must output a PPM file named `earth-small-comic.ppm`
 * Use software that can view PPM files to check your work, either via VS Code, eog (Eye of Gnome), Gimp, Photoshop, etc
 
 === Multi-threaded
 
-In the file, `glow_multithreaded.c`, implement a program that applies a glow effect using multiple threads. 
+In the file, `filter_multithreaded.c`, implement a program that applies a comic effect using multiple threads. 
 It should run much faster than your single threaded version.
 
 [source]
 ----
-$ ./glow_multithreaded -h
-usage: ./glow_multithreaded -N <NumThreads> -t <brightness threshold> -b <box blur size> -f <ppmfile>
-$ time ./glow_multithreaded
+$ ./filter_multithreaded -h
+usage: ./filter_multithreaded -N <NumThreads> -f <ppmfile>
+$ time ./filter_multithreaded
 Thread sub-image slice: rows (0,75)
 Thread sub-image slice: rows (75,150)
 Thread sub-image slice: rows (150,225)
@@ -163,8 +170,9 @@ sys     0m0.000s
 
 Requirements and recommendations:
 
-* Each thread should run all steps on a portion of the image. I recommend you divide the image into horizontal slices (not square blocks) 
+* Each thread should divide the work of filtering the image. I recommend you divide the image into horizontal slices for faster memory access (not square blocks!) 
 * You can assume that N will divide the images evenly. `earth.ppm` has resolution 3000x3000. `earth-small.ppm` has resolution 300x300.
-* Your program should output a file named `glow.ppm`
+* Your program should output a file that matches the original but with comic in the basename, e.g. `earth.ppm` should become `earth-comic.ppm`
 * Your program must support the command line arguments.
-* Your program may not use global variables.
+* Use either join (main thread) or barriers (within threads) to wait for a step to complete before a thread starts processing the next step.
+* Use additional PPM files and 2D arrays to store the results of intermediate steps.

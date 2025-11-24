@@ -15,12 +15,10 @@
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_assignment_7_where_others_fear_to_thread">Assignment 7: Where others fear to thread</a></li>
-<li><a href="#_dining_philosophers">1. Dining philosophers</a></li>
-<li><a href="#_consumerproducer">2. Consumer/Producer</a></li>
-<li><a href="#_editor_backend">3. Editor backend</a></li>
-<li><a href="#_glow">4. Glow</a>
+<li><a href="#_editor_backend">1. Editor backend</a></li>
+<li><a href="#_comic_filter">2. Comic filter</a>
 <ul class="sectlevel2">
-<li><a href="#_background">4.1. Background</a></li>
+<li><a href="#_background">2.1. Background</a></li>
 </ul>
 </li>
 </ul>
@@ -31,7 +29,7 @@
 <h2 id="_assignment_7_where_others_fear_to_thread">Assignment 7: Where others fear to thread</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, December 11th, before midnight</strong></p>
+<p><strong>Due Friday, December 12th, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -39,71 +37,65 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Synchronize the behavior of multiple threads</p>
+<p>Program several threaded applications</p>
 </li>
 <li>
-<p>Work with mutex and condition variables</p>
+<p>Use thread synchronization features</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_dining_philosophers">1. Dining philosophers</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_consumerproducer">2. Consumer/Producer</h2>
+<h2 id="_editor_backend">1. Editor backend</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the file, <code>cp.c</code>, implement the producer/consumer demo from class. Your producer
-function should generate an integer between 0 and 9. Your consumer function should print
-the value. The size of your circular queue should be 10 elements.</p>
+<p>Write a program that periodically backs up text that the user types on the screen.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>./cp</strong>
-Received item: 3
-Received item: 6
-Received item: 7
-Received item: 5
-Received item: 3
-Received item: 5
-^C</code></pre>
+<pre class="highlight"><code>$ <strong>./backup</strong>
+usage: ./backup <num_seconds>
+$ <strong>./backup 3</strong>
+Hello, friends. Let's always keep backups!
+^C
+$ <strong>ls -a</strong>
+.
+..
+.log-1764027171.txt
+.log-1764027174.txt
+Makefile
+backup.c</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Requirements:</p>
+<p>Requirements/Hints:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Use sleep(1.0) to slow the production of values and make the output of your program easier to read.</p>
+<p>Create a background thread to periodically save logs.</p>
 </li>
 <li>
-<p>Place the behavior of both threads in an infinite loop. Use Control-C to exit your demo.</p>
+<p>Save logs to a file with the name .log-&lt;time&gt;.txt. Notice that the name starts with a dot. This is a hidden file. To see hidden files, do <code>ls -a</code> or <code>ls -al</code>. You can use <code>time()</code> for the filename.</p>
+</li>
+<li>
+<p>Allow the user to write up to 4 KB of text, or 4096, characters.</p>
+</li>
+<li>
+<p>The user can press Ctrl-C to quit</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_editor_backend">3. Editor backend</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Extend your editor to save drafts of your file every X seconds using a background thread.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_glow">4. Glow</h2>
+<h2 id="_comic_filter">2. Comic filter</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_background">4.1. Background</h3>
+<h3 id="_background">2.1. Background</h3>
 <div class="paragraph">
-<p>In this assignment, you will implement a glow filter for images. You will implement the filter both single- and
+<p>In this assignment, you will implement a comic filter for images. You will implement the filter both single- and
 multi-threaded.</p>
 </div>
 <div class="paragraph">
@@ -119,7 +111,7 @@ multi-threaded.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/glow.png" alt="glow">
+<img src="img/earth-small-comic.png" alt="earth small comic">
 </div>
 </div>
 <div class="paragraph">
@@ -128,13 +120,13 @@ multi-threaded.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Extracting bright areas into a separate image</p>
+<p>Extracting edges and saving them in a new image</p>
 </li>
 <li>
-<p>Blurring the bright pixels</p>
+<p>Reducing colors</p>
 </li>
 <li>
-<p>Adding the blurred image to the original</p>
+<p>Combining the edges with the reduced color image</p>
 </li>
 </ul>
 </div>
@@ -145,101 +137,103 @@ multi-threaded.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-We will work with PPM files for this assignment.
+We will work with PPM files for this assignment. Reuse your PPM implementation from your previous assignments.
 </td>
 </tr>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_extract_bright_areas">4.1.1. Extract bright areas</h4>
+<h4 id="_extract_edges">2.1.1. Extract edges</h4>
 <div class="paragraph">
-<p>For each pixel, you can compute its brightness as the average of its red, green, and blue values. E.g.</p>
+<p>Edges correspond to pixels with large changes in intensity between neighbors. We use a <a href="https://en.wikipedia.org/wiki/Sobel_operator">Sobel operator</a>
+to estimate edges.</p>
+</div>
+<div class="paragraph">
+<p>First, we need to compute the intensity of each pixel and save it to either a new image or 2D matrix (your choice)
+The intensity is given by the following formula.</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\$brightness = (red + green + blue)/3\$
+\$intensity = (red + green + blue)/3\$
 </div>
 </div>
 <div class="paragraph">
-<p>We can compare this brightness to a threshold, say 200, to determine if we should apply the glow to this area.
-For the image below, we iterated through every pixel in the original image, computed its brightness, and
-then saved its brightness to a new image if the pixel exceeded the threshold.</p>
+<p>If we save the intensity to the red, green, and blue channels of each pixel, we will get a grayscale image.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/white.png" alt="white">
+<img src="img/gray.ppm" alt="200px">
 </div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_blur">4.1.2. Blur</h4>
-<div class="paragraph">
-<p>For this assignment, we will apply a box blur to each pixel in the image computed in the previous step.</p>
 </div>
 <div class="paragraph">
-<p>In a box blur, the color of each pixel is set to the average of its neighbors. For example, if we look
-only at the immediate neighbors of the pixel (i,j), the new color would be as follows:</p>
+<p>From the intensity, we can compute edges using the following formula.</p>
 </div>
 <div class="stemblock">
 <div class="content">
-\$new_{i,j} = (p_{i-1,j-1} + p_{i,j-1} + p_{i+1,j-1} +
-             p_{i-1,j}   + p_{i,j}   + p_{i+1,j} +
-             p_{i-1,j+1} + p_{i,j+1} + p_{i+1,j+1} )/9\$
-</div>
-</div>
-<div class="paragraph">
-<p>The above calculation would correspond to a box size of 3 because the region around the pixel has
-width 3 and height 3.</p>
-</div>
-<div class="paragraph">
-<p>We compute the blur separately for each color channel (read, blue, green). In the image below, we used a
-box size of 25. In other words, we used the 24 neighbors that were left, right, above, and below of the current
-pixel. If a pixel is near the edge of the image, we can clamp the blur indices so they stay in the image.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/blur.png" alt="blur">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The glow will look better with a gaussian blur. Feel free to implement one instead
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_putting_it_together">4.1.3. Putting it together</h4>
-<div class="paragraph">
-<p>The glow effect is achieved by adding the blurred image (bij) with the original image (oij).</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\$new_{i,j} = o_{i,j} + b_{i,j}\$
+\$Gx_{i,j} = (-p_{i-1,j-1}   + 0 + p_{i+1,j-1} +
+            -2 * p_{i-1,j} + 0 + 2 * p_{i+1,j} +
+            -p_{i-1,j+1}   + 0 + p_{i+1,j+1} )\$
+<br>
+\$Gy_{i,j} = (-p_{i-1,j-1} - 2*p_{i,j-1} - p_{i+1,j-1} +
+             0           +  0          + 0           +
+             p_{i-1,j+1} + 2*p_{i,j+1} + p_{i+1,j+1} )\$
+<br>
+\$value = \sqrt{Gx_{i,j} *  Gx_{i,j}  + Gy_{i,j} * Gy_{i,j}  }
+edge = value &gt; 128? 0 : 255\$
 </div>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/glow.png" alt="glow">
+<img src="img/edge.png" alt="200px">
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_single_threaded">4.1.4. Single-threaded</h4>
+<h4 id="_reduce_colors">2.1.2. Reduce colors</h4>
 <div class="paragraph">
-<p>In the file, <code>glow.c</code>, implement a single-threaded program that applies a glow effect to the image "earth-small.ppm".
+<p>We reduce colors by quantizing the colors of the image into B buckets. Each color channel
+is handled individually using the same formula.</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\$newRed = bucketsize * floor(0.5 + pix.red / bucketsize);\$
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>bucketsize</code> is 255 divided by the desired number of buckets N.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/reduce.png" alt="200px">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_putting_it_together">2.1.3. Putting it together</h4>
+<div class="paragraph">
+<p>The final effect is achieved by multiplying the edge image (Eij) with the reduced image (Rij).</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\$new_{i,j} = E_{i,j}/255 * R_{i,j}\$
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/earth-small-comic.png" alt="earth small comic">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_single_threaded">2.1.4. Single-threaded</h4>
+<div class="paragraph">
+<p>In the file, <code>filter.c</code>, implement a single-threaded program that applies a comic effect to the image "earth-small.ppm".
 In this question, you will get the core algorithm working, before re-implementing it to be multithreaded in
 the next question.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>time ./glow</strong>
+<pre class="highlight"><code>$ <strong>time ./filter</strong>
 real    0m0.518s
 user    0m0.513s
 sys     0m0.001s</code></pre>
@@ -251,10 +245,10 @@ sys     0m0.001s</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>This program can be simple. You may hard-coded the input file (earth-small.ppm), the threshold (200), and the blur box size (25).</p>
+<p>This program can be simple. You may hard-coded the input file (earth-small.ppm).</p>
 </li>
 <li>
-<p>Your program must output a PPM file named <code>glow.ppm</code></p>
+<p>Your program must output a PPM file named <code>earth-small-comic.ppm</code></p>
 </li>
 <li>
 <p>Use software that can view PPM files to check your work, either via VS Code, eog (Eye of Gnome), Gimp, Photoshop, etc</p>
@@ -263,16 +257,16 @@ sys     0m0.001s</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_multi_threaded">4.1.5. Multi-threaded</h4>
+<h4 id="_multi_threaded">2.1.5. Multi-threaded</h4>
 <div class="paragraph">
-<p>In the file, <code>glow_multithreaded.c</code>, implement a program that applies a glow effect using multiple threads.
+<p>In the file, <code>filter_multithreaded.c</code>, implement a program that applies a comic effect using multiple threads.
 It should run much faster than your single threaded version.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ ./glow_multithreaded -h
-usage: ./glow_multithreaded -N &lt;NumThreads&gt; -t &lt;brightness threshold&gt; -b &lt;box blur size&gt; -f &lt;ppmfile&gt;
-$ time ./glow_multithreaded
+<pre class="highlight"><code>$ ./filter_multithreaded -h
+usage: ./filter_multithreaded -N &lt;NumThreads&gt; -f &lt;ppmfile&gt;
+$ time ./filter_multithreaded
 Thread sub-image slice: rows (0,75)
 Thread sub-image slice: rows (75,150)
 Thread sub-image slice: rows (150,225)
@@ -289,19 +283,22 @@ sys     0m0.000s</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Each thread should run all steps on a portion of the image. I recommend you divide the image into horizontal slices (not square blocks)</p>
+<p>Each thread should divide the work of filtering the image. I recommend you divide the image into horizontal slices for faster memory access (not square blocks!)</p>
 </li>
 <li>
 <p>You can assume that N will divide the images evenly. <code>earth.ppm</code> has resolution 3000x3000. <code>earth-small.ppm</code> has resolution 300x300.</p>
 </li>
 <li>
-<p>Your program should output a file named <code>glow.ppm</code></p>
+<p>Your program should output a file that matches the original but with comic in the basename, e.g. <code>earth.ppm</code> should become <code>earth-comic.ppm</code></p>
 </li>
 <li>
 <p>Your program must support the command line arguments.</p>
 </li>
 <li>
-<p>Your program may not use global variables.</p>
+<p>Use either join (main thread) or barriers (within threads) to wait for a step to complete before a thread starts processing the next step.</p>
+</li>
+<li>
+<p>Use additional PPM files and 2D arrays to store the results of intermediate steps.</p>
 </li>
 </ul>
 </div>
@@ -312,7 +309,7 @@ sys     0m0.000s</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-10-08 15:08:26 -0400
+Last updated 2025-11-24 18:51:27 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">
