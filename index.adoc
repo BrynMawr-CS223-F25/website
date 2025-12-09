@@ -18,6 +18,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 * Welcome to systems programming! 
 * link:assts/asst07.html[Assignment 07] is due Dec 12th
+* link:assts/lab-memory-f25.html[Lab: Visualizing malloc] is due Dec 9th
 * Midterm II will be in-class Dec 4th. See link:studyguide4.html[Study Guide 4], link:studyguide5.html[Study Guide 5], link:studyguide6.html[Study Guide 6]
 * No office hours the week of Thanksgiving
 * The final exam will be on Tuesday, December 16th at 9:30 AM (3 hours, closed book, 1 written cheat sheet)
