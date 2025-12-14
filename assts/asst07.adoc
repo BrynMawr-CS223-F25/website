@@ -165,7 +165,7 @@ Thread sub-image slice: rows (150,225)
 Thread sub-image slice: rows (225,300)
 
 real    0m0.249s
-user    0m0.217s
+user    0m0.717s
 sys     0m0.000s
 ----
 
