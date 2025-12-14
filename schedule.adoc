@@ -218,7 +218,7 @@
 |*Code Optimization, C++*
 
 * Read: link:https://diveintosystems.org/singlepage/#_code_optimization[Chapter 12] 
-* link:assts/.html[Assignment 07]: Due {ASST07_DUE}
+* link:assts/asst07.html[Assignment 07]: Due {ASST07_DUE}
 * Lab checkins and final practice
 
 |
